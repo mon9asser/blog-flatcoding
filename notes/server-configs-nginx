@@ -1,0 +1,186 @@
+
+
+
+
+// =========================================================
+// =>> /etc/nginx/sites-available/
+// =========================================================
+
+1- codedtag.com
+ 
+server {
+    listen 80;
+    server_name codedtag.com www.codedtag.com;
+
+    location / {
+        proxy_pass http://141.136.35.135:2001;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        # Disable SSL verification for the upstream server (if necessary)
+        proxy_ssl_verify off;
+    }
+} 
+
+2- admin.codedtag.com
+
+ 
+server {
+    listen 80;
+    server_name admin.codedtag.com;
+
+    root /var/www/codedtag.com/public/admin/build;
+    index index.html;
+
+    location / {
+        try_files $uri /index.html;
+    }
+}
+ 
+ 
+
+
+3- api.codedtag.com
+
+server {
+    listen 80;
+    server_name api.codedtag.com;
+
+    location / {
+        proxy_pass https://141.136.35.135:2000/api/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        # Disable SSL verification for the upstream server (if necessary)
+        proxy_ssl_verify off;
+    }
+}
+
+
+
+// =========================================================
+// =>> Enable sites by linking
+// =========================================================
+
+sudo ln -s /etc/nginx/sites-available/codedtag.com /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/admin.codedtag.com /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/api.codedtag.com /etc/nginx/sites-enabled/
+
+
+// =========================================================
+// =>> Verify everything and reload
+// =========================================================
+sudo nginx -t
+sudo systemctl reload nginx
+
+// =========================================================
+// =>>Obtain the SSL Certificate
+// =========================================================
+
+sudo certbot --nginx -d codedtag.com -d www.codedtag.com
+sudo certbot --nginx -d admin.codedtag.com  
+sudo certbot --nginx -d api.codedtag.com  
+
+sudo certbot renew --dry-run
+
+
+
+
+
+
+
+
+
+
+
+// =========================================================
+// =>> /etc/nginx/nginx.conf { NO UPDATE HERE AS IT FOR ALL }
+// =========================================================
+user www-data;
+worker_processes auto;
+pid /run/nginx.pid;
+error_log /var/log/nginx/error.log;
+include /etc/nginx/modules-enabled/*.conf;
+
+events {
+        worker_connections 768;
+        # multi_accept on;
+}
+
+http {
+
+        ##
+        # Basic Settings
+        ##
+
+        sendfile on;
+        tcp_nopush on;
+        types_hash_max_size 2048;
+        # server_tokens off;
+
+        # server_names_hash_bucket_size 64;
+        # server_name_in_redirect off;
+
+        include /etc/nginx/mime.types;
+        default_type application/octet-stream;
+
+        ##
+        # SSL Settings
+        ##
+
+        ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3; # Dropping SSLv3, ref: POODLE
+        ssl_prefer_server_ciphers on;
+
+        ##
+        # Logging Settings
+        ##
+
+        access_log /var/log/nginx/access.log;
+
+        ##
+        # Gzip Settings
+        ##
+
+        gzip on;
+
+        gzip_vary on;
+        gzip_proxied any;
+        gzip_comp_level 6;
+        # gzip_buffers 16 8k;
+        # gzip_http_version 1.1;
+        gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+        gzip_min_length 256;
+        gzip_disable "msie6";
+        ##
+        # Virtual Host Configs
+        ##
+
+        include /etc/nginx/conf.d/*.conf;
+        include /etc/nginx/sites-enabled/*;
+}
+
+
+#mail {
+#       # See sample authentication script at:
+#       # http://wiki.nginx.org/ImapAuthenticateWithApachePhpScript
+#
+#       # auth_http localhost/auth.php;
+#       # pop3_capabilities "TOP" "USER";
+#       # imap_capabilities "IMAP4rev1" "UIDPLUS";
+#
+#       server {
+#               listen     localhost:110;
+#               protocol   pop3;
+#               proxy      on;
+#       }
+#
+#       server {
+#               listen     localhost:143;
+#               protocol   imap;
+#               proxy      on;
+#       }
+#}
