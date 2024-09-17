@@ -24,7 +24,7 @@ app.set('trust proxy', 1);
 
 
 const corsOptions = {
-    origin: [  'https://api.codedtag.com', 'https://admin.codedtag.com', 'https://media.codedtag.com', 'https://codedtag.com' ], // Allow only this origin
+    origin: [  'https://api.codedtag.com', 'https://admin.codedtag.com', 'https://media.codedtag.com', 'https://codedtag.com', 'http://localhost:3001' ], // Allow only this origin
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true, // This is required for cookies to work with CORS
     optionsSuccessStatus: 200,

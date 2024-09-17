@@ -95,7 +95,7 @@ class HelperData {
       
       // session data 
       var session = JSON.parse(localStorage.getItem("session"));
-       
+      
       if( session === null || session.token === undefined || session.token === "" ) {
         return {
           redirect_to: "",
@@ -129,6 +129,7 @@ class HelperData {
 
     async generateToken(user_browser) {
 
+      
       var request = await axios({
         method: 'get',
         url: `${Settings.server.api}/hash-request`, 
@@ -136,14 +137,14 @@ class HelperData {
           'x-api-key': 'qwe#r$s%s&d*r!w*e((f))d-f`werh14445`4rt5`4ert5`4rt31645k132v132', 
           'agent': user_browser
         }
-      });
-
+      });  
       return request.data;
     }
     
     async sendRequest ({api, method, data, headers, is_create, is_file } = null) {
  
             var generate_token = await this.generateToken(navigator.userAgent)
+            
             if( generate_token.is_error ) {
               return; 
             }

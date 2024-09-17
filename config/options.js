@@ -3,11 +3,20 @@ const { db_name } = require("./db")
  
 const Config = { 
 
+    /*
     dashboard_url: "https://admin.codedtag.com/dashboard",
     media_url: `https://media.codedtag.com`,
     site_url: "https://codedtag.com",
     admin: "admin.codedtag.com",
     login_url: "https://admin.codedtag.com/login", 
+    redirect_to: "/tutorials",
+    */
+
+    dashboard_url: "http://localhost:3001/dashboard",
+    media_url: `http://localhost:3000/uploads`,
+    site_url: "http://localhost:3001",
+    admin: "http://localhost:3001",
+    login_url: "http://localhost:3001/login", 
     redirect_to: "/tutorials",
 
     server: {

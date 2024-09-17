@@ -72,8 +72,9 @@ mediaRouter.post("/media/upload", middlewareTokens, upload.single("image"), asyn
           const outputPath = `${Config.uploads.folder}/${Config.uploads.serve}/${filename}`;
           
           await sharp(req.file.buffer)
-              .resize(800)
+              .resize(900)
               .toFormat('webp')
+              .webp({ quality: 95 })
               .toFile(outputPath);
 
           const newMedia = new Media({
