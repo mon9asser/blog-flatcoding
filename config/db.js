@@ -1,10 +1,10 @@
   
 module.exports = {
-    db_name:"codedtag_datab",
-    domain:"codedtag.com",
-    name:"codedtag",
+    db_name:"flat_coding_blog_db",
+    domain:"flatcoding.com",
+    name:"flatcoding",
     index:1,
-    property_id:"317812519", 
+    property_id:"", 
 }
 
 

@@ -15,7 +15,7 @@ const Config = {
         sitemap: "", // slug shuould be started with slash /
         robots: "", // slug shuould be started with slash /
         api: "/api",
-        port: process.env.port || 2000 
+        port: 3000 
     },
     
     // serve image uploads on server
