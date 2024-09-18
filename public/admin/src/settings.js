@@ -1,8 +1,8 @@
 const Settings = {
 
     server: {
-        //api: "https://api.codedtag.com"
-        api: "http://localhost:3000/api"
+        //api: "https://api.flatcoding.com"
+        api: "https://api.flatcoding.com"
     },
 
     google: {

@@ -24,7 +24,7 @@ app.set('trust proxy', 1);
 
 
 const corsOptions = {
-    origin: [  'https://api.codedtag.com', 'https://admin.codedtag.com', 'https://media.codedtag.com', 'https://codedtag.com', 'http://localhost:3001' ], // Allow only this origin
+    origin: [  'https://api.flatcoding.com', 'https://admin.flatcoding.com', 'https://media.flatcoding.com', 'https://flatcoding.com', 'http://localhost:3001' ], // Allow only this origin
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true, // This is required for cookies to work with CORS
     optionsSuccessStatus: 200,
@@ -39,7 +39,7 @@ app.use(
   helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
-      connectSrc: ["'self'", 'https://api.codedtag.com', 'https://admin.codedtag.com', 'https://media.codedtag.com', 'https://codedtag.com'],
+      connectSrc: ["'self'", 'https://api.flatcoding.com', 'https://admin.flatcoding.com', 'https://media.flatcoding.com', 'https://flatcoding.com'],
       styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
       styleSrcElem: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
       fontSrc: ["'self'", 'https://fonts.gstatic.com'],
@@ -143,19 +143,20 @@ app.get(Config.server.api + '/proxy', async (req, res) => {
  
 
 // Start the server and listen on the specified port
+/*
 app.listen(Config.server.port, () => {
     console.log(`Server is running on port ${Config.server.port}`);
 });
+*/
 
 
-/*
 // Load SSL certificate and key
 const sslOptions = {
-    key: fs.readFileSync('/etc/letsencrypt/live/codedtag.com/privkey.pem'),
-    cert: fs.readFileSync('/etc/letsencrypt/live/codedtag.com/cert.pem'),
+    key: fs.readFileSync('/etc/letsencrypt/live/flatcoding.com/privkey.pem'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/flatcoding.com/cert.pem'),
 };
 
 // Create HTTPS server
 https.createServer(sslOptions, app).listen(Config.server.port, () => {
     console.log(`The server is running on port ${Config.server.port}`);
-});*/
+});

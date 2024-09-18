@@ -10,7 +10,7 @@ const Config = {
     admin: "admin.flatcoding.com",
     login_url: "https://admin.flatcoding.com/login", 
     redirect_to: "/tutorials",
-     
+    
     /*
     dashboard_url: "http://localhost:3001/dashboard",
     media_url: `http://localhost:3000/uploads`,
@@ -34,7 +34,7 @@ const Config = {
         folder: `public`, // public/uploads upload image to folder
     }, 
     api_keys: 'qwe#r$s%s&d*r!w*e((f))d-f`werh14445`4rt5`4ert5`4rt31645k132v132',
-    jwt_secret: "codedtag_t1y4u5236985471zasde!gfh@qwe#$%hoj^ytu&*tu(ib)ib~gfhrytuibonphojlkmlbkxzasqwe",   
+    jwt_secret: "flatcoding_t1y4u5236985471zasde!gfh@qwe#$%hoj^ytu&*tu(ib)ib~gfhrytuibonphojlkmlbkxzasqwe",   
     database: {
         name: db_name,
         host: "mongodb://127.0.0.1",

@@ -12,31 +12,31 @@ module.exports = {
 /*
 
 module.exports = {
-    db_name:"aaa_codedtag",
-    domain:"Codedtag.com",
-    name:"CodedTag",
+    db_name:"aaa_flatcoding",
+    domain:"flatcoding.com",
+    name:"flatcoding",
     index:0,
     property_id:"317812519",
 
-    site_url: "https://codedtag.com/",
-    admin_url: "https://admin.codedtag.com/",
-    api_url: "https://api.codedtag.com/",
-    media_url: "https://media.codedtag.com/",
+    site_url: "https://flatcoding.com/",
+    admin_url: "https://admin.flatcoding.com/",
+    api_url: "https://api.flatcoding.com/",
+    media_url: "https://media.flatcoding.com/",
 }
 
 
 
 var db1 = {
-    b_name: "aaa_codedtag",
-    domain: "codedtag.com",
-    name: "codedtag",
+    b_name: "aaa_flatcoding",
+    domain: "flatcoding.com",
+    name: "flatcoding",
     index: 1, 
     property_id: "446426355",
 
-    site_url: "https://codedtag.com/",
-    admin_url: "https://admin.codedtag.com/",
-    api_url: "https://api.codedtag.com/",
-    media_url: "https://media.codedtag.com/",
+    site_url: "https://flatcoding.com/",
+    admin_url: "https://admin.flatcoding.com/",
+    api_url: "https://api.flatcoding.com/",
+    media_url: "https://media.flatcoding.com/",
 }
 
 */

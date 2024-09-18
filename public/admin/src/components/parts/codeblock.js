@@ -127,7 +127,7 @@ class CustomCodeBlok {
         // Code Section
         const block = document.createElement('div');
         block.setAttribute('contenteditable', 'false');
-        block.className = 'codedtag-block-of-code';
+        block.className = 'flatcoding-block-of-code';
         const codeElem = document.createElement('pre');
         codeElem.className = 'hljs language-plaintext';
         const code = document.createElement('code');

@@ -6,11 +6,11 @@
 // =>> /etc/nginx/sites-available/
 // =========================================================
 
-1- codedtag.com
+1- flatcoding.com
  
 server {
     listen 80;
-    server_name codedtag.com www.codedtag.com;
+    server_name flatcoding.com www.flatcoding.com;
 
     location / {
         proxy_pass http://141.136.35.135:2001;
@@ -24,14 +24,14 @@ server {
     }
 } 
 
-2- admin.codedtag.com
+2- admin.flatcoding.com
 
  
 server {
     listen 80;
-    server_name admin.codedtag.com;
+    server_name admin.flatcoding.com;
 
-    root /var/www/codedtag.com/public/admin/build;
+    root /var/www/flatcoding.com/public/admin/build;
     index index.html;
 
     location / {
@@ -42,11 +42,11 @@ server {
  
 
 
-3- api.codedtag.com
+3- api.flatcoding.com
 
 server {
     listen 80;
-    server_name api.codedtag.com;
+    server_name api.flatcoding.com;
 
     location / {
         proxy_pass https://141.136.35.135:2000/api/;
@@ -66,9 +66,9 @@ server {
 // =>> Enable sites by linking
 // =========================================================
 
-sudo ln -s /etc/nginx/sites-available/codedtag.com /etc/nginx/sites-enabled/
-sudo ln -s /etc/nginx/sites-available/admin.codedtag.com /etc/nginx/sites-enabled/
-sudo ln -s /etc/nginx/sites-available/api.codedtag.com /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/flatcoding.com /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/admin.flatcoding.com /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/api.flatcoding.com /etc/nginx/sites-enabled/
 
 
 // =========================================================
@@ -81,9 +81,9 @@ sudo systemctl reload nginx
 // =>>Obtain the SSL Certificate
 // =========================================================
 
-sudo certbot --nginx -d codedtag.com -d www.codedtag.com
-sudo certbot --nginx -d admin.codedtag.com  
-sudo certbot --nginx -d api.codedtag.com  
+sudo certbot --nginx -d flatcoding.com -d www.flatcoding.com
+sudo certbot --nginx -d admin.flatcoding.com  
+sudo certbot --nginx -d api.flatcoding.com  
 
 sudo certbot renew --dry-run
 

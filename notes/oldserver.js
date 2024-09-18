@@ -175,11 +175,11 @@ app.get('*', (req, res) => {
 app.use(express.static(path.join(__dirname, 'view/build')));
 
 app.use('/admin', express.static(path.join(__dirname, 'public/admin')));
-app.use('/codedtag', express.static(path.join(__dirname, 'public/codedtag')));
+app.use('/flatcoding', express.static(path.join(__dirname, 'public/flatcoding')));
 app.use('/accounting', express.static(path.join(__dirname, 'public/accounting')));
 
-app.get('/codedtag/*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/codedtag', 'index.html'));
+app.get('/flatcoding/*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/flatcoding', 'index.html'));
 });
 
 app.get('/accounting/*', (req, res) => {
