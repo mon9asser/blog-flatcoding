@@ -159,7 +159,7 @@ export default function Post ({upcoming}) {
                                         /> 
                                     </div>
                                     
-                                    <h1 className="tutorial-headline mt-h">{Helper.decodeHtmlEntities(upcoming?.post.post_title)}</h1>
+                                    <h1 className="tutorial-headline">{Helper.decodeHtmlEntities(upcoming?.post.post_title)}</h1>
                                     <i className="modified-date">
                                     Last updated on <time dateTime={Helper.formated_published_date(upcoming?.post.updated_date).value}>{Helper.formated_published_date(upcoming?.post.updated_date).text}</time>
                                     </i>
