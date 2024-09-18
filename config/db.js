@@ -1,6 +1,6 @@
   
 module.exports = {
-    db_name:"flat_coding_blog_db",
+    db_name:"codedtag_datab",
     domain:"flatcoding.com",
     name:"flatcoding",
     index:1,
