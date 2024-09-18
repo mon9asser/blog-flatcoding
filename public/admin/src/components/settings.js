@@ -321,7 +321,7 @@ class Settings extends Component {
                                     <div className="field" style={{ marginTop: "25px" }}>
                                         <label className="label">Beside Post Title</label>
                                         <div className="control">
-                                            <input onChange={e => this.setState({ beside_post_title: e.target.value })} value={this.state.beside_post_title} className="input" type="text" placeholder="- CodedTag" />
+                                            <input onChange={e => this.setState({ beside_post_title: e.target.value })} value={this.state.beside_post_title} className="input" type="text" placeholder="- flatcoding" />
                                         </div>
                                     </div>
 
@@ -527,7 +527,7 @@ class Settings extends Component {
                     <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0">
                         <div className="flex items-center justify-start space-x-3">
                             <div>
-                                © 2021, CodedTag.com
+                                © 2021, flatcoding.com
                             </div>
 
                             <div>

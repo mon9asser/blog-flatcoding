@@ -828,9 +828,9 @@ class postsWrap extends Component {
         <footer className="footer">
           <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0">
             <div className="flex items-center justify-start space-x-3">
-              <div>© 2021, CodedTag.com</div>
+              <div>© 2021, flatcoding.com</div>
               <div>
-                <p>Developed By: <a href="https://codedtag.com/" target="_blank">Montasser Mossallem</a></p>
+                <p>Developed By: <a href="https://flatcoding.com/" target="_blank">Montasser Mossallem</a></p>
               </div>
             </div>
           </div>

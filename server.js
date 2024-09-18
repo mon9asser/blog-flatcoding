@@ -24,7 +24,7 @@ app.set('trust proxy', 1);
 
 
 const corsOptions = {
-    origin: [  'https://api.codedtag.com', 'https://admin.codedtag.com', 'https://media.codedtag.com', 'https://codedtag.com', 'http://localhost:3001' ], // Allow only this origin
+    origin: [  'https://api.flatcoding.com', 'https://admin.flatcoding.com', 'https://media.flatcoding.com', 'https://flatcoding.com', 'http://localhost:3001' ], // Allow only this origin
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true, // This is required for cookies to work with CORS
     optionsSuccessStatus: 200,
@@ -39,7 +39,7 @@ app.use(
   helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
-      connectSrc: ["'self'", 'https://api.codedtag.com', 'https://admin.codedtag.com', 'https://media.codedtag.com', 'https://codedtag.com'],
+      connectSrc: ["'self'", 'https://api.flatcoding.com', 'https://admin.flatcoding.com', 'https://media.flatcoding.com', 'https://flatcoding.com'],
       styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
       styleSrcElem: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
       fontSrc: ["'self'", 'https://fonts.gstatic.com'],

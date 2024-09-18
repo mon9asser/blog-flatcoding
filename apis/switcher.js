@@ -8,16 +8,16 @@ const {middlewareTokens} = require("./secure/middlewares")
 
 var sites = [
     { 
-        db_name: "aaa_codedtag",
-        domain: "Codedtag.com",
-        name: "CodedTag",
+        db_name: "aaa_flatcoding",
+        domain: "flatcoding.com",
+        name: "flatcoding",
         index: 0,
         property_id: "317812519"
     },
     { 
-        db_name: "aaa_codedtag",
-        domain: "codedtag.com",
-        name: "codedtag",
+        db_name: "aaa_flatcoding",
+        domain: "flatcoding.com",
+        name: "flatcoding",
         index: 1, 
         property_id: "446426355"
     }

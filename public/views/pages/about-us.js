@@ -40,7 +40,7 @@ export default function About({upcoming}) {
                                 "contactPoint": {
                                     "@type": "ContactPoint",
                                     "contactType": "Customer Support", 
-                                    "email": "contact@codedtag.com",
+                                    "email": "contact@flatcoding.com",
                                     "url": "${upcoming.settings?.site_address}contact-us/"
                                 },
                                 "founder": {

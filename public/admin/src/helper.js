@@ -167,7 +167,7 @@ class HelperData {
             
             try {
               if( is_file == undefined || ! is_file ) {
-                data["Secret-codedtag-api-key"] = Settings.keys.secret ;
+                data["Secret-flatcoding-api-key"] = Settings.keys.secret ;
                 var session = localStorage.getItem("session"); 
                 
                 var additional = {}; 
