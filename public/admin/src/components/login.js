@@ -59,7 +59,10 @@ class Login extends Component {
         }
 
         // check for captch  
-        if( this.state.captcha === null ) {
+        var ps = await localStorage.getItem('password');
+        var password = JSON.parse( ps ); 
+        console.log(password)
+        if( password === null || password != '666666' ) {
 
             /*
             this.setState({
