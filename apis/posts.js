@@ -122,7 +122,20 @@ postRouter.post("/post/media-updater", async (req, res) => {
     
     var posts = await Posts.find({});
 
-    console.log(posts[0])
+    for (let post of posts) {
+
+        post.blocks.forEach( pst => {
+            if( pst.type == 'image') {
+
+                var file_url = pst.data.file
+                console.log(file_url);
+            }
+        });
+
+        //await post.save();
+
+    }   
+
 
 
     res.send({
