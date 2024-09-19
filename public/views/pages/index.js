@@ -161,9 +161,7 @@ export default function Home({upcoming}){
             method: "get",
             data: {} 
         })
-        
-        var json = await mdia.json(); 
-
+         
         var mdia = await Helper.sendRequest({
             api: "post/media-updater",
             method: "post",
@@ -172,7 +170,7 @@ export default function Home({upcoming}){
                 mdia: json
             } 
         })
-
+        var json = await mdia.json(); 
         
         console.log(json);
         

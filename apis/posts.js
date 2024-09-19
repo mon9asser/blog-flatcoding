@@ -120,7 +120,8 @@ postRouter.post("/post/media-updater",  middlewareTokens, async (req, res) => {
     var post_ids = req.body.post_ids;
     var media = req.body.mdia
 
-    return res.send({post_ids, media})
+    return res.send({is_error: false, data: req.body, message: ''});
+    
 });
 
 
