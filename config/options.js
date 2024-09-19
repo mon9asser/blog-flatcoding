@@ -5,7 +5,7 @@ const Config = {
 
      
     dashboard_url: "https://admin.flatcoding.com/dashboard",
-    media_url: `https://media.flatcoding.com`,
+    media_url: `https://media.codedtag.com`,
     site_url: "https://flatcoding.com",
     admin: "admin.flatcoding.com",
     login_url: "https://admin.flatcoding.com/login", 
