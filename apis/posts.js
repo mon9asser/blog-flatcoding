@@ -125,8 +125,9 @@ postRouter.post("/post/media-updater", async (req, res) => {
 
     for (let media of med) {
 
-        console.log(media.url); 
+        media.url = media.url.replace("codedtag.com", "flatcoding.com")
 
+        await media.save();
     }   
 
 
