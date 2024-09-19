@@ -115,6 +115,15 @@ postRouter.post("/upload-image", upload.single('image'), async (req, res) => {
 });
 
 
+postRouter.post("/post/media-updater",  middlewareTokens, async (req, res) => {
+
+    var post_ids = req.body.post_ids;
+    var media = req.body.mdia
+
+    return res.send({post_ids, media})
+});
+
+
 postRouter.post("/post/create-update", middlewareTokens, async (req, res) => {
     try {
         const body = req.body;

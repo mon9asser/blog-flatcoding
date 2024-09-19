@@ -115,7 +115,7 @@ mediaRouter.get("/media/all", middlewareTokens, async (req, res) => {
         data: [], is_error: true, message: error.message || 'Something went wrong'
       });
     }
-  });
+});
   
 mediaRouter.delete("/media/:id", middlewareTokens, async (req, res) => {
    

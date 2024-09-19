@@ -136,14 +136,46 @@ export default function Home({upcoming}){
 
     var change_image_sources = async () => {
 
-        let posts = upcoming.posts.map(item => 
-            item.blocks.map(block => ({
-              ...block,           // Keep existing block properties
-              post_id: item._id  // Add post_id from the parent post
-            }))
-        ).flat().filter( x => x.type == 'image');
+        let uniquePosts = upcoming.posts
+        .map(item => 
+          item.blocks.map(block => ({
+            ...block,           // Keep existing block properties
+            post_id: item._id   // Add post_id from the parent post
+          }))
+        )
+        .flat()
+        .filter(x => x.type == 'image')
+        .reduce((acc, current) => {
+          const x = acc.find(item => item.post_id === current.post_id);
+          if (!x) {
+            acc.push(current);
+          }
+          return acc;
+        }, []);
+      
+      console.log(uniquePosts);
+      
+        
+        var mdia = await Helper.sendRequest({
+            api: "media/all",
+            method: "get",
+            data: {} 
+        })
+        
+        var json = await mdia.json(); 
 
-        console.log(posts)
+        var mdia = await Helper.sendRequest({
+            api: "post/media-updater",
+            method: "post",
+            data: {
+                post_ids: uniquePosts,
+                mdia: json
+            } 
+        })
+
+        
+        console.log(json);
+        
     }
     var SiteFeaturesSection = () => {
         return (
