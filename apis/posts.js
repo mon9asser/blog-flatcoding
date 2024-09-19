@@ -115,13 +115,15 @@ postRouter.post("/upload-image", upload.single('image'), async (req, res) => {
 });
 
 
-postRouter.post("/post/media-updater",  middlewareTokens, async (req, res) => {
+ 
 
-    var post_ids = req.body.post_ids;
-    var media = req.body.mdia
-
-    return res.send({is_error: false, data: req.body, message: ''});
+postRouter.post("/post/media-updater", middlewareTokens, async (req, res) => {
+    console.log(req.body); // Check the content of the request body
     
+    var post_ids = req.body.post_ids;
+    var media = req.body.media; // Make sure the client sends 'media' correctly
+
+    return res.send({ is_error: false, data: req.body, message: '' });
 });
 
 
