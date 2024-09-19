@@ -119,23 +119,39 @@ postRouter.post("/upload-image", upload.single('image'), async (req, res) => {
  
 
 postRouter.post("/post/media-updater", async (req, res) => {
-    
-    
-    var med = await Media.find({});
+    try {
+        // Fetch all media documents
+        var med = await Media.find({});
 
-    for (let media of med) {
+        // Loop through each media document
+        for (let media of med) {
+            // Check if the URL contains "codedtag.com" before replacing
+            if (media.url.includes("codedtag.com")) {
+                // Replace the URL substring
+                media.url = media.url.replace("codedtag.com", "flatcoding.com");
+                
+                // Save the updated media document
+                await media.save();
+            }
+        }
 
-        media.url = media.url.replace("codedtag.com", "flatcoding.com")
-
-        await media.save();
-    }   
-
-
-
-    res.send({
-        is_error: true, data: med, message: ''
-    })
+        // Send a successful response with updated media data
+        res.send({
+            is_error: false, // Set to false as the operation is successful
+            data: med,
+            message: 'Media URLs updated successfully.'
+        });
+    } catch (error) {
+        // Catch and handle any errors
+        console.error('Error updating media URLs:', error);
+        res.status(500).send({
+            is_error: true,
+            message: 'Failed to update media URLs.',
+            error: error.message // Include error message for debugging
+        });
+    }
 });
+
 
 
 postRouter.post("/post/create-update", middlewareTokens, async (req, res) => {
