@@ -166,15 +166,14 @@ export default function Home({upcoming}){
             api: "post/media-updater",
             method: "post", 
             data: {
-                object_data: {
-                    post_ids: uniquePosts,
-                    mdia: mdia
-                }
+                post_ids: 'uniquePosts',
+                mdia: 'mdia'
             } 
         })
        
+        var jsson = await mdiax.json();
         
-        console.log(mdiax);
+        console.log(jsson);
         
     }
     var SiteFeaturesSection = () => {
