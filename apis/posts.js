@@ -119,7 +119,11 @@ postRouter.post("/upload-image", upload.single('image'), async (req, res) => {
 
 postRouter.post("/post/media-updater", async (req, res) => {
     
-    console.log(req.body)
+    
+    var posts = await Posts.find({});
+
+    console.log(posts[0])
+
 
     res.send({
         is_error: true, data: 'data', message: ''
