@@ -136,48 +136,7 @@ export default function Home({upcoming}){
         );
     }
 
-    var change_image_sources = async () => {
-
-        let uniquePosts = upcoming.posts
-        .map(item => 
-          item.blocks.map(block => ({
-            ...block,           // Keep existing block properties
-            post_id: item._id   // Add post_id from the parent post
-          }))
-        )
-        .flat()
-        .filter(x => x.type == 'image')
-        .reduce((acc, current) => {
-          const x = acc.find(item => item.post_id === current.post_id);
-          if (!x) {
-            acc.push(current);
-          }
-          return acc;
-        }, []);
-      
-      console.log(uniquePosts);
-      
-        
-        var mdia = await Helper.sendRequest({
-            api: "media/all",
-            method: "get",
-            data: {} 
-        })
-         
-        const response = await axios.post('https://api.flatcoding.com/post/media-updater', {
-            post_ids: uniquePosts, // Replace 'uniquePosts' with the actual array or value
-            media: mdia            // Correct the key from 'mdia' to 'media' as per your backend
-        }, {
-            headers: {
-                'Content-Type': 'application/json' // Set the content type to JSON
-            }
-        }); 
     
-        // Check the response
-        console.log(await mdia.json());
-        
-        
-    }
     var SiteFeaturesSection = () => {
         return (
             <div className="row content-center">
@@ -185,9 +144,7 @@ export default function Home({upcoming}){
                     upcoming.settings.site_name == "" ?"": <h2 className="custom-headline section-head text-center mb-25 mt-25">Why {upcoming.settings.site_name} ?</h2>
                 } 
                 <div className='row items-center content-center'>
-                    <button onClick={change_image_sources}>
-                        Click here to update
-                    </button>
+                     
                     <div className='center-icons sm-6 md-3 lg-3 text-center p-all-15'>
                         <div className="flatcoding-icon">
                             <span className='flexbox items-center content-center'>
