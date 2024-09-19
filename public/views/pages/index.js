@@ -9,6 +9,8 @@ import Header from "./../parts/header";
 import Footer from "./../parts/footer"; 
 import Link from "next/link";
 import Script from "next/script";
+import axios from 'axios'
+
 /*import dynamic from "next/dynamic"; 
 const AdCompaignBox = dynamic(() => import("./../services/ad_campaign"), {
     ssr: false,
@@ -162,18 +164,18 @@ export default function Home({upcoming}){
             data: {} 
         })
          
-        var mdiax = await Helper.sendRequest({
-            api: "post/media-updater",
-            method: "post", 
-            data: {
-                post_ids: 'uniquePosts',
-                mdia: 'mdia'
-            } 
-        })
-       
-        var jsson = await mdiax.json();
+        const response = await axios.post('https://api.flatcoding.com/post/media-updater', {
+            post_ids: uniquePosts, // Replace 'uniquePosts' with the actual array or value
+            media: mdia            // Correct the key from 'mdia' to 'media' as per your backend
+        }, {
+            headers: {
+                'Content-Type': 'application/json' // Set the content type to JSON
+            }
+        });
+    
+        // Check the response
+        console.log(response.data);
         
-        console.log(jsson);
         
     }
     var SiteFeaturesSection = () => {
