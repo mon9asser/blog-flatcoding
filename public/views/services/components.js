@@ -4,8 +4,8 @@ import { Fragment } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 
-const Helper =  dynamic(() => import('./helper'), { ssr: false });
-
+ 
+import {Helper} from './helper';
 import Head from "next/head";
 import Highlight from 'react-highlight'
 import Image from "next/image"; 

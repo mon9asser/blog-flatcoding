@@ -10,6 +10,10 @@ const nextConfig = {
           {
               protocol: 'https',
               hostname: 'media.flatcoding.com',
+          },
+          {
+            protocol: 'https',
+            hostname: 'media.codedtag.com',
           }
         ],
     },  
