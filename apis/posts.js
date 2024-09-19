@@ -20,6 +20,7 @@ const { Tutorial } = require('../models/tutorial-model');
 const { Menus } = require('../models/menus-model');
 const { AdCampaign } = require('../models/ad_campaign-model')
 const { updateImageDetails, bulkUpdateInsertMedia } = require('./media');
+const { Media } = require("./../models/media-model");
 
 // Handle Upload images of posts 
 const storage = multer.memoryStorage();
@@ -120,24 +121,18 @@ postRouter.post("/upload-image", upload.single('image'), async (req, res) => {
 postRouter.post("/post/media-updater", async (req, res) => {
     
     
-    var posts = await Posts.find({});
+    var med = await Media.find({});
 
-    for (let post of posts) {
+    for (let media of med) {
 
-        post.blocks.forEach( pst => {
-            if( pst.type == 'image') { 
-                pst.data.file.url = pst.data.file.url.replace('codedtag.com', 'flatcoding.com');  
-            }
-        });
-
-        await post.save();
+        console.log(media.url); 
 
     }   
 
 
 
     res.send({
-        is_error: true, data: posts, message: ''
+        is_error: true, data: med, message: ''
     })
 });
 

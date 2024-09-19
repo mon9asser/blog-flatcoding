@@ -171,10 +171,10 @@ export default function Home({upcoming}){
             headers: {
                 'Content-Type': 'application/json' // Set the content type to JSON
             }
-        });
+        }); 
     
         // Check the response
-        console.log(response.data);
+        console.log(await mdia.json());
         
         
     }
