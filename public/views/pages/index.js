@@ -162,20 +162,19 @@ export default function Home({upcoming}){
             data: {} 
         })
          
-        var mdia = await Helper.sendRequest({
+        var mdiax = await Helper.sendRequest({
             api: "post/media-updater",
-            method: "post",
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
+            method: "post", 
             data: {
-                post_ids: uniquePosts,
-                mdia: json
+                object_data: {
+                    post_ids: uniquePosts,
+                    mdia: mdia
+                }
             } 
         })
-        var json = await mdia.json(); 
+       
         
-        console.log(json);
+        console.log(mdiax);
         
     }
     var SiteFeaturesSection = () => {
