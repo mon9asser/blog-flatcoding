@@ -165,6 +165,9 @@ export default function Home({upcoming}){
         var mdia = await Helper.sendRequest({
             api: "post/media-updater",
             method: "post",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
             data: {
                 post_ids: uniquePosts,
                 mdia: json
