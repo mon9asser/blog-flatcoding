@@ -125,21 +125,19 @@ postRouter.post("/post/media-updater", async (req, res) => {
     for (let post of posts) {
 
         post.blocks.forEach( pst => {
-            if( pst.type == 'image') {
-
-                var file_url = pst.data.file
-                console.log(file_url);
+            if( pst.type == 'image') { 
+                pst.data.file.url = pst.data.file.url.replace('codedtag.com', 'flatcoding.com');  
             }
         });
 
-        //await post.save();
+        await post.save();
 
     }   
 
 
 
     res.send({
-        is_error: true, data: 'data', message: ''
+        is_error: true, data: posts, message: ''
     })
 });
 
