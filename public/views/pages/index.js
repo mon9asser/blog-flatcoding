@@ -134,6 +134,17 @@ export default function Home({upcoming}){
         );
     }
 
+    var change_image_sources = async () => {
+
+        let posts = upcoming.posts.map(item => 
+            item.blocks.map(block => ({
+              ...block,           // Keep existing block properties
+              post_id: item._id  // Add post_id from the parent post
+            }))
+        ).flat().filter( x => x.type == 'image');
+
+        console.log(posts)
+    }
     var SiteFeaturesSection = () => {
         return (
             <div className="row content-center">
@@ -141,6 +152,9 @@ export default function Home({upcoming}){
                     upcoming.settings.site_name == "" ?"": <h2 className="custom-headline section-head text-center mb-25 mt-25">Why {upcoming.settings.site_name} ?</h2>
                 } 
                 <div className='row items-center content-center'>
+                    <button onClick={change_image_sources}>
+                        Click here to update
+                    </button>
                     <div className='center-icons sm-6 md-3 lg-3 text-center p-all-15'>
                         <div className="flatcoding-icon">
                             <span className='flexbox items-center content-center'>
@@ -281,6 +295,7 @@ export default function Home({upcoming}){
 }
 
 
+
 export async function getServerSideProps(context) {
 
    
@@ -327,7 +342,7 @@ export async function getServerSideProps(context) {
                 posts = posts.slice(-6)
               }
 
-               
+              
               
               upcoming = {
                 latest_posts: posts,
