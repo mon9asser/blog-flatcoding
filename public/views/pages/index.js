@@ -29,6 +29,8 @@ export default function Home({upcoming}){
         return <ServerOffline/>
     }
     
+      
+
     var jsonLdContent = `
             {
                 "@context": "https://schema.org",
@@ -334,6 +336,7 @@ export async function getServerSideProps(context) {
 
               
               
+
               upcoming = {
                 latest_posts: posts,
                 tutorials: json.data.tutorials,
