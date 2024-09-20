@@ -2,7 +2,8 @@ const Settings = {
 
     server: {
         //api: "https://api.flatcoding.com"
-        api: "https://api.flatcoding.com"
+         api: "https://api.flatcoding.com"
+       // api: "http://localhost:3000/api"
     },
 
     google: {

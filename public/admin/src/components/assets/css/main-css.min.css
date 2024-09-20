@@ -850,3 +850,55 @@ body {
 .open_this_modal {
     background-color: rgba(0, 0, 0, 0.6);
 }
+
+.faq-list-admin {
+  display: block;
+}
+
+.faq-list-admin li {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.faq-list-admin li input,
+.faq-list-admin li textarea {
+    border: 1px solid #ddd;
+    display: block;
+    padding: 10px;
+    width: 100%;
+} 
+.faq-list-admin li div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.faq-list-admin li div span {
+    background-color: #222;
+    display: flex;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #fff;
+}
+
+.nfaqno {
+    padding: 10px;
+    display: block;
+    font-size: 12px;
+    font-weight: normal;
+    width: 100%;
+    text-align: center;
+}
+
+.numnbfaqs {
+    font-size: 12px;
+    font-weight: normal;
+    text-decoration: none;
+    text-transform: none;
+    margin-left: 10px;
+}

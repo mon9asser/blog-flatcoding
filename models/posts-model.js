@@ -37,6 +37,10 @@ let postsSchema = new Schema({
         type: Array,  
         default: []
     },
+    faqs_section: {
+        type: Array,  
+        default: []
+    },
     meta_title: {
         type: String, 
         trim: true,

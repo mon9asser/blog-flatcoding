@@ -157,8 +157,7 @@ class HelperData {
             
             headers["authorization"] = token;
             headers["x-api-key"] = 'qwe#r$s%s&d*r!w*e((f))d-f`werh14445`4rt5`4ert5`4rt31645k132v132';
-             
-            headers['Access-Control-Allow-Origin'] = '*';
+              
             if( is_create === undefined ) {
               is_create = false; 
             }

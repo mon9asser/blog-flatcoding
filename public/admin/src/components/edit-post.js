@@ -186,6 +186,7 @@ class wrappedEditPost extends Component {
                 slug: ""
             },
             allow_search_engine: true, 
+            faqs_section: [],
             enable_ads: true, 
 
             canonical_url: "",
@@ -664,6 +665,7 @@ class wrappedEditPost extends Component {
             article_thumbnail_url: post.article_thumbnail_url,
             tutorial: post?.tutorial || {},
             allow_search_engine: post.allow_search_engine,
+            faqs_section: post.faqs_section,
             enable_ads: post.enable_ads, 
             canonical_url: post.canonical_url,
             is_published: post.is_published
@@ -734,6 +736,7 @@ class wrappedEditPost extends Component {
             article_thumbnail_url: this.state.article_thumbnail_url,
             tutorial: this.state.tutorial,
             allow_search_engine: this.state.allow_search_engine,
+            faqs_section: this.state.faqs_section,
             enable_ads: this.state.enable_ads,
             canonical_url: this.state.canonical_url,
             is_published: this.state.is_published 
@@ -864,6 +867,41 @@ class wrappedEditPost extends Component {
         });
    }
 
+   removeQuestion = (key) => {
+
+        var faqs = [...this.state.faqs_section].filter( (x, index) => key != index);
+
+        this.setState({
+            faqs_section: faqs
+        });
+
+    }
+
+    // ke, e.target.value, 'question'
+    add_value_to_array = (key, val, type) => {
+
+        var faqs = [...this.state.faqs_section];
+        var fQuestion = {...faqs[key]};
+        fQuestion[type] = val;
+        faqs[key] = fQuestion;
+ 
+        this.setState({
+            faqs_section: faqs
+        })
+
+    }
+
+    add_new_faq = () => {
+        var faqs = [...this.state.faqs_section];
+        faqs.push({
+            question: '', 
+            answer: ''
+        })
+        this.setState({
+            faqs_section: faqs
+        })
+    }
+
     render() {
 
         console.log("editor page is loaded ...")
@@ -905,6 +943,43 @@ class wrappedEditPost extends Component {
                                 tools={Tools} 
                                 data={this.state.initialState}  
                             />
+
+<div className="ce-block__content">
+                                <div style={{border: "1px solid #ddd", marginTop: "10px", backgroundColor: '#f9f9f9'}}>
+                                    <b style={{padding: "20px", display: "flex", borderBottom: "1px solid #dfdfdf", background: "#fff", alignItems: 'center'}}>
+                                        <span>FAQs Section</span>
+                                        <i className="numnbfaqs">{this.state.faqs_section.length} Questions</i>
+                                        <button onClick={this.add_new_faq} style={{marginLeft: 'auto'}} className="button blue">+</button>    
+                                    </b>
+
+                                    {
+                                         this.state.faqs_section.length ?
+                                         <ul className="faq-list-admin">
+
+                                            {
+                                                this.state.faqs_section.map( (x, ke) => {
+                                                    return (
+                                                        <li key={ke}>
+                                                            <div>
+                                                                <span>
+                                                                    #{ke + 1}:
+                                                                </span> 
+                                                                <input onChange={e => this.add_value_to_array(ke, e.target.value, 'question')} value={x.question} placeholder="Write question here" type="text" />
+                                                                <button onClick={e => this.removeQuestion(ke)} className="button red"><i className="mdi mdi-trash-can"></i></button>
+                                                            </div>
+                                                            <textarea onChange={e => this.add_value_to_array(ke, e.target.value, 'answer')} placeholder="Write answer here" value={x.answer}></textarea>
+                                                        </li>
+                                                    )
+                                                }) 
+                                            } 
+
+                                        </ul>: <b className="nfaqno">No questions found! click on add new</b>
+
+                                    }
+                                    
+                                </div>
+
+                            </div>
 
                             <div className="ce-block__content">
                                
