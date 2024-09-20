@@ -43,6 +43,29 @@ export default function Post ({upcoming}) {
     }
 
    
+    var faqs = upcoming.post.faqs_section;
+    var faqs_schema = '';
+    // Check if FAQs exist and append them as "mainEntity" of the Article
+    if (faqs && faqs.length) {
+        var faqEntities = faqs.map((faq) => ({
+            "@type": "Question",
+            "name": faq.question,
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": faq.answer
+            }
+        }));
+    
+        // Adding FAQs as part of the main JSON-LD object
+        faqs_schema += `
+            "mainEntity": { 
+                "@type": "FAQPage",
+                "mainEntity": ${JSON.stringify(faqEntities)}
+            }
+        `;
+    }
+
+     
 
     var json_data_var = `
                         {
@@ -60,8 +83,8 @@ export default function Post ({upcoming}) {
                                 "@type": "Organization",
                                 "name": "${upcoming?.settings?.site_name}",  
                                 "logo": {
-                                "@type": "ImageObject",
-                                "url": "${upcoming?.settings?.site_logo}"  
+                                    "@type": "ImageObject",
+                                    "url": "${upcoming?.settings?.site_logo}"  
                                 }
                             },
                             "mainEntityOfPage": {
@@ -102,8 +125,15 @@ export default function Post ({upcoming}) {
                                     }
                                 ]
                             }
-                            }
+                            
+                            ${faqs_schema && faqs_schema != '' ? ',' + faqs_schema : ''}
+                        }
                 `;
+
+    
+    
+     
+
 
     var content_header = upcoming?upcoming.settings.header: ''
     var content_footer = upcoming?upcoming.settings.footer: ''
