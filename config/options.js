@@ -2,8 +2,7 @@
 const { db_name } = require("./db")
  
 const Config = { 
-
-     
+    
     dashboard_url: "https://admin.flatcoding.com/dashboard",
     media_url: `https://media.flatcoding.com`,
     site_url: "https://flatcoding.com",

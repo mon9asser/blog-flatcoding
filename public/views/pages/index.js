@@ -347,7 +347,7 @@ export async function getServerSideProps(context) {
                 company_links,
                 follow_links,
                 nav_links,
-                site_url,
+                site_url: site_url || null,
                 menus: json.data.menus,              
                 ads: json.data.ads
               };

@@ -1,4 +1,3 @@
-/*
 const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
@@ -16,25 +15,22 @@ require("./apis/anlytics");
 
 const app = express();
 app.set('trust proxy', 1);
- 
+/*const corsOptions = {
+    origin: "*",
+    credentials: true,
+    optionsSuccessStatus: 200,
+};*/
+
 
 
 const corsOptions = {
-    origin: [
-        'https://api.flatcoding.com',
-        'https://admin.flatcoding.com',
-        'https://media.flatcoding.com',
-        'https://flatcoding.com',
-        'http://localhost:3001',
-        'http://localhost:3000',
-        'http://localhost:3002'
-    ], // Specify allowed origins
+    origin: [  'https://api.flatcoding.com', 'https://admin.flatcoding.com', 'https://media.flatcoding.com', 'https://flatcoding.com', 'http://localhost:3001' ], // Allow only this origin
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true, // Allow cookies to be sent
-    allowedHeaders: ['Content-Type', 'Authorization'], // Specify allowed headers
-    exposedHeaders: ['Content-Length', 'X-Foo', 'X-Bar'], // Expose headers to client
+    credentials: true, // This is required for cookies to work with CORS
     optionsSuccessStatus: 200,
 };
+app.use(cors(corsOptions));
+
 app.use(express.json());
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(helmet());
@@ -43,7 +39,7 @@ app.use(
   helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
-      connectSrc: ["'self'", 'https://api.flatcoding.com', 'https://admin.flatcoding.com', 'https://media.flatcoding.com', 'https://flatcoding.com', 'http://localhost:3000'],
+      connectSrc: ["'self'", 'https://api.flatcoding.com', 'https://admin.flatcoding.com', 'https://media.flatcoding.com', 'https://flatcoding.com'],
       styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
       styleSrcElem: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
       fontSrc: ["'self'", 'https://fonts.gstatic.com'],
@@ -55,7 +51,7 @@ app.use(
     },
   })
 );
- 
+   
   
 // Rate limiting configuration
 /*
@@ -66,49 +62,6 @@ const apiLimiter = rateLimit({
 });
 app.use(apiLimiter);
 */
-
-
-
-const express = require("express");
-const bodyParser = require("body-parser");
-const path = require("path");
-const cors = require("cors");
-const helmet = require("helmet");
-const fs = require("fs");
-const https = require("https");
-
-const { Config } = require("./config/options");
-const axios = require("axios");
-
-const app = express();
-app.set('trust proxy', 1);
-
-const corsOptions = {
-    origin: [
-        'https://api.flatcoding.com',
-        'https://admin.flatcoding.com',
-        'https://media.flatcoding.com',
-        'https://flatcoding.com',
-        'http://localhost:3001',
-        'http://localhost:3000',
-        'http://localhost:3002'
-    ], 
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    credentials: true, 
-    allowedHeaders: ['Content-Type', 'Authorization'], 
-    exposedHeaders: ['Content-Length', 'X-Foo', 'X-Bar'], 
-    optionsSuccessStatus: 204, // Change this to 204
-};
-
-app.use(express.json());
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
-app.use(helmet());
-app.use(cors(corsOptions)); // Ensure cors is applied before your routes
-
-// Explicitly handle OPTIONS requests
-app.options('*', cors(corsOptions)); 
-
-
 // Importing routers
 const { tokenRouter } = require("./apis/secure/token");
 const { mediaRouter } = require("./apis/media");
@@ -188,9 +141,8 @@ app.get(Config.server.api + '/proxy', async (req, res) => {
 });
 
  
-
-// Start the server and listen on the specified port
 /*
+// Start the server and listen on the specified port
 app.listen(Config.server.port, () => {
     console.log(`Server is running on port ${Config.server.port}`);
 });
@@ -206,4 +158,4 @@ const sslOptions = {
 // Create HTTPS server
 https.createServer(sslOptions, app).listen(Config.server.port, () => {
     console.log(`The server is running on port ${Config.server.port}`);
-});
+}); 
