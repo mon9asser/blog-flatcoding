@@ -24,13 +24,21 @@ app.set('trust proxy', 1);
 
 
 const corsOptions = {
-    origin: [  'https://api.flatcoding.com', 'https://admin.flatcoding.com', 'https://media.flatcoding.com', 'https://flatcoding.com', 'http://localhost:3001', 'http://localhost3000', 'http://localhost3002' ], // Allow only this origin
+    origin: [
+        'https://api.flatcoding.com',
+        'https://admin.flatcoding.com',
+        'https://media.flatcoding.com',
+        'https://flatcoding.com',
+        'http://localhost:3001',
+        'http://localhost:3000',
+        'http://localhost:3002'
+    ], // Specify allowed origins
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true, // This is required for cookies to work with CORS
+    credentials: true, // Allow cookies to be sent
+    allowedHeaders: ['Content-Type', 'Authorization'], // Specify allowed headers
+    exposedHeaders: ['Content-Length', 'X-Foo', 'X-Bar'], // Expose headers to client
     optionsSuccessStatus: 200,
 };
-app.use(cors(corsOptions));
-
 app.use(express.json());
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(helmet());
@@ -39,7 +47,7 @@ app.use(
   helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
-      connectSrc: ["'self'", 'https://api.flatcoding.com', 'https://admin.flatcoding.com', 'https://media.flatcoding.com', 'https://flatcoding.com'],
+      connectSrc: ["'self'", 'https://api.flatcoding.com', 'https://admin.flatcoding.com', 'https://media.flatcoding.com', 'https://flatcoding.com', 'http://localhost:3000'],
       styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
       styleSrcElem: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
       fontSrc: ["'self'", 'https://fonts.gstatic.com'],
