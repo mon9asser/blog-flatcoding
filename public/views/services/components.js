@@ -1491,7 +1491,7 @@ const FaqsSection = ({ faqs_section }) => {
     <div className="faqs-section">
       <h3>Frequently Asked Questions (FAQs)</h3>
       <ul>
-        {faqs_section.map((x) => {
+        {faqs_section.map((x, ky) => {
           // Step 1: Replace {`*class="language"* code`} with Highlight component
           const answerParts = x.answer.split(/\{\`\*class="([^"]+)"\*\s([^`]*)\`\}/g);
           let processedAnswer = answerParts.map((part, index) => {
@@ -1526,7 +1526,7 @@ const FaqsSection = ({ faqs_section }) => {
           });
 
           return (
-            <li key={x.question}>
+            <li key={ky}>
               <h4 onClick={toggleExpansion} className="faq-question">{x.question}</h4>
               <div
                 className="faq-answer"
