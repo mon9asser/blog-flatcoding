@@ -1170,3 +1170,59 @@ ul li a.expanded-a::after{
  .mb-h {
     margin-bottom: 15px;
  }
+
+ .faqs-section {
+    display: block;
+    overflow: hidden;
+    width: 100%;
+    margin-top: 30px; 
+ }
+
+ .faqs-section h3 {
+    color: #0a0a23;
+    font-weight: 600;
+    font-size: 1.2625rem; /* 25px / 16px = 1.5625rem */
+    margin-bottom: 15px;
+}
+
+
+ .faqs-section ul {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+
+    border: 1px solid rgb(221, 221, 221);
+    margin-top: 10px;
+    background-color: rgb(249, 249, 249);
+ }
+
+ .faqs-section ul li {
+    border-bottom: 1px solid #dfdfdf;
+ }
+ .faqs-section ul li h4 {
+    color: #0a0a23;
+    line-height: 1.6;
+    padding: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    background-color: #fff;
+    border-bottom: 1px solid #dfdfdf;
+ }
+
+ .faqs-section ul li div {
+    padding: 13px 10px;
+    font-size: 14px;
+    color: #0a0a23;
+    line-height: 1.6;
+ }
+
+ .faqs-section ul li div .inline-code{
+    color: #dd3535;
+    background: #dd353526;
+    padding: 2px 5px;
+    margin: 0px 2px;
+    border-radius: 3px;
+ }
+ .faqs-section ul li div > * {
+    margin-bottom: 10px;
+ } 
