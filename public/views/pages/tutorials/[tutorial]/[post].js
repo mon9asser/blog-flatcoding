@@ -50,6 +50,8 @@ export default function Post ({upcoming}) {
     if (faqs && faqs.length) {
         var faqEntities = faqs.map((faq) => {
             var answer = faq.answer.includes('|') ? faq.answer.replace(/\|/g, '') : faq.answer;
+            answer = answer.replace(/\{\`\*class=['"][^'"]+['"]\*\s([^`]*)\`\}/g, "`$1`");
+
             return {
                 "@type": "Question",
                 "name": faq.question,

@@ -1478,64 +1478,69 @@ const TableOfContent = ({ data }) => {
 };
 
 const FaqsSection = ({ faqs_section }) => {
-
-  const [isExpanded, setIsExpanded] = useState(false);
+  // Initialize all answers as collapsed (false)
+  const [isExpanded, setIsExpanded] = useState(faqs_section.map(() => false));
 
   // Function to toggle the expanded state
-  const toggleExpansion = () => {
-    setIsExpanded(!isExpanded);
+  const toggleExpansion = (currentIndex) => {
+    setIsExpanded((prevState) =>
+      prevState.map((item, index) => (index === currentIndex ? !item : false))
+    );
   };
-  
 
   return (
     <div className="faqs-section">
       <h3>Frequently Asked Questions (FAQs)</h3>
       <ul>
-        {faqs_section.map((x) => {
-          // Step 1: Replace {`*class="language"* code`} with Highlight component
-          const answerParts = x.answer.split(/\{\`\*class="([^"]+)"\*\s([^`]*)\`\}/g);
-          let processedAnswer = answerParts.map((part, index) => {
-            if (index % 3 === 0) {
-              // Step 2: Process normal text, split by | and wrap in <p>
+        {faqs_section.map((faq, index) => {
+          // Process the answer for highlighting and inline code rendering
+          const answerParts = faq.answer.split(/\{\`\*class=['"]([^'"]+)['"]\*\s([^`]*)\`\}/g);
+           
+          let processedAnswer = answerParts.map((part, idx) => {
+            if (idx % 3 === 0) {
               return part.split('|').map((segment, i) => {
-                // Step 3: Handle inline code `text` inside each <p>
                 const inlineProcessed = segment.split(/`([^`]*)`/g).map((inlinePart, j) => {
-                  if (j % 2 === 0) {
-                    // Regular text
-                    return <span key={`${index}-${i}-${j}`}>{inlinePart}</span>;
-                  } else {
-                    // Inline code text
-                    return <code key={`${index}-${i}-${j}`} className="inline-code">{inlinePart}</code>;
-                  }
+                  return j % 2 === 0 ? (
+                    <span key={`${idx}-${i}-${j}`}>{inlinePart}</span>
+                  ) : (
+                    <code key={`${idx}-${i}-${j}`} className="inline-code">{inlinePart}</code>
+                  );
                 });
-                return <p key={`${index}-${i}`}>{inlineProcessed}</p>;
+                return <p key={`${idx}-${i}`}>{inlineProcessed}</p>;
               });
-            } else if (index % 3 === 1) {
-              // Code block: This is the class name captured by the regex
+            } else if (idx % 3 === 1) {
               const className = part;
-              const codeValue = answerParts[index + 1]; // This is the code value
+              const codeValue = answerParts[idx + 1];
               return (
-                <Highlight key={index} className={className}>
+                <Highlight key={idx} className={className}>
                   {codeValue}
                 </Highlight>
               );
             } else {
-              // Skip the next part as it has already been processed
               return null;
             }
           });
 
           return (
-            <li key={x.question}>
-              <h4 onClick={toggleExpansion} className="faq-question">{x.question}</h4>
+            <li key={index}>
+              <h4 style={{ borderBottomWidth: isExpanded[index] ? '1px' : '0' }} onClick={() => toggleExpansion(index)} className="faq-question">
+                <span>
+                {faq.question}
+                </span>
+                <span className={`faq-arrow ` + (isExpanded[index] ? 'expanded': '')}></span>
+              </h4>
               <div
                 className="faq-answer"
                 style={{
-                  maxHeight: isExpanded ? '500px' : '0', // Adjust maxHeight based on content size
-                  opacity: isExpanded ? 1 : 0,
-                  transition: 'max-height 0.3s ease, opacity 0.3s ease'
-                }}        
-              >{processedAnswer}</div>
+                  maxHeight: isExpanded[index] ? '500px' : '0',
+                  opacity: isExpanded[index] ? 1 : 0,
+                  overflow: 'hidden',
+                  transition: 'max-height 0.1s ease, opacity 0.3s ease',
+                  padding: isExpanded[index] ? '20px' : '0',
+                }}
+              >
+                {processedAnswer}
+              </div>
             </li>
           );
         })}
@@ -1543,6 +1548,7 @@ const FaqsSection = ({ faqs_section }) => {
     </div>
   );
 };
+
 
 var ArticleContent = ({blocks}) => {
       

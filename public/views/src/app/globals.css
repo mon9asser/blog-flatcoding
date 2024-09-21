@@ -1202,7 +1202,7 @@ ul li a.expanded-a::after{
  .faqs-section ul li h4 {
     color: #0a0a23;
     line-height: 1.6;
-    padding: 10px;
+    
     font-size: 15px;
     font-weight: 500;
     background-color: #fff;
@@ -1226,3 +1226,39 @@ ul li a.expanded-a::after{
  .faqs-section ul li div > * {
     margin-bottom: 10px;
  } 
+
+ .faq-question {
+    cursor: pointer;
+    display: flex;
+ }
+ .faq-question span:first-child {
+    padding: 10px;
+ }
+ .faq-question span:last-child {
+    background-color: #fff;
+    border-left: 1px solid #dfdfdf;
+    min-width: 30px;
+    flex-grow: 0;
+    display: flex;
+    position: relative; /* Needed for the arrow position */
+    margin-left: auto; /* Pushes the arrow to the right */
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .faq-question span:last-child::after {
+    content: "";
+    border-right: 1px solid #222;
+    border-bottom: 1px solid #222;
+    width: 7px;
+    height: 7px;
+    transform: rotate(45deg);
+    transition: transform .2s ease-in-out;
+  }
+
+  .faq-question span.expanded:last-child::after {
+    transform: rotate(-135deg);
+  }
+ .faq-arrow {
+    background-color: red;
+ }
