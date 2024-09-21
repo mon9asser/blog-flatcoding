@@ -1492,12 +1492,14 @@ const FaqsSection = ({ faqs_section }) => {
     <div className="faqs-section">
       <h3>Frequently Asked Questions (FAQs)</h3>
       <ul>
+ 
         {faqs_section.map((faq, index) => {
           // Process the answer for highlighting and inline code rendering
           const answerParts = faq.answer.split(/\{\`\*class=['"]([^'"]+)['"]\*\s([^`]*)\`\}/g);
            
           let processedAnswer = answerParts.map((part, idx) => {
             if (idx % 3 === 0) {
+ 
               return part.split('|').map((segment, i) => {
                 const inlineProcessed = segment.split(/`([^`]*)`/g).map((inlinePart, j) => {
                   return j % 2 === 0 ? (
@@ -1521,7 +1523,7 @@ const FaqsSection = ({ faqs_section }) => {
             }
           });
 
-          return (
+          return ( 
             <li key={index}>
               <h4 style={{ borderBottomWidth: isExpanded[index] ? '1px' : '0' }} onClick={() => toggleExpansion(index)} className="faq-question">
                 <span>
@@ -1529,7 +1531,7 @@ const FaqsSection = ({ faqs_section }) => {
                 </span>
                 <span className={`faq-arrow ` + (isExpanded[index] ? 'expanded': '')}></span>
               </h4>
-              <div
+               <div
                 className="faq-answer"
                 style={{
                   maxHeight: isExpanded[index] ? '500px' : '0',
