@@ -18,7 +18,8 @@ import {
     NextPrevPagination,
     SocialShare,
     FeedBackBlock,
-    ServerOffline
+    ServerOffline,
+    FaqsSection
  } from "./../../../../../services/components";
  
 import { useRouter } from 'next/router';
@@ -42,6 +43,33 @@ export default function TabPost({upcoming}) {
         } else {
             image = image[0].data.file.url 
         }
+    }
+
+    var faqs = upcoming.post.faqs_section;
+    var faqs_schema = '';
+    // Check if FAQs exist and append them as "mainEntity" of the Article
+    if (faqs && faqs.length) {
+        var faqEntities = faqs.map((faq) => {
+            var answer = faq.answer.includes('|') ? faq.answer.replace(/\|/g, '') : faq.answer;
+            answer = answer.replace(/\{\`\*class=['"][^'"]+['"]\*\s([^`]*)\`\}/g, "`$1`");
+
+            return {
+                "@type": "Question",
+                "name": faq.question,
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": JSON.stringify(answer).slice(1, -1)  
+                }
+            };
+        });        
+    
+        // Adding FAQs as part of the main JSON-LD object
+        faqs_schema += `
+            "mainEntity": { 
+                "@type": "FAQPage",
+                "mainEntity": ${JSON.stringify(faqEntities)}
+            }
+        `;
     }
 
     const header_content = parse(upcoming.settings.header)
@@ -110,7 +138,10 @@ export default function TabPost({upcoming}) {
                                         }
                                     ]
                                 }
-                                }
+
+                                ${faqs_schema && faqs_schema != '' ? ',' + faqs_schema : ''}
+
+                            }
                     `;
 
     var TabPostComponents = () => {
@@ -156,6 +187,12 @@ export default function TabPost({upcoming}) {
                                 <ArticleContentSingle helper={{ads: upcoming.ads, settings: upcoming.settings}} blocks={upcoming.post.blocks}/>
                             </div>
 
+                            {
+                                upcoming.post.faqs_section && upcoming.post.faqs_section.length?
+                                (
+                                    <FaqsSection faqs_section={upcoming.post.faqs_section}/>
+                                ): ''
+                            }
                         </div> 
 
                         {

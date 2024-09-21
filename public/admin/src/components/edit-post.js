@@ -967,7 +967,7 @@ class wrappedEditPost extends Component {
                                                                 <input onChange={e => this.add_value_to_array(ke, e.target.value, 'question')} value={x.question} placeholder="Write question here" type="text" />
                                                                 <button onClick={e => this.removeQuestion(ke)} className="button red"><i className="mdi mdi-trash-can"></i></button>
                                                             </div>
-                                                            <textarea onChange={e => this.add_value_to_array(ke, e.target.value, 'answer')} placeholder="Write answer here" value={x.answer}></textarea>
+                                                            <textarea onChange={e => this.add_value_to_array(ke, e.target.value, 'answer')} placeholder="In answer you can use {`*class='php'* TEXT`} for code block or `TEXT` for inline coding and you can use | pipeline" value={x.answer}></textarea>
                                                         </li>
                                                     )
                                                 }) 

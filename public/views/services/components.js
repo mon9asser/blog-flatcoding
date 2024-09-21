@@ -1477,6 +1477,81 @@ const TableOfContent = ({ data }) => {
   );
 };
 
+const FaqsSection = ({ faqs_section }) => {
+  // Initialize all answers as collapsed (false)
+  const [isExpanded, setIsExpanded] = useState(faqs_section.map(() => false));
+
+  // Function to toggle the expanded state
+  const toggleExpansion = (currentIndex) => {
+    setIsExpanded((prevState) =>
+      prevState.map((item, index) => (index === currentIndex ? !item : false))
+    );
+  };
+
+  return (
+    <div className="faqs-section">
+      <h3>Frequently Asked Questions (FAQs)</h3>
+      <ul>
+ 
+        {faqs_section.map((faq, index) => {
+          // Process the answer for highlighting and inline code rendering
+          const answerParts = faq.answer.split(/\{\`\*class=['"]([^'"]+)['"]\*\s([^`]*)\`\}/g);
+           
+          let processedAnswer = answerParts.map((part, idx) => {
+            if (idx % 3 === 0) {
+ 
+              return part.split('|').map((segment, i) => {
+                const inlineProcessed = segment.split(/`([^`]*)`/g).map((inlinePart, j) => {
+                  return j % 2 === 0 ? (
+                    <span key={`${idx}-${i}-${j}`}>{inlinePart}</span>
+                  ) : (
+                    <code key={`${idx}-${i}-${j}`} className="inline-code">{inlinePart}</code>
+                  );
+                });
+                return <p key={`${idx}-${i}`}>{inlineProcessed}</p>;
+              });
+            } else if (idx % 3 === 1) {
+              const className = part;
+              const codeValue = answerParts[idx + 1];
+              return (
+                <Highlight key={idx} className={className}>
+                  {codeValue}
+                </Highlight>
+              );
+            } else {
+              return null;
+            }
+          });
+
+          return ( 
+            <li key={index}>
+              <h4 style={{ borderBottomWidth: isExpanded[index] ? '1px' : '0' }} onClick={() => toggleExpansion(index)} className="faq-question">
+                <span>
+                {faq.question}
+                </span>
+                <span className={`faq-arrow ` + (isExpanded[index] ? 'expanded': '')}></span>
+              </h4>
+               <div
+                className="faq-answer"
+                style={{
+                  maxHeight: isExpanded[index] ? '500px' : '0',
+                  opacity: isExpanded[index] ? 1 : 0,
+                  overflow: 'hidden',
+                  transition: 'max-height 0.1s ease, opacity 0.3s ease',
+                  padding: isExpanded[index] ? '20px' : '0',
+                }}
+              >
+                {processedAnswer}
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+};
+
+
 var ArticleContent = ({blocks}) => {
       
   var subheadings = blocks.filter(x => x.type == 'header' && x.id != 'header-level-1' ).map(x => ({
@@ -1604,5 +1679,6 @@ export {
   NextPrevPagination,
   ArticleContentSingle,
   ArticleContent,
-  GenerateTutorialContent_tab
+  GenerateTutorialContent_tab,
+  FaqsSection
 }

@@ -16,7 +16,8 @@ import {
     NextPrevPagination,
     SocialShare,
     FeedBackBlock,
-    ServerOffline
+    ServerOffline,
+    FaqsSection
 } from "./../../../services/components"
 import parse from 'html-react-parser' 
 import Head from "next/head"; 
@@ -43,6 +44,34 @@ export default function Post ({upcoming}) {
     }
 
    
+    var faqs = upcoming.post.faqs_section;
+    var faqs_schema = '';
+    // Check if FAQs exist and append them as "mainEntity" of the Article
+    if (faqs && faqs.length) {
+        var faqEntities = faqs.map((faq) => {
+            var answer = faq.answer.includes('|') ? faq.answer.replace(/\|/g, '') : faq.answer;
+            answer = answer.replace(/\{\`\*class=['"][^'"]+['"]\*\s([^`]*)\`\}/g, "`$1`");
+
+            return {
+                "@type": "Question",
+                "name": faq.question,
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": JSON.stringify(answer).slice(1, -1)  
+                }
+            };
+        });        
+    
+        // Adding FAQs as part of the main JSON-LD object
+        faqs_schema += `
+            "mainEntity": { 
+                "@type": "FAQPage",
+                "mainEntity": ${JSON.stringify(faqEntities)}
+            }
+        `;
+    }
+
+     
 
     var json_data_var = `
                         {
@@ -60,8 +89,8 @@ export default function Post ({upcoming}) {
                                 "@type": "Organization",
                                 "name": "${upcoming?.settings?.site_name}",  
                                 "logo": {
-                                "@type": "ImageObject",
-                                "url": "${upcoming?.settings?.site_logo}"  
+                                    "@type": "ImageObject",
+                                    "url": "${upcoming?.settings?.site_logo}"  
                                 }
                             },
                             "mainEntityOfPage": {
@@ -102,8 +131,15 @@ export default function Post ({upcoming}) {
                                     }
                                 ]
                             }
-                            }
+                            
+                            ${faqs_schema && faqs_schema != '' ? ',' + faqs_schema : ''}
+                        }
                 `;
+
+    
+    
+     
+
 
     var content_header = upcoming?upcoming.settings.header: ''
     var content_footer = upcoming?upcoming.settings.footer: ''
@@ -165,11 +201,20 @@ export default function Post ({upcoming}) {
                                     </i>
                                 </header> 
 
-                                 <AdCompaignBox settings={upcoming.settings} data={upcoming?.ads} position={'after_title'}/>
-
+                                <AdCompaignBox settings={upcoming.settings} data={upcoming?.ads} position={'after_title'}/>
+                                    
                                 <div className="lg-2-content tutorial-content content-section">
                                     <ArticleContentSingle helper={{ads: upcoming?.ads, settings: upcoming?.settings}} blocks={upcoming?.post.blocks}/>
                                 </div>
+
+
+                                {
+                                    upcoming.post.faqs_section && upcoming.post.faqs_section.length?
+                                    (
+                                        <FaqsSection faqs_section={upcoming.post.faqs_section}/>
+                                    ): ''
+                                }
+                                
 
                             </div> 
                             
@@ -261,6 +306,7 @@ export default function Post ({upcoming}) {
                 }}
             />
             <ArticleComponents/>
+            
             <Footer 
                 settings={upcoming?.settings}
                 menus={{
