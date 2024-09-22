@@ -138,11 +138,13 @@ class HelperData {
           'agent': user_browser
         }
       });  
+       
       return request.data;
     }
     
     async sendRequest ({api, method, data, headers, is_create, is_file } = null) {
- 
+
+       
             var generate_token = await this.generateToken(navigator.userAgent)
             
             if( generate_token.is_error ) {
@@ -150,7 +152,7 @@ class HelperData {
             }
 
             var token = generate_token.data;
-            
+ 
             if( headers === undefined ) {
                 headers = {};
             }
