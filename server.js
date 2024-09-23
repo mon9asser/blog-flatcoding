@@ -148,7 +148,7 @@ app.listen(Config.server.port, () => {
 });
  
 
-/*
+/*  
 // Load SSL certificate and key
 const sslOptions = {
     key: fs.readFileSync('/etc/letsencrypt/live/flatcoding.com/privkey.pem'),
