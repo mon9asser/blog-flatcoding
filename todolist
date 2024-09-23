@@ -25,7 +25,37 @@ webstories
 	amp_story_props
 	date_updated
 	date_published
+
+
+
+
+
+==========================================================================
+	
+	story_templates
+	===================================
+	id 
+	slide_type (adsense, slide)
+	template_name ( string to select template which already desined in react component )
+	
+
+	webstory
+	===================================
+	id 
+	screens 
+		screen_object		(adsense, slide)
+		story_template_id	
+		screen_data
+	
+	meta
+		description
+		title
+		image_cover
+	amp_story_props
+	date_updated
+	date_published 
 /* 
+
 
 ====================================
 Online server to do list
