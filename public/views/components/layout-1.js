@@ -21,7 +21,13 @@ var Layout_1 = ({data}) => {
     }
 
 
-    return <Slide_A paragraph={obj.paragraph} headline={obj.headline} overlay={{position: 'center', bg: '#000', color: '#fff'}}/>
+    return (
+        <Slide_A 
+            paragraph={obj.paragraph} 
+            headline={obj.headline} 
+            overlay={{position: 'center', bg: '#000', color: '#fff'}}
+        />
+    );
 }
 
 export default Layout_1;

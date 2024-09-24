@@ -21,7 +21,11 @@ var Slide_A = ({ headline, paragraph, media, overlay, link, text_mode }) => {
 
     var title = headline != undefined ? headline: 'He is nearing the end of his life';
     var text = paragraph != undefined ? paragraph: 'Be a strong';
-    var _media = media ? media: {url: 'https://images.unsplash.com/photo-1572271460567-b895e00877c7', type: 'image', poster: 'https://images.unsplash.com/photo-1608190824485-94687b2207c7'} 
+    var _media = media ? media: {
+        url: 'https://images.unsplash.com/photo-1572271460567-b895e00877c7', 
+        type: 'image', 
+        poster: 'https://images.unsplash.com/photo-1608190824485-94687b2207c7'
+    } 
 
     var webm_url = '';
     if( _media.url.indexOf('.mp4') != -1 ) {
@@ -50,9 +54,7 @@ var Slide_A = ({ headline, paragraph, media, overlay, link, text_mode }) => {
             marginTop: 'auto',
             marginBottom: 'auto'
         }
-    }
-
-
+    } 
 
     if( link && link.position == 'bottom' ) {
         link_position = {
@@ -103,16 +105,19 @@ var Slide_A = ({ headline, paragraph, media, overlay, link, text_mode }) => {
 
     var Link_Data = () => {
 
-        if( link ) {
-            
+        if( link ) { 
+
             var stylish = {};
             if( link.style && link.style.bg != undefined ) {
                 stylish.background = link.style.bg;
             }
+
             if( link.style && link.style.color != undefined ) {
                 stylish.color = link.style.color;
             }
+
             return <a style={{...stylish, textAlign:'center', ...link_position, padding: '0px 20px'}} href={link.url}>{link.text}</a>
+        
         }
 
         return null;
