@@ -1,35 +1,16 @@
 import { Helper } from "../../services/helper";
-/**
- * headline
- * paragraph
- * media = { url, type, poster }
- * overlay = {bg, color, position= bottom center top auto}
- * text_mode = {headline, paragraph} // vertical - horizontal
- * text_styles = {headline, paragraph}
- * link = {
-            position: 'bottom', // top - center - bottom - auto
-            text: '',
-            url: '',
-            style: {
-                bg: 'red',
-                color: '#fff', 
-                other_styles => css styles
-            }
-        }
- */
-
- 
-var Slide_A = ({ headline, paragraph, media, overlay, link, text_mode, text_styles }) => {
+  
+var Slide_B = ({ headline, paragraph, media, overlay, link, text_mode, text_styles }) => {
     
-    var title = headline != undefined ? headline: 'He is nearing the end of his life';
-    var text = paragraph != undefined ? paragraph: 'Be a strong';
+    var title = headline != undefined ? headline: 'Our Best Coding Platform';
+    var text = paragraph != undefined ? paragraph: 'Welcom to';
     var _media = media ? media: {
         url: '', 
         type: 'image', 
         poster: ''
     } 
 
-    var webm_url = '';
+    var webm_url = 'https://images.unsplash.com/photo-1721265250426-be34ca925fe4';
     if( _media.url.indexOf('.mp4') != -1 ) {
         webm_url = _media.url.replace(".mp4", '.webm');
     }
@@ -145,49 +126,43 @@ var Slide_A = ({ headline, paragraph, media, overlay, link, text_mode, text_styl
     var anId = Helper.generateRandomStrings()
     return (
         <amp-story-page id={anId}>
-            {
-                _media.url != "" ? (
-                    <amp-story-grid-layer template="fill">
-                        {
-                            _media.type == 'image'? (
-                                <amp-img 
-                                    src={_media.url}
-                                    width="720"
-                                    height="1280"
-                                    layout="responsive"
-                                    crossorigin="anonymous"
-                                    animate-in="zoom-out" // Apply zoom-out animation
-                                    animate-in-duration="1s" // Set the duration of the zoom-out effect
-                                    alt={title}>
-                                </amp-img>
-                            ):(
-                                <amp-video
-                                    width="720"
-                                    height="1280"
-                                    layout="responsive"
-                                    autoplay
-                                    loop
-                                    controls
-                                    poster={_media.poster}
-                                >
-                                    <source src={_media.url} type='video/mp4' />
-                                    <source src={webm_url} type="video/webm" />
-                                    <div fallback>
-                                        <p>This browser does not support the video element.</p>
-                                    </div>
-                                </amp-video>
-                            )
-                        }
-                    </amp-story-grid-layer>
-                ): ""
-            }
-            
-
+            <amp-story-grid-layer template="vertical">
+                {
+                    _media.type == 'image'? (
+                        <amp-img 
+                            src={_media.url}
+                            width="720"
+                            height="1280"
+                            layout="responsive"
+                            crossorigin="anonymous"
+                            animate-in="zoom-out" // Apply zoom-out animation
+                            animate-in-duration="1s" // Set the duration of the zoom-out effect
+                            alt={title}>
+                        </amp-img>
+                    ):(
+                        <amp-video
+                            width="720"
+                            height="1280"
+                            layout="responsive"
+                            autoplay
+                            loop
+                            controls
+                            poster={_media.poster}
+                        >
+                            <source src={_media.url} type='video/mp4' />
+                            <source src={webm_url} type="video/webm" />
+                            <div fallback>
+                                <p>This browser does not support the video element.</p>
+                            </div>
+                        </amp-video>
+                    )
+                }
+            </amp-story-grid-layer>
             <amp-story-grid-layer template="verticall">
                 
                 <div style={{...position, ...custom_styles, color: style.color, background: style.bg, padding: '15px', borderRadius: '5px'}}>
+                    <p style={{...styling, ...paragraph_text_mode}}>{text}</p>
                     <h1 style={{...styling.headline, ...headline_text_mode}}>{title}</h1>
-                    <p style={{...styling, ...paragraph_text_mode}}>{text}</p> 
                     <Link_Data/>
                 </div>
                 
@@ -198,4 +173,4 @@ var Slide_A = ({ headline, paragraph, media, overlay, link, text_mode, text_styl
 
 
 
-export default Slide_A;
+export default Slide_B;

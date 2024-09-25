@@ -26,7 +26,7 @@ import Slide_A from "./main/slide-a"
  */
 
 
-var Layout_1 = ({textData, link_data, overlay, media_cover, text_styles}) => { 
+var Layout_3 = ({textData, link_data, overlay, media_cover, text_styles}) => { 
     
     var obj = !textData ? {}: textData;
 
@@ -40,7 +40,7 @@ var Layout_1 = ({textData, link_data, overlay, media_cover, text_styles}) => {
     
     var overlay_objects = overlay ? overlay: {
         position: 'bottom', 
-        bg: '#000', 
+        bg: 'transparent', 
         color: '#fff'
     };
 
@@ -53,7 +53,9 @@ var Layout_1 = ({textData, link_data, overlay, media_cover, text_styles}) => {
 
     // custom css style
     overlay_objects.custom_styles = {
-        textAlign: 'left' 
+        textAlign: 'left', 
+        borderRight: '2px solid #fff',
+        borderLeft: '2px solid #fff'
     }
 
     var link = !link_data ? {}: link_data;
@@ -73,4 +75,4 @@ var Layout_1 = ({textData, link_data, overlay, media_cover, text_styles}) => {
     );
 }
 
-export default Layout_1;
+export default Layout_3;

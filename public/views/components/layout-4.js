@@ -26,21 +26,21 @@ import Slide_A from "./main/slide-a"
  */
 
 
-var Layout_1 = ({textData, link_data, overlay, media_cover, text_styles}) => { 
+var Layout_4 = ({textData, link_data, overlay, media_cover, text_styles}) => { 
     
     var obj = !textData ? {}: textData;
 
     if( obj.paragraph == undefined ) { 
-        obj.paragraph = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.";
+        obj.paragraph = "";
     }
 
     if( obj.headline == undefined ) { 
-        obj.headline = "He is nearing the end of his life";
+        obj.headline = "";
     }
     
     var overlay_objects = overlay ? overlay: {
         position: 'bottom', 
-        bg: '#000', 
+        bg: 'transparent', 
         color: '#fff'
     };
 
@@ -73,4 +73,4 @@ var Layout_1 = ({textData, link_data, overlay, media_cover, text_styles}) => {
     );
 }
 
-export default Layout_1;
+export default Layout_4;
