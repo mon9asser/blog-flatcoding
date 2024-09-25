@@ -77,7 +77,39 @@ var Slide_B = ({ data, styles, orders, urls }) => {
                         }
 
                         .full_page {
-                            background:teal;
+                            background:#222;
+                        }
+ 
+                        .button-1 {
+                            background-color: #EA4C89;
+                            border-radius: 8px;
+                            border-style: none;
+                            box-sizing: border-box;
+                            color: #FFFFFF;
+                            cursor: pointer;
+                            display: inline-block;
+                            font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+                            font-size: 14px;
+                            font-weight: 500;
+                            height: 40px;
+                            line-height: 20px;
+                            list-style: none;
+                            margin: 0;
+                            outline: none;
+                            padding: 10px 16px;
+                            position: relative;
+                            text-align: center;
+                            text-decoration: none;
+                            transition: color 100ms;
+                            vertical-align: baseline;
+                            user-select: none;
+                            -webkit-user-select: none;
+                            touch-action: manipulation;
+                        }
+
+                        .button-1:hover,
+                        .button-1:focus {
+                            background-color: #F082AC;
                         }
                     `}
                     
@@ -109,7 +141,7 @@ var Slide_B = ({ data, styles, orders, urls }) => {
                             In AMP Stories, if you want to achieve the object-fit: cover; effect for images, you should use the layout="fill" attribute on your.
                         </p>
                         
-                        <a href="#data" className="button-data">Visit Our Site</a>
+                        <a href="#data" className="button-1">Visit Our Site</a>
                             
                      </div>
                 </amp-story-grid-layer> 
