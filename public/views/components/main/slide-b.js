@@ -1,86 +1,122 @@
 import Head from "next/head";
 import { Helper } from "../../services/helper";
   
-var Slide_B = ({ data, styles, orders, urls }) => {
+var Slide_B = ({ data, urls, link, styles }) => {
     
-     
+    var anId = Helper.generateRandomStrings()
+    var subtitle = 'Welcome to';
+    var headline = "Our Coding Blog";
+    var intro_paragraph = "Here are the latest topics:"
+    var paragraph = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.";
+    var button = {};
+    var stylesh = ''; 
+    if( styles != undefined ) {
+        for (const [selector, styleObj] of Object.entries(styles)) {
+            let styleString = '';
+            for (const [key, value] of Object.entries(styleObj)) {
+                const cssKey = key.replace(/([A-Z])/g, '-$1').toLowerCase();
+                styleString += `${cssKey}: ${value}; `;
+            }
+            stylesh += `.${selector}-${anId} { ${styleString.trim()} } `;
+        }
+        stylesh = stylesh.trim();
+    }
+
+    if( link && link.url != undefined ) {
+        button = link;
+        if( button.text == undefined )
+            button.text = 'Read more'
+    }
+
     var url_sets = urls ? urls: [
         {
-            link: 'https://facebook.com',
-            url: 'https://images.unsplash.com/photo-1727162334294-170987f6b31b',
+            link: '#',
+            url: 'https://placehold.co/600x400',
             alt: ''
         },
         {
-            link: 'https://twitter.com',
-            url: 'https://images.unsplash.com/photo-1727162334294-170987f6b31b',
+            link: '#',
+            url: 'https://placehold.co/600x400',
             alt: ''
         },
         {
-            link: '#https://tumblr.com',
-            url: 'https://images.unsplash.com/photo-1727162334294-170987f6b31b',
+            link: '#',
+            url: 'https://placehold.co/600x400',
             alt: ''
         },
         {
-            link: 'https://news.com',
-            url: 'https://images.unsplash.com/photo-1727162334294-170987f6b31b',
+            link: '#',
+            url: 'https://placehold.co/600x400',
             alt: ''
         },
         {
-            link: 'https://setter.com',
-            url: 'https://images.unsplash.com/photo-1727162334294-170987f6b31b',
+            link: '#',
+            url: 'https://placehold.co/600x400',
             alt: ''
-        }, 
+        }
     ]; 
- 
-    var anId = Helper.generateRandomStrings()
+    
+    if(data && data.intro_paragraph != undefined ) {
+        intro_paragraph = data.intro_paragraph;
+    }
+
+    if(data && data.headline != undefined ) {
+        headline = data.headline;
+    }
+
+    if(data && data.paragraph != undefined ) {
+        paragraph = data.paragraph;
+    }
+
+    if(data && data.subtitle != undefined ) {
+        subtitle = data.subtitle;
+    }
+
+    
     return (
         <>
             <Head>
                 <style amp-custom>
                     {`
-                        .amp-data-container {
+                        .page_container-${anId} {
                             padding: 45px;
                         }
-                        .amp-data-container > * {
+                        .page_container-${anId} > * {
                             margin-bottom: 20px;
                         }
-                        .flex-container {
+                        .wrapper-${anId} {
+                            padding:0 !important;
+                            margin-left:0;
+                            margin-right:0;
                             flex-wrap: wrap;
-                            gap: 20px;
+                            gap: 13px;
                             display: flex;  
                             justify-content: space-between; 
                             align-items: center;                               
                         }
-                        .flex-container a {
+
+                        .wrapper-${anId} a {
                            flex: 1;
                            flex-basis: ${(url_sets && url_sets.length > 2) ? '25%': '45%'}; 
                         } 
  
-                        .headline {
-                            color: #fff !important;
+                        .headline-${anId} {
+                            color: #fff;
                             font-family: 'Anton', serif;
                             text-transform: uppercase;
                             font-size: 25px;
                         }
 
-                        .paragraph {
+                        .paragraph-${anId} {
                             font-weight: 100;  
                             color: #fff;
-                        }
-                      
-                        .button-data {
-                            display: block; 
-                            padding: 8px 15px;
-                            border-radius: 3px;
-                            color: #fff;
-                            background: blue;
-                        }
+                        } 
 
-                        .full_page {
+                        .page-${anId} {
                             background:#222;
                         }
  
-                        .button-1 {
+                        .button-${anId} {
                             background-color: #EA4C89;
                             border-radius: 8px;
                             border-style: none;
@@ -107,41 +143,58 @@ var Slide_B = ({ data, styles, orders, urls }) => {
                             touch-action: manipulation;
                         }
 
-                        .button-1:hover,
-                        .button-1:focus {
+                        .button-${anId}:hover,
+                        .button-${anId}:focus {
                             background-color: #F082AC;
                         }
+
+                        .img-${anId} {
+                            border-radius:3px;
+                        }
+                            
+                        ${stylesh}
                     `}
                     
                 </style>
             </Head>
-            <amp-story-page id={anId} className='full_page'>
+            <amp-story-page id={anId} className={`page-${anId}`}>
                 
                 <amp-story-grid-layer template="fill">
-                     <div className="amp-data-container">
+                     <div className={`page_container-${anId}`}>
 
                         <div>
-                            <p className="paragraph">Welcome to</p>
-                            <h1 className="headline">Our programming blog</h1>
+                            <p className={`paragraph-${anId}`}>{subtitle}</p>
+                            <h1 className={`headline-${anId}`}>{headline}</h1>
                         </div>
 
-                        <p className="paragraph">
-                            Here are latest topics:
+                        <p className={`paragraph-${anId}`}>
+                            {intro_paragraph}
                         </p>
                             
                         {
                             url_sets.length? (
-                                <div className="flex-container">
-                                    {url_sets.map( (x, _k) => <a key={_k}  href={x.link}><amp-img className='flex-image' src={x.url} width="180" height="180" layout="responsive" alt={x.alt}></amp-img></a>)}
+                                <div className={`wrapper-${anId}`}>
+                                    {url_sets.map( (x, _k) => {
+
+                                        return (
+                                            x.link != '' ? <a key={_k}  href={x.link}><amp-img className={`img-${anId}`} src={x.url} width="180" height="180" layout="responsive" alt={x.alt}></amp-img></a>: 
+                                            <amp-img className={`img-${anId}`} src={x.url} width="180" height="180" layout="responsive" alt={x.alt}></amp-img>
+                                        )
+                                    })}
                                 </div>
                             ): ''
                         }
 
-                        <p className="paragraph">
-                            In AMP Stories, if you want to achieve the object-fit: cover; effect for images, you should use the layout="fill" attribute on your.
+                        <p className={`paragraph-${anId}`}>
+                            {paragraph}
                         </p>
                         
-                        <a href="#data" className="button-1">Visit Our Site</a>
+                        {
+                            button.url != undefined?
+                                <a href={button.url} className={`button-${anId}`}>{button.text}</a>
+                            : ''
+                        }
+                        
                             
                      </div>
                 </amp-story-grid-layer> 

@@ -1,4 +1,4 @@
-import Slide_B from "./main/slide-b"
+import Slide_D from "./main/slide-d"
 
 /*
     data = {headline, subtitle, paragraph, intro_paragraph}
@@ -15,7 +15,7 @@ import Slide_B from "./main/slide-b"
     }
 */
 
-var Layout_5 = ({data, button, urls, styles}) => {
+var Layout_6 = ({data, button, urls, styles}) => {
 
     var obj = !data ? {}: data;
 
@@ -38,8 +38,8 @@ var Layout_5 = ({data, button, urls, styles}) => {
     var link = !button ? {}: button;
     
     
-    return <Slide_B link={link} data={obj} urls={urls} styles={styles}/>
+    return <Slide_D link={link} data={obj} urls={urls} styles={styles}/>
 }
 
 
-export default Layout_5;
+export default Layout_6;

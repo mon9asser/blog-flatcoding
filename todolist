@@ -1,59 +1,19 @@
-webstories
-================
-	id 
-	screens []
-		screen_type		( adsense, slide )
-		slide_template	(1,2,3,4,5,6,7)
-		slide_object ( case it is adsense in screen_type )
-		slide_data	[] => {}
-			grid_layer_props []
-			elements []
-				headline {}
-					text
-					styles
-				paragraph {}
-					text
-					styles
-				media {}
-					url
-					props {}
-					type(video, image) 
-	meta
-		description
-		title
-		image_cover
-	amp_story_props
-	date_updated
-	date_published
 
-
-
-
-
-==========================================================================
-	
-	story_templates
-	===================================
-	id 
-	slide_type (adsense, slide)
-	template_name ( string to select template which already desined in react component )
-	
-
-	webstory
-	===================================
-	id 
-	screens 
-		screen_object		(adsense, slide)
-		story_template_id	
-		screen_data
-	
-	meta
-		description
-		title
-		image_cover
-	amp_story_props
-	date_updated
-	date_published 
+webstory
+===================================
+id 
+screens 
+	screen_object		(adsense, slide)
+	template_name	
+	data
+	options
+meta
+	description
+	title
+	image_cover
+amp_story_props
+date_updated
+date_published 
 /* 
 
 
