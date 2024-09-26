@@ -8,8 +8,118 @@ class CreateWebStories extends Component {
     constructor(props) {
         super(props);
         this.state = {
+
+            // => settings (not for save) 
             settings: null,
-            templates: null 
+            templates: null,
+            
+            // => general settings for AMP 
+
+            // => (for save)
+            title:'',
+            description: '',
+            meta_description: '',
+            is_published: false, 
+            disable_search_engines: false, 
+            canonical: '',
+            image_cover: '', 
+            amp_story_props: {},
+
+            // => slides ( for save )
+            screens: [], 
+            date_updated: '',
+
+
+        }
+    }
+
+    createNewSlide = (name) => {
+        
+        var story = {
+            screen_object: 'slide', //
+            template_name: name,
+            data: {} 
+        };
+
+        // setup data
+        switch( name ) {
+            
+            case 'layout-1':
+
+                // main data 
+                story.data = {
+                    slide_template:name,
+                    headline: '',
+                    paragraph: '',
+                    text_styles: {
+                        headline: '', 
+                        paragraph: ''
+                    },
+                    link: {
+                        text: "Open",
+                        url: "#",
+                        style: {
+                            bg: 'tomato',
+                            color: '#fff',
+                            other_styles: {  
+                                marginTop: '15px',
+                                display: 'block',
+                                padding: '5px 0px',
+                                borderRadius: '5px',
+                            }
+                        }
+                    },
+                    media_url: '',
+                    overlay:{ 
+                        position: 'center', 
+                        bg: '#000', 
+                        color: '#fff', 
+                        custom_styles: {} 
+                    },
+                    media_cover: {
+                        url: '', 
+                        poster: ''
+                    }
+                } 
+
+                break;
+            
+            case 'layout-2':
+                story.data = {
+                    slide_template:name,
+                    headline: '',
+                    paragraph: '',
+                    text_styles: {
+                        headline: '', 
+                        paragraph: ''
+                    },
+                    link: {
+                        text: "Open",
+                        url: "#",
+                        style: {
+                            bg: 'tomato',
+                            color: '#fff',
+                            other_styles: {  
+                                marginTop: '15px',
+                                display: 'block',
+                                padding: '5px 0px',
+                                borderRadius: '5px',
+                            }
+                        }
+                    },
+                    media_url: '',
+                    overlay:{ 
+                        position: 'center', 
+                        bg: '#000', 
+                        color: '#fff', 
+                        custom_styles: {} 
+                    },
+                    media_cover: {
+                        url: '', 
+                        poster: ''
+                    }
+                }
+                break;
         }
     }
 
@@ -46,8 +156,9 @@ class CreateWebStories extends Component {
                         this.state.templates.map( (x, _k) => {
                             return (
                                 <li key={_k}>
-                                    <a>
-                                        <img crossOrigin="anonymous" src={x.thumbnail} width="300" height="500"/>
+                                    <img crossOrigin="anonymous" src={x.thumbnail} width="300" height="500"/>
+                                    <a className="add-to-story" href="#" onClick={e => this.createNewSlide(x.name)}>
+                                       + Add
                                     </a>
                                 </li>
                             );
@@ -69,22 +180,12 @@ class CreateWebStories extends Component {
                 { this.state.settings != null ? <this.SidebarRightAMPScreens/>: ''}
 
                 <section className="section main-section"> 
-                    
+                    <div>
+
+                    </div>
                 </section> 
 
-                <footer className="footer">
-                    <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0">
-                        <div className="flex items-center justify-start space-x-3">
-                            <div>
-                                © 2021, flatcoding.com
-                            </div>
-
-                            <div>
-                                <p>Developed By: <a href="/test" target="_blank">Montasser Mossallem</a></p>
-                            </div>
-                        </div>
-                    </div>
-                </footer>  
+                 
             </div>
         );
     }

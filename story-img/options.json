@@ -1,42 +1,50 @@
 {
     "layouts": [
         {
-            "name": "Layout 1",
+            "title": "Layout 1",
+            "name": "layout-1",
             "thumbnail": "/layout-1.png",
             "options": {}
         },
         {
-            "name": "Layout 2",
+            "title": "Layout 2",
+            "name": "layout-2",
             "thumbnail": "/layout-2.png",
             "options": {}
         },
         {
-            "name": "Layout 3",
+            "title": "Layout 3",
+            "name": "layout-3",
             "thumbnail": "/layout-3.png",
             "options": {}
         },
         {
-            "name": "Layout 4",
+            "title": "Layout 4",
+            "name": "layout-4",
             "thumbnail": "/layout-4.png",
             "options": {}
         },
         {
-            "name": "Layout 5",
+            "title": "Layout 5",
+            "name": "layout-5",
             "thumbnail": "/layout-5.png",
             "options": {}
         },
         {
-            "name": "Layout 6",
+            "title": "Layout 6",
+            "name": "layout-6",
             "thumbnail": "/layout-6.png",
             "options": {}
         },
         {
-            "name": "Layout 7",
+            "title": "Layout 7",
+            "name": "layout-7",
             "thumbnail": "/layout-7.png",
             "options": {}
         },
         {
-            "name": "Layout 8",
+            "title": "Layout 8",
+            "name": "layout-8",
             "thumbnail": "/layout-8.png",
             "options": {}
         }
