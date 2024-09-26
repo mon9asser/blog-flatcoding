@@ -902,3 +902,40 @@ body {
     text-transform: none;
     margin-left: 10px;
 }
+
+.amp-right-sidebar {
+    width: 210px;
+    background: #111827;
+    position: fixed;
+    top: 0; 
+    right: -190px; 
+    height: 100%;
+    z-index: 1000;
+    color: #fff;
+    padding: 20px;
+    overflow-y: auto;
+    transition: right 0.2s ease-in-out;
+}
+
+.amp-right-sidebar:hover {
+    right: 0;
+}
+.amp-right-sidebar ul {
+    list-style: none;
+}
+.amp-right-sidebar ul li {
+    display: block;
+    padding: 10px;
+}
+.amp-right-sidebar ul li a {
+    border-radius: 5px;
+    overflow: hidden;
+    display: block;
+    cursor: pointer;
+    padding: 8px;
+    outline: 2px solid #fff;
+}
+.amp-right-sidebar h2 {
+    font-weight: bold; 
+}
+

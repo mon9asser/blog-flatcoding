@@ -55,7 +55,9 @@ var Permissions = [
             "tutorials",
             "redirects",
             'media',
-            'webstories'
+            'webstories',
+            'create-story',
+            'edit-story',
         ]
     }
 ]; 

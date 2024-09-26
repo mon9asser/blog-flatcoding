@@ -3,7 +3,7 @@ import { NavbarContainer } from "./parts/navbar";
 import { SidebarContainer } from "./parts/sidebar";
 import { Helper } from "../helper";
 
-class WebStories extends Component {
+class CreateWebStories extends Component {
     
     constructor(props) {
         super(props);
@@ -43,9 +43,9 @@ class WebStories extends Component {
                 <ul>
                     
                     {
-                        this.state.templates.map( x => {
+                        this.state.templates.map( (x, _k) => {
                             return (
-                                <li>
+                                <li key={_k}>
                                     <a>
                                         <img crossOrigin="anonymous" src={x.thumbnail} width="300" height="500"/>
                                     </a>
@@ -90,4 +90,6 @@ class WebStories extends Component {
     }
 }
  
-export { WebStories };
+export { CreateWebStories };
+
+

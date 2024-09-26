@@ -82,6 +82,7 @@ const { sitemapRouter } = require("./apis/sitemap");
 const { redirectsRouter } = require("./apis/redirects");
 const { redirectRouter } = require("./apis/redirect");
 const { utillRouter } = require("./apis/utils");
+const { storiesRouter }  = require("./apis/stories");
 
 // Serve static files for React app
 // Middleware to serve static files for the main site
@@ -89,6 +90,7 @@ const { utillRouter } = require("./apis/utils");
  
 // Serve static files for uploads (media)
 app.use("/uploads", express.static(path.join(__dirname, "public/uploads")));
+app.use("/api/story-img", express.static(path.join(__dirname, "story-img")));
 
 // API Routes
 app.use(Config.server.api, mediaRouter);
@@ -108,6 +110,7 @@ app.use(Config.server.api, commentsRouter);
 app.use(Config.server.api, analyticsRouter);
 app.use(Config.server.api, analyticsRouter2);
 app.use(Config.server.api, utillRouter);
+app.use(Config.server.api, storiesRouter);
 
 // Sitemap and robots files
 app.use(Config.server.api, sitemapRouter);

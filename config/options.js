@@ -7,12 +7,14 @@ const Config = {
     media_url: `https://media.flatcoding.com`,
     site_url: "https://flatcoding.com",
     admin: "admin.flatcoding.com",
+    site_api: `https://api.flatcoding.com`, 
     login_url: "https://admin.flatcoding.com/login", 
     redirect_to: "/tutorials",
     */
     
     dashboard_url: "http://localhost:3002/dashboard",
-    media_url: `http://localhost:3000/uploads`,
+    media_url: `http://localhost:3000/uploads`, 
+    site_api: `http://localhost:3000/api`, 
     site_url: "http://localhost:3002",
     admin: "http://localhost:3001",
     login_url: "http://localhost:3002/login", 
