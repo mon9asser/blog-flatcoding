@@ -972,3 +972,49 @@ body {
     font-weight: bold; 
 }
 
+.story-components-data { 
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-top: -25px;
+}
+
+.story-components-data h1 {
+    font-weight: bold;
+    font-size: 25px;
+    margin-bottom: 25px;
+}
+
+.story-basic-info {
+    padding: 25px 5px;
+    background-color: #fff;
+    border: 1px solid #d3d3d3;
+    margin-top: 20px;
+}
+
+.story-section-title {
+    margin-bottom: 15px;
+    display: block;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.col-field {
+    margin-bottom: 15px;
+}
+.col-field input,
+.col-field textarea {
+    padding: 8px;
+    width: 100%;
+    border: 1px solid #ddd; 
+}
+
+.flexbox-fields {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+
+.flexbox-fields input {
+    width: auto;
+}
