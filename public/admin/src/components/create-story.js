@@ -20,9 +20,11 @@ class CreateWebStories extends Component {
             description: '',
             meta_description: '',
             is_published: false, 
-            disable_search_engines: false, 
+            enable_search_engine: true, 
+            enable_besside_title: true, 
             canonical: '',
             image_cover: '', 
+            meta_title: '',
 
             // => slides ( for save )
             screens: [], 
@@ -51,35 +53,36 @@ class CreateWebStories extends Component {
                 // main data 
                 story.data = {
                     slide_template:name,
-                    headline: '',
-                    paragraph: '',
+                    headline: 'He is nearing the end of his life',
+                    paragraph: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
                     text_styles: {
-                        headline: '', 
-                        paragraph: ''
+                        headline: {marginBottom: '15px', display: 'flex', fontFamily: "'Anton', serif", textTransform: "uppercase"}, 
+                        paragraph: {}
                     },
                     link: {
-                        text: "Open",
-                        url: "#",
-                        style: {
-                            bg: 'tomato',
-                            color: '#fff',
+                        text: "",
+                        url: "",
+                        style: { 
                             other_styles: {  
+                                backgroundColor: '#EA4C89',
+                                color: '#fff',
                                 marginTop: '15px',
                                 display: 'block',
                                 padding: '5px 0px',
                                 borderRadius: '5px',
                             }
                         }
-                    },
-                    media_url: '',
+                    }, 
                     overlay:{ 
-                        position: 'center', 
-                        bg: '#000', 
-                        color: '#fff', 
-                        custom_styles: {} 
+                        position: 'bottom', 
+                        custom_styles: {
+                            textAlign: 'left',
+                            backgroundColor: '#000', 
+                            color: '#fff',
+                        } 
                     },
                     media_cover: {
-                        url: '', 
+                        url: 'https://media.flatcoding.com/learn-to-cod-with-codedtag.webp', 
                         poster: ''
                     }
                 } 
@@ -89,114 +92,159 @@ class CreateWebStories extends Component {
             case 'layout-2':
                 story.data = {
                     slide_template:name,
-                    headline: '',
-                    paragraph: '',
+                    headline: 'He is nearing the end of his life',
+                    paragraph: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
                     text_styles: {
-                        headline: '', 
-                        paragraph: ''
+                        headline: {marginBottom: '15px', display: 'flex', fontFamily: "'Anton', serif", textTransform: "uppercase", borderLeft: '2px solid #fff', borderRight: '2px solid #fff'}, 
+                        paragraph: {}
                     },
                     link: {
-                        text: "Open",
-                        url: "#",
+                        text: 'Click', 
                         style: {
-                            bg: 'tomato',
-                            color: '#fff',
-                            other_styles: {  
-                                marginTop: '15px',
-                                display: 'block',
-                                padding: '5px 0px',
-                                borderRadius: '5px',
+                            other_styles: { 
+                                color: '#fff', 
+                                background: '#000', 
+                                padding: '3px', 
+                                borderRadius: '5px', 
+                                width: '100%' 
                             }
                         }
-                    },
-                    media_url: '',
+                    }, 
                     overlay:{ 
                         position: 'center', 
-                        bg: '#000', 
-                        color: '#fff', 
-                        custom_styles: {} 
+                        custom_styles: {
+                            textAlign: 'left',
+                            display: 'flex',
+                            gap: '15px',
+                            alignItems: 'center',
+                            background: 'transparent', 
+                            color: '#fff'
+                        }
                     },
                     media_cover: {
-                        url: '', 
+                        url: 'https://media.flatcoding.com/learn-to-cod-with-codedtag.webp', 
                         poster: ''
                     }
                 }
                 break;
             
-                case 'layout-3':
+            case 'layout-3':
                     story.data = {
                         slide_template:name,
-                        headline: '',
-                        paragraph: '',
+                        headline: 'He is nearing the end of his life',
+                        paragraph: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
                         text_styles: {
-                            headline: '', 
+                            headline: {marginBottom: '15px', display: 'flex', fontFamily: "'Anton', serif", textTransform: "uppercase"}, 
                             paragraph: ''
                         },
                         link: {
                             text: "Open",
                             url: "#",
-                            style: {
-                                bg: 'tomato',
-                                color: '#fff',
+                            style: { 
                                 other_styles: {  
-                                    marginTop: '15px',
-                                    display: 'block',
-                                    padding: '5px 0px',
-                                    borderRadius: '5px',
+                                    textAlign: 'left', 
+                                    borderRight: '2px solid #fff',
+                                    borderLeft: '2px solid #fff',
+                                    background: 'transparent', 
+                                    color: '#fff'
                                 }
                             }
-                        },
-                        media_url: '',
+                        }, 
                         overlay:{ 
                             position: 'center', 
-                            bg: '#000', 
-                            color: '#fff', 
-                            custom_styles: {} 
+                            custom_styles: {
+                                backgroundColor: '#000', 
+                                color: '#fff', 
+                            } 
                         },
                         media_cover: {
-                            url: '', 
+                            url: 'https://media.flatcoding.com/learn-to-cod-with-codedtag.webp', 
                             poster: ''
                         }
                     }
                     break;
 
-                case 'layout-4':
+            case 'layout-4':
                     story.data = {
                         slide_template:name,
                         headline: '',
                         paragraph: '',
                         text_styles: {
-                            headline: '', 
+                            headline:  {marginBottom: '15px', display: 'flex', fontFamily: "'Anton', serif", textTransform: "uppercase"}, 
                             paragraph: ''
                         },
                         link: {
                             text: "Open",
                             url: "#",
                             style: {
-                                bg: 'tomato',
-                                color: '#fff',
+                                
                                 other_styles: {  
+                                    background: 'tomato',
+                                    color: '#fff',
                                     marginTop: '15px',
                                     display: 'block',
                                     padding: '5px 0px',
                                     borderRadius: '5px',
                                 }
                             }
-                        },
-                        media_url: '',
+                        }, 
                         overlay:{ 
-                            position: 'center', 
-                            bg: '#000', 
-                            color: '#fff', 
-                            custom_styles: {} 
+                            position: 'center',   
+                            custom_styles: {
+                                textAlign: 'left',
+                                background: 'transparent', 
+                                color: '#fff'
+                            } 
                         },
                         media_cover: {
-                            url: '', 
+                            url: 'https://media.flatcoding.com/learn-to-cod-with-codedtag.webp', 
                             poster: ''
                         }
                     }
                     break;
-                
+            
+            case 'layout-5':
+                story.data = {
+                    slide_template:name,
+                    headline: '',
+                    paragraph: '',
+                    subtitle: '',
+                    intro_paragraph: '',
+                    button: {
+                        url: '', 
+                        text: ''
+                    },
+                    urls: [], /*{link, url, alt}*/
+                    styles: {} /*headline - page_container-wrapper-paragraph-page-button-img*/
+                }
+                break;
+            case 'layout-6':
+                story.data = {
+                    slide_template:name,
+                    headline: '',
+                    paragraph: '',
+                    subtitle: '',
+                    intro_paragraph: '',
+                    button: {
+                        url: '', 
+                        text: ''
+                    },
+                    urls: [], /*{link, url, alt}*/
+                    styles: {} /*headline - page_container-wrapper-paragraph-page-button-img*/
+                }
+                break;
+            case 'layout-7':
+                    story.data = {
+                        slide_template:name,
+                        headline: 'Celebrity Philanthropy',
+                        paragraph: 'Lorem Ipsum is simply dummy text of the printing.',
+                        subtitle: 'The best of',
+                        button: {
+                            url: '', 
+                            text: ''
+                        }
+                     }
+                    break;
         }
          
         var old_screens = [...this.state.screens];
@@ -284,8 +332,7 @@ class CreateWebStories extends Component {
     };
     
 
-    StoryComponents = () => {
-        console.log("Rendered screens:", this.state.screens); 
+    StoryComponents = () => { 
         return (
             <section className="story-components-data">
                 <h1>Create a new story</h1>
@@ -298,30 +345,38 @@ class CreateWebStories extends Component {
                                     <b className="story-section-title">Story Basic Informations</b>
                                 </div>
                                <div className="col-field"> 
-                                    <input placeholder="Title" />
+                                    <input onChange={e => this.setState({title: e.target.value})} value={this.state.title} placeholder="Title" />
                                </div>
                                <div className="col-field"> 
-                               <textarea placeholder="Description"></textarea>
+                               <textarea onChange={e => this.setState({description: e.target.value})} value={this.state.description} placeholder="Description"></textarea>
                                </div>
                                <div className="col-field"> 
-                                    <input placeholder="Link of Image Cover" />
+                                    <input onChange={e => this.setState({image_cover: e.target.image_cover})} value={this.state.image_cover} placeholder="Link of Image Cover" />
                                </div>
                                <div className="col-field"> 
-                                    <input placeholder="Meta Title" />
+                                    <input onChange={e => this.setState({meta_title: e.target.meta_title})} value={this.state.meta_title} placeholder="Meta Title" />
                                </div>
                                <div className="col-field"> 
-                                    <textarea placeholder="Meta Description"></textarea>
+                                    <textarea onChange={e => this.setState({meta_description: e.target.meta_description})} value={this.state.meta_description} placeholder="Meta Description"></textarea>
                                </div>
                                 <div className="col-field flexbox-fields"> 
                                     <label>
-                                        <input type="checkbox" />
+                                        <input 
+                                            type="checkbox"
+                                            onChange={e => this.setState({enable_besside_title: !this.state.enable_besside_title})}
+                                            checked={this.state.enable_besside_title}
+                                        />
                                         Enable Beside Meta Title
                                     </label>
                                </div>
                                
                                <div className="col-field flexbox-fields"> 
                                     <label>
-                                        <input type="checkbox" />
+                                        <input 
+                                            type="checkbox" 
+                                            onChange={e => this.setState({enable_search_engine: !this.state.enable_search_engine})}
+                                            checked={this.state.enable_search_engine}
+                                        />
                                         Allow search engines to show this Article in search results?
                                     </label>
                                </div>

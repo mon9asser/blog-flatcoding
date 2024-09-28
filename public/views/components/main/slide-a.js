@@ -34,7 +34,7 @@ var Slide_A = ({ headline, paragraph, media, overlay, link, text_mode, text_styl
         webm_url = _media.url.replace(".mp4", '.webm');
     }
         
-    var style = overlay ? overlay: {bg: '#000', color: '#fff', position: 'auto'}
+    var style = overlay ? overlay: {position: 'auto'}
     
     var custom_styles = {};
     if( style.custom_styles != undefined ) {
@@ -185,7 +185,7 @@ var Slide_A = ({ headline, paragraph, media, overlay, link, text_mode, text_styl
 
             <amp-story-grid-layer template="verticall">
                 
-                <div style={{...position, ...custom_styles, color: style.color, background: style.bg, padding: '15px', borderRadius: '5px'}}>
+                <div style={{...position,  padding: '15px', borderRadius: '5px', ...custom_styles}}>
                     <h1 style={{...styling.headline, ...headline_text_mode}}>{title}</h1>
                     <p style={{...styling, ...paragraph_text_mode}}>{text}</p> 
                     <Link_Data/>

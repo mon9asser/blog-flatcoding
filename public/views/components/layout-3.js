@@ -39,9 +39,7 @@ var Layout_3 = ({textData, link_data, overlay, media_cover, text_styles}) => {
     }
     
     var overlay_objects = overlay ? overlay: {
-        position: 'bottom', 
-        bg: 'transparent', 
-        color: '#fff'
+        position: 'bottom',
     };
 
     var media = media_cover ? media_cover: {url: ''}; 
@@ -55,7 +53,9 @@ var Layout_3 = ({textData, link_data, overlay, media_cover, text_styles}) => {
     overlay_objects.custom_styles = {
         textAlign: 'left', 
         borderRight: '2px solid #fff',
-        borderLeft: '2px solid #fff'
+        borderLeft: '2px solid #fff',
+        background: 'transparent', 
+        color: '#fff'
     }
 
     var link = !link_data ? {}: link_data;

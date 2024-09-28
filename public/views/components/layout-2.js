@@ -12,14 +12,14 @@ import Slide_A from "./main/slide-a"
     link={{
         text: "Read More",
         url: "https://eratags.com",
-        style: {
-            bg: 'tomato',
-            color: '#fff',
+        style: { 
             other_styles: { => custom styles
                 marginTop: '15px',
                 display: 'block',
                 padding: '5px 0px',
                 borderRadius: '5px',
+                 bg: 'tomato',
+                color: '#fff',
             }
         }
     }}
@@ -40,8 +40,6 @@ var Layout_1 = ({textData, link_data, overlay, media_cover, text_styles}) => {
     
     var overlay_objects = overlay ? overlay: {
         position: 'center', 
-        bg: 'transparent', 
-        color: '#fff'
     };
 
     var media = media_cover ? media_cover: {url: ''}; 
@@ -56,13 +54,15 @@ var Layout_1 = ({textData, link_data, overlay, media_cover, text_styles}) => {
         textAlign: 'left',
         display: 'flex',
         gap: '15px',
-        alignItems: 'center'
+        alignItems: 'center',
+        background: 'transparent', 
+        color: '#fff'
     }
 
     var link = {};
     var link_obj = !link_data ? {}: link_data;
     if( link_obj.url != undefined )
-        link = {text: 'Click', style: {color: '#fff', bg: '#000', other_styles: { padding: '3px', borderRadius: '5px', width: '100%' }}, ...link_obj}
+        link = {text: 'Click', style: { other_styles: { background: '#000', color: '#fff',  padding: '3px', borderRadius: '5px', width: '100%' }}, ...link_obj}
 
     var _styles_txt = text_styles ? text_styles: {}
     if( !_styles_txt || _styles_txt.headline == undefined )

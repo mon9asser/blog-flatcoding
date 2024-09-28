@@ -8,13 +8,11 @@ import Slide_A from "./main/slide-a"
     headline={obj.headline} 
     text_styles = {headline, paragraph}
     media_cover = {url, poster => case it video}
-    overlay={{position: 'center', bg: '#000', color: '#fff', custom_styles: {}}}
+    overlay={{position: 'center', custom_styles: {}}}
     link={{
         text: "Read More",
         url: "https://eratags.com",
         style: {
-            bg: 'tomato',
-            color: '#fff',
             other_styles: { => custom styles
                 marginTop: '15px',
                 display: 'block',
@@ -39,9 +37,7 @@ var Layout_1 = ({textData, link_data, overlay, media_cover, text_styles}) => {
     }
     
     var overlay_objects = overlay ? overlay: {
-        position: 'bottom', 
-        bg: '#000', 
-        color: '#fff'
+        position: 'bottom'
     };
 
     var media = media_cover ? media_cover: {url: ''}; 
@@ -53,7 +49,9 @@ var Layout_1 = ({textData, link_data, overlay, media_cover, text_styles}) => {
 
     // custom css style
     overlay_objects.custom_styles = {
-        textAlign: 'left' 
+        textAlign: 'left',
+        backgroundColor: '#000', 
+        color: '#fff'
     }
 
     var link = !link_data ? {}: link_data;

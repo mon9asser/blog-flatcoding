@@ -3,11 +3,13 @@ import { Helper } from "../../services/helper";
   
 var Slide_B = ({ data, urls, link, styles }) => {
     
-    var anId = Helper.generateRandomStrings()
-    var subtitle = 'Welcome to';
+    var anId = Helper.generateRandomStrings();
     var headline = "Our Coding Blog";
-    var intro_paragraph = "Here are the latest topics:"
     var paragraph = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.";
+
+    var subtitle = 'Welcome to';
+    var intro_paragraph = "Here are the latest topics:"
+    
     var button = {};
     var stylesh = ''; 
     if( styles != undefined ) {
