@@ -23,7 +23,6 @@ class CreateWebStories extends Component {
             disable_search_engines: false, 
             canonical: '',
             image_cover: '', 
-            amp_story_props: {},
 
             // => slides ( for save )
             screens: [], 
@@ -33,11 +32,14 @@ class CreateWebStories extends Component {
         }
     }
 
-    createNewSlide = (name) => {
+    createNewSlide = (name, e) => {
         
+        e.preventDefault();
+
         var story = {
             screen_object: 'slide', //
             template_name: name,
+            open: false, // expand block of slide 
             data: {} 
         };
 
@@ -196,6 +198,13 @@ class CreateWebStories extends Component {
                     break;
                 
         }
+         
+        var old_screens = [...this.state.screens];
+            old_screens.push(story);
+
+        this.setState({
+            screens: old_screens
+        })
     }
 
     async componentDidMount(){
@@ -232,7 +241,7 @@ class CreateWebStories extends Component {
                             return (
                                 <li key={_k}>
                                     <img crossOrigin="anonymous" src={x.thumbnail} width="300" height="500"/>
-                                    <a className="add-to-story" href="#" onClick={e => this.createNewSlide(x.name)}>
+                                    <a className="add-to-story" href="#" onClick={e => this.createNewSlide(x.name, e)}>
                                        + Add
                                     </a>
                                 </li>
@@ -245,25 +254,60 @@ class CreateWebStories extends Component {
         );
     }
 
+    blockExpandCollapse = (index) => {
+         
+        var screens = [...this.state.screens];
+        if( screens[index] != undefined ) {
+            screens[index].open = !screens[index].open; 
+        }
+
+        this.setState({
+            screens: screens
+        })
+
+    }
+
+    deleteStory = (index) => {
+        // Log the initial state for debugging purposes
+        console.log("Before delete:", this.state.screens);
+    
+        // Use setState with a function to get the previous state
+        this.setState((prevState) => {
+            // Filter out the element at the specified index
+            const updatedScreens = prevState.screens.filter((_, k) => index !== k);
+            
+            // Return the new state
+            return { screens: updatedScreens };
+        }, () => {
+            // This callback is executed after the state has been updated.
+            console.log("After Delete:", this.state.screens);
+        });
+    };
+    
+
     StoryComponents = () => {
+        console.log("Rendered screens:", this.state.screens); 
         return (
             <section className="story-components-data">
                 <h1>Create a new story</h1>
                 <div>
                     
                     <div className="story-basic-info">
-                        <b className="story-section-title">Story Basic Informations</b>
                         <div className="row">
                             <div className="md-6">
+                                 <div>
+                                    <b className="story-section-title">Story Basic Informations</b>
+                                </div>
                                <div className="col-field"> 
                                     <input placeholder="Title" />
                                </div>
                                <div className="col-field"> 
                                <textarea placeholder="Description"></textarea>
                                </div>
-                            </div>
-                            <div className="md-6"> 
-                                <div className="col-field"> 
+                               <div className="col-field"> 
+                                    <input placeholder="Link of Image Cover" />
+                               </div>
+                               <div className="col-field"> 
                                     <input placeholder="Meta Title" />
                                </div>
                                <div className="col-field"> 
@@ -282,8 +326,98 @@ class CreateWebStories extends Component {
                                         Allow search engines to show this Article in search results?
                                     </label>
                                </div>
-                               
                             </div>
+                            <div className="md-6"> 
+                                <div>
+                                    <b className="story-section-title">Story Slides</b>
+                                </div>
+
+                                {
+                                    
+
+                                    this.state.screens.map( (x, index) => {
+                                        return (
+                                            <div key={index} className="sotry-block">
+                                                <div className="flex-story-head">
+                                                    <h2 onClick={e => this.blockExpandCollapse(index)}>Story Title</h2>
+                                                    <div className="flex-subtitle">
+                                                        <div>
+                                                        Type: <b>Layout 1</b>
+                                                        </div>
+                                                        <span onClick={e => this.deleteStory(index)} className='mdi mdi-trash-can'></span>
+                                                    </div>
+                                                </div>
+                                                <div style={{display: x.open ? 'block': 'none'}} className="flex-story-body">
+                                                    <div className="col-field"> 
+                                                        <label>
+                                                            <span>Slide Headline</span>
+                                                            <input placeholder="Slide Headline" />
+                                                        </label>
+                                                    </div>
+                                                    <div className="col-field"> 
+                                                        <label>
+                                                            <span>Slide Paragraph</span>
+                                                            <textarea placeholder="Slide Paragraph"></textarea>
+                                                        </label>
+                                                    </div>
+                                                    <div className="col-field"> 
+                                                        <label>
+                                                            <span>Background Media URL</span>
+                                                            <input placeholder="Background Media URL" />
+                                                        </label>
+                                                    </div>
+                                                    <div className="col-field">
+                                                        <label>
+                                                            <span>Video Poster URL (IMAGE)</span> 
+                                                            <input placeholder="Video Poster URL (IMAGE)" />
+                                                        </label>
+                                                    </div>
+                                                    <div className="col-field"> 
+                                                        <label>
+                                                            <span>Button Title</span> 
+                                                            <input placeholder="Button Title" />
+                                                        </label>
+                                                    </div>
+                                                    <div className="col-field"> 
+                                                        <label>
+                                                            <span>Button URL</span> 
+                                                            <input placeholder="Button URL" />
+                                                        </label>
+                                                    </div>
+                                                    <div className="col-field"> 
+                                                        <label>
+                                                            <span>Headline Styles</span>
+                                                            <textarea placeholder="Headline Styles"></textarea>
+                                                        </label>
+                                                    </div>
+                                                    <div className="col-field"> 
+                                                        <label>
+                                                            <span>Paragraph Styles</span>
+                                                            <textarea placeholder="Paragraph Styles"></textarea>
+                                                        </label>
+                                                    </div>
+                                                    <div className="col-field"> 
+                                                        <label>
+                                                            <span>Button Styles (Link) </span>
+                                                            <textarea placeholder="Button Styles"></textarea>
+                                                        </label>
+                                                    </div>
+                                                    <div className="col-field"> 
+                                                        <label>
+                                                            <span>Box Overlay Styles </span>
+                                                            <textarea placeholder="Overlay Styles"></textarea>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>   
+                                        )
+                                    }) 
+                                }
+                                
+                           
+                            </div>
+
+                            
                         </div>
                     </div>
                 </div>

@@ -994,8 +994,6 @@ body {
 .story-section-title {
     margin-bottom: 15px;
     display: block;
-    padding-left: 15px;
-    padding-right: 15px;
 }
 
 .col-field {
@@ -1017,4 +1015,58 @@ body {
 
 .flexbox-fields input {
     width: auto;
+}
+
+.sotry-block {
+    border: 1px solid #dfdfdf;
+    margin-top: 20px; 
+}
+
+.sotry-block .flex-story-body {
+    display: none;
+}
+
+.sotry-block h2 {
+    color: teal;
+    font-weight: bold;
+}
+.flex-story-head {
+    display: flex;
+    border-bottom: 1px solid #d9d9d9;
+    padding: 15px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+}
+
+.flex-story-head div {
+    margin-left: auto;
+}
+
+.flex-story-body {
+    padding: 15px;
+}
+
+.col-field span {
+    margin-bottom: 5px;
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.flex-subtitle {
+    display: flex;
+    gap: 15px;
+}
+
+.flex-subtitle .mdi {
+    color: #fff;
+    background-color: tomato;
+    padding: 2px 5px;
+    border-radius: 3px;
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.flex-subtitle .mdi:hover {
+    opacity: 1;
 }
