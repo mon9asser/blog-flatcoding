@@ -213,7 +213,7 @@ class CreateWebStories extends Component {
             Helper.sendRequest({ api: "settings/get", method: 'GET', data: {} }),
             Helper.sendRequest({ api: "story/templates", method: 'GET', data: {} }),
         ]); 
-
+        
         if(!settingsResponse.is_error) {
             if( settingsResponse.data.length ) {
                 this.setState({
@@ -228,7 +228,6 @@ class CreateWebStories extends Component {
 
     SidebarRightAMPScreens = () => {
         
-         
         return (
             <div className="amp-right-sidebar">
                 <h2>
@@ -426,6 +425,8 @@ class CreateWebStories extends Component {
     }
 
     render() {
+
+        console.log(this.state.settings)
         return (
             <div id="app">
 
