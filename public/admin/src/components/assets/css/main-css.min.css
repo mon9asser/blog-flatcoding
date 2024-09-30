@@ -1070,3 +1070,9 @@ body {
 .flex-subtitle .mdi:hover {
     opacity: 1;
 }
+
+.styleoverlayposition {
+    border: 1px solid #dfdfdf;
+    width: 100%;
+    padding: 8px;
+}

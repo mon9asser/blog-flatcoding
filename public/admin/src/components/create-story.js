@@ -36,7 +36,7 @@ class CreateWebStories extends Component {
         }
     }
 
-    save_story = () => {
+    save_story = async () => {
         this.setState({
             is_pressed: true
         })
@@ -58,7 +58,15 @@ class CreateWebStories extends Component {
             object_to_save.id = this.state.id;
         }
 
-        console.log(object_to_save);
+        // send data to database 
+        var request = await Helper.sendRequest({ 
+            api: "story/create", 
+            method: 'POST', 
+            data: object_to_save 
+        });
+
+        console.log(request);
+
     }
 
     createNewSlide = (name, e) => {
@@ -481,11 +489,25 @@ class CreateWebStories extends Component {
                             <textarea 
                                 onChange={e => {
                                     var screens = [...this.state.screens];
-                                    screens[index].data.text_styles.headline = JSON.parse(e.target.value);
+                                    var json_format = screens[index].data.text_styles.headline; // Keep the existing value as default
+
+                                    try {
+                                        if (e.target.value.trim()) { // Check if the input is not empty
+                                            json_format = JSON.parse(e.target.value); // Try to parse the JSON input
+                                        } else {
+                                            throw new Error("Empty input");
+                                        }
+                                    } catch (error) {
+                                        console.error("Invalid JSON input", error); // Log the error for debugging
+                                        alert("Please provide valid JSON format for headline styles."); // Notify the user about invalid JSON
+                                    }
+
+                                    screens[index].data.text_styles.headline = json_format;
 
                                     this.setState({
                                         screens: screens
-                                    })
+                                    });
+
                                 }} 
                                 value={JSON.stringify(data.data.text_styles.headline)}
                             placeholder="Headline Styles"></textarea>
@@ -494,19 +516,85 @@ class CreateWebStories extends Component {
                     <div className="col-field"> 
                         <label>
                             <span>Paragraph Styles</span>
-                            <textarea placeholder="Paragraph Styles"></textarea>
+                            <textarea 
+                            onChange={e => {
+                                var screens = [...this.state.screens];
+                                var json_format = ''
+                                try {
+                                    json_format = JSON.parse(e.target.value)
+                                } catch (error) {}
+                                screens[index].data.text_styles.paragraph = json_format;
+
+                                this.setState({
+                                    screens: screens
+                                })
+                            }} 
+                            value={JSON.stringify(data.data.text_styles.paragraph)}
+                            placeholder="Paragraph Styles"></textarea>
                         </label>
                     </div>
                     <div className="col-field"> 
                         <label>
                             <span>Button Styles (Link) </span>
-                            <textarea placeholder="Button Styles"></textarea>
+                            <textarea 
+                                onChange={e => {
+                                    var screens = [...this.state.screens];
+                                    var json_format = ''
+                                    try {
+                                        json_format = JSON.parse(e.target.value)
+                                    } catch (error) {}
+                                    screens[index].data.link.style.other_styles = json_format;
+    
+                                    this.setState({
+                                        screens: screens
+                                    })
+                                }} 
+                                value={JSON.stringify(data.data.link.style.other_styles)}
+                            placeholder="Button Styles"></textarea>
+                        </label>
+                    </div>
+                    <div className="col-field"> 
+                        <label>
+                            <span>Box Overlay Position </span>
+                            <select 
+                                className="styleoverlayposition" 
+                                onChange={e => {
+                                    
+
+                                    var screens = [...this.state.screens]; 
+                                    screens[index].data.overlay.position = e.target.value;
+    
+                                    this.setState({
+                                        screens: screens
+                                    })
+
+                                }}
+                                value={data.data.overlay.position}>
+                                <option value={'auto'}>Auto</option>
+                                <option value={'center'}>Center</option>
+                                <option value={'top'}>Top</option>
+                                <option value={'bottom'}>Bottom</option>
+                            </select>
                         </label>
                     </div>
                     <div className="col-field"> 
                         <label>
                             <span>Box Overlay Styles </span>
-                            <textarea placeholder="Overlay Styles"></textarea>
+                            <textarea  
+                                onChange={e => {
+                                    var screens = [...this.state.screens];
+                                    var json_format = ''
+                                    try {
+                                        json_format = JSON.parse(e.target.value)
+                                    } catch (error) {}
+                                    screens[index].data.overlay.custom_styles = json_format;
+                                    
+                                    this.setState({
+                                        screens: screens
+                                    })
+                                }} 
+                                value={JSON.stringify(data.data.overlay.custom_styles)}
+                            placeholder="Overlay Styles"></textarea>
                         </label>
                     </div>
                 </div>
@@ -514,8 +602,7 @@ class CreateWebStories extends Component {
 
                 break;
         }
-
-        console.log(data);
+ 
         return render
     }
 

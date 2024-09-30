@@ -47,11 +47,11 @@ storiesRouter.get("/story/templates", middlewareTokens, async (req, res) => {
 })
 
 
-storiesRouter.get("/story/create", middlewareTokens, async (req, res) => {
-  
+storiesRouter.post("/story/create", middlewareTokens, async (req, res) => {
+   
    try {
     const { id, title, description, meta_description, is_published, enable_search_engine, enable_besside_title, canonical, image_cover, meta_title, screens } = req.body;
-
+    
     // Check if an id is provided
     if (id) {
       // Try to find the story by id
@@ -95,6 +95,7 @@ storiesRouter.get("/story/create", middlewareTokens, async (req, res) => {
       screens,
     });
 
+    
     // Save the new story
     await newStory.save();
     return res.status(201).json({
