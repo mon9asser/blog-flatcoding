@@ -23,7 +23,7 @@ export default function Story() {
                 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Anton" />
             </Head>
             <amp-story standalone publisher="Example Publisher" publisher-logo-src="https://example.com/logo.png" poster-portrait-src="https://example.com/poster.jpg">
-                <Layout_7/>
+                <Layout_1/>
             </amp-story>
         </>
     )

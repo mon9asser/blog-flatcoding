@@ -6,49 +6,54 @@ const ObjectId = Schema.ObjectId;
 
 let storiesSchema = new Schema({
 
-    screens: [
-        {
-            screen_object: {
-                type: String,
-                trim: true,
-                default: ''
-            },
-            template_name:  {
-                type: String,
-                trim: true,
-                default: ''
-            },
-            data: {},
-            options: {}
-        }
-    ],
-    meta: {
-        description: {
-            type: String,
-            trim: true,
-            default: ''
-        },
-        title:  {
-            type: String,
-            trim: true,
-            default: ''
-        },
-        image_cover:  {
-            type: String,
-            trim: true,
-            default: ''
-        },
+    title:  {
+        type: String,
+        trim: true,
+        default: ''
     },
-    amp_story_props: {},
+    description:  {
+        type: String,
+        trim: true,
+        default: ''
+    },
+    meta_description:  {
+        type: String,
+        trim: true,
+        default: ''
+    },
+    is_published:  {
+        type: Boolean, 
+        default: false
+    },
+    enable_search_engine: {
+        type: Boolean, 
+        default: false
+    }, 
+    enable_besside_title: {
+        type: Boolean, 
+        default: false
+    },
+    canonical:  {
+        type: String,
+        trim: true,
+        default: ''
+    },
+    image_cover:  {
+        type: String,
+        trim: true,
+        default: ''
+    },
+    meta_title:  {
+        type: String,
+        trim: true,
+        default: ''
+    },
+    screens: [],
     date_updated: {
         type: Date,
         default: Date.now,
-    },
-    date_published: {
-        type: Date,
-        default: Date.now,
-    },
- 
+    } 
+    
 });
 
 // Create Collection

@@ -12,9 +12,11 @@ class CreateWebStories extends Component {
             // => settings (not for save) 
             settings: null,
             templates: null,
-            
+            is_pressed: false, 
             // => general settings for AMP 
 
+            // => for update story by id 
+            id: null,
             // => (for save)
             title:'',
             description: '',
@@ -32,6 +34,31 @@ class CreateWebStories extends Component {
 
 
         }
+    }
+
+    save_story = () => {
+        this.setState({
+            is_pressed: true
+        })
+
+        var object_to_save = { 
+            title: this.state.title, 
+            description: this.state.description, 
+            meta_description: this.state.meta_description, 
+            is_published: this.state.is_published, 
+            enable_search_engine: this.state.enable_search_engine, 
+            enable_besside_title: this.state.enable_besside_title, 
+            canonical: this.state.canonical, 
+            image_cover: this.state.image_cover, 
+            meta_title: this.state.meta_title, 
+            screens: this.state.screens
+        }
+
+        if( this.state.id != null ) {
+            object_to_save.id = this.state.id;
+        }
+
+        console.log(object_to_save);
     }
 
     createNewSlide = (name, e) => {
@@ -331,6 +358,166 @@ class CreateWebStories extends Component {
         });
     };
     
+    StoryComponent = ({data, index}) => {
+
+        var render = null;
+
+        switch(data.template_name) {
+            case 'layout-1':
+                
+                render = <div key={index} className="sotry-block">
+                <div className="flex-story-head">
+                    <h2 onClick={e => this.blockExpandCollapse(index)}>{data.template_name}</h2>
+                    <div className="flex-subtitle">
+                        <div>
+                        Type: <b>{data.screen_object}</b>
+                        </div>
+                        <span onClick={e => this.deleteStory(index)} className='mdi mdi-trash-can'></span>
+                    </div>
+                </div>
+                <div style={{display: data.open ? 'block': 'none'}} className="flex-story-body">
+                    <div className="col-field"> 
+                        <label>
+                            <span>Slide Headline</span>
+                            <input 
+                                onChange={e => {
+                                    var screens = [...this.state.screens];
+                                    screens[index].data.headline = e.target.value;
+
+                                    this.setState({
+                                        screens: screens
+                                    })
+                                }} 
+                                value={data.data.headline} 
+                                placeholder="Slide Headline" 
+                            />
+                        </label>
+                    </div>
+                    <div className="col-field"> 
+                        <label>
+                            <span>Slide Paragraph</span>
+                            <textarea 
+                                onChange={e => {
+                                    var screens = [...this.state.screens];
+                                    screens[index].data.paragraph = e.target.value;
+
+                                    this.setState({
+                                        screens: screens
+                                    })
+                                }} 
+                                value={data.data.paragraph} 
+                            placeholder="Slide Paragraph"></textarea>
+                        </label>
+                    </div>
+                    <div className="col-field"> 
+                        <label>
+                            <span>Background Media URL</span>
+                            <input 
+
+                            onChange={e => {
+                                var screens = [...this.state.screens];
+                                screens[index].data.media_cover.url = e.target.value;
+
+                                this.setState({
+                                    screens: screens
+                                })
+                            }} 
+                            value={data.data.media_cover.url} 
+
+                            placeholder="Background Media URL" />
+                        </label>
+                    </div>
+                    <div className="col-field">
+                        <label>
+                            <span>Video Poster URL (IMAGE)</span> 
+                            <input 
+                                onChange={e => {
+                                    var screens = [...this.state.screens];
+                                    screens[index].data.media_cover.poster = e.target.value;
+    
+                                    this.setState({
+                                        screens: screens
+                                    })
+                                }} 
+                                value={data.data.media_cover.poster}
+                            placeholder="Video Poster URL (IMAGE)" />
+                        </label>
+                    </div>
+                    <div className="col-field"> 
+                        <label>
+                            <span>Button Title</span> 
+                            <input 
+                                onChange={e => {
+                                    var screens = [...this.state.screens];
+                                    screens[index].data.link.text = e.target.value;
+
+                                    this.setState({
+                                        screens: screens
+                                    })
+                                }} 
+                                value={data.data.link.text}
+                            placeholder="Button Title" />
+                        </label>
+                    </div>
+                    <div className="col-field"> 
+                        <label>
+                            <span>Button URL</span> 
+                            <input 
+                                onChange={e => {
+                                    var screens = [...this.state.screens];
+                                    screens[index].data.link.url = e.target.value;
+
+                                    this.setState({
+                                        screens: screens
+                                    })
+                                }} 
+                                value={data.data.link.url}
+                                placeholder="Button URL" />
+                        </label>
+                    </div>
+                    <div className="col-field"> 
+                        <label>
+                            <span>Headline Styles</span>
+                            <textarea 
+                                onChange={e => {
+                                    var screens = [...this.state.screens];
+                                    screens[index].data.text_styles.headline = JSON.parse(e.target.value);
+
+                                    this.setState({
+                                        screens: screens
+                                    })
+                                }} 
+                                value={JSON.stringify(data.data.text_styles.headline)}
+                            placeholder="Headline Styles"></textarea>
+                        </label>
+                    </div>
+                    <div className="col-field"> 
+                        <label>
+                            <span>Paragraph Styles</span>
+                            <textarea placeholder="Paragraph Styles"></textarea>
+                        </label>
+                    </div>
+                    <div className="col-field"> 
+                        <label>
+                            <span>Button Styles (Link) </span>
+                            <textarea placeholder="Button Styles"></textarea>
+                        </label>
+                    </div>
+                    <div className="col-field"> 
+                        <label>
+                            <span>Box Overlay Styles </span>
+                            <textarea placeholder="Overlay Styles"></textarea>
+                        </label>
+                    </div>
+                </div>
+            </div>;
+
+                break;
+        }
+
+        console.log(data);
+        return render
+    }
 
     StoryComponents = () => { 
         return (
@@ -351,13 +538,16 @@ class CreateWebStories extends Component {
                                <textarea onChange={e => this.setState({description: e.target.value})} value={this.state.description} placeholder="Description"></textarea>
                                </div>
                                <div className="col-field"> 
-                                    <input onChange={e => this.setState({image_cover: e.target.image_cover})} value={this.state.image_cover} placeholder="Link of Image Cover" />
+                                    <input onChange={e => this.setState({image_cover: e.target.value})} value={this.state.image_cover} placeholder="Link of Image Cover" />
                                </div>
                                <div className="col-field"> 
-                                    <input onChange={e => this.setState({meta_title: e.target.meta_title})} value={this.state.meta_title} placeholder="Meta Title" />
+                                    <input onChange={e => this.setState({meta_title: e.target.value})} value={this.state.meta_title} placeholder="Meta Title" />
                                </div>
                                <div className="col-field"> 
-                                    <textarea onChange={e => this.setState({meta_description: e.target.meta_description})} value={this.state.meta_description} placeholder="Meta Description"></textarea>
+                                    <textarea onChange={e => this.setState({meta_description: e.target.value})} value={this.state.meta_description} placeholder="Meta Description"></textarea>
+                               </div>
+                               <div className="col-field"> 
+                                    <input onChange={e => this.setState({canonical: e.target.value})} value={this.state.canonical} placeholder="Canonical URL" />
                                </div>
                                 <div className="col-field flexbox-fields"> 
                                     <label>
@@ -377,7 +567,7 @@ class CreateWebStories extends Component {
                                             onChange={e => this.setState({enable_search_engine: !this.state.enable_search_engine})}
                                             checked={this.state.enable_search_engine}
                                         />
-                                        Allow search engines to show this Article in search results?
+                                        Allow search engines to show this Story in search results?
                                     </label>
                                </div>
                             </div>
@@ -386,94 +576,42 @@ class CreateWebStories extends Component {
                                     <b className="story-section-title">Story Slides</b>
                                 </div>
 
-                                {
-                                    
-
-                                    this.state.screens.map( (x, index) => {
-                                        return (
-                                            <div key={index} className="sotry-block">
-                                                <div className="flex-story-head">
-                                                    <h2 onClick={e => this.blockExpandCollapse(index)}>Story Title</h2>
-                                                    <div className="flex-subtitle">
-                                                        <div>
-                                                        Type: <b>Layout 1</b>
-                                                        </div>
-                                                        <span onClick={e => this.deleteStory(index)} className='mdi mdi-trash-can'></span>
-                                                    </div>
-                                                </div>
-                                                <div style={{display: x.open ? 'block': 'none'}} className="flex-story-body">
-                                                    <div className="col-field"> 
-                                                        <label>
-                                                            <span>Slide Headline</span>
-                                                            <input placeholder="Slide Headline" />
-                                                        </label>
-                                                    </div>
-                                                    <div className="col-field"> 
-                                                        <label>
-                                                            <span>Slide Paragraph</span>
-                                                            <textarea placeholder="Slide Paragraph"></textarea>
-                                                        </label>
-                                                    </div>
-                                                    <div className="col-field"> 
-                                                        <label>
-                                                            <span>Background Media URL</span>
-                                                            <input placeholder="Background Media URL" />
-                                                        </label>
-                                                    </div>
-                                                    <div className="col-field">
-                                                        <label>
-                                                            <span>Video Poster URL (IMAGE)</span> 
-                                                            <input placeholder="Video Poster URL (IMAGE)" />
-                                                        </label>
-                                                    </div>
-                                                    <div className="col-field"> 
-                                                        <label>
-                                                            <span>Button Title</span> 
-                                                            <input placeholder="Button Title" />
-                                                        </label>
-                                                    </div>
-                                                    <div className="col-field"> 
-                                                        <label>
-                                                            <span>Button URL</span> 
-                                                            <input placeholder="Button URL" />
-                                                        </label>
-                                                    </div>
-                                                    <div className="col-field"> 
-                                                        <label>
-                                                            <span>Headline Styles</span>
-                                                            <textarea placeholder="Headline Styles"></textarea>
-                                                        </label>
-                                                    </div>
-                                                    <div className="col-field"> 
-                                                        <label>
-                                                            <span>Paragraph Styles</span>
-                                                            <textarea placeholder="Paragraph Styles"></textarea>
-                                                        </label>
-                                                    </div>
-                                                    <div className="col-field"> 
-                                                        <label>
-                                                            <span>Button Styles (Link) </span>
-                                                            <textarea placeholder="Button Styles"></textarea>
-                                                        </label>
-                                                    </div>
-                                                    <div className="col-field"> 
-                                                        <label>
-                                                            <span>Box Overlay Styles </span>
-                                                            <textarea placeholder="Overlay Styles"></textarea>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>   
-                                        )
-                                    }) 
-                                }
-                                
+                                <div style={{border:'1px solid #ddd', padding: '15px'}}>                                
+                                    {
+                                        
+                                        this.state.screens.length?
+                                        this.state.screens.map( (x, index) => <this.StoryComponent data={x} index={index} key={index}/>):
+                                        <div>
+                                            <b>No stories found!</b>
+                                        </div>
+                                    }
+                                </div>
                            
                             </div>
 
                             
                         </div>
                     </div>
+
+                    <div style={{position: "sticky", zIndex: "200", display: "flex", justifyContent: "space-between", bottom: "0", width: "100%", padding: "20px", background: "#f9f9f9", margin: "0 auto"}}>
+                        <a className="button red" style={{marginTop: "15px"}}>Delete Story</a>
+                        <div style={{display: "flex", gap: 10, alignItems: "center"}}>
+                            
+                            <label style={{display: "flex", gap: "10px", marginRight: "40px"}}>
+                                <input checked={this.state.is_published} onChange={e => this.setState({ is_published: !this.state.is_published })} type="checkbox" />
+                                Publish
+                            </label>
+                            
+                            <a onClick={this.save_story} className="button blue">
+                                {
+                                    ( this.state.is_pressed ) ?
+                                    <span className="loader"></span> : 
+                                    "Save"
+                                }
+                            </a>
+                        </div>
+                    </div>
+
                 </div>
             </section>
         )
