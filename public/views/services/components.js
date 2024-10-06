@@ -725,13 +725,14 @@ function TutorialsContent({ blocks, tutorials, ad_camp, settings }){
                  </Highlight>
                );
              case 'image':
+              var src = x?.data?.file?.url.replace("codedtag.com", "flatcoding.com")
                return (
                  <figure key={x.id}>
                    <Image
                      className={x?.data?.stretched ? 'full' : ''}//half
                      alt={x?.data?.caption}
                      height={250}
-                     src={x?.data?.file?.url}
+                     src={src}
                      width={x?.data?.file?.width}
                    />
                  </figure>
@@ -1139,13 +1140,15 @@ var ArticleContentSingle = ({blocks, helper}) => {
               </Highlight>
             )
           } else if (x.type == 'image') {
+            var src = x?.data?.file?.url.replace("codedtag.com", "flatcoding.com")
+              
             return (
               <figure key={x.id}> 
                     <Image
                         className={x?.data?.stretched ? 'full': ''}//half
                         alt={x?.data?.caption}
                         height={250}
-                        src={x?.data?.file?.url} // use normal <img> attributes as props
+                        src={src} // use normal <img> attributes as props
                         width={x?.data?.file?.width} /> 
               </figure>
             )
@@ -1170,14 +1173,15 @@ var ArticleContentSingle = ({blocks, helper}) => {
           } else if (x.type == 'list') {
             return <StyledList key={x.id} data={x.data} />
           } else if (x.type == 'customImage') {
-             
+            var src = x?.data?.url.replace("codedtag.com", "flatcoding.com")
+            
             return (
               <figure key={x.id}> 
                     <Image
                         className={x?.data?.stretched ? 'full': ''}//half
                         alt={x?.data?.alt}
                         height={320}
-                        src={x?.data?.url} // use normal <img> attributes as props
+                        src={src} // use normal <img> attributes as props
                         width={400} /> 
               </figure>
             )
@@ -1585,13 +1589,15 @@ var ArticleContent = ({blocks}) => {
               </Highlight>
             )
           } else if (x.type == 'image') {
+            var src = x?.data?.file?.url.replace("codedtag.com", "flatcoding.com")
+            
             return (
               <figure key={x.id}> 
                     <Image
                         className={x?.data?.stretched ? 'full': ''} //half
                         alt={x?.data?.caption}
                         height={250}
-                        src={x?.data?.file?.url} // use normal <img> attributes as props
+                        src={src} // use normal <img> attributes as props
                         width={x?.data?.file?.width} /> 
               </figure>
             )
@@ -1617,13 +1623,14 @@ var ArticleContent = ({blocks}) => {
             return <StyledList key={x.id} data={x.data} />
           } else if (x.type == 'customImage') {
              
+            var src = x?.data?.url.replace("codedtag.com", "flatcoding.com")
             return (
               <figure key={x.id}> 
                     <Image
                         className={x?.data?.stretched ? 'full': ''}//half
                         alt={x?.data?.alt}
                         height={320}
-                        src={x?.data?.url} // use normal <img> attributes as props
+                        src={src} // use normal <img> attributes as props
                         width={400} /> 
               </figure>
             )
