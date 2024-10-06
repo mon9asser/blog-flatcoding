@@ -9,6 +9,18 @@ class HelperData {
     return he.decode(text);  
   }
 
+  generateRandomStrings() {
+    var length = 15;
+    const characters = 'abcdefghijklmnopqrstuvwxyz';
+    let randomString = '';
+
+    for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        randomString += characters[randomIndex];
+    }
+
+    return randomString;
+  }
 
   validateEmail(email){
     // var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

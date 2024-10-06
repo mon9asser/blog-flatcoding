@@ -1,4 +1,21 @@
+
+webstory
+===================================
+id 
+screens 
+	screen_object		(adsense, slide)
+	template_name	
+	data
+	options
+meta
+	description
+	title
+	image_cover
+amp_story_props
+date_updated
+date_published 
 /* 
+
 
 ====================================
 Online server to do list

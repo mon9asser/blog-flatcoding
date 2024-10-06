@@ -13,7 +13,15 @@ const nextConfig = {
           },
           {
             protocol: 'https',
-            hostname: 'media.codedtag.com',
+            hostname: 'media.flatcoding.com',
+          },
+          {
+            protocol: 'https',
+            hostname: 'cdn.pixabay.com'
+          },
+          {
+            protocol: 'https',
+            hostname: 'unsplash.com'
           }
         ],
     },  

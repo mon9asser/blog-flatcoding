@@ -37,6 +37,7 @@ import { Redirects } from './components/redirects.js'
 import { MediaUploader } from './components/media.js';
 import { Users } from './components/users.js';
 import { WebStories } from './components/webstories.js';
+import { CreateWebStories } from './components/create-story.js';
 var WrappApplication = () => (
   
   <BrowserRouter> 
@@ -76,6 +77,9 @@ var WrappApplication = () => (
             
             <Route path='/dashboard/media' element={<MediaUploader/>} />
             <Route path='/dashboard/webstories' element={<WebStories/>} />
+
+            <Route path='/dashboard/create-story' element={<CreateWebStories/>} />
+            <Route path='/dashboard/edit-story/:story' element={<WebStories/>} />
             
             <Route path="/dashboard/redirects" element={<Redirects/>} />  
             
