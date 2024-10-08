@@ -142,17 +142,17 @@ app.get(Config.server.api + '/proxy', async (req, res) => {
         });
     }
 });
-
  
- /*
+ 
 // Start the server and listen on the specified port
 app.listen(Config.server.port, () => {
     console.log(`Server is running on port ${Config.server.port}`);
 });
  
 
-  */ 
+ 
 // Load SSL certificate and key
+/*
 const sslOptions = {
     key: fs.readFileSync('/etc/letsencrypt/live/flatcoding.com/privkey.pem'),
     cert: fs.readFileSync('/etc/letsencrypt/live/flatcoding.com/cert.pem'),
@@ -162,3 +162,5 @@ const sslOptions = {
 https.createServer(sslOptions, app).listen(Config.server.port, () => {
     console.log(`The server is running on port ${Config.server.port}`);
 });
+
+*/

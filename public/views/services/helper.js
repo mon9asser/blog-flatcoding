@@ -203,6 +203,7 @@ class HelperData {
 
     // generate token 
     var request = await this.generateToken();
+    
     if( request.status == 200 ) {
       var response = await request.json();
       if( ! response.is_error ) {

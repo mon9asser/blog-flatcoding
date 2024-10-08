@@ -183,7 +183,7 @@ var Slide_A = ({ headline, paragraph, media, overlay, link, text_mode, text_styl
             }
             
 
-            <amp-story-grid-layer template="verticall">
+            <amp-story-grid-layer template="vertical">
                 
                 <div style={{...position,  padding: '15px', borderRadius: '5px', ...custom_styles}}>
                     <h1 style={{...styling.headline, ...headline_text_mode}}>{title}</h1>

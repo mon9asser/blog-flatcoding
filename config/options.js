@@ -3,6 +3,7 @@ const { db_name } = require("./db")
  
 const Config = { 
     
+    /*
     dashboard_url: "https://admin.flatcoding.com/dashboard",
     media_url: `https://media.flatcoding.com`,
     site_url: "https://flatcoding.com",
@@ -10,8 +11,8 @@ const Config = {
     site_api: `https://api.flatcoding.com`, 
     login_url: "https://admin.flatcoding.com/login", 
     redirect_to: "/tutorials",
-    
-    /*
+    */
+
     dashboard_url: "http://localhost:3002/dashboard",
     media_url: `http://localhost:3000/uploads`, 
     site_api: `http://localhost:3000/api`, 
@@ -19,7 +20,7 @@ const Config = {
     admin: "http://localhost:3001",
     login_url: "http://localhost:3002/login", 
     redirect_to: "/tutorials",
-    */
+    
 
     server: {
         redirects: "",

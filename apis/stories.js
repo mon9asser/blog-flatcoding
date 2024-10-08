@@ -116,5 +116,41 @@ storiesRouter.post("/story/create", middlewareTokens, async (req, res) => {
 })
 
 
+storiesRouter.get("/story/get", async (req, res) => {
+  try {
+    const { slug } = req.query;  // Get the ID from query parameters
+     
+    // If an ID is provided, fetch the story by ID
+    if (slug) {
+      
+      const story = await WebStories.find({});
+       
+      if (!story) {
+        return res.status(404).json({
+          is_error: true,
+          message: "Story not found",
+          data: []
+        });
+      }
+
+      return res.status(200).json({
+        is_error: false,
+        message: "Story fetched successfully",
+        data: story
+      });
+    } 
+
+  } catch (error) {
+    console.error("Error fetching story/stories:", error);
+    return res.status(500).json({
+      is_error: true,
+      message: "Internal server error: " + error.message,
+      data: []
+    });
+  }
+});
+
+
+
 
 module.exports = { storiesRouter };
