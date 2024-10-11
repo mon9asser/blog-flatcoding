@@ -32,10 +32,12 @@ export default function Story({ upcoming }) {
   return (
     <>
       <Head>
-        <meta charSet="utf-8" />
-        {/* Set the title from server-side props */}
-        <title>{story?.title}</title>
+
+        <meta charset="utf-8"/> 
+        <title>{story?.meta_title}</title>
         <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" />
+        
+        
         <script async src="https://cdn.ampproject.org/v0.js"></script>
         <script async src="https://cdn.ampproject.org/v0/amp-video-0.1.js"></script>
         <script async src="https://cdn.ampproject.org/v0/amp-story-1.0.js"></script>
@@ -70,17 +72,25 @@ export async function getServerSideProps(context) {
   if( request.status == 200) {
     
     var json = await request.json();  
-    if( json.is_error || !json.data.length ) {
+
+ 
+    if( json.is_error || !json.data.story.length ) {
         return {
           notFound: true
         }
     } 
-
-     
+    
     var story = {};
     // working with story 
-    if( json.data.length ) {
-      story = json.data[0];
+    if( json.data.story.length ) {
+      story = json.data.story[0];
+      var settings = json.data.settings;
+       
+      // attach beside title beside_post_title
+      if( story.enable_besside_title && settings.beside_post_title != "" ) {
+        story.meta_title = story.meta_title + " " + settings.beside_post_title; 
+      }
+
     }
 
     

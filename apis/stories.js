@@ -5,7 +5,8 @@ var storiesRouter = express.Router();
 const fs = require('fs');
 const path = require('path');
 const { Config } = require('../config/options');
-
+const { Sets } = require('./../models/settings-model');
+ 
 storiesRouter.get("/story/templates", middlewareTokens, async (req, res) => {
 
     try {
@@ -117,37 +118,48 @@ storiesRouter.post("/story/create", middlewareTokens, async (req, res) => {
 
 
 storiesRouter.get("/story/get", async (req, res) => {
-  try {
-    const { slug } = req.query;  // Get the ID from query parameters
-     
-    // If an ID is provided, fetch the story by ID
-    if (slug) {
-      
-      const story = await WebStories.find({});
-       
-      if (!story) {
-        return res.status(404).json({
-          is_error: true,
-          message: "Story not found",
-          data: []
-        });
-      }
 
-      return res.status(200).json({
-        is_error: false,
-        message: "Story fetched successfully",
-        data: story
+  try {
+  
+    const { slug } = req.query;
+    var param = {};
+
+    if (slug) {
+      param = {
+        slug
+      }
+    }  
+
+    const story = await WebStories.find(param);
+    let settings = await Sets.find({})
+    if( settings && settings.length ) {
+      settings = settings[0];
+    }
+
+    if (!story) {
+      return res.send({
+        is_error: true,
+        message: "Story not found",
+        data: []
       });
-    } 
+    }
+
+    return res.send({
+      is_error: false,
+      message: "Story fetched successfully",
+      data: {story, settings}
+    });
 
   } catch (error) {
-    console.error("Error fetching story/stories:", error);
-    return res.status(500).json({
+
+    return res.send({
       is_error: true,
-      message: "Internal server error: " + error.message,
+      message: error.message || "Something went error!" ,
       data: []
     });
+
   }
+
 });
 
 

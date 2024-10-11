@@ -46,9 +46,7 @@ class WebStories extends Component {
                         this.state.templates.map( x => {
                             return (
                                 <li>
-                                    <a>
-                                        <img crossOrigin="anonymous" src={x.thumbnail} width="300" height="500"/>
-                                    </a>
+                                    <img crossOrigin="anonymous" src={x.thumbnail} width="300" height="500"/>
                                 </li>
                             );
                         })
