@@ -1,4 +1,50 @@
  
+ {
+  _id: '6708dcb7825d095a910137e6',
+  title: 'PHP Tutorial',
+  slug: 'story-php-tutorial',
+  description: 'this is a description for php tutorial',
+  meta_description: 'This is meta description of php story',
+  is_published: true,
+  enable_search_engine: true,
+  enable_besside_title: true,
+  canonical: 'this is can',
+  image_cover: 'https://images.unsplash.com/photo-1720048171230-c60d162f93a0?q=80&w=1374',
+  meta_title: 'Story Test: This is Astory',
+  screens: [
+    {
+      screen_object: 'slide',
+      template_name: 'layout-1',
+      open: true,
+      data: [Object]
+    }
+  ],
+  date_updated: '2024-10-11T08:07:21.108Z',
+  __v: 0
+}
+{
+  story: {
+    _id: '6708dcb7825d095a910137e6',
+    title: 'PHP Tutorial',
+    slug: 'story-php-tutorial',
+    description: 'this is a description for php tutorial',
+    meta_description: 'This is meta description of php story',
+    is_published: true,
+    enable_search_engine: true,
+    enable_besside_title: true,
+    canonical: 'this is can',
+    image_cover: 'https://images.unsplash.com/photo-1720048171230-c60d162f93a0?q=80&w=1374',
+    meta_title: 'Story Test: This is Astory',
+    screens: [ [Object] ],
+    date_updated: '2024-10-11T08:07:21.108Z',
+    __v: 0
+  }
+}
+
+
+
+
+
 <link rel="preconnect" href="https://cdn2.bustle.com" crossorigin="">
 <link rel="preconnect" href="https://cdn2c.bustle.com" crossorigin="">
 <link rel="preconnect" href="https://imgix.bustle.com">
