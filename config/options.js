@@ -27,6 +27,7 @@ const Config = {
         sitemap: "", // slug shuould be started with slash /
         robots: "", // slug shuould be started with slash /
         api: "/api",
+        compilers: "/compilers",
         port: 3000 
     },
     

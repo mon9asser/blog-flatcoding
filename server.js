@@ -84,6 +84,8 @@ const { redirectRouter } = require("./apis/redirect");
 const { utillRouter } = require("./apis/utils");
 const { storiesRouter }  = require("./apis/stories");
 
+const { compilerRouter } = require("./compilers")
+
 // Serve static files for React app
 // Middleware to serve static files for the main site
 // app.use(express.static(path.join(__dirname, 'public/views/build')));
@@ -115,6 +117,10 @@ app.use(Config.server.api, storiesRouter);
 // Sitemap and robots files
 app.use(Config.server.api, sitemapRouter);
 // app.use(Config.server.redirects, redirectsRouter);
+
+// Compilers 
+app.use(Config.server.compilers, compilerRouter );
+
 
 // Proxy route
 app.get(Config.server.api + '/proxy', async (req, res) => {
