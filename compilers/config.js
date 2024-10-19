@@ -1,7 +1,7 @@
 var executions = {
     javascript: 'node',
     php: 'php',
-    python: 'python'
+    python: 'python3'
 };
 
 module.exports = { executions };

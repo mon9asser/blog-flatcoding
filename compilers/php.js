@@ -5,9 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 
-
-
-
+ 
 const restrictedPHPFunctions = [
     'exec',       // Executes a system command
     'shell_exec', // Executes a shell command
@@ -41,6 +39,7 @@ const restrictedPHPFunctions = [
 ];
 
 const restrictedPatternsInPHP = [
+    /`[^`]*`/g,           // Detects backticks (`` `command` ``) used to execute system commands
     /eval\(/g,            // Detects use of eval()
     /shell_exec\(/g,      // Detects use of shell_exec()
     /system\(/g,          // Detects use of system()
