@@ -1,4 +1,41 @@
  
+
+
+
+ ====================================================
+
+  Compilers ( API + MODEL + .... ( UI, Interactions ) )
+  ==============================
+  title 
+  meta_title 
+  meta_description 
+  description 
+  slug 
+  thumbnail_url
+  language
+  keyphrase
+  allow_search_engine
+  canonical
+  prevent_codes []
+  created_at
+
+       prevent_codes => seperated by comma , prevent some code from fire like module, export etc ..
+
+
+  compilers_logs
+  =============================
+  compiler_id 
+  language
+  code_data 
+  create_date
+  execution_time
+  errors
+  user_ip 
+  block_user_ip 
+
+ ====================================================
+ 
+ 
  {
   _id: '6708dcb7825d095a910137e6',
   title: 'PHP Tutorial',
