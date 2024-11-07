@@ -202,8 +202,8 @@ export default function TabPost({upcoming}) {
                                     <div className="separator-div"></div> 
                                     {
                                         upcoming.tutorial.options.sidebar_content == 'chapters' && upcoming.chapters.length != 0 ?
-                                        <NextPrevPagination site_url={upcoming.site_url} tutorial_slug={upcoming.tutorial.slug} type='chapters' data={upcoming.chapters} current_post_slug={upcoming.post.slug}/>
-                                        : <NextPrevPagination site_url={upcoming.site_url} tutorial_slug={upcoming.tutorial.slug} type='posts' data={upcoming.posts} current_post_slug={upcoming.post.slug}/> 
+                                        <NextPrevPagination site_url={upcoming.site_url} tutorial_slug={upcoming.tutorial.slug} type='chapters' data={upcoming.chapters} current_post_slug={upcoming.post.slug} is_tab={true} />
+                                        : <NextPrevPagination site_url={upcoming.site_url} tutorial_slug={upcoming.tutorial.slug} type='posts' data={upcoming.posts} current_post_slug={upcoming.post.slug} is_tab={true}/> 
                                     } 
                                     <div className="separator-div"></div>
                                 </>
