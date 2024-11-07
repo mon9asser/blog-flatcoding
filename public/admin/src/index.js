@@ -38,6 +38,8 @@ import { MediaUploader } from './components/media.js';
 import { Users } from './components/users.js';
 import { WebStories } from './components/webstories.js';
 import { CreateWebStories } from './components/create-story.js';
+import { CreateCompiler } from './components/create-compiler.js';
+
 var WrappApplication = () => (
   
   <BrowserRouter> 
@@ -83,6 +85,9 @@ var WrappApplication = () => (
             
             <Route path="/dashboard/redirects" element={<Redirects/>} />  
             
+ 
+            <Route path="/dashboard/create-compiler" element={<CreateCompiler/>} />
+             
             
         </Routes>
       </AuthWrapper>

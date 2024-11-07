@@ -19,6 +19,7 @@ class CreateWebStories extends Component {
             id: null,
             // => (for save)
             title:'',
+            slug: '',
             description: '',
             meta_description: '',
             is_published: false, 
@@ -44,7 +45,8 @@ class CreateWebStories extends Component {
         var object_to_save = { 
             title: this.state.title, 
             description: this.state.description, 
-            meta_description: this.state.meta_description, 
+            meta_description: this.state.meta_description,
+            slug: this.state.slug,
             is_published: this.state.is_published, 
             enable_search_engine: this.state.enable_search_engine, 
             enable_besside_title: this.state.enable_besside_title, 
@@ -629,6 +631,9 @@ class CreateWebStories extends Component {
                                </div>
                                <div className="col-field"> 
                                     <input onChange={e => this.setState({meta_title: e.target.value})} value={this.state.meta_title} placeholder="Meta Title" />
+                               </div>
+                               <div className="col-field"> 
+                                    <input onChange={e => this.setState({slug: e.target.value})} value={this.state.slug} placeholder="Slug Name" />
                                </div>
                                <div className="col-field"> 
                                     <textarea onChange={e => this.setState({meta_description: e.target.value})} value={this.state.meta_description} placeholder="Meta Description"></textarea>

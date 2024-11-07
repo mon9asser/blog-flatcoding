@@ -58,6 +58,9 @@ var Permissions = [
             'webstories',
             'create-story',
             'edit-story',
+            'create-compiler',
+            'compilers',
+            'edit-compiler'
         ]
     }
 ]; 

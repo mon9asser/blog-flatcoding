@@ -1194,14 +1194,15 @@ var ArticleContentSingle = ({blocks, helper}) => {
   );     
 }
 
-var NextPrevPagination = ({site_url, tutorial_slug, type, data, current_post_slug}) => {
+var NextPrevPagination = ({site_url, tutorial_slug, type, data, current_post_slug, is_tab}) => {
      
-      
+  var isTab = is_tab == undefined ? false: is_tab;
+  
   var posts = data; 
   if(type == 'chapters') {
     posts = data.map(x => x.posts).flat();
   }
-
+   
   // get current index;
   var index = posts.findIndex( x => x.slug == current_post_slug );
 
@@ -1215,21 +1216,26 @@ var NextPrevPagination = ({site_url, tutorial_slug, type, data, current_post_slu
   
   var next_link = next == undefined ? '':`${site_url}tutorials/${tutorial_slug}/${next.slug}/`;
   var prev_link = prev == undefined ? '':`${site_url}tutorials/${tutorial_slug}/${prev.slug}/`;
+ 
+  if( isTab ) {
+    next_link = next == undefined ? '':`${site_url}tutorials/${tutorial_slug}/t/reference/${next.slug}/`;
+    prev_link = prev == undefined ? '':`${site_url}tutorials/${tutorial_slug}/t/reference/${prev.slug}/`;
+  }
 
   return (
     <div className="flexbox space-between pagination">
-        
+       
         {
           
           ( prev == undefined ) ? '':
         
-        <Link href={prev_link} className="flexbox direction-row items-center hover-to-left">
-            <i className="left-arrow-pagin"></i>
-            <span>
-                <span className="d-none d-sm-block">{Helper.decodeHtmlEntities(prev.post_title)}</span> 
-                <span className="d-block d-sm-none">Prev</span> 
-            </span>
-        </Link> 
+          <Link href={prev_link} className="flexbox direction-row items-center hover-to-left">
+              <i className="left-arrow-pagin"></i>
+              <span>
+                  <span className="d-none d-sm-block">{Helper.decodeHtmlEntities(prev.post_title)}</span> 
+                  <span className="d-block d-sm-none">Prev</span> 
+              </span>
+          </Link> 
         } 
 
         {
@@ -1246,6 +1252,8 @@ var NextPrevPagination = ({site_url, tutorial_slug, type, data, current_post_slu
     </div>
   );
 }
+
+
 
 var Breadcrumbs = ({data}) => {
   return (

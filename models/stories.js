@@ -11,6 +11,11 @@ let storiesSchema = new Schema({
         trim: true,
         default: ''
     },
+    slug: {
+        type: String,
+        trim: true,
+        default: 'webstory-example'
+    },
     description:  {
         type: String,
         trim: true,

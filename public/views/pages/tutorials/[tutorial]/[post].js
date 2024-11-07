@@ -70,8 +70,7 @@ export default function Post ({upcoming}) {
             }
         `;
     }
-
-     
+ 
 
     var json_data_var = `
                         {
@@ -332,11 +331,8 @@ export async function getServerSideProps(context) {
             api: `post-page/get?tut_name=${tutorial}&post_slug=${post}&tab=root`,
             method: "get",
             data: {}
-        }) 
+        }); 
         
-        
-        
- 
         if (!request.ok) {
             throw new Error('Server is offline');
         }

@@ -42,7 +42,9 @@ var Layout_1 = ({textData, link_data, overlay, media_cover, text_styles}) => {
 
     var media = media_cover ? media_cover: {url: ''}; 
     if( media_cover && media_cover.url != undefined && media_cover.url.indexOf('.mp4') != -1 ) {
+        // case it video, so bring the ogg src
         media.type = 'video';
+
     } else {
         media.type = 'image';
     }
