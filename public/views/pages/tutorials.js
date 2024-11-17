@@ -13,8 +13,8 @@ import {
 } from "./../services/components"; 
 
 
-export default function Tutorials({upcoming}) {
-    
+export default function Tutorials({upcoming, adsReady}) {
+     
     if(!upcoming) {
         return <ServerOffline/>
     }
@@ -90,7 +90,7 @@ export default function Tutorials({upcoming}) {
                     </div>
                 </header> 
                 <div className="lg-2-content tutorial-content content-section">
-                    <TutorialsContent settings={upcoming.settings} ad_camp={upcoming.ads} blocks={upcoming.blocks} tutorials={upcoming.tutorials}/>
+                    <TutorialsContent adsReady={adsReady} settings={upcoming.settings} ad_camp={upcoming.ads} blocks={upcoming.blocks} tutorials={upcoming.tutorials}/>
                 </div> 
             </div>
 
@@ -140,10 +140,11 @@ export async function getServerSideProps(context) {
                     notFound: true 
                 };
             }
+            
             if(json.settings.length) {
                 json.settings = json.settings[0];
             }
-    
+            
             var site_url = json.settings.site_address;
             if(site_url) {
                 var url_array = site_url.split('/');

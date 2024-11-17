@@ -1,3 +1,4 @@
+
 import { useState, useRef, createElement, useEffect } from "react";
 import { useRouter } from 'next/router';
 import { Fragment } from "react";
@@ -10,10 +11,7 @@ import Head from "next/head";
 import Highlight from 'react-highlight'
 import Image from "next/image"; 
 
- 
-const AdCompaignBox = dynamic(() => import("./../services/ad_campaign"), {
-    ssr: false,
-});
+import AdCompaignBox from "./ad_campaign";
 
 import {
   EmailShareButton,
@@ -161,7 +159,7 @@ function AdCompaignBoxOld({ position, data, classes }) {
 
 
 
-var GenerateTutorialContent_tab = ({ data, upcoming, built_url, ad_camp }) => {
+var GenerateTutorialContent_tab = ({ data, upcoming, built_url, ad_camp, adsReady }) => {
   // Split the data by the delimiter "|"
   const parts = data.split('|').map(part => part.trim());
 
@@ -178,7 +176,7 @@ var GenerateTutorialContent_tab = ({ data, upcoming, built_url, ad_camp }) => {
                   <LazyLoadYouTube cls="ifram-tut-youtube" url={src} />
                 </div>
 
-                <AdCompaignBox settings={upcoming.settings} data={ad_camp} position={'after_youtube_video_content_1'}/> 
+                { adsReady? <AdCompaignBox settings={upcoming.settings} data={ad_camp} position={'after_youtube_video_content_1'}/>: ""} 
             </Fragment>
           );
         }
@@ -192,7 +190,7 @@ var GenerateTutorialContent_tab = ({ data, upcoming, built_url, ad_camp }) => {
         // Chapters and posts shortcode
         else if (part.startsWith('[chapters-posts]')) {
           if(upcoming != undefined )
-            return <TutorialLinks key={index} ad_camp={ad_camp} built_url={built_url} upcoming={upcoming} />;
+            return <TutorialLinks key={index} ad_camp={ad_camp} built_url={built_url} upcoming={upcoming} adsReady={adsReady} />;
         } 
         // Default case: plain paragraph
         else {
@@ -204,7 +202,7 @@ var GenerateTutorialContent_tab = ({ data, upcoming, built_url, ad_camp }) => {
         }
       })}
 
-      <AdCompaignBox settings={upcoming.settings} data={ad_camp} position={'after_tutorial_description_1'}/>
+      { adsReady?<AdCompaignBox settings={upcoming.settings} data={ad_camp} position={'after_tutorial_description_1'}/>: "" }
     </>
   );
 }
@@ -411,7 +409,7 @@ var FeedBackBlock = ({data_id, data_title, feeadback_title }) => {
 
 }
 
-function SubscribeComponents ({is_footer, title, description, camp_data, settings }) {
+function SubscribeComponents ({is_footer, title, description, camp_data, settings, adsReady }) {
 
   var main_settings = settings; 
   
@@ -502,7 +500,7 @@ function SubscribeComponents ({is_footer, title, description, camp_data, setting
           
           {
             is_footer ? '':
-            <AdCompaignBox settings={main_settings} position="before_subscribe" data={camp_data}/> 
+            (adsReady ? <AdCompaignBox settings={main_settings} position="before_subscribe" data={camp_data}/>: "")
           }
           
           <form className="set-center form-group set-focus" action="/" method="get"> 
@@ -517,7 +515,7 @@ function SubscribeComponents ({is_footer, title, description, camp_data, setting
           </form>
           {
             is_footer ? '':
-            <AdCompaignBox settings={main_settings} position="after_subscribe" data={camp_data}/> 
+            (adsReady? <AdCompaignBox settings={main_settings} position="after_subscribe" data={camp_data}/> : '') 
           }
           
         </div>
@@ -527,7 +525,13 @@ function SubscribeComponents ({is_footer, title, description, camp_data, setting
 
 
 
-var TutorialLinks = ({upcoming, built_url, ad_camp}) => {
+
+
+
+
+
+
+var TutorialLinks = ({upcoming, built_url, ad_camp, adsReady}) => {
   
   var counter_ads = 0;
   var ads_every = upcoming.settings?.ads_between_navs_in_chapters ?upcoming.settings.ads_between_navs_in_chapters: 4;
@@ -547,7 +551,7 @@ var TutorialLinks = ({upcoming, built_url, ad_camp}) => {
                        
                       return ( 
                         <Fragment key={chapter._id} > 
-                          { (k % ads_every == 0 ) &&  <AdCompaignBox settings={upcoming.settings} data={ad_camp} position={`between_row_ad_${counter_ads}`}/>}
+                          { (k % ads_every == 0 ) &&  ( adsReady? <AdCompaignBox settings={upcoming.settings} data={ad_camp} position={`between_row_ad_${counter_ads}`}/>: '')}
                           <TutorialsList built_url={built_url} data={chapter.posts} chapter_title={chapter.chapter_title} index={k}/>
                         </Fragment>
                        );
@@ -562,7 +566,7 @@ var TutorialLinks = ({upcoming, built_url, ad_camp}) => {
                           }
                           return ( 
                           <Fragment key={k} >
-                              { (k % ads_every == 0 ) &&  <AdCompaignBox settings={upcoming.settings} data={ad_camp} position={`between_row_ad_${counter_ads}`}/>}
+                              { (k % ads_every == 0 ) && ( adsReady? <AdCompaignBox settings={upcoming.settings} data={ad_camp} position={`between_row_ad_${counter_ads}`}/>: '')}
                               <TutorialsList built_url={built_url} data={posts} index={k}/>
                            </Fragment>
                         );
@@ -576,7 +580,23 @@ var TutorialLinks = ({upcoming, built_url, ad_camp}) => {
 }
 
 
-var GenerateTutorialContent_2 = ({ data, upcoming, built_url, ad_camp }) => {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var GenerateTutorialContent_2 = ({ data, upcoming, built_url, ad_camp, adsReady }) => {
 
   // Split the data by the delimiter "|"
   const parts = data.split('|').map(part => part.trim());
@@ -593,7 +613,7 @@ var GenerateTutorialContent_2 = ({ data, upcoming, built_url, ad_camp }) => {
                 <div className="mt-25">
                   <LazyLoadYouTube cls="ifram-tut-youtube" url={src} />
                 </div> 
-                 <AdCompaignBox settings={upcoming.settings} data={ad_camp} position={'after_youtube_video_content_2'}/>
+                 {adsReady ? <AdCompaignBox settings={upcoming.settings} data={ad_camp} position={'after_youtube_video_content_2'}/>: "" }
             </Fragment>
           );
         }
@@ -607,7 +627,7 @@ var GenerateTutorialContent_2 = ({ data, upcoming, built_url, ad_camp }) => {
         // Chapters and posts shortcode
         else if (part.startsWith('[chapters-posts]')) {
           if(upcoming != undefined )
-            return <TutorialLinks ad_camp={ad_camp} key={index} built_url={built_url} upcoming={upcoming} />;
+            return <TutorialLinks adsReady={adsReady} ad_camp={ad_camp} key={index} built_url={built_url} upcoming={upcoming} />;
         } 
         // Default case: plain paragraph
         else {
@@ -619,7 +639,7 @@ var GenerateTutorialContent_2 = ({ data, upcoming, built_url, ad_camp }) => {
         }
       })} 
       
-      <AdCompaignBox settings={upcoming.settings} classes='wrapper chapter-elements max-1150 offset-left offset-right mt-30 flexbox gap-20 flex-wrap content-center' data={ad_camp} position={'after_tutorial_description_2'}/>
+      {adsReady? <AdCompaignBox settings={upcoming.settings} classes='wrapper chapter-elements max-1150 offset-left offset-right mt-30 flexbox gap-20 flex-wrap content-center' data={ad_camp} position={'after_tutorial_description_2'}/>: "" }
     </>
   );
 
@@ -699,11 +719,10 @@ var TutorialsList = ({ index, data, chapter_title, built_url }) => {
   );
 }
 
-function TutorialsContent({ blocks, tutorials, ad_camp, settings }){
+function TutorialsContent({ blocks, tutorials, ad_camp, settings, adsReady }){
   // console.log(ad_camp);
    var header_count = 0;
-   var end_section = 0;
-
+   var end_section = 0; 
    return (
      <Fragment>
        {blocks?.map(( x, ind ) => {
@@ -741,21 +760,31 @@ function TutorialsContent({ blocks, tutorials, ad_camp, settings }){
                header_count += 1;
 
                return <Fragment key={`${x.id}-block-header`}>
-               <AdCompaignBox settings={settings}
-                 key={`${x.id}-ad-before`}
-                 position={`before_section_title_${header_count}`}
-                 data={ad_camp}
-               />
+                {
+                  adsReady ?
+                  <>
+                    <AdCompaignBox settings={settings}
+                      key={`${x.id}-ad-before`}
+                      position={`before_section_title_${header_count}`}
+                      data={ad_camp}
+                    />
+                    <b>{header_count}</b>
+                  </>
+                   : ""
+                }
                {createElement(
                  `h${Math.min(Math.max(x?.data?.level, 1), 6)}`,
                  { key: `${x.id}-heading`, style: { textAlign: x?.data?.alignment } },
                  Helper.decodeHtmlEntities(x?.data?.text)
                )}
-               <AdCompaignBox settings={settings}
-                 key={`${x.id}-ad-after`}
-                 position={`after_section_title_${header_count}`}
-                 data={ad_camp}
-               />
+                {
+                  adsReady ?
+                  <AdCompaignBox settings={settings}
+                    key={`${x.id}-ad-after`}
+                    position={`after_section_title_${header_count}`}
+                    data={ad_camp}
+                  />: ""
+                }
              </Fragment>;
              case 'youtubeEmbed':
                return <LazyLoadYouTube key={x.id} url={x.data?.url} />;
@@ -815,12 +844,15 @@ function TutorialsContent({ blocks, tutorials, ad_camp, settings }){
                          </div>
                        ))}
                      </div>
-
+                    
+                    { 
+                     adsReady ?
                      <AdCompaignBox settings={settings}
                        key={`${x.id}-ad-end-of-section`}
                        position={`end_of_category_section_${end_section}`}
                        data={ad_camp}
-                     />
+                     />: ""
+                      }
 
                    </Fragment>
                  );
@@ -887,7 +919,7 @@ var LazyLoadYouTube = ({ url, width = '560', height = '315', cls='' }) => {
   );
 }
 
-var GenerateTutorialContent_1 = ({ data, upcoming, built_url, ad_camp }) => {
+var GenerateTutorialContent_1 = ({ data, upcoming, built_url, ad_camp, adsReady }) => {
   // Split the data by the delimiter "|"
   const parts = data.split('|').map(part => part.trim());
 
@@ -904,7 +936,7 @@ var GenerateTutorialContent_1 = ({ data, upcoming, built_url, ad_camp }) => {
                   <LazyLoadYouTube cls="ifram-tut-youtube" url={src} />
                 </div>
 
-                 <AdCompaignBox settings={upcoming.settings} data={ad_camp} position={'after_youtube_video_content_1'}/> 
+                 {adsReady? <AdCompaignBox settings={upcoming.settings} data={ad_camp} position={'after_youtube_video_content_1'}/>: ""} 
             </Fragment>
           );
         }
@@ -918,7 +950,7 @@ var GenerateTutorialContent_1 = ({ data, upcoming, built_url, ad_camp }) => {
         // Chapters and posts shortcode
         else if (part.startsWith('[chapters-posts]')) {
           if(upcoming != undefined )
-            return <TutorialLinks key={index} ad_camp={ad_camp} built_url={built_url} upcoming={upcoming} />;
+            return <TutorialLinks adsReady={adsReady} key={index} ad_camp={ad_camp} built_url={built_url} upcoming={upcoming} />;
         } 
         // Default case: plain paragraph
         else {
@@ -930,7 +962,7 @@ var GenerateTutorialContent_1 = ({ data, upcoming, built_url, ad_camp }) => {
         }
       })}
 
-       <AdCompaignBox settings={upcoming.settings} data={ad_camp} position={'after_tutorial_description_1'}/>
+      {adsReady ? <AdCompaignBox settings={upcoming.settings} data={ad_camp} position={'after_tutorial_description_1'}/>: "" }
     </>
   );
 }
@@ -1083,7 +1115,7 @@ var SocialShare = ({platforms, url, title, radius, size, width, height}) => {
 }
 
 
-var ArticleContentSingle = ({blocks, helper}) => {
+var ArticleContentSingle = ({blocks, helper, adsReady}) => {
       
   var subheadings = blocks.filter(x => x.type == 'header' && x.id != 'header-level-1' ).map(x => ({
     href: Helper.generate_slugs(x?.data?.text),
@@ -1119,7 +1151,8 @@ var ArticleContentSingle = ({blocks, helper}) => {
             var ad_campaign_element = '';
             if( text_counter >= words_every ) {
               ad_counter++; 
-              ad_campaign_element =  <AdCompaignBox settings={settings} data={ads} position={`inside_content_${ad_counter}`}/>;
+              var elm_ent = adsReady ? <AdCompaignBox settings={settings} data={ads} position={`inside_content_${ad_counter}`}/>: ''
+              ad_campaign_element = elm_ent ;
               text_counter = 0;
             }
             
@@ -1263,7 +1296,7 @@ var Breadcrumbs = ({data}) => {
   );
 }
 
-var ArticleSidebar = ({type, data, site_url, tutorial_slug, current_post_slug, tab_slug, helper}) => {
+var ArticleSidebar = ({type, data, site_url, tutorial_slug, current_post_slug, tab_slug, helper, adsReady}) => {
 
   var settings = null, ads = []; 
   if( helper != undefined ) {
@@ -1366,7 +1399,7 @@ var ArticleSidebar = ({type, data, site_url, tutorial_slug, current_post_slug, t
 
               </ul>
                
-               <AdCompaignBox settings={settings} data={ads} position={`in_sidebar_${elem_list}`}/>
+              { adsReady? <AdCompaignBox settings={settings} data={ads} position={`in_sidebar_${elem_list}`}/>: "" }
                 
             </Fragment>
           )
@@ -1406,7 +1439,7 @@ var ArticleSidebar = ({type, data, site_url, tutorial_slug, current_post_slug, t
               </ul>
 
               {
-                x.length >= settings.ads_between_navs_every_list ?  <AdCompaignBox settings={settings} data={ads} position={`in_sidebar_${elem_list}`}/>: ''
+                x.length >= settings.ads_between_navs_every_list ?  (adsReady? <AdCompaignBox settings={settings} data={ads} position={`in_sidebar_${elem_list}`}/>: ""): ''
               }
             </Fragment>
           )

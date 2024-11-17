@@ -230,6 +230,7 @@ export default function Home({upcoming, adsReady}){
                                 { adsReady? <AdCompaignBox settings={upcoming.settings} position="before_title" data={upcoming.ads}/> : ""}
 
                                 <SubscribeComponents  
+                                    adsReady={adsReady}
                                     camp_data={upcoming.ads}
                                     is_footer={false}
                                     settings={upcoming.settings}

@@ -22,9 +22,9 @@ import {
 import parse from 'html-react-parser' 
 import Head from "next/head"; 
  
-export default function Post ({upcoming}) {
+export default function Post ({upcoming, adsReady}) {
     
-
+    
     
     if(!upcoming) {
         return <ServerOffline/>
@@ -156,12 +156,12 @@ export default function Post ({upcoming}) {
                             <div className="md-4 md-1-half plr-20 main-sidebar flex-order-2-md">
                                 <StickyBox offsetTop={85} offsetBottom={20}>
                                     
-                                     <AdCompaignBox settings={upcoming.settings} data={upcoming?.ads} position={'before_sidebar'} />
+                                     {adsReady?<AdCompaignBox settings={upcoming.settings} data={upcoming?.ads} position={'before_sidebar'} />: ''}
                                     
                                     {
                                         upcoming?.tutorial.options.sidebar_content == 'chapters' && upcoming?.chapters.length != 0 ?
-                                        <ArticleSidebar helper={{ads: upcoming?.ads, settings:upcoming?.settings}} site_url={upcoming?.site_url} tutorial_slug={upcoming?.tutorial.slug} type='chapters' data={upcoming?.chapters} current_post_slug={upcoming?.post.slug}/> 
-                                        : <ArticleSidebar helper={{ads: upcoming?.ads, settings:upcoming?.settings}} site_url={upcoming?.site_url} tutorial_slug={upcoming?.tutorial.slug} type='posts' data={upcoming?.posts} current_post_slug={upcoming?.post.slug}/> 
+                                        <ArticleSidebar adsReady={adsReady} helper={{ads: upcoming?.ads, settings:upcoming?.settings}} site_url={upcoming?.site_url} tutorial_slug={upcoming?.tutorial.slug} type='chapters' data={upcoming?.chapters} current_post_slug={upcoming?.post.slug}/> 
+                                        : <ArticleSidebar adsReady={adsReady} helper={{ads: upcoming?.ads, settings:upcoming?.settings}} site_url={upcoming?.site_url} tutorial_slug={upcoming?.tutorial.slug} type='posts' data={upcoming?.posts} current_post_slug={upcoming?.post.slug}/> 
                                     }
                                     
                                     
@@ -173,7 +173,7 @@ export default function Post ({upcoming}) {
                         <div className={`plr-20 md-2-content main-content flex-order-1-md ${upcoming?.tutorial.options.sidebar_content == 'none'?'md-9 auto-sides': 'md-8'}`}>
                             <div className="max-1150 offset-left offset-right demove-ads">
                                 
-                                 <AdCompaignBox settings={upcoming.settings} data={upcoming?.ads} position={'before_title'}/>
+                                 {adsReady?<AdCompaignBox settings={upcoming.settings} data={upcoming?.ads} position={'before_title'}/>: ''}
 
                                 <header className="flexbox content-center column-direction mb-30">
                                     
@@ -200,10 +200,10 @@ export default function Post ({upcoming}) {
                                     </i>
                                 </header> 
 
-                                <AdCompaignBox settings={upcoming.settings} data={upcoming?.ads} position={'after_title'}/>
+                                {adsReady?<AdCompaignBox settings={upcoming.settings} data={upcoming?.ads} position={'after_title'}/>: ''}
                                     
                                 <div className="lg-2-content tutorial-content content-section">
-                                    <ArticleContentSingle helper={{ads: upcoming?.ads, settings: upcoming?.settings}} blocks={upcoming?.post.blocks}/>
+                                    <ArticleContentSingle adsReady={adsReady} helper={{ads: upcoming?.ads, settings: upcoming?.settings}} blocks={upcoming?.post.blocks}/>
                                 </div>
 
 
@@ -257,7 +257,7 @@ export default function Post ({upcoming}) {
                                 }
                             </div>
                             
-                             <AdCompaignBox settings={upcoming.settings} data={upcoming?.ads} position={`after_contents`}/>
+                             {adsReady?<AdCompaignBox settings={upcoming.settings} data={upcoming?.ads} position={`after_contents`}/>: ''}
 
                             <FeedBackBlock data_id={upcoming?.post._id} data_title={upcoming?.post.post_title}/>
                         </div>

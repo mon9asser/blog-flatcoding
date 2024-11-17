@@ -13,9 +13,9 @@ export default function MyApp({ Component, pageProps }) {
    
   
   var settings = (pageProps.upcoming == undefined || pageProps == undefined) ? null: pageProps.upcoming.settings; 
-  var adsense_account = 'ca-pub-xxxxxxxxxxxxx';// settings != null && settings.google_ads.enabled ? settings.google_ads.field: '';
+  var adsense_account = settings != null && settings.google_ads.enabled ? settings.google_ads.field: '';
   var [adsReady, setAdsReady] = useState(false);
-
+  
   return (
     <div className={poppins.className}>
         
