@@ -17,13 +17,14 @@ const AdCompaignBox = dynamic(() => import("./../services/ad_campaign"), {
 });
 */
 import AdCompaignBox from "./../services/ad_campaign";
+
 import { 
     SubscribeComponents,
     ServerOffline
 } from "./../services/components"; 
 import { notFound } from "next/navigation";
 
-export default function Home({upcoming}){
+export default function Home({upcoming, adsReady}){
      
     if(!upcoming) {
         return <ServerOffline/>
@@ -226,9 +227,10 @@ export default function Home({upcoming}){
                         <div className="row offset-left offset-right max-1172 mlr--30 ptb-50 section-subscribe">
                             <div className={`lg-7 md-7 sm-12 flexbox content-center items-start column-direction p-all-30 ${upcoming.settings.banner_image_url == "" ? 'offset-left offset-right text-center': ''}`}>                                      
                                 
-                                <AdCompaignBox settings={upcoming.settings} position="before_title" data={upcoming.ads}/> 
+                                { adsReady? <AdCompaignBox settings={upcoming.settings} position="before_title" data={upcoming.ads}/> : ""}
 
                                 <SubscribeComponents  
+                                    adsReady={adsReady}
                                     camp_data={upcoming.ads}
                                     is_footer={false}
                                     settings={upcoming.settings}
@@ -259,15 +261,17 @@ export default function Home({upcoming}){
                     </div>
                     <div className="feature-block">
                         <div className="max-1172 offset-left offset-right row plr-15 mlr--30 ptb-50 section-tutorials">
-                            <AdCompaignBox settings={upcoming.settings} position="before_section_2" data={upcoming.ads}/> 
+                            { adsReady? <AdCompaignBox settings={upcoming.settings} position="before_section_2" data={upcoming.ads}/>: ""} 
                             <SiteFeaturesSection/>
-                            <AdCompaignBox settings={upcoming.settings} position="after_section_2" data={upcoming.ads}/> 
+                            { adsReady? <AdCompaignBox settings={upcoming.settings} position="after_section_2" data={upcoming.ads}/>: ""}
                         </div>
                     </div>
                     <div className="row offset-left offset-right plr-15 mlr--30 ptb-50 max-1172">
-                        <AdCompaignBox settings={upcoming.settings} position="before_section_3" data={upcoming.ads}/> 
+
+                        { adsReady ? <AdCompaignBox settings={upcoming.settings} position="before_section_3" data={upcoming.ads}/>: '' }
                         <TutorialsSection/>
-                        <AdCompaignBox settings={upcoming.settings} position="after_section_3" data={upcoming.ads}/>
+                        { adsReady ? <AdCompaignBox settings={upcoming.settings} position="after_section_3" data={upcoming.ads}/>: "" }
+                    
                     </div> 
                 </div>
             </section> 

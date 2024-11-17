@@ -13,11 +13,27 @@ export default function MyApp({ Component, pageProps }) {
    
   
   var settings = (pageProps.upcoming == undefined || pageProps == undefined) ? null: pageProps.upcoming.settings; 
+  var adsense_account = settings != null && settings.google_ads.enabled ? settings.google_ads.field: '';
+  var [adsReady, setAdsReady] = useState(false);
   
   return (
     <div className={poppins.className}>
-        <Component {...pageProps} />
         
+        
+        { 
+          ( settings != null && settings.google_ads.enabled ) && (
+            <Script
+              async
+              src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsense_account}`}
+              crossOrigin="anonymous" 
+              strategy="afterInteractive"
+              onLoad={() => {
+                console.log('Ads are ready');
+                setAdsReady(true);
+              }}
+            />
+          )  
+        }
 
         {
           // Google Analytics 
@@ -45,24 +61,13 @@ export default function MyApp({ Component, pageProps }) {
           )
         }
         
+        <Component {...pageProps} adsReady={adsReady} />
         <Head>
             <link rel="manifest" href="/icons/manifest.json" />
             <meta name="theme-color" content="#000000" />
             <meta name="viewport" content="width=device-width, initial-scale=1" />
             <link rel="icon" href="/icons/favicon.ico" />
             <link rel="apple-touch-icon" href="/icons/logo192.png" /> 
-        
-            { 
-              ( settings != null && settings.google_ads.enabled ) && (
-                <script
-                  async
-                  id="adsbygoogle-script-tag"
-                  src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${settings.google_ads.field}`}
-                  crossOrigin="anonymous" 
-                />
-              )  
-            }
-
         </Head>
     </div>
   );
