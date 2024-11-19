@@ -870,7 +870,7 @@ postRouter.get("/tutorials-page/get", middlewareTokens, async (req, res) => {
         const users = await Usr.find({email: "moun2030@gmail.com"});
         const tutorials = await Tutorial.find({"options.publish": true })
        // const ads = await AdCampaign.find({page: 'tutorial_page', is_enabled: true });
-        const ads = await AdCampaign.find({page: page_template, is_enabled: true });
+        const ads = await AdCampaign.find({page: 'all_tutorials_page', is_enabled: true });
 
         var social_links = [];
 

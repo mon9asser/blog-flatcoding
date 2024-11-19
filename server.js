@@ -84,7 +84,7 @@ const { redirectRouter } = require("./apis/redirect");
 const { utillRouter } = require("./apis/utils");
 const { storiesRouter }  = require("./apis/stories");
 
-const { compilerRouter } = require("./compilers")
+// const { compilerRouter } = require("./compilers")
 
 // Serve static files for React app
 // Middleware to serve static files for the main site
@@ -104,6 +104,7 @@ app.use(Config.server.api, categoryRouter);
 app.use(Config.server.api, settingsRouter);
 app.use(Config.server.api, postRouter);
 app.use(Config.server.api, tutorialRouter);
+
 app.use(Config.server.api, chapterRouter);
 app.use(Config.server.api, menuRouter);
 app.use(Config.server.api, adCampaignRouter);
@@ -119,7 +120,7 @@ app.use(Config.server.api, sitemapRouter);
 // app.use(Config.server.redirects, redirectsRouter);
 
 // Compilers 
-app.use(Config.server.compilers, compilerRouter );
+// app.use(Config.server.compilers, compilerRouter );
 
 
 // Proxy route
