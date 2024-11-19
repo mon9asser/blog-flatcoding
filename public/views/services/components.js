@@ -767,8 +767,7 @@ function TutorialsContent({ blocks, tutorials, ad_camp, settings, adsReady }){
                       key={`${x.id}-ad-before`}
                       position={`before_section_title_${header_count}`}
                       data={ad_camp}
-                    />
-                    <b>{header_count}</b>
+                    /> 
                   </>
                    : ""
                 }

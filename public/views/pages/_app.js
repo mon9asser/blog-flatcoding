@@ -9,17 +9,26 @@ const poppins = Poppins({
   display: 'swap',
 });
 
-export default function MyApp({ Component, pageProps }) {
+export default function MyApp({ Component, pageProps  }) {
    
   
+ 
+ 
   var settings = (pageProps.upcoming == undefined || pageProps == undefined) ? null: pageProps.upcoming.settings; 
-  var adsense_account = settings != null && settings.google_ads.enabled ? settings.google_ads.field: '';
   var [adsReady, setAdsReady] = useState(false);
-  
+  const [isLocalhost, setIsLocalhost] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setIsLocalhost(window.location.hostname === 'localhost');
+    }
+  }, []);
+ 
+  var adsense_account = isLocalhost ?'ca-pub-xxxxxxxxxxx':settings != null && settings.google_ads.enabled ? settings.google_ads.field: '';
+
   return (
     <div className={poppins.className}>
-        
-        
+         
         { 
           ( settings != null && settings.google_ads.enabled ) && (
             <Script
@@ -72,5 +81,7 @@ export default function MyApp({ Component, pageProps }) {
     </div>
   );
 }
+
+
 
  

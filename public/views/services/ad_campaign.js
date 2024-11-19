@@ -94,6 +94,14 @@ export default function AdCompaignBox({ position, data, classes, settings }) {
     }
   }, []);
   
+
+
+  // if current server is localhost so replace ids of adsense account to test 
+  if( window.location.host.indexOf('localhost') != -1 ) {
+    dataAttributes['data-ad-client'] = 'ca-pub-xxxxxxxxxxxxxxxx';
+    dataAttributes['data-ad-slot'] = '123456';
+  }
+  
   // google ads
   return (
     <div className="">
