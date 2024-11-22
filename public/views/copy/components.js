@@ -686,9 +686,7 @@ const ResponsiveTable = ({ data }) => {
                   {content.slice(withHeadings ? 1 : 0).map((row, rowIndex) => (
                       <tr key={rowIndex}>
                           {row.map((cell, cellIndex) => (
-                              <td key={cellIndex} data-label={withHeadings ? content[0][cellIndex] : `Column ${cellIndex + 1}`}>
-                                <span dangerouslySetInnerHTML={{__html: Helper.decodeHtmlEntities(cell)}}/>
-                              </td>
+                              <td key={cellIndex} data-label={withHeadings ? content[0][cellIndex] : `Column ${cellIndex + 1}`} dangerouslySetInnerHTML={{__html: Helper.decodeHtmlEntities(cell)}}/>
                           ))}
                       </tr>
                   ))}
@@ -1523,8 +1521,9 @@ const TableOfContent = ({ data }) => {
   );
 };
 
-/*
 const FaqsSection = ({ faqs_section }) => {
+
+  
   // Initialize all answers as collapsed (false)
   const [isExpanded, setIsExpanded] = useState(faqs_section.map(() => false));
 
@@ -1597,121 +1596,6 @@ const FaqsSection = ({ faqs_section }) => {
     </div>
   );
 };
-*/
-
- 
-const FaqsSection = ({ faqs_section }) => {
-  const [isExpanded, setIsExpanded] = useState(faqs_section.map(() => false));
-  const [hasPadding, setHasPadding] = useState(faqs_section.map(() => false));
-
-  const toggleExpansion = (currentIndex) => {
-    setIsExpanded((prevState) =>
-      prevState.map((item, index) => (index === currentIndex ? !item : false))
-    );
-
-    // Manage padding state after the transition
-    setTimeout(() => {
-      setHasPadding((prevState) =>
-        prevState.map((item, index) =>
-          index === currentIndex ? !item : false
-        )
-      );
-    }, 300); // Match the transition duration
-  };
-
-  var hasHtmlTags = (str) => {
-      const htmlTagRegex = /<\/?[a-z][\s\S]*>/i;
-      return htmlTagRegex.test(str);
-  }
-
-
-  return (
-    <div className="faqs-section">
-      <h3>Frequently Asked Questions (FAQs)</h3>
-      <ul>
-        {faqs_section.map((faq, index) => {
-          const answerParts = faq.answer.split(
-            /\{\`\*class=['"]([^'"]+)['"]\*\s([^`]*)\`\}/g
-          );
-
-          
-          const processedAnswer = answerParts.map((part, idx) => {
-            if (idx % 3 === 0) {
-              return part.split(/(?<!\|)\|(?!\|)/g).map((segment, i) => {
-
-                const inlineProcessed = segment
-                  .split(/`([^`]*)`/g)
-                  .map((inlinePart, j) => {
-                    console.log(inlinePart);
-                    return j % 2 === 0 ? (
-
-                      hasHtmlTags(inlinePart) ? <div key={`${idx}-${i}-${j}`} dangerouslySetInnerHTML={{__html: inlinePart }} />: <span key={`${idx}-${i}-${j}`}>{inlinePart}</span>
-                      
-                    ) : (
-                      <code key={`${idx}-${i}-${j}`} className="inline-code">
-                        {inlinePart}
-                      </code>
-                    );
-                  });
-                
-                 
-                return <div key={`${idx}-${i}`}>{inlineProcessed}</div>;
-              });
-            } else if (idx % 3 === 1) {
-              const className = part;
-              const codeValue = answerParts[idx + 1];
-              return (
-                <Highlight key={idx} className={className}>
-                  {codeValue}
-                </Highlight>
-              );
-            } else {
-              return null;
-            }
-          });
-
-          return (
-            <li key={index}>
-              <h4
-                style={{
-                  borderBottomWidth: isExpanded[index] ? "1px" : "0",
-                }}
-                onClick={() => toggleExpansion(index)}
-                className="faq-question"
-              >
-                <span>{faq.question}</span>
-                <span
-                  className={`faq-arrow ` + (isExpanded[index] ? "expanded" : "")}
-                ></span>
-              </h4>
-              <div
-                className="faq-answer"
-                ref={(el) => {
-                  if (el && isExpanded[index]) {
-                    el.style.maxHeight = `${el.scrollHeight}px`;
-                  } else if (el) {
-                    el.style.maxHeight = "0";
-                  }
-                }}
-                style={{
-                  overflow: "hidden",
-                  transition: "max-height 0.3s ease, opacity 0.3s ease",
-                  opacity: isExpanded[index] ? 1 : 0, 
-                }}
-              >
-                <div style={{padding: '20px'}}>
-                  {processedAnswer}
-                </div>
-              </div>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
-  );
-};
-
-
 
 
 var ArticleContent = ({blocks}) => {

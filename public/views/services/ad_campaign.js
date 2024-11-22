@@ -101,7 +101,7 @@ export default function AdCompaignBox({ position, data, classes, settings }) {
     dataAttributes['data-ad-client'] = 'ca-pub-xxxxxxxxxxxxxxxx';
     dataAttributes['data-ad-slot'] = '123456';
   }
-  
+ 
   // google ads
   return (
     <div className="">

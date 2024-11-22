@@ -321,29 +321,19 @@ textarea:focus {
 
   .list-container ul,
   .list-container ol {
-    list-style: none !important; 
+    
   } 
   .list-container ul li,
   .list-container ol li {
-    position: relative;
+    position: relative;   
   }
-  .list-container ul li::before {
-    content: '';
-    position: absolute;
-    left: -20px;
-    top: 50%; 
-    width: 6.2px;
-    height: 6.2px;
-    background-color:#0a0a23;   
-    display: block;
-    border-radius: 50%;
-    transition: transform 0.3s ease, background-color 0.3s ease, outline 0.3s ease;
-  }
+ 
   .list-container ol li {
     counter-increment: item;
     margin-left: 35px !important;
     
-    }
+}
+
   .list-container ol li::before {
     font-size: 12px !important;
     content: counter(item);
@@ -1210,7 +1200,7 @@ ul li a.expanded-a::after{
  }
 
  .faqs-section ul li div {
-    padding: 13px 10px;
+   /* padding: 13px 10px;*/
     font-size: 14px;
     color: #0a0a23;
     line-height: 1.6;
@@ -1223,9 +1213,10 @@ ul li a.expanded-a::after{
     margin: 0px 2px;
     border-radius: 3px;
  }
- .faqs-section ul li div > * {
-    margin-bottom: 10px;
+ .faqs-section ul li div > *:not(:last-child) {
+    margin-bottom: 10px; 
  } 
+ 
 
  .faq-question {
     cursor: pointer;
@@ -1262,3 +1253,96 @@ ul li a.expanded-a::after{
  .faq-arrow {
     background-color: red;
  }
+
+ ins[data-ad-status="unfilled"] {
+    display: none !important;
+ }
+
+ .faqs-section ul ul {
+    list-style: outside;
+ }
+ .faqs-section ul ul,
+ .faqs-section ul ol {
+    border: none;
+    display: block;
+    width: 100%;
+    padding-left: 20px;
+    margin-top: 15px;
+ } 
+
+ .faqs-section ul ul li ,
+ .faqs-section ul ol li {
+    border: none;
+    margin-bottom: 3px;
+ }
+
+ .table-container table {
+    margin: 0 !important;
+ }
+
+ 
+ table.table thead th { 
+    /* background-color: #e5e5e5 !important;   */
+    padding: 5px;
+    font-size: 14px;
+    color: #222;
+    text-align: center;
+    font-weight: bold;
+ }
+ 
+
+ table.table tbody td {  
+    padding: 5px;
+    font-size: 14px; 
+    text-align: center; 
+    color: #222;
+ }
+
+ @media (max-width: 600px) {
+    .table thead {
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        overflow: hidden;
+    }
+    .table td{ 
+        text-align: left !important;
+        overflow: hidden;
+    }
+
+    .table td span {
+        padding-left: 43%;
+        text-align: left;
+    }
+    .table td::before { 
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        top: 0;
+        width: 40%; 
+        font-weight: normal;
+        font-size: 13px;
+        overflow: hidden; 
+        text-align: center;
+        border-right: 1px solid #ddd;
+    }
+}
+ 
+
+.content-section > p > code,
+ul li code, ol li code,
+.table tr td code {
+   color: #dd3535;
+   background: #dd353526;
+   padding: 2px 2px; 
+   border-radius: 4px;  
+}
+
+
+img.half, div.feature-block svg, .feature-block {
+    max-width: 95%;
+}
+
+.feature-block {
+    margin: 0px auto;
+}
