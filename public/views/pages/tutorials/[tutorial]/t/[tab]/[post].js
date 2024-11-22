@@ -31,8 +31,7 @@ export default function TabPost({upcoming, adsReady}) {
       
     if(!upcoming) {
         return <ServerOffline/>
-    }
-    
+    } 
     var image = ''
 
     if( upcoming ) {
@@ -169,7 +168,7 @@ export default function TabPost({upcoming, adsReady}) {
                     }
                     
                         
-                    <div className={`plr-20 md-2-content main-content flex-order-1-md ${upcoming.tutorial.options.sidebar_content == 'none'?'md-9 auto-sides': 'md-8'}`}>
+                    <div className={`plr-20 md-2-content main-content flex-order-1-md ${upcoming.tutorial.options.sidebar_content == 'none'?'md-8': 'md-9 auto-sides'}`}>
                         <div className="max-1150 offset-left offset-right">
                             
                             {adsReady?<AdCompaignBox settings={upcoming.settings} data={upcoming.ads} position={'before_title'}/>: ''}
@@ -345,7 +344,7 @@ export async function getServerSideProps(context) {
             var company_links = json.data.menus?.filter( x=> x.menu_name === "company_nav_links")
             var follow_links = json.data.menus?.filter( x=> x.menu_name === 'follow_nav_links');
             var nav_links = json.data.menus?.filter( x=> x.menu_name === 'tags_nav_links');
-
+            
             upcoming = {                 
                 nav_right,
                 nav_left,
