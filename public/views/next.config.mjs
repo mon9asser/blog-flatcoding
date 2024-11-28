@@ -126,11 +126,11 @@ const nextConfig = {
             });
             
             redirects.push({
-              source: '/Root',
+              source: "/%5E[a-zA-Z0-9_]%20$/",
               destination: '/',
               permanent: true,
             });
-
+  
             return redirects;
     
         } catch (error) {
