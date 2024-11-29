@@ -155,7 +155,7 @@ function AdCompaignBoxOld({ position, data, classes }) {
   return <div className={combinedClasses} ref={adRef}></div>;
 };
 
- 
+
 
 
 
@@ -526,7 +526,44 @@ function SubscribeComponents ({is_footer, title, description, camp_data, setting
 
 
 
+var CreateCaptcha = ({value}) => {
 
+
+
+
+  var canvasRef = useRef(null);
+  
+  useEffect(() => {
+
+    if ( canvasRef == null || !canvasRef.current) return;
+
+    // generate width and height 
+    canvasRef.current.width = 200;
+    canvasRef.current.height = 70; 
+
+    var context = canvasRef.current.getContext("2d");
+    
+    // background
+    context.fillStyle = '#f0f0f0';
+    context.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+
+    // calculate text position 
+    var x =  (canvasRef.current.width / 2) - 50;
+    var y = (canvasRef.current.height / 2) + 9;
+
+    // Set text
+    context.font = '22px Arial';
+    context.fillStyle = '#000';
+
+    context.fillText(value, x, y);
+
+  }, [value]);
+
+  return (
+    <canvas ref={canvasRef}></canvas>
+  );
+
+}
 
 
 
@@ -1845,5 +1882,6 @@ export {
   ArticleContentSingle,
   ArticleContent,
   GenerateTutorialContent_tab,
-  FaqsSection
+  FaqsSection,
+  CreateCaptcha
 }

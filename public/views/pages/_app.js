@@ -1,5 +1,5 @@
 import { Poppins } from 'next/font/google';
-import "@/app/globals.css"; // Import your global styles
+//import "@/app/theme.css"; // Import your global styles
 import Head from 'next/head';
 import Script from 'next/script';
 import { useEffect, useState } from 'react';
@@ -24,7 +24,7 @@ export default function MyApp({ Component, pageProps  }) {
     }
   }, []);
  
-  var adsense_account = (settings != null && settings.google_ads.enabled) ? settings.google_ads.field: '';
+  var adsense_account =  "ca-pub-xxxxxxxxxxxxxxxx"; // (settings != null && settings.google_ads.enabled) ? settings.google_ads.field: '';
   
   return (
     <div className={poppins.className}>

@@ -1,4 +1,4 @@
-import "@/app/globals.css";
+import "@/app/theme.css";
 import Head from "next/head";
 import Image from "next/image";
 import { Fragment } from "react";

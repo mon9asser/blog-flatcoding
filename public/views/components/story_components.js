@@ -1,5 +1,5 @@
 
-import "@/app/globals.css";
+import "@/app/theme.css";
 import { useEffect, useState } from 'react';
 import Head from "next/head";
 import Image from "next/image";
