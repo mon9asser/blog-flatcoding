@@ -14729,21 +14729,22 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
   background: #ae95dd;
   border-color: #ae95dd;
   color: #673BB7; }
-
+/*
 .alert-success {
   background: #cdf1a6;
   border-color: #cdf1a6;
-  color: #7ED321; }
+  color: #7ED321; }*/
 
 .alert-warning {
   background: #ffd996;
   border-color: #ffd996;
   color: #FFAA16; }
 
+  /*
 .alert-danger {
   background: #ff9696;
   border-color: #ff9696;
-  color: #FF1616; }
+  color: #FF1616; }*/
 
 .alert-info {
   background: #bef5e8;

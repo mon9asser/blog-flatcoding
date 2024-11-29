@@ -5,10 +5,13 @@ import Script from 'next/script';
 
 class HelperData {
 
+  user_cookie = 'user_info';
+  jwt_secret = "flatcoding_t1y4u5236985471zasde!gfh@qwe#$%hoj^ytu&*tu(ib)ib~gfhrytuibonphojlkmlbkxzasqwe";
+  
   decodeHtmlEntities(text) {
     return he.decode(text);  
   }
-
+  
   generateCaptcha = () => {
 
     // make it with 6 charachters 
@@ -222,10 +225,11 @@ class HelperData {
         token = response.data;
       }
     } 
-
+    
     headers["x-api-key"] = Config.app_key 
     headers["authorization"] = token;
-    
+    headers["Content-Type"] = "application/json";
+
     var requestObject = { 
      // cache: 'force-cache',
       headers,
@@ -233,7 +237,7 @@ class HelperData {
     }
 
     if( method.toLowerCase() == 'post') { 
-      requestObject.body = data; 
+      requestObject.body = JSON.stringify(data); 
     }
 
     

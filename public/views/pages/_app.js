@@ -24,7 +24,7 @@ export default function MyApp({ Component, pageProps  }) {
     }
   }, []);
  
-  var adsense_account =  "ca-pub-xxxxxxxxxxxxxxxx"; // (settings != null && settings.google_ads.enabled) ? settings.google_ads.field: '';
+  var adsense_account = (settings != null && settings.google_ads.enabled) ? settings.google_ads.field: '';
   
   return (
     <div className={poppins.className}>
