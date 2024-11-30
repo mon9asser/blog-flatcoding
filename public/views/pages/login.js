@@ -123,8 +123,7 @@ export default function login() {
                                 <div className="col-xl-12">
                                     <div className="auth-form">
                                         <h4 className="text-center mb-4">Sign in your account</h4>
-                                        {error != '' && <div className="alert alert-danger">{error}</div>}
-                                        {loginSuccess != '' && <div className="alert alert-success">{loginSuccess}</div>}
+                                       
                                         <form>
                                             <div className="form-group">
                                                 <label><strong>Email</strong></label>
@@ -168,10 +167,15 @@ export default function login() {
                                                         <label className="form-check-label" htmlFor="basic_checkbox_1">Remember me</label>
                                                     </div>
                                                 </div>
+                                                {/*
                                                 <div className="form-group">
-                                                    <a href="page-forgot-password.html">Forgot Password?</a>
-                                                </div>
+                                                    <a href="/">Forgot Password?</a>
+                                                </div>*/}
                                             </div>
+
+                                            {error != '' && <div className="alert alert-danger">{error}</div>}
+                                            {loginSuccess != '' && <div className="alert alert-success">{loginSuccess}</div>}
+
                                             <div className="text-center">
                                                 <button onClick={loginProccess} type="submit" className="btn btn-primary btn-block default-btn">
                                                     {loading ? "Please wait ...": "Login"}
@@ -179,7 +183,7 @@ export default function login() {
                                             </div>
                                         </form>
                                         <div className="new-account mt-3">
-                                            <p>Don't have an account? <a className="text-primary" href="./page-register.html">Sign up</a></p>
+                                            <p>Don't have an account? <a className="text-primary" href="/register">Sign up</a></p>
                                         </div>
                                     </div>
                                 </div>

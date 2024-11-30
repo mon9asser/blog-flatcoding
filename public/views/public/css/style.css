@@ -19364,3 +19364,8 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
 .default-btn:hover {
   opacity: 0.95;
 }
+
+.form-group label strong {
+  color: #666;
+  font-weight: normal;
+}
