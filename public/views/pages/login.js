@@ -173,7 +173,7 @@ export default function login() {
                                                 </div>
                                             </div>
                                             <div className="text-center">
-                                                <button onClick={loginProccess} type="submit" className="btn btn-primary btn-block">
+                                                <button onClick={loginProccess} type="submit" className="btn btn-primary btn-block default-btn">
                                                     {loading ? "Please wait ...": "Login"}
                                                 </button>
                                             </div>

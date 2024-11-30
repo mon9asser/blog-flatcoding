@@ -538,7 +538,7 @@ var CreateCaptcha = ({value}) => {
     if ( canvasRef == null || !canvasRef.current) return;
 
     // generate width and height 
-    canvasRef.current.width = 200;
+    canvasRef.current.width = 150;
     canvasRef.current.height = 70; 
 
     var context = canvasRef.current.getContext("2d");

@@ -1553,7 +1553,7 @@ pre {
 .form-control {
   display: block;
   width: 100%;
-  height: calc(1.5em + 0.75rem + 2px);
+  height: calc(2.3em + 0.75rem + 2px);
   padding: 0.375rem 0.75rem;
   font-size: 0.875rem;
   font-weight: 400;
@@ -1573,7 +1573,7 @@ pre {
   .form-control:focus {
     color: #495057;
     background-color: #fff;
-    border-color: #b4a7ef;
+    border-color: #b9355e ;
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgba(89, 59, 219, 0.25); }
   .form-control::placeholder {
@@ -19355,3 +19355,12 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
 }
 /*# sourceMappingURL=style.css.map */
 
+
+.default-btn {
+  background-color: #b9355e !important;
+  border: none;
+}
+
+.default-btn:hover {
+  opacity: 0.95;
+}
