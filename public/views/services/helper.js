@@ -9,7 +9,8 @@ class HelperData {
   jwt_secret = "flatcoding_t1y4u5236985471zasde!gfh@qwe#$%hoj^ytu&*tu(ib)ib~gfhrytuibonphojlkmlbkxzasqwe";
   
   decodeHtmlEntities(text) {
-    return he.decode(text);  
+    return text;
+    // return he.decode(text);  
   }
   
   generateCaptcha = () => {
@@ -248,6 +249,16 @@ class HelperData {
     return response;
   }
 
+  sanitizeCode( code ) {
+    return code;
+    return code
+        .replace(/&/g, '&amp;')  // Escape & first to avoid double escaping
+        .replace(/</g, '&lt;')  // Escape <
+        .replace(/>/g, '&gt;')  // Escape >
+        .replace(/"/g, '&quot;') // Escape "
+        .replace(/'/g, '&#39;')  // Escape '
+        .replace(/\//g, '&#47;'); // Escape /
+  }
 }
 
 var Helper = new HelperData();
