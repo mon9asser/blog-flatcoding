@@ -130,9 +130,7 @@ const nextConfig = {
               destination: '/',
               permanent: true,
             });
-
-            
-  
+ 
             return redirects;
     
         } catch (error) {

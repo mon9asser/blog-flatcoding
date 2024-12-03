@@ -1,3 +1,5 @@
+import "./../public/css/index.module.css";
+
 export function reportWebVitals(metric) {
     console.log(metric);
 }
