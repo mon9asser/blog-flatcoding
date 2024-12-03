@@ -10,23 +10,4 @@ export default function Home() {
     );
 }
 
-export async function getServerSideProps(context) {
-    try {
-
-        var request = await Helper.sendRequest({
-            api: "home-page/get",
-            method: "get",
-            data: {} 
-        })
-
-        console.log(request);
-
-        return {
-            props: {data: ''}
-        };
-
-    } catch (error) {
-        return { props: { error: 'Server is offline, please try again later.' } }; 
-    }
-}
-  
+ 
