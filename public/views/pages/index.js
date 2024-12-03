@@ -361,7 +361,7 @@ export async function getServerSideProps(context) {
               }
 
               
-              
+              console.log(json.data.posts);
 
               upcoming = {
                 latest_posts: posts,
