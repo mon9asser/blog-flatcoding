@@ -15,7 +15,7 @@ export default function Home({data}) {
 export async function getServerSideProps(context) {
   
   var request = await Helper.sendRequest({
-      api: "home-page/get",
+      api: "front/home/get",
       method: "get",
       data: {} 
   });

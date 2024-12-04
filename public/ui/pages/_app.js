@@ -1,4 +1,4 @@
-import "./../public/css/index.module.css";
+import "./../public/css/all.css";
 
 export function reportWebVitals(metric) {
     console.log(metric);

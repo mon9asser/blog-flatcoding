@@ -71,6 +71,7 @@ const { categoryRouter } = require("./apis/category");
 const { settingsRouter } = require("./apis/settings");
 const { postRouter } = require("./apis/posts");
 const { tutorialRouter } = require("./apis/tutorials");
+const { frontendRouter } = require("./apis/front-end");
 const { chapterRouter } = require("./apis/chapters");
 const { menuRouter } = require("./apis/menus");
 const { adCampaignRouter } = require("./apis/campaigns");
@@ -104,6 +105,7 @@ app.use(Config.server.api, categoryRouter);
 app.use(Config.server.api, settingsRouter);
 app.use(Config.server.api, postRouter);
 app.use(Config.server.api, tutorialRouter);
+app.use(Config.server.api, frontendRouter);
 
 app.use(Config.server.api, chapterRouter);
 app.use(Config.server.api, menuRouter);
