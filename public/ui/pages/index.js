@@ -78,8 +78,12 @@ const HomePage = ({ upcoming }) => {
                 }
             }
     `;
-  
-   
+ 
+
+   console.log(upcoming)
+  console.log('baside home title is requried!!')
+  const header_content = parse(upcoming.header);
+  const footer_content = parse(upcoming.footer);
   // Render homepage content if the server is online
   return (
      <>
@@ -103,17 +107,17 @@ const HomePage = ({ upcoming }) => {
               dangerouslySetInnerHTML={{ __html: jsonLdContent }}
           />
           
-          {parse(upcoming.header)}
+          {header_content}
       </Head>
       
       <Header 
-          header_data={{
-            site_address: upcoming.site_address, 
-            site_logo: upcoming.site_logo, 
-            site_name: upcoming.site_name 
-          }} 
-          nav_left={'upcoming.nav_left'} 
-          nav_right={'upcoming.nav_right'} 
+          header_options={{
+            site_name: upcoming.site_name,
+            site_logo: upcoming.site_logo,
+            site_url: upcoming.site_url
+          }}
+          nav_left ={upcoming.main_menu} 
+          nav_right={upcoming.main_nav_righ}
       />
 
 
