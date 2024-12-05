@@ -391,3 +391,101 @@ ul li code, ol li code  {
     border-radius: 4px;
 }
 
+
+.mask {
+    background-color: #000001;
+    display: none;
+    z-index: 2500;
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+    height: 100%;
+    left: 0;
+    top: 0
+}
+.mask {
+    opacity: 1;
+    -webkit-transition: opacity .3s ease-in-out;
+    -moz-transition: opacity .3s ease-in-out;
+    -o-transition: opacity .3s ease-in-out;
+    transition: opacity .3s ease-in-out
+}
+
+.mask.fade {
+    opacity: 0;
+}
+
+.active--aside {
+    left: 0 !important;
+    right: unset !important
+}
+.active--aside.set-right {
+    right: 0 !important;
+    left: unset !important
+}
+
+.collapsible {
+    display: -moz-flex;
+    display: flex;
+    -moz-flex-direction: column;
+    -o-flex-direction: column;
+    flex-direction: column;
+    align-items: flex-start;
+    list-style: none;
+    padding: 0;
+    width: 100%;
+    overflow: hidden;
+    -o-transition: max-height 0.3s ease-out;
+    -webkit-transition: max-height 0.3s ease-out;
+    transition: max-height 0.3s ease-out;
+    max-height: 0;
+    /* Initial state: collapsed */
+}
+
+.collapsible.expanded {
+    max-height: 550px;
+    /* Adjust based on the content height */
+    -o-transition: max-height 0.3s ease-in;
+    -webkit-transition: max-height 0.3s ease-in;
+    transition: max-height 0.3s ease-in;
+}
+
+ 
+
+
+.tble-content.expanded {
+    -webkit-transform: translateX(0);
+    -moz-transform: translateX(0);
+    -ms-transform: translateX(0);
+    -o-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1;
+    -o-transition: transform 0.5s ease-in, opacity 0.5s ease-in;
+    -webkit-transition: transform 0.5s ease-in, opacity 0.5s ease-in;
+    transition: transform 0.5s ease-in, opacity 0.5s ease-in;
+}
+
+.faq-question span.expanded:last-child::after {
+    transform: rotate(-135deg);
+}
+
+
+
+
+
+.collapsible.expanded {
+    max-height: 550px;
+    /* Adjust based on the content height */
+    -o-transition: max-height 0.3s ease-in;
+    -webkit-transition: max-height 0.3s ease-in;
+    transition: max-height 0.3s ease-in;
+}
+
+
+ul li a.expanded-a::after {
+    -webkit-transform: translate(7px, -1px) rotate(-130deg);
+    -moz-transform: translate(7px, -1px) rotate(-130deg);
+    -ms-transform: translate(7px, -1px) rotate(-130deg);
+    -o-transform: translate(7px, -1px) rotate(-130deg);
+    transform: translate(7px, -1px) rotate(-130deg);
+}

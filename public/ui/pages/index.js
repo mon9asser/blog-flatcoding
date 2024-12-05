@@ -117,7 +117,7 @@ const HomePage = ({ upcoming }) => {
             site_url: upcoming.site_url
           }}
           nav_left ={upcoming.main_menu} 
-          nav_right={upcoming.main_nav_righ}
+          nav_right={upcoming.main_nav_right}
       />
 
 

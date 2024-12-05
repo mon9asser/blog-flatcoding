@@ -80,12 +80,12 @@ frontendRouter.get("/front/home/get", middlewareTokens, async (req, res) => {
 
         /* 
         -----------------------------------------------------------
-        2. Menus (  company_nav_links - follow_nav_links - tags_nav_links - main_nav_right - main_menu - )
+        2. Menus (  company_nav_links - follow_nav_links - tags_nav_links - main_nav_rightt - main_menu - )
         -----------------------------------------------------------*/
         var company_nav_links= menus.filter(x => x.menu_name === 'company_nav_links');
         var follow_nav_links= menus.filter(x => x.menu_name === 'follow_nav_links');
         var tags_nav_links= menus.filter(x => x.menu_name === 'tags_nav_links');
-        var main_nav_righ= menus.filter(x => x.menu_name === 'main_nav_righ');
+        var main_nav_right= menus.filter(x => x.menu_name === 'main_nav_right');
         var main_menu = menus.filter(x => x.menu_name === 'main_menu');
 
         /* 
@@ -110,7 +110,7 @@ frontendRouter.get("/front/home/get", middlewareTokens, async (req, res) => {
             company_nav_links,
             follow_nav_links,
             tags_nav_links,
-            main_nav_righ,
+            main_nav_right,
             main_menu, 
 
             latest_tutorials,

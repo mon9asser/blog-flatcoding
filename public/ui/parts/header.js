@@ -6,7 +6,7 @@ import {SearchComponent} from '../services/components';
  
 // header_options, nav_left, nav_right
 export default function Header({header_options, nav_left, nav_right}) {
-    
+    console.log(nav_right);
     var sidebarRef = useRef();
     var sidebarContentRef = useRef();
     var maskRef = useRef();
@@ -43,7 +43,7 @@ export default function Header({header_options, nav_left, nav_right}) {
         e.preventDefault();
         var doc_id = document.querySelector(`#collapsed-item-${id}`); 
         var anchor = document.querySelector(`#nav-anchor-${id}`); 
-
+        
         if( doc_id.classList.contains('expanded') ) {
             anchor.classList.remove('expanded-a')
             doc_id.classList.remove('expanded'); 
@@ -79,13 +79,13 @@ export default function Header({header_options, nav_left, nav_right}) {
         if(text.indexOf("[button]") != -1 ) {
             var arr = text.split(']');
             var item_text = arr[arr.length - 1].trim();
-            item = <span className="btn third-btn radius-5 custom-header-btn">{item_text}</span>
+            item = <span className={`${styles["btn"]} ${styles["third-btn"]} ${styles["radius-5"]} ${styles["custom-header-btn"]}`}>{item_text}</span>
         } else if ( text.indexOf("[svg]") != -1) {
             var arr = text.split(']');
             var icon = arr[arr.length - 1];
-            item = <span className="flexbox" dangerouslySetInnerHTML={{__html: icon}} />
+            item = <span className={styles['flexbox']} dangerouslySetInnerHTML={{__html: icon}} />
         } else if ( text.indexOf("[burgericon]") != -1 ) {
-            item = <span  className="nav-toggler aside-toggler remove-anchor-paddings"><span></span><span></span><span></span></span>
+            item = <span  className={`${styles["nav-toggler"]} ${styles["aside-toggler"]} ${styles["remove-anchor-paddings"]}`}><span></span><span></span><span></span></span>
         } 
 
         return item;
@@ -100,7 +100,7 @@ export default function Header({header_options, nav_left, nav_right}) {
                     <aside ref={sidebarRef} className={`${styles["aside"]} ${styles["responsive-aside"]}`}> 
 
                     {/* Mask to fade in or out */}
-                    <div ref={maskRef} className={styles["mask"] + " " + styles["fade"]} onClick={close_sidebar}></div> 
+                    <div ref={maskRef} className='mask fade' onClick={close_sidebar}></div> 
 
                     {/* Close Button */}
                     <Link ref={closeSidebarRef} className={`${styles["close-toggler"]} ${styles["close-btn"]}`} href='#' onClick={close_sidebar}></Link> 
@@ -119,100 +119,100 @@ export default function Header({header_options, nav_left, nav_right}) {
                         </div>
 
                         <div className={styles["wrapper"] + " " + styles["side-wrapper"]}>
-                        <ul className={styles["block-list"] + " " + styles["no-padding"]}>
-                            {
-                            nav_left.map(x => { 
-                                var _return = <li key={x._id}><Link target={x.openInNewTab ? "_blank" : ""} href={x.link}><ItemElement text={x.title}/></Link></li>;
-                                
-                                if(x.subitems.length) {
-                                _return = (
-                                    <li className={styles["has-slideitem"]} key={x._id}> 
-                                    <Link id={`nav-anchor-${x._id}`} onClick={(e) => expand_collapse_item(e, x._id)} target={x.openInNewTab ? "_blank" : ""} href={x.link}><ItemElement text={x.title}/></Link>
-                                    <ul className={styles["slideitem"] + " " + styles["collapsible"]} id={`collapsed-item-${x._id}`}>
-                                        {x.subitems.map(y => <li key={y._id}><Link target={y.openInNewTab ? "_blank" : ""} href={y.link}>{y.title}</Link></li>)}
-                                    </ul>
-                                    </li>
-                                );
-                                }
+                            <ul className={styles["block-list"] + " " + styles["no-padding"]}>
+                                {
+                                nav_left.map(x => { 
+                                    var _return = <li key={x._id}><Link target={x.openInNewTab ? "_blank" : ""} href={x.link}><ItemElement text={x.title}/></Link></li>;
+                                    
+                                    if(x.subitems.length) {
+                                    _return = (
+                                        <li className={'has-slideitem'} key={x._id}> 
+                                        <Link id={`nav-anchor-${x._id}`} onClick={(e) => expand_collapse_item(e, x._id)} target={x.openInNewTab ? "_blank" : ""} href={x.link}><ItemElement text={x.title}/></Link>
+                                        <ul className={`slideitem collapsible collapsed-item-${x._id}`}>
+                                            {x.subitems.map(y => <li key={y._id}><Link target={y.openInNewTab ? "_blank" : ""} href={y.link}>{y.title}</Link></li>)}
+                                        </ul>
+                                        </li>
+                                    );
+                                    }
 
-                                return _return;
-                            })
-                            }  
-                        </ul>
+                                    return _return;
+                                })
+                                }  
+                            </ul>
                         </div>
                     </div>
                     </aside>
 
                     <header className={styles["wrapper"] + " " + styles["white-bg"] + " " + styles["border-bottom"] + " " + styles["plr-0"] + " " + styles["sticky"]}>
-                    <nav className={`${styles["flexbox"]} ${styles["items-center"]} ${styles["offset-left"]} ${styles["offset-right"]} ${styles["plr-15"]} ${styles["max-1172"]} ${styles["default-height"]}`}>
-                        
-                        {
-                        header_options != null && header_options?.site_logo != "" ?
-                        <Link href={site_url} className={styles["site-logo"]}>
-                            <Image 
-                            alt={header_options.site_name}
-                            width="135" 
-                            height="36"
-                            src={header_options?.site_logo}  
-                            priority
-                            /> 
-                        </Link> : ""
-                        }
-
-                        <ul className={`${styles["inline-list"]} ${styles["left-p-30"]} ${styles["main-nav"]}`}>
-                        {
-                            nav_left?.map(x => { 
-                            var _return = <li key={x._id}><Link target={x.openInNewTab ? "_blank" : ""} href={x.link}><ItemElement text={x.title}/></Link></li>;
+                        <nav className={`${styles["flexbox"]} ${styles["items-center"]} ${styles["offset-left"]} ${styles["offset-right"]} ${styles["plr-15"]} ${styles["max-1172"]} ${styles["default-height"]}`}>
                             
-                            if(x.subitems.length) {
-                                _return = (
-                                <li className={styles["has-subitem"]} key={x._id}> 
-                                    <Link target={x.openInNewTab ? "_blank" : ""} href={x.link}>
-                                    <ItemElement text={x.title}/>
+                            {
+                            header_options != null && header_options?.site_logo != "" ?
+                            <Link href={site_url} className={styles["site-logo"]}>
+                                <Image 
+                                alt={header_options.site_name}
+                                width="135" 
+                                height="36"
+                                src={header_options?.site_logo}  
+                                priority
+                                /> 
+                            </Link> : ""
+                            }
+
+                            <ul className={`${styles["inline-list"]} ${styles["left-p-30"]} ${styles["main-nav"]}`}>
+                            {
+                                nav_left?.map(x => { 
+                                var _return = <li key={x._id}><Link target={x.openInNewTab ? "_blank" : ""} href={x.link}><ItemElement text={x.title}/></Link></li>;
+                                
+                                if(x.subitems.length) {
+                                    _return = (
+                                    <li className={styles["has-subitem"]} key={x._id}> 
+                                        <Link target={x.openInNewTab ? "_blank" : ""} href={x.link}>
+                                        <ItemElement text={x.title}/>
+                                        </Link>
+                                        <ul className={styles["subitem"]}>
+                                        {x.subitems.map(y => <li key={y._id}><Link target={y.openInNewTab ? "_blank" : ""} href={y.link}>{y.title}</Link></li>)}
+                                        </ul>
+                                    </li>
+                                    );
+                                }
+
+                                return _return;
+                                })
+                            }
+                            </ul>
+
+                            <ul className={`${styles["inline-list"]} ${styles["left-p-30"]} ${styles["offset-right"]} ${styles["mlr--15"]} ${styles["update-html"]}`}>
+                            {
+                                nav_right.map(x => { 
+                                var _return = <li key={x._id}><Link target={x.openInNewTab ? "_blank" : ""} href={x.link}><ItemElement text={x.title}/></Link></li>;
+                                
+                                if(x.title.indexOf('[burgericon]') != -1) {
+                                    _return = <li key={x._id}>
+                                    <Link href='#' onClick={sidebar_toggle}>
+                                        <ItemElement text={x.title}/>
                                     </Link>
-                                    <ul className={styles["subitem"]}>
-                                    {x.subitems.map(y => <li key={y._id}><Link target={y.openInNewTab ? "_blank" : ""} href={y.link}>{y.title}</Link></li>)}
-                                    </ul>
-                                </li>
-                                );
+                                    </li>;
+                                }
+
+                                if(x.subitems.length) {
+                                    _return = (
+                                    <li className={styles["has-subitem"]} key={x._id}> 
+                                        <Link target={x.openInNewTab ? "_blank" : ""} href={x.link}>
+                                        <ItemElement text={x.title}/>
+                                        </Link>
+                                        <ul className={styles["subitem"]}>
+                                        {x.subitems.map(y => <li key={y._id}><Link target={y.openInNewTab ? "_blank" : ""} href={y.link}>{y.title}</Link></li>)}
+                                        </ul>
+                                    </li>
+                                    );
+                                }
+
+                                return _return;
+                                })
                             }
-
-                            return _return;
-                            })
-                        }
-                        </ul>
-
-                        <ul className={`${styles["inline-list"]} ${styles["left-p-30"]} ${styles["offset-right"]} ${styles["mlr--15"]} ${styles["update-html"]}`}>
-                        {
-                            nav_right.map(x => { 
-                            var _return = <li key={x._id}><Link target={x.openInNewTab ? "_blank" : ""} href={x.link}><ItemElement text={x.title}/></Link></li>;
-                            
-                            if(x.title.indexOf('[burgericon]') != -1) {
-                                _return = <li key={x._id}>
-                                <Link href='#' onClick={sidebar_toggle}>
-                                    <ItemElement text={x.title}/>
-                                </Link>
-                                </li>;
-                            }
-
-                            if(x.subitems.length) {
-                                _return = (
-                                <li className={styles["has-subitem"]} key={x._id}> 
-                                    <Link target={x.openInNewTab ? "_blank" : ""} href={x.link}>
-                                    <ItemElement text={x.title}/>
-                                    </Link>
-                                    <ul className={styles["subitem"]}>
-                                    {x.subitems.map(y => <li key={y._id}><Link target={y.openInNewTab ? "_blank" : ""} href={y.link}>{y.title}</Link></li>)}
-                                    </ul>
-                                </li>
-                                );
-                            }
-
-                            return _return;
-                            })
-                        }
-                        </ul>
-                    </nav>
+                            </ul>
+                        </nav>
                     </header>
                 </nav>
                 </header>

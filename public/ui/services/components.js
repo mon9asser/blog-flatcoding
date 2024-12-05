@@ -74,10 +74,10 @@ function SearchComponent ({searchType}) {
 
   // seach components 
   var render = (
-    <form className="search-form" style={{marginTop: '25px'}}>
+    <form className={styles['search-form']} style={{marginTop: '25px'}}>
         <input onChange={e => setQuery(e.target.value)} value={query} type="text" placeholder="What are you looking for?" />
-        <button onClick={sendRequest} className="btn third-btn radius-5 custom-header-btn">
-          {is_pressed?<span className='loader'></span>: 'Search'}
+        <button onClick={sendRequest} className={`${styles["btn"]} ${styles["third-btn"]} ${styles["radius-5"]} ${styles["custom-header-btn"]}`}>
+          {is_pressed?<span className={styles['loader']}></span>: 'Search'}
         </button>
     </form>
   );
@@ -85,7 +85,7 @@ function SearchComponent ({searchType}) {
   // sidebar seach components 
   if( searchType == 'sidebar' ) {
     render = (
-      <form className="form-group form-1" action="/" method="get">
+      <form className={styles["form-group"] + " " + styles["form-1"]} action="/" method="get">
           <input onChange={e => setQuery(e.target.value)} value={query} type="text" placeholder="Search in our tutorials" />
           <button onClick={sendRequest} type="submit">
               {is_pressed?<span className='loader black-loader'></span>: <span className="flexbox">
