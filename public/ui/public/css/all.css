@@ -489,3 +489,19 @@ ul li a.expanded-a::after {
     -o-transform: translate(7px, -1px) rotate(-130deg);
     transform: translate(7px, -1px) rotate(-130deg);
 }
+
+
+li.has-dropdown>a:after, li.has-slideitem>a:after, li.has-subitem>a:after {
+    content: "";
+    border-right: 1px solid var(--nav-link-color);
+    border-bottom: 1px solid var(--nav-link-color);
+    width: 5px;
+    height: 5px;
+    transform: translate(7px, -1px) rotate(45deg);
+    margin-top: -1px;
+    margin-left: auto;
+}
+
+.slideitem li a, .xrow {
+    font-size: 14px;
+}

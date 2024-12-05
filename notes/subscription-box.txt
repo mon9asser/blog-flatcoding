@@ -1,0 +1,19 @@
+<div>
+    <h2 class="title">Your Title Here</h2>
+    <h1 class="custom-headline section-head">Your Title Here</h1>
+
+    <p class="font-16 pb-15">Your description here</p>
+    <p>Your description here</p>
+
+    <div style={{margin: '0 auto'}}>
+        <div class="response-msg success type">Your message here</div>
+
+        <form class="set-center form-group set-focus" action="/" method="get">
+            <input type="text" placeholder="example@email.com" />
+            <button class="btn primary-btn" type="submit">
+                <span class="loader"></span>
+                Subscribe
+            </button>
+        </form>
+    </div>
+</div>

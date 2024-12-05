@@ -29,7 +29,7 @@ export async function getServerSideProps(context) {
     }
 
     var json = await request.json(); 
-    
+     
     
     return {
       props: {
@@ -46,6 +46,7 @@ export async function getServerSideProps(context) {
 
 const HomePage = ({ upcoming }) => {
 
+   
   // server offline
   if( !upcoming || upcoming === undefined ) {
     return <ServerOffline/>
@@ -79,9 +80,7 @@ const HomePage = ({ upcoming }) => {
             }
     `;
  
-
-   console.log(upcoming)
-  console.log('baside home title is requried!!')
+  
   const header_content = parse(upcoming.header);
   const footer_content = parse(upcoming.footer);
   // Render homepage content if the server is online
@@ -111,16 +110,26 @@ const HomePage = ({ upcoming }) => {
       </Head>
       
       <Header 
-          header_options={{
-            site_name: upcoming.site_name,
-            site_logo: upcoming.site_logo,
-            site_url: upcoming.site_url
-          }}
-          nav_left ={upcoming.main_menu} 
-          nav_right={upcoming.main_nav_right}
+        header_options={{
+          site_name: upcoming.site_name,
+          site_logo: upcoming.site_logo,
+          site_url: upcoming.site_url
+        }}
+        nav_left ={upcoming.main_menu} 
+        nav_right={upcoming.main_nav_right}
       />
-
-
+      
+      <Footer 
+        footer_options={{
+          site_name: upcoming.site_name,
+          site_logo: upcoming.site_logo,
+          site_url: upcoming.site_url
+        }}
+        company_links= {upcoming.company_nav_links}
+        follow_links= {upcoming.follow_nav_links}
+        nav_links= {upcoming.tags_nav_links} 
+      /> 
+      {footer_content}
      </>
   );
 };

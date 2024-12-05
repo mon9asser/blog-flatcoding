@@ -59,8 +59,15 @@ frontendRouter.get("/front/home/get", middlewareTokens, async (req, res) => {
         
         var slinks = user[0].social_links.map( x => `"${x.social_link}"`);
 
+        // enable beside title 
+        var beside_title = getValueFromObject(options, 'beside_post_title')
+        var site_meta_title = getValueFromObject(options, 'site_meta_title');
+        if( beside_title != '' ) {
+            site_meta_title =site_meta_title + " "+ beside_title;
+        }
+        
         var site_options = {
-            site_meta_title: getValueFromObject(options, 'site_meta_title'),
+            site_meta_title: site_meta_title,
             site_meta_description: getValueFromObject(options, 'site_meta_description'),
             site_url : getValueFromObject(options, 'site_address'), 
             site_name: getValueFromObject(options, 'site_name'),

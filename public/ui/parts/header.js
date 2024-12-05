@@ -6,7 +6,7 @@ import {SearchComponent} from '../services/components';
  
 // header_options, nav_left, nav_right
 export default function Header({header_options, nav_left, nav_right}) {
-    console.log(nav_right);
+     
     var sidebarRef = useRef();
     var sidebarContentRef = useRef();
     var maskRef = useRef();
@@ -125,14 +125,14 @@ export default function Header({header_options, nav_left, nav_right}) {
                                     var _return = <li key={x._id}><Link target={x.openInNewTab ? "_blank" : ""} href={x.link}><ItemElement text={x.title}/></Link></li>;
                                     
                                     if(x.subitems.length) {
-                                    _return = (
-                                        <li className={'has-slideitem'} key={x._id}> 
-                                        <Link id={`nav-anchor-${x._id}`} onClick={(e) => expand_collapse_item(e, x._id)} target={x.openInNewTab ? "_blank" : ""} href={x.link}><ItemElement text={x.title}/></Link>
-                                        <ul className={`slideitem collapsible collapsed-item-${x._id}`}>
-                                            {x.subitems.map(y => <li key={y._id}><Link target={y.openInNewTab ? "_blank" : ""} href={y.link}>{y.title}</Link></li>)}
-                                        </ul>
-                                        </li>
-                                    );
+                                        _return = (
+                                            <li className={'has-slideitem'} key={x._id}> 
+                                                <Link id={`nav-anchor-${x._id}`} onClick={(e) => expand_collapse_item(e, x._id)} target={x.openInNewTab?"_blank": ""} href={x.link}><ItemElement text={x.title}/></Link>
+                                                <ul className={`slideitem collapsible collapsed-item-${x._id}`} id={`collapsed-item-${x._id}`}>
+                                                    {x.subitems.map(y => <li key={y._id}><Link target={y.openInNewTab ? "_blank" : ""} href={y.link}>{y.title}</Link></li>)}
+                                                </ul>
+                                            </li>
+                                        );
                                     }
 
                                     return _return;
