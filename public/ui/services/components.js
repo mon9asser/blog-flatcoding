@@ -1,7 +1,8 @@
 import styles from "../public/css/index.module.css";
 import Head from "next/head";
 import { useRouter } from 'next/router';
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import parse from 'html-react-parser';
 
 function ServerOffline() {
 
@@ -52,9 +53,7 @@ function ServerOffline() {
       </>
     );
 }
-
-
-
+ 
 function SearchComponent ({searchType}) {
     
   var [query, setQuery] = useState('');
@@ -104,7 +103,73 @@ function SearchComponent ({searchType}) {
 
 }
 
+function AdCompaignBox({position, data, classes}) {
+  
+  const combinedClasses = classes ? `ad-box ${classes}` : 'ad-box';
+  const adInitialized = useRef(false);
+
+  // if no ads in this section so return null 
+  if( !data || !data.length ) {
+    return null; 
+  } 
+
+  // Ad Position: searching for target ads according to section name
+  const index = data.findIndex((x) => x.position === position );
+   
+  if (index === -1) {
+    return null;
+  }
+
+  var adsbysite = data[index]; 
+  
+  // dont show ad if it is disabled 
+  if( adsbysite.is_enabled == undefined || adsbysite.is_enabled === false ) {
+    return null;
+  }
+
+  if(window == undefined ) {
+    console.error("SSR is enabled, so client will not work!");
+    return null; 
+  }
+ 
+
+  var sponsored = adsbysite.code; 
+
+  // sponser type is adsense
+  useEffect(() => {
+    if(sponsored.indexOf('</ins>') != -1 ) {
+
+      if( adsbygoogle == undefined ) {
+        console.error("Google AdSense: Initialization Error");
+        return null;
+      }
+
+      if (!adInitialized.current) {
+        try {
+          (adsbygoogle = window.adsbygoogle || []).push({});
+          adInitialized.current = true;
+        } catch (err) {
+          console.error("AdSense error:", err);
+        }
+      }
+      
+      
+    }
+  });
+
+  if(sponsored.indexOf('</ins>') != -1 ) {
+    console.log(sponsored);
+    return <div className={combinedClasses}>{parse(sponsored)}</div>;
+  }
+ 
+
+
+  return <div className={combinedClasses}>{position}</div>
+
+}
+
 export {
     ServerOffline,
-    SearchComponent
+    SearchComponent,
+    AdCompaignBox
 }

@@ -3,11 +3,13 @@ import { Helper } from "@/services/helper.js";
 import styles from "@/public/css/index.module.css";
 import Head from "next/head";
 import { ServerOffline } from "@/services/components.js";
-import parse from 'html-react-parser' 
+import parse from 'html-react-parser'; 
 import Image from "next/image.js";
 import Header from "./../parts/header.js";
 import Footer from "./../parts/footer.js"; 
 import { useState } from "react";
+import Link from "next/link";
+import { AdCompaignBox } from "@/services/components.js";
 export async function getServerSideProps(context) {
 
   const { res } = context;
@@ -44,8 +46,8 @@ export async function getServerSideProps(context) {
 
 }
 
-const HomePage = ({ upcoming }) => {
-
+const HomePage = ({ upcoming, adsReady }) => {
+  
   console.log(upcoming);
   // server offline
   if( !upcoming || upcoming === undefined ) {
@@ -80,8 +82,7 @@ const HomePage = ({ upcoming }) => {
             }
     `;
   
-    
-  
+
   const header_content = parse(upcoming.header);
   const footer_content = parse(upcoming.footer);
   
@@ -211,6 +212,7 @@ const HomePage = ({ upcoming }) => {
           <div className={`${styles['banner-gray']}`}>
             <div className={`${styles['row']} ${styles['offset-left']} ${styles['offset-right']} ${styles['max-1172']} ${styles['mlr--30']} ${styles['ptb-50']} ${styles['section-subscribe']}`}>
               <div className={`${styles['lg-7']} ${styles['md-7']} ${styles['sm-12']} ${styles['flexbox']} ${styles['content-center']} ${styles['items-start']} ${styles['column-direction']} ${styles['p-all-30']}`}>                                      
+                { adsReady? <AdCompaignBox position="before_title" data={upcoming.sponsers}/> : ""}
                 <SubscribeComponents/>
               </div>
 
@@ -291,6 +293,53 @@ const HomePage = ({ upcoming }) => {
                 </div>
                 <h5>Books and Resources</h5>
               </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+
+      <section className={`${styles['white-bg']}`}>
+
+        <div className={`${styles['wrapper-no-padding']}`}>
+          <div className={`${styles['max-1172']} ${styles['offset-left']} ${styles['offset-right']} ${styles['row']} ${styles['plr-15']} ${styles['mlr--30']} ${styles['ptb-50']} ${styles['section-tutorials']}`}>
+            <div className={`${styles['row']} ${styles['offset-left']} ${styles['offset-right']} ${styles['plr-15']} ${styles['mlr--30']} ${styles['ptb-50']} ${styles['max-1172']}`}>
+                <div className={`${styles['header-section']} ${styles['hero']} ${styles['text-center']}`}>  
+                  <h2 className={`${styles['custom-headline']} ${styles['section-head']} ${styles['text-center']} ${styles['mb-10']} ${styles['mt-25']}`}>{upcoming.latest_tutorials.homepage_section_title}</h2>
+                  <p>{upcoming.latest_tutorials.homepage_section_description}</p>
+                </div>
+                <div className={`${styles['row']} ${styles['content-center']}`}>
+                 {upcoming.latest_tutorials.tutorials.map(tutorial => {
+
+                  return (
+                    <div key={tutorial._id} className={`${styles['sm-6']} ${styles['md-4']} ${styles['lg-4']} ${styles['text-center']} ${styles['p-all-15']}`}>
+                        <div className={styles['tutorial-box']}>
+                            
+                            {
+                                tutorial?.tutorial_svg_icon != ''? 
+                                    <i className={styles['tutorial-thumbs']} dangerouslySetInnerHTML={{__html: tutorial?.tutorial_svg_icon}}/>
+                                : ""
+                            }
+                            
+                            <h3>
+                                <Link href={tutorial.url}>{tutorial.tutorial_title}</Link>
+                                
+                                {
+                                    tutorial?.selected_category?.name != ''? 
+                                    <span className={styles['subtitle']}>{tutorial?.selected_category?.name}</span>: 
+                                    ""
+                                }
+                                
+                            </h3>
+                            <Link className={styles['floating-all']} href={tutorial.url}></Link>
+                        </div>
+                    </div>
+                  )
+
+                 })}
+                </div>
+                <Link className={`${styles['see-more-tutorials']}`} href={`${upcoming.site_url}tutorials/`}>See more</Link>
             </div>
           </div>
         </div>
