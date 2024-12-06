@@ -505,3 +505,9 @@ li.has-dropdown>a:after, li.has-slideitem>a:after, li.has-subitem>a:after {
 .slideitem li a, .xrow {
     font-size: 14px;
 }
+ 
+
+.h1, h1 {
+    font-size: 2.1875rem;
+    line-height: 2.99rem;
+}

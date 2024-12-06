@@ -79,6 +79,10 @@ frontendRouter.get("/front/home/get", middlewareTokens, async (req, res) => {
             google_analytics: getValueFromObject(options, 'google_analytics'),
             header: getValueFromObject(options, 'header'),
             footer: getValueFromObject(options, 'footer'),
+            subscribe_title:getValueFromObject(options, 'subscribe_title'),
+            subscribe_description:getValueFromObject(options, 'subscribe_description'),
+            banner_image_url: getValueFromObject(options, 'banner_image_url'),
+            banner_title: getValueFromObject(options, 'site_meta_title')
         }; 
 
         if( site_options.site_url ) {

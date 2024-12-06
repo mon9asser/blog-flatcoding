@@ -30,7 +30,7 @@ userRouters.post("/user/subscribe", middlewareTokens,  async (req, res) => {
     }
 
     var email = req.body.email?req.body.email: null; 
-
+    console.log(email);
     if( email === null ) {
         objx.is_error = true;
         objx.success = false;

@@ -5273,7 +5273,8 @@ img.half, div.feature-block svg, .feature-block {
     -webkit-transition: transform .2s linear;
     -moz-transition: transform .2s linear;
     -o-transition: transform .2s linear;
-    transition: transform .2s linear
+    transition: transform .2s linear;
+    z-index: 20000;
 }
 .close-btn:hover {
     opacity: 1;
