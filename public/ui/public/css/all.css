@@ -507,7 +507,13 @@ li.has-dropdown>a:after, li.has-slideitem>a:after, li.has-subitem>a:after {
 }
  
 
+
 .h1, h1 {
     font-size: 2.1875rem;
     line-height: 2.99rem;
+}
+
+.h2, h2 {
+    font-size: 1.875rem;
+    line-height: 2.45rem;
 }
