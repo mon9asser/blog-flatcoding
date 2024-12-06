@@ -214,6 +214,7 @@ const HomePage = ({ upcoming, adsReady }) => {
               <div className={`${styles['lg-7']} ${styles['md-7']} ${styles['sm-12']} ${styles['flexbox']} ${styles['content-center']} ${styles['items-start']} ${styles['column-direction']} ${styles['p-all-30']}`}>                                      
                 { adsReady? <AdCompaignBox position="before_title" data={upcoming.sponsers}/> : ""}
                 <SubscribeComponents/>
+                { adsReady? <AdCompaignBox position="after_title" data={upcoming.sponsers}/> : ""}
               </div>
 
               <div className={`${styles['lg-5']} ${styles['md-5']} ${styles['sm-12']} ${styles['flexbox']} ${styles['content-center']} ${styles['items-center']} ${styles['column-direction']} ${styles['p-all-15']}`}>

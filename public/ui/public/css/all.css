@@ -517,3 +517,8 @@ li.has-dropdown>a:after, li.has-slideitem>a:after, li.has-subitem>a:after {
     font-size: 1.875rem;
     line-height: 2.45rem;
 }
+
+ins {
+    width:100%; 
+    min-width: 200px;
+}
