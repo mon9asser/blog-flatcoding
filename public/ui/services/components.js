@@ -179,7 +179,8 @@ function AdCompaignBox({position, data, isReady, classes}) {
           }, {});
           attributes.style = styleObject; // Replace the style string with the object
       } 
-      
+      // => dont forget to convert 'class' to 'className' 
+
       return <div className={combinedClasses}>
         <ins {...attributes}></ins>
       </div>
