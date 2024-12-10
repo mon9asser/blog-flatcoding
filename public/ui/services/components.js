@@ -1,3 +1,5 @@
+"use client";
+
 import styles from "../public/css/index.module.css";
 import Head from "next/head";
 import { useRouter } from 'next/router';
@@ -103,9 +105,95 @@ function SearchComponent ({searchType}) {
 
 }
 
-function AdCompaignBox({position, data, classes}) {
-  return <b>Ads Box here</b>   
-}
+function AdCompaignBox({position, data, isReady, classes}) {
+  
+  var combinedClasses = classes ? `ad-box ${classes}` : 'ad-box';
+  var adInitialized = useRef(false);
+
+  if( !data || !data.length ) {
+    return null; 
+  } 
+
+  const index = data.findIndex((x) => x.position === position );
+  if(index == -1 ) {
+    return null;
+  }
+
+  var adsbysite = data[index];
+
+  if( adsbysite.is_enabled == undefined || adsbysite.is_enabled === false ) {
+    return null;
+  }
+
+  // ---------------------------------------------
+  // working with google adsense units
+  // ---------------------------------------------
+  var isAdsByAdsense = (adsbysite.code.indexOf('adsbygoogle') !== -1 && adsbysite.code.indexOf('</ins>') !== -1);
+  useEffect(() => {
+    if(isReady) {
+
+      // check if ad is google adsense and window object 
+      if(window && isAdsByAdsense ) {
+        if (!adInitialized.current) {
+          try {
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            adInitialized.current = true;
+          } catch (err) {
+            console.error("AdSense error:", err);
+          }
+        }
+      }
+    }
+  }, [isReady]) ;
+
+  if( isAdsByAdsense ) {
+    
+    const insRegex = /<ins\s+([^>]+)>/g;
+    let insMatch = insRegex.exec(adsbysite.code);
+
+    if (insMatch) {
+        const insTagContent = insMatch[0]; // Full <ins> element
+        console.log("Extracted <ins> Element:", insTagContent);
+
+        // Step 2: Extract attributes from the <ins> element
+        const attributes = {};
+        const attributeRegex =/([a-zA-Z0-9_-]+)=['"]([^'"]+)['"]/g;
+        let attributeMatch;
+
+        while ((attributeMatch = attributeRegex.exec(insTagContent)) !== null) {
+            const attributeName = attributeMatch[1];
+            const attributeValue = attributeMatch[2]; 
+            attributes[attributeName] = attributeValue;
+        } 
+
+        
+        // convert style from string to be object 
+        if (attributes.style) {
+          const styleObject = attributes.style.split(';').reduce((acc, stylePair) => {
+              const [key, value] = stylePair.split(':').map(s => s.trim());
+              if (key && value) {
+                  const camelCaseKey = key.replace(/-([a-z])/g, (_, char) => char.toUpperCase());
+                  acc[camelCaseKey] = value;
+              }
+              return acc;
+          }, {});
+          attributes.style = styleObject; // Replace the style string with the object
+      } 
+      
+      return <div className={combinedClasses}>
+        <ins {...attributes}></ins>
+      </div>
+    } else {
+        console.log("No <ins> element found in the string.");
+    }
+ 
+  }
+
+  // check for other sponors
+
+  
+  return <b>Ads Box here {index}</b>   
+} 
 
 export {
     ServerOffline,

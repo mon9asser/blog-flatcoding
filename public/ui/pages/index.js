@@ -47,8 +47,7 @@ export async function getServerSideProps(context) {
 }
 
 const HomePage = ({ upcoming, adsReady }) => {
-  
-  console.log(upcoming);
+   
   // server offline
   if( !upcoming || upcoming === undefined ) {
     return <ServerOffline/>
@@ -169,8 +168,7 @@ const HomePage = ({ upcoming, adsReady }) => {
           </div>
       );
   };
-
-  console.log(upcoming);
+ 
 
   return (
      <>
@@ -211,10 +209,11 @@ const HomePage = ({ upcoming, adsReady }) => {
         <div className={`${styles['wrapper-no-padding']} ${styles['offset-left']} ${styles['offset-right']}`}>
           <div className={`${styles['banner-gray']}`}>
             <div className={`${styles['row']} ${styles['offset-left']} ${styles['offset-right']} ${styles['max-1172']} ${styles['mlr--30']} ${styles['ptb-50']} ${styles['section-subscribe']}`}>
+              
               <div className={`${styles['lg-7']} ${styles['md-7']} ${styles['sm-12']} ${styles['flexbox']} ${styles['content-center']} ${styles['items-start']} ${styles['column-direction']} ${styles['p-all-30']}`}>                                      
-                { adsReady? <AdCompaignBox position="before_title" data={upcoming.sponsers}/> : ""}
+                <AdCompaignBox isReady={adsReady} position="before_title" data={upcoming.sponsers}/>
                 <SubscribeComponents/>
-                { adsReady? <AdCompaignBox position="after_title" data={upcoming.sponsers}/> : ""}
+                <AdCompaignBox isReady={adsReady} position="after_title" data={upcoming.sponsers}/> 
               </div>
 
               <div className={`${styles['lg-5']} ${styles['md-5']} ${styles['sm-12']} ${styles['flexbox']} ${styles['content-center']} ${styles['items-center']} ${styles['column-direction']} ${styles['p-all-15']}`}>
