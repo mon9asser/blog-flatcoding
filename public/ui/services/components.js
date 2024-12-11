@@ -131,7 +131,7 @@ function AdCompaignBox({position, data, isReady, classes}) {
   var isAdsByAdsense = (adsbysite.code.indexOf('adsbygoogle') !== -1 && adsbysite.code.indexOf('</ins>') !== -1);
   useEffect(() => {
     if(isReady) {
-
+      
       // check if ad is google adsense and window object 
       if(window && isAdsByAdsense ) {
         if (!adInitialized.current) {
@@ -144,6 +144,7 @@ function AdCompaignBox({position, data, isReady, classes}) {
         }
       }
     }
+    
   }, [isReady]) ;
 
   if( isAdsByAdsense ) {
@@ -152,8 +153,7 @@ function AdCompaignBox({position, data, isReady, classes}) {
     let insMatch = insRegex.exec(adsbysite.code);
 
     if (insMatch) {
-        const insTagContent = insMatch[0]; // Full <ins> element
-        console.log("Extracted <ins> Element:", insTagContent);
+        const insTagContent = insMatch[0]; // Full <ins> element 
 
         // Step 2: Extract attributes from the <ins> element
         const attributes = {};
@@ -179,8 +179,13 @@ function AdCompaignBox({position, data, isReady, classes}) {
           }, {});
           attributes.style = styleObject; // Replace the style string with the object
       } 
-      // => dont forget to convert 'class' to 'className' 
 
+      // => dont forget to convert 'class' to 'className' 
+      if( attributes.class ) {
+        attributes.className = attributes.class 
+        delete attributes.class;
+      }
+      
       return <div className={combinedClasses}>
         <ins {...attributes}></ins>
       </div>
@@ -193,7 +198,7 @@ function AdCompaignBox({position, data, isReady, classes}) {
   // check for other sponors
 
   
-  return <b>Ads Box here {index}</b>   
+  return <div className={combinedClasses} dangerouslySetInnerHTML={{__html: adsbysite.code }}/>
 } 
 
 export {
