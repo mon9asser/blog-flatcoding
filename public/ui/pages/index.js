@@ -1,5 +1,6 @@
 
 import { Helper } from "@/services/helper.js";
+import Config from "@/services/config.js";
 import styles from "@/public/css/index.module.css";
 import Head from "next/head";
 import { ServerOffline } from "@/services/components.js";
@@ -225,7 +226,10 @@ const HomePage = ({ upcoming, adsReady }) => {
                     alt={upcoming.banner_title}
                     height={200} 
                     width={320}
-                    src={upcoming.banner_image_url}  
+                    src={upcoming.banner_image_url} 
+                   /* blurDataURL={Config.img_200} 
+                    placeholder="blur"
+                   */
                   /> 
                 </figure>
               </div> 
@@ -234,13 +238,21 @@ const HomePage = ({ upcoming, adsReady }) => {
         </div>
       </section>   
 
+
       <section className={`${styles['white-bg']}`}>
+
+      
 
         <div className={`${styles['feature-block']}`}>
           <div className={`${styles['max-1172']} ${styles['offset-left']} ${styles['offset-right']} ${styles['row']} ${styles['plr-15']} ${styles['mlr--30']} ${styles['ptb-50']} ${styles['section-tutorials']}`}>
+            
+            <AdCompaignBox isReady={adsReady} position="before_section_2" data={upcoming.sponsers}/>
+
             <h2 className={`${styles['custom-headline']} ${styles['section-head']} ${styles['text-center']} ${styles['mb-25']} ${styles['mt-25']}`}>Why FlatCoding?</h2>
             <div className={`${styles['row']} ${styles['items-center']} ${styles['content-center']}`}>
+
               <div className={`${styles['center-icons']} ${styles['sm-6']} ${styles['md-3']} ${styles['lg-3']} ${styles['text-center']} ${styles['p-all-15']}`}>
+                
                 <div className={`${styles['flatcoding-icon']}`}>
                   <span className={`${styles['flexbox']} ${styles['items-center']} ${styles['content-center']}`}>
                     <svg width="35px" height="35px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -255,6 +267,7 @@ const HomePage = ({ upcoming, adsReady }) => {
                 </div>
                 <h5>Free Tutorials</h5>
               </div>
+
               <div className={`${styles['center-icons']} ${styles['sm-6']} ${styles['md-3']} ${styles['lg-3']} ${styles['text-center']} ${styles['p-all-15']}`}>
                 <div className={`${styles['flatcoding-icon']}`}>
                   <span className={`${styles['flexbox']} ${styles['bg2']} ${styles['items-center']} ${styles['content-center']}`}>
@@ -265,6 +278,7 @@ const HomePage = ({ upcoming, adsReady }) => {
                 </div>
                 <h5>Online Compilers</h5>
               </div>
+
               <div className={`${styles['center-icons']} ${styles['sm-6']} ${styles['md-3']} ${styles['lg-3']} ${styles['text-center']} ${styles['p-all-15']}`}>
                 <div className={`${styles['flatcoding-icon']}`}>
                   <span className={`${styles['bg3']} ${styles['flexbox']} ${styles['items-center']} ${styles['content-center']}`}>
@@ -278,6 +292,7 @@ const HomePage = ({ upcoming, adsReady }) => {
                 </div>
                 <h5>Solving Problems</h5>
               </div>
+
               <div className={`${styles['center-icons']} ${styles['sm-6']} ${styles['md-3']} ${styles['lg-3']} ${styles['text-center']} ${styles['p-all-15']}`}>
                 <div className={`${styles['flatcoding-icon']}`}>
                   <span className={`${styles['flexbox']} ${styles['bg4']} ${styles['items-center']} ${styles['content-center']}`}>
@@ -293,17 +308,29 @@ const HomePage = ({ upcoming, adsReady }) => {
                 </div>
                 <h5>Books and Resources</h5>
               </div>
+
+
+
             </div>
+
+            <AdCompaignBox isReady={adsReady} position="after_section_2" data={upcoming.sponsers}/>
+
           </div>
         </div>
 
       </section>
 
 
+
+
+
       <section className={`${styles['white-bg']}`}>
 
         <div className={`${styles['wrapper-no-padding']}`}>
           <div className={`${styles['max-1172']} ${styles['offset-left']} ${styles['offset-right']} ${styles['row']} ${styles['plr-15']} ${styles['mlr--30']} ${styles['ptb-50']} ${styles['section-tutorials']}`}>
+            
+            <AdCompaignBox isReady={adsReady} position="before_section_3" data={upcoming.sponsers}/>
+
             <div className={`${styles['row']} ${styles['offset-left']} ${styles['offset-right']} ${styles['plr-15']} ${styles['mlr--30']} ${styles['ptb-50']} ${styles['max-1172']}`}>
                 <div className={`${styles['header-section']} ${styles['hero']} ${styles['text-center']}`}>  
                   <h2 className={`${styles['custom-headline']} ${styles['section-head']} ${styles['text-center']} ${styles['mb-10']} ${styles['mt-25']}`}>{upcoming.latest_tutorials.homepage_section_title}</h2>
@@ -341,6 +368,9 @@ const HomePage = ({ upcoming, adsReady }) => {
                 </div>
                 <Link className={`${styles['see-more-tutorials']}`} href={`${upcoming.site_url}tutorials/`}>See more</Link>
             </div>
+
+            <AdCompaignBox isReady={adsReady} position="after_section_3" data={upcoming.sponsers}/>
+
           </div>
         </div>
 

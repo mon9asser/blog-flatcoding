@@ -196,8 +196,6 @@ function AdCompaignBox({position, data, isReady, classes}) {
   }
 
   // check for other sponors
-
-  
   return <div className={combinedClasses} dangerouslySetInnerHTML={{__html: adsbysite.code }}/>
 } 
 
