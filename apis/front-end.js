@@ -158,7 +158,7 @@ frontendRouter.get("/front/tutorials/get", middlewareTokens, async (req, res) =>
     
     try {
 
-        var tuts = await Tutorial.find({ "options.publish": true }).select('tutorial_title slug date_updated tutorial_svg_icon duration selected_category').sort({ _id: -1 }).lean(); 
+        var tuts = await Tutorial.find({ "options.publish": true }).select('tutorial_title slug date_updated tutorial_svg_icon duration selected_category _id').sort({ _id: -1 }).lean(); 
         var ads = await AdCampaign.find({page:"all_tutorials_page", is_enabled: true});
         var settings = await Sets.find({}).sort({ _id: -1 }).limit(1);
         var menus = await Menus.find({});
@@ -221,7 +221,21 @@ frontendRouter.get("/front/tutorials/get", middlewareTokens, async (req, res) =>
         -----------------------------------------------------------*/
         var tutorials = tuts.map(x => {
             x.url = `${site_options.site_url}tutorials/${x.slug}/`;
-            delete x.slug
+            delete x.slug 
+
+            return x;
+        });
+
+
+       //  console.log( tutorials[tutorials.length - 1].selected_category.id );
+
+       
+        post.blocks = [...post.blocks].map(x => {
+
+            if( x.type == 'tutorialsList' ) {
+                x.data.tutorials = tutorials.filter(y => y.selected_category.id == x.data.selectedValue)
+            }
+
             return x;
         });
 
@@ -233,9 +247,7 @@ frontendRouter.get("/front/tutorials/get", middlewareTokens, async (req, res) =>
             tags_nav_links,
             main_nav_right,
             main_menu, 
-
-            tutorials,
-
+             
             sponsers: ads,
             post,
             // not compelted yet

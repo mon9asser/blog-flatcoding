@@ -59,6 +59,27 @@ class HelperData {
       return staticData;
     };
 
+    formatDate = (dateString) => {
+
+        const date = new Date(dateString);
+
+
+        // Format the date components separately
+        const day = date.getDate();
+        const month = date.toLocaleString('en-GB', { month: 'long' });
+        const year = date.getFullYear();
+
+        // Combine them with a comma
+        const formattedDate = `${day} ${month}, ${year}`;
+        
+        return formattedDate;
+
+    }
+
+    decodeHtmlEntities(text) {
+      return text;
+      // return he.decode(text);  
+    }
 
 }
 
