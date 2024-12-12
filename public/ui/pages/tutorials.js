@@ -56,7 +56,7 @@ const TutorialsPage = ({ upcoming, adsReady }) => {
     if( !upcoming || upcoming === undefined ) {
         return <ServerOffline/>
     }
-
+    console.log(upcoming);
     var jsonLdContent = `
       {
           "@context": "https://schema.org",
@@ -179,11 +179,13 @@ const TutorialsPage = ({ upcoming, adsReady }) => {
                       case 'header':
                         header_count += 1;
                         return <Fragment key={`${x.id}-block-header`}>
+                            <AdCompaignBox isReady={adsReady} position={`before_section_title_${header_count}`} data={upcoming.sponsers}/>
                             {createElement(
                               `h${Math.min(Math.max(x?.data?.level, 1), 6)}`,
                               { key: `${x.id}-heading`, style: { textAlign: x?.data?.alignment } },
                               Helper.decodeHtmlEntities(x?.data?.text)
                             )}
+                            <AdCompaignBox isReady={adsReady} position={`after_section_title_${header_count}`} data={upcoming.sponsers}/>
                         </Fragment>;
                       
                       case 'youtubeEmbed':
@@ -245,15 +247,48 @@ const TutorialsPage = ({ upcoming, adsReady }) => {
                         );
 
                         case 'tutorialsList':
+                          end_section += 1;
                            return (
                             <Fragment key={`frage-box-${x.id}`}>
                                 <div className={`${styles['row']} ${styles['mlr--15']}`} key={x.id}>
-                                  {console.log(x.data.tutorials.length)}
+                                  {
+                                    x.data.tutorials.length ? 
+                                    x.data.tutorials.map(item => {
+                                      return <div key={item._id} className={`${styles['sm-6']} ${styles['md-4']} ${styles['lg-4']} ${styles['text-center']} ${styles['p-all-15']}`}>
+                                        <div className={styles['tutorial-box']}>
+                                          {item.tutorial_svg_icon !== '' && (
+                                            <i
+                                            className={styles['tutorial-thumbs']}
+                                            style={{ background: '#2d4756' }}
+                                            dangerouslySetInnerHTML={{
+                                              __html: item.tutorial_svg_icon,
+                                            }}
+                                            />
+                                          )}
+                                          <h3>
+                                          <span>{item.tutorial_title}</span>
+                                          {item.duration !== '' && (
+                                          <span className={styles['subtitle']}>
+                                            Duration:- {item.duration}
+                                          </span>
+                                          )}
+                                        </h3>
+                                        <Link
+                                          className={styles['floating-all']}
+                                          href={`${item.url}`}
+                                        ></Link>
+                                        </div>
+                                      </div>
+                                    }): ''
+                                  }
                                 </div> 
+
+                                <AdCompaignBox isReady={adsReady} position={`end_of_category_section_${end_section}`} data={upcoming.sponsers}/>
                             </Fragment>
                            )
                         default:
                           return null;
+                        
                     }
                     // end switch 
 
@@ -280,38 +315,4 @@ const TutorialsPage = ({ upcoming, adsReady }) => {
 export default TutorialsPage;
 
 
-/*
-
-{filtered.map(item => (
-	<div
-	  key={item._id}
-	  className="sm-6 md-4 lg-4 text-center p-all-15"
-	>
-	  <div className="tutorial-box">
-		{item.tutorial_svg_icon !== '' && (
-		  <i
-			className="tutorial-thumbs"
-			style={{ background: '#2d4756' }}
-			dangerouslySetInnerHTML={{
-			  __html: item.tutorial_svg_icon,
-			}}
-		  />
-		)}
-		<h3>
-		  <span>{item.tutorial_title}</span>
-		  {item.duration !== '' && (
-			<span className="subtitle">
-			  Duration:- {item.duration}
-			</span>
-		  )}
-		</h3>
-		<Link
-		  className="floating-all"
-		  href={`/tutorials/${item.slug}/`}
-		></Link>
-	  </div>
-	</div>
-  ))}
-
-
-  */
+ 
