@@ -8,7 +8,7 @@ const {Menus} = require("./../models/menus-model");
 const {Usr} = require("./../models/user-model");
 const {AdCampaign} = require("./../models/ad_campaign-model");
 const {middlewareTokens} = require("./secure/middlewares")
-
+const { escape } = require('validator');
 var frontendRouter = express.Router(); 
 var path = require("path");
 var fs = require("fs");
@@ -274,13 +274,120 @@ frontendRouter.get("/front/tutorials/get", middlewareTokens, async (req, res) =>
 frontendRouter.get("/front/tutorial/get", middlewareTokens, async (req, res) => {
     try {
 
+        if( !req.query.tut_name ) {
+            return res.send({
+                is_error: true, 
+                data: [],   
+                message: "parameter required!",
+            });
+        }
+
+        // secure user data 
+        if (!/^[a-zA-Z0-9-_]+$/.test(req.query.tut_name)) {
+            return res.send({
+                is_error: true, 
+                data: [], 
+                status: 404,  
+                message: "Invalid tutorial name!",
+            });
+        } 
+        var tutorial_slug = escape(req.query.tut_name);
+
+        // target tutorial
+        var tutorial = await Tutorial.findOne({slug: tutorial_slug, "options.publish": true});
+        var ads = await AdCampaign.find({ is_enabled: true, page: 'tutorial_page' });
+        var settings = await Sets.find({}).sort({ _id: -1 }).limit(1);
+        var menus = await Menus.find({});
+        var user = await Usr.find({email: 'moun2030@gmail.com'});
+
+        
+        
+        
+        // menus 
+        var company_nav_links= menus.filter(x => x.menu_name === 'company_nav_links');
+        var follow_nav_links= menus.filter(x => x.menu_name === 'follow_nav_links');
+        var tags_nav_links= menus.filter(x => x.menu_name === 'tags_nav_links');
+        var main_nav_right= menus.filter(x => x.menu_name === 'main_nav_right');
+        var main_menu = menus.filter(x => x.menu_name === 'main_menu');
+
+        var response_data = {
+            tutorial,
+            company_nav_links,
+            follow_nav_links,
+            tags_nav_links,
+            main_nav_right,
+            main_menu,  
+            sponsers: ads,
+            blog_latest_articles: []
+        }
+
+        if( tutorial == null ) {
+
+            return res.send({
+                is_error: true, 
+                data: response_data, 
+                status: 404,
+                message: "Fetched Successfully!!",
+            });
+
+        }
         
 
+        var posts = await Posts.find({'tutorial.id': tutorial._id.toString(), "selected_tab._id": 'root', post_type: 0, is_published: true}).select('slug post_title');
+        
+
+        /* 
+        -----------------------------------------------------------
+        1. settings
+        -----------------------------------------------------------*/
+
+        var options = settings ? (settings.length ? settings[settings.length - 1]: {} ) : {}
+
+        var slinks = user[0].social_links.map( x => `"${x.social_link}"`);
+
+        // enable beside title 
+        var beside_title = getValueFromObject(options, 'beside_post_title')
+        var site_meta_title = getValueFromObject(tutorial, 'meta_title');
+        if( beside_title != '' ) {
+            site_meta_title =site_meta_title + " "+ beside_title;
+        }
+
+        var site_options = {
+            site_meta_title: site_meta_title,
+            site_meta_description: getValueFromObject(tutorial, 'meta_description'),
+            site_url : getValueFromObject(options, 'site_address'), 
+            site_name: getValueFromObject(options, 'site_name'),
+            site_thumbnail_url: getValueFromObject(options, 'site_thumbnail_url'),
+            social_links: slinks, 
+            site_logo : getValueFromObject(options, 'site_logo'),
+            beside_post_title: getValueFromObject(tutorial, 'enable_beside_title'),
+            google_ads: getValueFromObject(options, 'google_ads'),
+            google_analytics: getValueFromObject(options, 'google_analytics'),
+            header: getValueFromObject(options, 'header'),
+            footer: getValueFromObject(options, 'footer'), 
+        }; 
+
+        if( site_options.site_url ) {
+            site_options.site_url = site_options.site_url[site_options.site_url.length - 1] == '/' ? site_options.site_url: `${site_options.site_url}/`
+        }
+        
+
+        response_data = {posts , ...response_data, ...site_options}
+        
+        // get posts 
+        return res.send({
+            is_error: false, 
+            data: response_data,
+            message:  "Fetched Successfully!",
+        })  
+
+        
+       
     } catch(error) {
 
         return res.send({
             is_error: true, 
-            data: [], 
+            data:error.message, 
             message: error.message || "Something went wrong",
         });
 

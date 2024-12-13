@@ -295,7 +295,7 @@ const TutorialsPage = ({ upcoming, adsReady }) => {
               } 
           </div> 
       </div>
-
+              
       <Footer 
         footer_options={{
           subscribe_title: upcoming.subscribe_title, 
