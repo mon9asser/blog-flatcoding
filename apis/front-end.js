@@ -333,7 +333,7 @@ frontendRouter.get("/front/tutorial/get", middlewareTokens, async (req, res) => 
         }
         
 
-        var posts = await Posts.find({'tutorial.id': tutorial._id.toString(), "selected_tab._id": 'root', post_type: 0, is_published: true}).select('slug post_title');
+        
         
 
         /* 
@@ -371,8 +371,17 @@ frontendRouter.get("/front/tutorial/get", middlewareTokens, async (req, res) => 
             site_options.site_url = site_options.site_url[site_options.site_url.length - 1] == '/' ? site_options.site_url: `${site_options.site_url}/`
         }
         
+        var pst = await Posts.find({'tutorial.id': tutorial._id.toString(), "selected_tab._id": 'root', post_type: 0, is_published: true}).select('slug post_title');
+        var posts = pst.map(post => ({
+            url: `${site_options.site_url}tutorials/${tutorial.slug}/${post.slug}/`,
+            post_title: post.post_title 
+        }));
 
-        response_data = {posts , ...response_data, ...site_options}
+        // chapters would be here !!
+
+        response_data = {
+           posts , 
+            ...response_data, ...site_options}
         
         // get posts 
         return res.send({
