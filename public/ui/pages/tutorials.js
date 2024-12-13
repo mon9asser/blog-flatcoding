@@ -56,7 +56,7 @@ const TutorialsPage = ({ upcoming, adsReady }) => {
     if( !upcoming || upcoming === undefined ) {
         return <ServerOffline/>
     }
-    console.log(upcoming);
+    
     var jsonLdContent = `
       {
           "@context": "https://schema.org",
@@ -88,12 +88,10 @@ const TutorialsPage = ({ upcoming, adsReady }) => {
   const footer_content = parse(upcoming.footer)
   var header_count = 0;
   var end_section = 0; 
-
-  console.log(jsonLdContent);
-  console.log(upcoming);
+      
     return <>
         <Head>
-          <title>{upcoming.post.meta_title}</title>
+          <title>{upcoming.site_meta_title}</title>
           <meta name="description" content={upcoming.post.meta_description} />
           {
               upcoming.post.allow_search_engine? "" :
@@ -103,7 +101,7 @@ const TutorialsPage = ({ upcoming, adsReady }) => {
           <link rel="canonical" href={`${upcoming.site_url}tutorials/`}/>
           <meta property="og:locale" content="en_US"/>
           <meta property="og:type" content="article"/>
-          <meta property="og:title" content={upcoming.post.meta_title}/>
+          <meta property="og:title" content={upcoming.site_meta_title}/>
           <meta property="og:description" content={upcoming.post.meta_description}/>
           <meta property="og:url" content={`${upcoming.site_url}tutorials/`}/>
           <meta property="og:site_name" content={upcoming.site_name}/> 

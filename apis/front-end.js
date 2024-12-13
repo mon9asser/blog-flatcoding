@@ -150,7 +150,7 @@ frontendRouter.get("/front/home/get", middlewareTokens, async (req, res) => {
 
     
      
-})
+});
 
 
 // Tutorials Data in Route: /tutorials
@@ -183,7 +183,7 @@ frontendRouter.get("/front/tutorials/get", middlewareTokens, async (req, res) =>
         if( beside_title != '' ) {
             site_meta_title =site_meta_title + " "+ beside_title;
         }
-        
+         
         var site_options = {
             site_meta_title: site_meta_title,
             site_meta_description: getValueFromObject(post, 'meta_description'),
@@ -226,10 +226,7 @@ frontendRouter.get("/front/tutorials/get", middlewareTokens, async (req, res) =>
             return x;
         });
 
-
-       //  console.log( tutorials[tutorials.length - 1].selected_category.id );
-
-       
+        
         post.blocks = [...post.blocks].map(x => {
 
             if( x.type == 'tutorialsList' ) {
@@ -261,7 +258,7 @@ frontendRouter.get("/front/tutorials/get", middlewareTokens, async (req, res) =>
         });
 
     } catch(error) {
-        console.log(error)
+       
         return res.send({
             is_error: true, 
             data: [], 
@@ -273,5 +270,21 @@ frontendRouter.get("/front/tutorials/get", middlewareTokens, async (req, res) =>
 });
 
 
+// Tutorial Data in Route: /tutorials/:tutorial-slug 
+frontendRouter.get("/front/tutorial/get", middlewareTokens, async (req, res) => {
+    try {
+
+        
+
+    } catch(error) {
+
+        return res.send({
+            is_error: true, 
+            data: [], 
+            message: error.message || "Something went wrong",
+        });
+
+    }
+});
  
 module.exports = { frontendRouter }
