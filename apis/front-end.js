@@ -372,12 +372,16 @@ frontendRouter.get("/front/tutorial/get", middlewareTokens, async (req, res) => 
         }
         
         var pst = await Posts.find({'tutorial.id': tutorial._id.toString(), "selected_tab._id": 'root', post_type: 0, is_published: true}).select('slug post_title');
-        var posts = pst.map(post => ({
-            url: `${site_options.site_url}tutorials/${tutorial.slug}/${post.slug}/`,
-            post_title: post.post_title 
-        }));
+        var posts = pst.map(post => {
+            var p = {
+                url: `${site_options.site_url}tutorials/${tutorial.slug}/${post.slug}/`,
+                post_title: post.post_title 
+            };
 
-        // chapters would be here !!
+            return p;
+        });
+
+        
 
         response_data = {
            posts , 
