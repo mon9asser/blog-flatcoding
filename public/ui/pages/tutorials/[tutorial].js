@@ -58,13 +58,126 @@ export async function getServerSideProps(context) {
 
 export default function tutorial ({upcoming, adsReady}) {
      
-      
+    
     // server offline
     if( !upcoming || upcoming === undefined ) {
         return <ServerOffline/>
     }
 
     console.log(upcoming);
+    var json_code_var = `{
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "${upcoming.tutorial?.tutorial_title}",
+          "author": {
+              "@type": "Organization",
+              "name": "${upcoming?.site_name}"
+          },
+          "datePublished": "${upcoming.tutorial?.date_published}",   
+          "dateModified": "${upcoming.tutorial?.date_updated}",   
+          "description": "${upcoming.site_meta_description}",
+          "publisher": {
+              "@type": "Organization",
+              "name": "${upcoming?.site_name}",
+              "logo": {
+                  "@type": "ImageObject",
+                  "url": "${upcoming?.site_logo}"  
+              }
+          },
+          "mainEntityOfPage": {
+              "@type": "WebPage",
+              "@id": "${upcoming.site_url}tutorials/${upcoming.tutorial?.slug}/"
+          },
+          "url": "${upcoming.site_url}tutorials/${upcoming.tutorial?.slug}/",
+          "articleSection": "${upcoming.tutorial?.tag}",
+          "keywords": "${upcoming.tutorial?.keyphrase}",
+          "image": "${upcoming.tutorial?.thumbnail_url}",
+          "breadcrumb": {
+                  "@context": "https://schema.org",
+                  "@type": "BreadcrumbList",
+                  "itemListElement": [
+                      {
+                          "@type": "ListItem",
+                          "position": 1,
+                          "name": "Home",
+                          "item": "${upcoming.site_url}"
+                      },
+                      {
+                          "@type": "ListItem",
+                          "position": 2,
+                          "name": "Tutorials",
+                          "item": "${upcoming.site_url}tutorials/"
+                      },
+                      {
+                          "@type": "ListItem",
+                          "position": 3,
+                          "name": "${upcoming.tutorial?.tutorial_title}",
+                          "item": "${upcoming.site_url}tutorials/${upcoming.tutorial?.slug}/"
+                      }  
+                  ]
+          }
+    }`;
+
+    const header_content = parse(upcoming.header)
+    const footer_content = parse(upcoming.footer)
     
-    return <b>Hello World !!</b>
+
+    return <>
+      <Head>
+        <title>{upcoming.site_meta_title}</title>
+        <meta name="description" content={upcoming.site_meta_description} />
+        {
+            upcoming.tutorial?.options?.hide_from_search_engines ?
+            <meta name="robots" content={"noindex, nofollow, noarchive, nosnippet, noodp, notranslate, noimageindex"} />
+            : ""
+        } 
+
+        <link rel="canonical" href={`${upcoming.site_url}tutorials/${upcoming.tutorial?.slug}/`}/>
+        <meta property="og:locale" content="en_US"/>
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content={upcoming.site_meta_title}/>
+        <meta property="og:description" content={upcoming.site_meta_description}/>
+        <meta property="og:url" content={`${upcoming.site_url}tutorials/${upcoming.tutorial?.slug}/`}/>
+        <meta property="og:site_name" content={upcoming.site_name}/> 
+
+        
+        <meta property="og:image" content={upcoming.tutorial?.thumbnail_url}/>
+        <meta name="twitter:card" content="summary_large_image"/> 
+        <meta name="twitter:image" content={upcoming.tutorial?.thumbnail_url}/>
+        
+        <script 
+            type="application/ld+json" 
+            dangerouslySetInnerHTML={{__html: json_code_var}}
+        /> 
+        {header_content}  
+      </Head>
+
+      <Header 
+        header_options={{
+          site_name: upcoming.site_name,
+          site_logo: upcoming.site_logo,
+          site_url: upcoming.site_url
+        }}
+        nav_left ={upcoming.main_menu} 
+        nav_right={upcoming.main_nav_right}
+      />
+
+      <section className={styles.tutorial_banner + ' ' + styles.wrapper}>
+        <div className={styles['max-1170'] + ' ' + styles['offset-right'] + ' ' + styles['offset-left']+ ' ' + styles['plr-15']}>
+          Tutorial Banner
+        </div>
+      </section>
+
+      <Footer 
+        footer_options={{
+          subscribe_title: upcoming.subscribe_title, 
+          subscribe_description: upcoming.subscribe_description
+        }}
+        company_links= {upcoming.company_nav_links}
+        follow_links= {upcoming.follow_nav_links}
+        nav_links= {upcoming.tags_nav_links} 
+      />
+
+      {footer_content}  
+    </>;
 }

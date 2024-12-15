@@ -5331,3 +5331,7 @@ img.half, div.feature-block svg, .feature-block {
     color: #b9355e;
     border: 1px solid #b9355e;
 }
+
+.tutorial_banner {
+    background: red;
+}

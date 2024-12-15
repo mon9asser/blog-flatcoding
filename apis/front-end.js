@@ -348,6 +348,7 @@ frontendRouter.get("/front/tutorial/get", middlewareTokens, async (req, res) => 
         // enable beside title 
         var beside_title = getValueFromObject(options, 'beside_post_title')
         var site_meta_title = getValueFromObject(tutorial, 'meta_title');
+         
         if( beside_title != '' ) {
             site_meta_title =site_meta_title + " "+ beside_title;
         }
