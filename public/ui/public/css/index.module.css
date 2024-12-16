@@ -5333,5 +5333,10 @@ img.half, div.feature-block svg, .feature-block {
 }
 
 .tutorial_banner {
-    background: red;
+   /* background: linear-gradient(to right, #06162f, #1c4033); */
+}
+
+.section-ptb-25 {
+    padding-bottom: 55px;
+    padding-top: 55px;
 }

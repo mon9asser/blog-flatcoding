@@ -121,6 +121,12 @@ export default function tutorial ({upcoming, adsReady}) {
     const header_content = parse(upcoming.header)
     const footer_content = parse(upcoming.footer)
     
+    var banner_bg = {
+      left: '#06162f',
+      right: '#1c4033',
+      is_gradient: true,
+      bg: 'red'  
+    }
 
     return <>
       <Head>
@@ -162,9 +168,13 @@ export default function tutorial ({upcoming, adsReady}) {
         nav_right={upcoming.main_nav_right}
       />
 
-      <section className={styles.tutorial_banner + ' ' + styles.wrapper}>
-        <div className={styles['max-1170'] + ' ' + styles['offset-right'] + ' ' + styles['offset-left']+ ' ' + styles['plr-15']}>
-          Tutorial Banner
+      <section className={styles.tutorial_banner + ' ' + styles.wrapper} style={{background: banner_bg.is_gradient? `linear-gradient(to right, ${banner_bg.left}, ${banner_bg.right})`: banner_bg.bg}}>
+        <div className={styles['max-1170'] + ' ' + styles['section-ptb-25'] +  ' ' + styles['offset-right'] + ' ' + styles['offset-left']+ ' ' + styles['plr-10']}>
+          <header className={styles['row']}>
+            <div className={styles['col-8']}>
+              <h1>PHP Tutorial</h1>
+            </div>
+          </header>
         </div>
       </section>
 
