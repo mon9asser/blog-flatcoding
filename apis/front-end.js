@@ -302,7 +302,6 @@ frontendRouter.get("/front/tutorial/get", middlewareTokens, async (req, res) => 
 
         
         
-        
         // menus 
         var company_nav_links= menus.filter(x => x.menu_name === 'company_nav_links');
         var follow_nav_links= menus.filter(x => x.menu_name === 'follow_nav_links');
@@ -311,7 +310,6 @@ frontendRouter.get("/front/tutorial/get", middlewareTokens, async (req, res) => 
         var main_menu = menus.filter(x => x.menu_name === 'main_menu');
 
         var response_data = {
-            tutorial,
             company_nav_links,
             follow_nav_links,
             tags_nav_links,
@@ -365,12 +363,15 @@ frontendRouter.get("/front/tutorial/get", middlewareTokens, async (req, res) => 
             google_ads: getValueFromObject(options, 'google_ads'),
             google_analytics: getValueFromObject(options, 'google_analytics'),
             header: getValueFromObject(options, 'header'),
-            footer: getValueFromObject(options, 'footer'), 
+            footer: getValueFromObject(options, 'footer') 
         }; 
 
         if( site_options.site_url ) {
             site_options.site_url = site_options.site_url[site_options.site_url.length - 1] == '/' ? site_options.site_url: `${site_options.site_url}/`
         }
+        
+        
+        
         
         var pst = await Posts.find({'tutorial.id': tutorial._id.toString(), "selected_tab._id": 'root', post_type: 0, is_published: true}).select('slug post_title');
         var posts = pst.map(post => {
@@ -382,10 +383,31 @@ frontendRouter.get("/front/tutorial/get", middlewareTokens, async (req, res) => 
             return p;
         });
 
+        var tabs_updated = [];
+        if (tutorial.tabs && tutorial.tabs.length) {
+            // tutorials/php-programming/t/
+            tabs_updated = tutorial.tabs.map(x => {
+                return {
+                    title: x.title,
+                    url: tutorial.slug.indexOf( 'https://' ) != -1? tutorial.slug :`${site_options.site_url}tutorials/${tutorial.slug}/t/${x.slug}/`  
+                };
+            }); 
+        }
+ 
+
+        tabs_updated = [
+            {
+                title: tutorial.tutorial_title,
+                url: `${site_options.site_url}tutorials/${tutorial.slug}/` 
+            }, 
+            ...tabs_updated
+        ]
         
 
         response_data = {
+           tabs: tabs_updated, 
            posts , 
+           tutorial,
             ...response_data, ...site_options}
         
         // get posts 

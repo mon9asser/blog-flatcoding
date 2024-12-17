@@ -95,7 +95,7 @@ export default function Header({header_options, nav_left, nav_right}) {
     return(
         <> 
              <header className={styles["wrapper"] + " " + styles["white-bg"] + " " + styles["border-bottom"] + " " + styles["plr-0"] + " " + styles["sticky"]}>
-                <nav className={`${styles["flexbox"]} ${styles["items-center"]} ${styles["offset-left"]} ${styles["offset-right"]} ${styles["plr-15"]} ${styles["max-1172"]} ${styles["default-height"]}`}>
+                <nav className={`${styles["flexbox"]} ${styles["items-center"]} ${styles["offset-left"]} ${styles["offset-right"]} ${styles["plr-0"]} ${styles["max-1172"]} ${styles["default-height"]}`}>
                     
                     <aside ref={sidebarRef} className={`${styles["aside"]} ${styles["responsive-aside"]}`}> 
 

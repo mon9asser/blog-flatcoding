@@ -5340,3 +5340,43 @@ img.half, div.feature-block svg, .feature-block {
     padding-bottom: 55px;
     padding-top: 55px;
 }
+
+
+.banner-header-dark h1 {
+    color: #fff;
+    font-size: 1.5em;
+    font-weight: bold;
+    border-left: 5px solid #10b310;
+    padding-left: 15px;
+    line-height: 1.2;
+}
+
+.banner-header-dark p {
+    font-size: 15px;
+    margin-top: 20px;
+    color: #999;
+
+}
+
+.banner-header-light {
+    color: #000;
+}
+
+.banner-header-dark .tutorials-tabs {
+    margin-top: 15px;
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.banner-header-dark .tutorials-tabs li a {
+    font-size: 14px; 
+    border-radius: 3px;
+    color: #999;
+}
+
+.banner-header-dark .tutorials-tabs li a:hover {
+    color: #fff;
+}

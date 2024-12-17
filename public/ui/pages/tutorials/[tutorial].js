@@ -125,7 +125,8 @@ export default function tutorial ({upcoming, adsReady}) {
       left: '#06162f',
       right: '#1c4033',
       is_gradient: true,
-      bg: 'red'  
+      bg: 'red',
+      is_dark: true  
     }
 
     return <>
@@ -171,8 +172,18 @@ export default function tutorial ({upcoming, adsReady}) {
       <section className={styles.tutorial_banner + ' ' + styles.wrapper} style={{background: banner_bg.is_gradient? `linear-gradient(to right, ${banner_bg.left}, ${banner_bg.right})`: banner_bg.bg}}>
         <div className={styles['max-1170'] + ' ' + styles['section-ptb-25'] +  ' ' + styles['offset-right'] + ' ' + styles['offset-left']+ ' ' + styles['plr-10']}>
           <header className={styles['row']}>
-            <div className={styles['col-8']}>
-              <h1>PHP Tutorial</h1>
+            <div className={styles['md-8'] + ' ' + (banner_bg.is_dark? styles['banner-header-dark']: styles['banner-header-light'])}>
+              <h1>{upcoming.tutorial.tutorial_title}</h1>
+              <p>{upcoming.tutorial.description}</p>
+              {
+                upcoming.tabs.length ? (
+                  <ul className={styles['tutorials-tabs']}>
+                    {
+                      upcoming.tabs.map(x => <li><a href={x.url}>{x.title}</a></li>)
+                    }
+                  </ul>
+                ): ''
+              }
             </div>
           </header>
         </div>
