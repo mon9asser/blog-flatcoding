@@ -170,11 +170,20 @@ export default function tutorial ({upcoming, adsReady}) {
       />
 
       <section className={styles.tutorial_banner + ' ' + styles.wrapper} style={{background: banner_bg.is_gradient? `linear-gradient(to right, ${banner_bg.left}, ${banner_bg.right})`: banner_bg.bg}}>
-        <div className={styles['max-1170'] + ' ' + styles['section-ptb-25'] +  ' ' + styles['offset-right'] + ' ' + styles['offset-left']+ ' ' + styles['plr-10']}>
+        <div className={styles['max-1170'] + ' ' + styles['section-ptb-25'] +  ' ' + styles['offset-right'] + ' ' + styles['offset-left']}>
           <header className={styles['row']}>
             <div className={styles['md-8'] + ' ' + (banner_bg.is_dark? styles['banner-header-dark']: styles['banner-header-light'])}>
               <h1>{upcoming.tutorial.tutorial_title}</h1>
               <p>{upcoming.tutorial.description}</p>
+            </div>
+          </header>
+        </div>
+      </section>
+
+      <section className={styles.tutorial_banner + ' ' + styles['section-tabs-navs']}>
+        <div className={styles['max-1170'] + ' ' + styles['offset-right'] + ' ' + styles['offset-left']}>
+          <div className={styles['row']}>
+            <div className={styles['md-8']}>
               {
                 upcoming.tabs.length ? (
                   <ul className={styles['tutorials-tabs']}>
@@ -185,9 +194,151 @@ export default function tutorial ({upcoming, adsReady}) {
                 ): ''
               }
             </div>
-          </header>
+          </div>
         </div>
       </section>
+
+
+      <section className={styles['max-1170'] + ' ' + styles['section-ptb-0'] +  ' ' + styles['offset-right'] + ' ' + styles['offset-left']+ ' ' + styles['plr-10']}>
+        <div className={styles['row']}>
+          <div className={styles['md-9']}>
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+            Column 8 
+          </div>
+          <div className={styles['md-3'] + ' ' + styles['sidebar-right-col']}>
+            <div className={styles['sidebar-right']}>
+                Sidebar Box
+            </div>
+          </div>
+        </div>
+      </section>
+ 
 
       <Footer 
         footer_options={{

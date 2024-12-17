@@ -5362,8 +5362,8 @@ img.half, div.feature-block svg, .feature-block {
     color: #000;
 }
 
-.banner-header-dark .tutorials-tabs {
-    margin-top: 15px;
+.tutorials-tabs {
+    
     list-style: none;
     padding: 0;
     display: flex;
@@ -5371,12 +5371,26 @@ img.half, div.feature-block svg, .feature-block {
     flex-wrap: wrap;
 }
 
-.banner-header-dark .tutorials-tabs li a {
+ .tutorials-tabs li a {
     font-size: 14px; 
     border-radius: 3px;
-    color: #999;
+    color: #666;
 }
 
-.banner-header-dark .tutorials-tabs li a:hover {
-    color: #fff;
+.tutorials-tabs li a:hover {
+    color: #b9355e;
+}
+
+.section-tabs-navs {
+    border-bottom: 1px solid #efefef;
+    padding: 15px;
+}
+
+.sidebar-right-col {
+    z-index: 1000;
+}
+.sidebar-right {
+    background-color: red; 
+    margin-top: -100%;
+    z-index: 2000;
 }
