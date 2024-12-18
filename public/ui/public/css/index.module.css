@@ -5372,7 +5372,7 @@ img.half, div.feature-block svg, .feature-block {
 }
 
  .tutorials-tabs li a {
-    font-size: 14px; 
+    font-size: 16px; 
     border-radius: 3px;
     color: #666;
 }
@@ -5393,13 +5393,9 @@ img.half, div.feature-block svg, .feature-block {
      
 }
 
-.mlr--15 {
-    margin-left: -15px;
-    margin-right: -15px;
-}
-
  
-@media only screen and (min-width: 410px ) {
+ 
+@media only screen and (min-width: 768px ) {
 
     .tutorials-tabs li a {
         padding-bottom: 18px;
@@ -5413,12 +5409,13 @@ img.half, div.feature-block svg, .feature-block {
         border-bottom: 1px solid #bb3462;
         background: #efefef;
         color: #b8345f;
+        font-weight: bold;
     }
     
 }
 
 
-@media only screen and (max-width: 410px )  {
+@media only screen and (max-width: 768px )  {
     .tutorials-tabs {
         gap: 10px;
     }
@@ -5432,4 +5429,39 @@ img.half, div.feature-block svg, .feature-block {
         background: #bb3462;;
         color: #fff;
     }
+}
+
+.tut-title {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.tut-title div:first-child {
+    flex-shrink: 0;
+    background-color: transparent;
+    width: 150px;
+    height: 150px;
+    border-radius: 5px;
+}
+
+.tut-title div:first-child svg {
+    width: 100%;
+    height: 100%; 
+}
+
+
+.tut-title div:last-child {
+    flex-grow:1;
+}
+
+
+
+@media only screen and (max-width: 450px) {
+    .tut-title {
+        flex-direction: column;
+        align-items: start; 
+    } 
+
+   
 }

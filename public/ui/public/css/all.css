@@ -522,3 +522,39 @@ ins {
     width:100%; 
     min-width: 200px;
 }
+
+[contenteditable]:hover,
+[contenteditable]:focus {
+  background: #a4b3fe;
+}
+@media print {
+    
+    [contenteditable]:hover,
+    [contenteditable]:focus {
+      outline: none;
+    }
+  }
+
+
+
+  thead tr th {
+    color: #373757;
+    font-weight: 500;
+  }
+  thead tr th:last-child {
+    text-align: right;
+  }
+
+
+  tbody tr th {
+    color: #373757;
+    font-family: 'Roboto', sans-serif;
+    font-weight: normal;
+  }
+  tbody tr td {
+    font-family: 'Roboto', sans-serif;
+    color: #868e96;
+  }
+  tbody tr td:last-child {
+    text-align: right;
+  }

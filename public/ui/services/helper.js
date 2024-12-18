@@ -81,6 +81,24 @@ class HelperData {
       // return he.decode(text);  
     }
 
+    validateEmail(email){
+      // var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+       var re =/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+       return re.test(email);
+   }
+   
+
+    generateCaptcha = () => {
+
+      // make it with 6 charachters 
+      var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      return Array.from({ length: 6 }, () => { 
+        var generate = Math.floor(Math.random() * chars.length);
+        return chars.charAt(generate)
+      }).join(' ');
+  
+    }
+
 }
 
 var Helper = new HelperData();

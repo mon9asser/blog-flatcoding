@@ -172,9 +172,14 @@ export default function tutorial ({upcoming, adsReady}) {
       <section className={styles.tutorial_banner + ' ' + styles.wrapper} style={{background: banner_bg.is_gradient? `linear-gradient(to right, ${banner_bg.left}, ${banner_bg.right})`: banner_bg.bg}}>
         <div className={styles['max-1170'] + ' ' + styles['section-ptb-25'] +  ' ' + styles['offset-right'] + ' ' + styles['offset-left']}>
           <header className={styles['row']}>
-            <div className={styles['md-8'] + ' ' + (banner_bg.is_dark? styles['banner-header-dark']: styles['banner-header-light'])}>
-              <h1>{upcoming.tutorial.tutorial_title}</h1>
-              <p>{upcoming.tutorial.description}</p>
+            <div className={styles['md-10'] + ' ' + (banner_bg.is_dark? styles['banner-header-dark']: styles['banner-header-light'])}>
+              <div className={styles['tut-title']}>
+                <div dangerouslySetInnerHTML={{__html: upcoming.tutorial.tutorial_svg_icon}} />
+                <div>
+                  <h1>{upcoming.tutorial.tutorial_title}</h1>
+                  <p>{upcoming.tutorial.description}</p>
+                </div>
+              </div>
             </div>
           </header>
         </div>
