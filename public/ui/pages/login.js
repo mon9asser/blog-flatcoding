@@ -1,6 +1,7 @@
 import {useState, useEffect, useRef } from 'react';
 // import style from './../public/css/admin.module.css';
-import styles from "@/public/css/admin.module.css";
+import styles from "@/public/focus/css/style.module.css";
+// D:\flatcoding.com\public\ui\public\focus\css\style.css
 import { Helper } from '../services/helper';
 import {CreateCaptcha} from "./../services/components";
 import loginIcon from "@/public/icons/icon-login.gif";
@@ -24,7 +25,7 @@ export default function login() {
          
         // check session exists
         if (cookie) {
-            window.location.href = '/dashboard';
+            // window.location.href = '/dashboard';
             return;
         }
 
