@@ -1,4 +1,11 @@
 /*Login Form*/
+
+.form-group input:focus, .form-group input:active {
+  border:1px solid #b9355e;
+}
+
+
+
 .authincation {
   display: flex;
   flex-direction: column;
@@ -39,6 +46,9 @@
 .col-md-6 {
   flex: 0 0 50%;
   max-width: 50%;
+}
+.mx-width {
+  width: 350px;
 }
 
 .authincation-content {
@@ -128,6 +138,7 @@
   padding: 10px 20px;
   margin-bottom: 15px;
   border-radius: 4px;
+  font-size: 12px;
 }
 
 .alert-danger {
@@ -156,10 +167,12 @@
 
 .btn-primary {
   color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: #b9355e;
+  border-color: #b9355e;
 }
-
+.btn-primary:hover {
+  opacity: 0.9;
+}
 .btn-block {
   display: block;
   width: 100%;
@@ -175,9 +188,60 @@
 }
 
 .text-primary {
-  color: #007bff;
+  color: #b9355e;
 }
 
 .mt-3 {
   margin-top: 12px;
+}
+
+
+.form-group label {
+  font-size: 13px;
+  display: block;
+  margin-top: 30px !important;
+  margin-bottom: 10px !important;
+}
+
+.rm-mt .form-group {
+ margin-bottom: 0px !important;
+}
+
+.rm-mt input {
+  border: none !important;
+  padding-left: 5px;
+  border-radius: 0 !important;
+  border-right: 1px solid #dfdfdf;
+}
+.headlogin {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.headlogin h4 {
+  margin: 0;
+  padding: 0;
+  color: #000;
+}
+
+
+.rm-mt input:focus,
+.rm-mt input:active {
+  border-right: 1px solid #dfdfdf;
+}
+
+.rm-mt canvas { 
+
+}
+
+.rm-mt {
+  border: 1px solid #eee;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+.mb-space-btn {
+  margin-bottom: 20px;
 }

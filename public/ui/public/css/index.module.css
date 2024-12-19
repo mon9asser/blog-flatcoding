@@ -141,6 +141,7 @@
     margin-bottom: 25px;
     width: 100%;
 }
+
 .icon {
     display: inline-block;
     width: 100px;
@@ -1133,6 +1134,11 @@ a.thumb-down .stroke-color {
     top: 0;
     bottom: 0;
     padding: 25px !important
+}
+
+.hero p {
+    font-size: 15px;
+    color: #666;
 }
 @media only screen and (max-width:768px) {
     .hero p {
@@ -5333,6 +5339,7 @@ img.half, div.feature-block svg, .feature-block {
 }
 
 .tutorial_banner {
+    padding-left: 30px;
    /* background: linear-gradient(to right, #06162f, #1c4033); */
 }
 
@@ -5340,8 +5347,7 @@ img.half, div.feature-block svg, .feature-block {
     padding-bottom: 55px;
     padding-top: 55px;
 }
-
-
+ 
 .banner-header-dark h1 {
     color: #fff;
     font-size: 1.5em;

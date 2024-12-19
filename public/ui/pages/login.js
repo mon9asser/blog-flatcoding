@@ -3,9 +3,10 @@ import {useState, useEffect, useRef } from 'react';
 import styles from "@/public/css/admin.module.css";
 import { Helper } from '../services/helper';
 import {CreateCaptcha} from "./../services/components";
+import loginIcon from "@/public/icons/icon-login.gif";
 import DOMPurify from 'dompurify';
 import Cookies from 'js-cookie';
-
+import Image from 'next/image';
 export default function login() {
 
     var [generatedCaptcha, setGenerateCaptcha] = useState(null);
@@ -118,15 +119,26 @@ export default function login() {
         <div className={`${styles['authincation']} ${styles['h-100']} ${styles['mt-10']}`}>
             <div className={`${styles['container-fluid']} ${styles['h-100']}`}>
                 <div className={`${styles['row']} ${styles['justify-content-center']} ${styles['h-100']} ${styles['align-items-center']}`}>
-                    <div className={styles['col-md-6']}>
+                    <div className={styles['col-md-4'] + ' ' + styles['mx-width']}>
                         <div className={styles['authincation-content']}>
                             <div className={`${styles['row']} ${styles['no-gutters']}`}>
                                 <div className={styles['col-xl-12']}>
                                     <div className={styles['auth-form']}>
-                                        <h4 className={`${styles['text-center']} ${styles['mb-4']}`}>Sign in your account</h4>
+
+                                        <div className={styles['headlogin']}>
+                                            <Image 
+                                                alt={'Login to your account'}
+                                                width="25" 
+                                                height="25"
+                                                src={loginIcon}  
+                                                priority
+                                            /> 
+
+                                            <h4 className={`${styles['text-center']} ${styles['mb-4']}`}>Sign in your account</h4>
+                                        </div>
                                         <form>
                                             <div className={styles['form-group']}>
-                                                <label><strong>Email</strong></label>
+                                                <label>Email</label>
                                                 <input 
                                                     type="email" 
                                                     placeholder="Email"
@@ -136,7 +148,7 @@ export default function login() {
                                                 />
                                             </div>
                                             <div className={styles['form-group']}>
-                                                <label><strong>Password</strong></label>
+                                                <label>Password</label>
                                                 <input 
                                                     type="password" 
                                                     placeholder="Password"
@@ -145,7 +157,7 @@ export default function login() {
                                                     onChange={e => setPassword(e.target.value)}
                                                 />
                                             </div>
-                                            <div className={`${styles['form-inline']} ${styles['d-flex']} ${styles['justify-content-between']} ${styles['mt-4']} ${styles['mb-2']}`}>
+                                            <div className={`${styles['form-inline']} ${styles['mb-space-btn']} ${styles['rm-mt']} ${styles['d-flex']} ${styles['justify-content-between']} ${styles['mt-4']} ${styles['mb-2']}`}>
                                                 <div className={styles['form-group']}>
                                                     <input 
                                                         type="text"
@@ -159,16 +171,9 @@ export default function login() {
                                                     <CreateCaptcha value={generatedCaptcha} />
                                                 </div>
                                             </div>
-                                            <div className={`${styles['form-row']} ${styles['d-flex']} ${styles['justify-content-between']} ${styles['mt-4']} ${styles['mb-2']}`}>
-                                                <div className={styles['form-group']}>
-                                                    <div className={`${styles['form-check']} ${styles['ml-2']}`}>
-                                                        <input className={styles['form-check-input']} type="checkbox" id="basic_checkbox_1" />
-                                                        <label className={styles['form-check-label']} htmlFor="basic_checkbox_1">Remember me</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            {error !== '' && <div className={`${styles['alert']} ${styles['alert-danger']}`}>{error}</div>}
-                                            {loginSuccess !== '' && <div className={`${styles['alert']} ${styles['alert-success']}`}>{loginSuccess}</div>}
+                                            
+                                            {error !== '' && <div className={`${styles['alert']} ${styles['mb-space-btn']} ${styles['alert-danger']}`}>{error}</div>}
+                                            {loginSuccess !== '' && <div className={`${styles['alert']} ${styles['mb-space-btn']} ${styles['alert-success']}`}>{loginSuccess}</div>}
                                             <div className={styles['text-center']}>
                                                 <button onClick={loginProccess} type="submit" className={`${styles['btn']} ${styles['btn-primary']} ${styles['btn-block']} ${styles['default-btn']}`}>
                                                     {loading ? "Please wait ..." : "Login"}

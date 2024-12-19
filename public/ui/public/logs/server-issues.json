@@ -2861,5 +2861,19 @@
     "country": "Saudi Arabia",
     "region": "Riyadh Region",
     "ip": "2001:16a2:c070:7a33:44c:9bda:22b9:c78c"
+  },
+  {
+    "issue": "Server is offline",
+    "timestamp": "2024-12-19T13:11:52.310Z",
+    "country": "Saudi Arabia",
+    "region": "Riyadh Region",
+    "ip": "2001:16a2:c07d:58f1:d4f3:9178:d4b4:6dc3"
+  },
+  {
+    "issue": "Server is offline",
+    "timestamp": "2024-12-19T13:11:52.645Z",
+    "country": "Saudi Arabia",
+    "region": "Riyadh Region",
+    "ip": "2001:16a2:c07d:58f1:d4f3:9178:d4b4:6dc3"
   }
 ]

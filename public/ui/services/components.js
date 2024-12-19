@@ -212,18 +212,18 @@ var CreateCaptcha = ({value}) => {
     if ( canvasRef == null || !canvasRef.current) return;
 
     // generate width and height 
-    canvasRef.current.width = 150;
-    canvasRef.current.height = 70; 
+    canvasRef.current.width = 140;
+    canvasRef.current.height = 35; 
 
     var context = canvasRef.current.getContext("2d");
     
     // background
-    context.fillStyle = '#f0f0f0';
+    context.fillStyle = '#fff';
     context.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height);
 
     // calculate text position 
     var x =  (canvasRef.current.width / 2) - 50;
-    var y = (canvasRef.current.height / 2) + 9;
+    var y = (canvasRef.current.height / 2) + 11;
 
     // Set text
     context.font = '22px Arial';
