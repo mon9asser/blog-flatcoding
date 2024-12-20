@@ -1,4 +1,6 @@
-import "./../public/css/all.css";
+import "@/public/focus/css/all.styles.css";
+import "@/public/css/all.css";
+
 import { Poppins } from 'next/font/google'; 
 import Head from 'next/head';
 import Script from 'next/script';

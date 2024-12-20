@@ -1,5 +1,5 @@
 import {useState, useEffect, useRef } from 'react';
-import style from "@/public/css/index.module.css";
+import styles from "@/public/focus/css/style.module.css";
 import { Helper } from '../services/helper';
 import {CreateCaptcha} from "./../services/components";
 import DOMPurify from 'dompurify';
