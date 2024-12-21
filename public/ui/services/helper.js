@@ -92,8 +92,10 @@ class HelperData {
 
       // make it with 6 charachters 
       var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      
       return Array.from({ length: 6 }, () => { 
         var generate = Math.floor(Math.random() * chars.length);
+         
         return chars.charAt(generate)
       }).join(' ');
   

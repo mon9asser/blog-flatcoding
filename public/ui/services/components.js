@@ -203,7 +203,7 @@ function AdCompaignBox({position, data, isReady, classes}) {
 var CreateCaptcha = ({value}) => {
 
 
-
+  console.log(value);
 
   var canvasRef = useRef(null);
   

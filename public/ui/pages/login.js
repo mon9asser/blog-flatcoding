@@ -23,16 +23,16 @@ export default function login() {
     
     useEffect(() => {
         
+        // store result of capcha
+        setGenerateCaptcha(Helper.generateCaptcha()); 
+
         var cookie = Cookies.get(Helper.user_cookie);
          
         // check session exists
         if (cookie) {
-            // window.location.href = '/dashboard';
+            window.location.href = '/dashboard';
             return;
-        }
-
-        // store result of capcha
-        setGenerateCaptcha(Helper.generateCaptcha()); 
+        }  
 
     }, []);
 
