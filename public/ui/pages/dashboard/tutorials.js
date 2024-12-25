@@ -68,8 +68,13 @@ export default function tutorials() {
             <section className={styles['wrapper']}>
                 
                 {/* Headline */}
-                <h1 className={styles['headline-title']}>Tutorials</h1>
-
+                <div className={styles['headline-titles']}>
+                    <h1 className={styles['headline-title']}>Tutorials</h1>
+                    <button>
+                        <i className={icons['ti-plus']}></i>
+                        <span>Create New Tutorial</span>
+                    </button>
+                </div>
                 {/*Statistics*/}
                 <div className={styles.statistics_blocks}>
                     <ul>

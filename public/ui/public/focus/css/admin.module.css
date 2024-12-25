@@ -488,3 +488,35 @@
  
 
   
+  .headline-titles {
+    display: flex; 
+    margin: 20px 0;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .headline-titles h1 {
+    margin: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .headline-titles button {
+    margin-left: auto;
+    padding: 0;
+    line-height: 30px;
+    height: auto;
+    display: flex;
+    font-size: 14px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    color: #333;
+    gap: 10px
+  }
+
+  .headline-titles button:hover {
+    color: #000;
+  }
+
+
+  
