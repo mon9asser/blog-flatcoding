@@ -71,16 +71,33 @@ export default function tutorials() {
                 <div className={styles.statistics_blocks}>
                     <ul>
                         <li>
-                            <i>Total Tutorials</i>
+                            <span className={icons['ti-documents']}></span>
+                            <span>
+                                <i>150K</i>
+                                <span>Total Tutorials</span>
+                            </span>
                         </li>
                         <li>
-                            <i>Published</i>
+                            
+                            <span className={icons['ti-menu']}></span>
+                            <span>
+                                <i>52,542</i>
+                                <span>Published</span>
+                            </span>
                         </li>
                         <li>
-                            <i>Pending Review</i>
+                            <span className={icons['ti-menu']}></span>
+                            <span>
+                                <i>5483</i>
+                                <span>Pending Review</span>
+                            </span>
                         </li>
                         <li>
-                            <i>Draft</i>
+                            <span className={icons['ti-menu']}></span>
+                            <span>
+                                <i>5,066</i>
+                                <span>Draft</span>
+                            </span>
                         </li>
                     </ul>
                 </div>
