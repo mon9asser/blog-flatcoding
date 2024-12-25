@@ -25,7 +25,14 @@ export default function () {
 
            <header className={`${styles['header']}`}>
                 <nav className={`${styles['wrapper']} ${styles['flexbox']}`}>
-                    Hello this is
+                    <ul className={styles['navbar-list']}>
+                        <li>
+                            <a>
+                                <i className={icons['ti-eye']}></i>
+                                <span>Visit Website</span>
+                            </a>
+                        </li> 
+                    </ul>
                 </nav>
            </header>
 
