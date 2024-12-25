@@ -81,17 +81,20 @@
 }
 
 .expand-sidebar {
-    background-color: #2c3436;
+    color: #2c3436;
     width: 35px;
     height: 35px;
     position: absolute;
-    right: -33px;
+    right: -36px;
     z-index: 2000;
     top: 12px;
     border-radius: 2px;
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 1px solid #eee;
+    background-color: #fff;
+ 
 }
 
 .expand-sidebar a {
@@ -101,8 +104,9 @@
 }
 
 .expand-sidebar a:hover,
-.expand-sidebar a:focus {
-    color: #fff;
+.expand-sidebar a:focus,
+.expand-sidebar a:active {
+    color: #2c3436; 
 }
 
 .open-mask {
@@ -231,6 +235,14 @@
   }
 
   @media (max-width: 768px) {
+    .responsiveTable tbody,
+    .responsiveTable thead {
+      width: 100%; 
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+      overflow: hidden;
+    }
     .responsiveTable th,
     .responsiveTable td {
       padding: 8px;
@@ -238,10 +250,8 @@
     }
   }
   
-  @media (max-width: 480px) {
-    .responsiveTable {
-      display: block;
-    }
+  @media (max-width: 688px) {
+    
   
     .responsiveTable thead {
       display: none;
@@ -266,13 +276,13 @@
     .responsiveTable tbody tr td:last-child {
       border-bottom: none;
     }
-  
+    /*
     .responsiveTable tbody tr td:before {
       content: attr(data-label);
       font-weight: bold;
       flex: 1;
       text-align: left;
-    }
+    }*/
   
     .responsiveTable tbody tr td[data-label="Status"] {
       display: flex;
@@ -280,6 +290,66 @@
     }
   }
   
+
+  .tableContainer > ul {
+    display: none !important;
+  }
+
+  .tableContainer > ul > li {
+    display: block;
+    width: 100%; 
+    font-size: 13px;
+    padding: 10px 0px;
+    border-bottom: 1px dashed #ddd;
+  }
+  .tableContainer > ul > li > div {
+    display: flex;
+    flex-direction: column;
+  }
+  .tableContainer > ul > li > div > a {
+    font-weight: bold;
+    color: #000 !important;
+    font-size: 15px; 
+  }
+
+  .headline-title { 
+    margin-top: 25px;
+    padding: 0;
+    line-height: 35px;
+    border-left: 3px solid #2c3436;
+    color: #2c3436;
+    padding-left: 15px;
+    font-weight: bold;
+    font-size: 18px;
+  }
+
+  @media only screen and (max-width: 800px) {
+    .tableContainer table {
+      display: none !important;
+    }
+
+    .tableContainer >  ul {
+      display: block !important;
+    }
+  }
+
+  @media only screen and (max-width: 400px) {
+    .serial-pagination {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+    }
+    .serial-pagination ul {
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .serial-pagination span {
+      margin: 0 auto;
+    }
+  }
 
   .td-of-tble ul  {
     display: flex;
@@ -321,24 +391,100 @@
 
   .statistics_blocks ul li {
     border: 1px solid #dfdfdf;
-    flex:1;
+    flex-grow: 1;
     border-radius: 5px;
     padding: 10px;
+    display: flex; 
+    align-items: center;
+    gap: 15px;
   }
 
-  .statistics_blocks ul li span, 
-  .statistics_blocks ul li i {
+  .statistics_blocks ul li > span:first-child {
+    flex-shrink: 0 !important;
+    font-size: 24px;  
+    border-right: 1px solid #dfdfdf;
+    padding-left: 5px;
+    padding-right: 18px;
+  }
+  .statistics_blocks ul li > span:last-child {
+    flex-shrink: 0 !important;
+  }
+
+  .statistics_blocks ul li span span, 
+  .statistics_blocks ul li span i {
     display: block;
     width: 100%;
     color: #000;
   }
-  .statistics_blocks ul li span {
+  .statistics_blocks ul li span span {
     font-size: 15px; 
     color: #999;
   }
 
-  .statistics_blocks ul li i {
+  .statistics_blocks ul li span i {
     font-weight: bold;
     font-size: 25px;
     color: #000;
   }
+
+  .has-filter i {
+    background-color: #fff;
+    border: 1px solid #dfdfdf;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 12px;
+    margin-right: 10px;
+    color: #dfdfdf;
+  }
+
+  .has-filter i:hover {
+    color: #000;
+    border: 1px solid #000;
+  }
+
+  .serial-pagination {
+    display: flex;
+  }
+
+  .serial-pagination > span {
+    margin-left: auto;
+  }
+
+  .serial-pagination > ul {
+    display: flex;
+    gap: 10px;
+  }
+
+  .serial-pagination > ul > li > a,
+  .serial-pagination > span {
+    padding: 5px 10px;
+    display: flex;
+    
+    
+    font-size: 13px;
+    min-width: 30px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    
+  }
+
+  .serial-pagination > ul > li > a {
+    border: 1px solid #dfdfdf;
+    color: #000 !important;
+    border-radius: 3px;
+  }
+
+  .serial-pagination > ul > li > a.active {
+    background-color: #222;
+    color: #fff !important;
+  }
+
+  .edit-view-movile {
+    margin-top: 15px;
+    display: flex;
+    gap: 15px;
+  }
+ 
+
+  

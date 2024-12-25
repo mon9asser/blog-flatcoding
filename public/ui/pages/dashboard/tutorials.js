@@ -67,11 +67,14 @@ export default function tutorials() {
 
             <section className={styles['wrapper']}>
                 
+                {/* Headline */}
+                <h1 className={styles['headline-title']}>Tutorials</h1>
+
                 {/*Statistics*/}
                 <div className={styles.statistics_blocks}>
                     <ul>
                         <li>
-                            <span className={icons['ti-documents']}></span>
+                            <span className={icons['ti-layers']}></span>
                             <span>
                                 <i>150K</i>
                                 <span>Total Tutorials</span>
@@ -79,21 +82,21 @@ export default function tutorials() {
                         </li>
                         <li>
                             
-                            <span className={icons['ti-menu']}></span>
+                            <span className={icons['ti-share']}></span>
                             <span>
                                 <i>52,542</i>
                                 <span>Published</span>
                             </span>
                         </li>
                         <li>
-                            <span className={icons['ti-menu']}></span>
+                            <span className={icons['ti-view-list-alt']}></span>
                             <span>
                                 <i>5483</i>
                                 <span>Pending Review</span>
                             </span>
                         </li>
                         <li>
-                            <span className={icons['ti-menu']}></span>
+                            <span className={icons['ti-layout']}></span>
                             <span>
                                 <i>5,066</i>
                                 <span>Draft</span>
@@ -102,66 +105,136 @@ export default function tutorials() {
                     </ul>
                 </div>
 
-                {/*Filters*/}
+                
+
                 {/*Table of tutorials*/}
                 <div className={styles.tableContainer}>
-                <table className={styles.responsiveTable}>
-                    <thead>
-                    <tr>
-                        <th>Titles of Tutorials</th>
-                        <th>Category</th>
-                        <th>Status</th>
-                        <th>Last Update</th>
-                        <th>Quality</th>
-                        <th>Statistics</th>
-                        
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {data.map((row) => (
-                        <tr className={styles['td-of-tble']} key={row.id}>
+                    <table className={styles.responsiveTable}>
+                        <thead>
+                        <tr>
+                            <th className={styles['has-filter']}>
+                                {/*Filters*/}
+                                <a href="#"><i className={icons['ti-filter']}></i></a>
+                                <span>Titles of Tutorials</span>
+                            </th>
+                            <th>Category</th>
+                            <th>Status</th>
+                            <th>Last Update</th>
+                            <th>Quality</th>
+                            <th>Statistics</th>
                             
-                        <td>
-                            <span>{row.customer}</span>
-                            <ul>
-                                <li>
-                                    <a>25 Posts</a>
-                                </li>
-                                <li>
-                                    <a data-color="blue">Edit</a>
-                                </li>
-                                <li>
-                                    <a data-color="red">Delete</a>
-                                </li>
-                                <li>
-                                    <a data-color="blue">Preview</a>
-                                </li>
-                            </ul>
-                        </td>
-                        <td>{row.location}</td>
-                        <td className={styles[row.status_code]}>
-                            <span>{row.status}</span>
-                        </td>
-                        <td>{row.orderDate}</td>
-                        <td>medium</td>
-                        
-                        <td>{row.amount}</td>
                         </tr>
-                    ))}
-                    </tbody>
-                    <thead>
-                    <tr>
-                        <th>Titles of Tutorials</th>
-                        <th>Category</th>
-                        <th>Statistics</th>
-                        <th>Status</th>
-                        <th>Quality</th>
-                        <th>Last Update</th>
-                    </tr>
-                    </thead>
-                </table>
+                        </thead>
+                        <tbody>
+                        {data.map((row) => (
+                            <tr className={styles['td-of-tble']} key={row.id}>
+                                
+                            <td>
+                                <span>{row.customer}</span>
+                                <ul>
+                                    <li>
+                                        <a>25 Posts</a>
+                                    </li>
+                                    <li>
+                                        <a data-color="blue">Edit</a>
+                                    </li>
+                                    <li>
+                                        <a data-color="red">Delete</a>
+                                    </li>
+                                    <li>
+                                        <a data-color="blue">Preview</a>
+                                    </li>
+                                </ul>
+                            </td>
+                            <td>{row.location}</td>
+                            <td className={styles[row.status_code]}>
+                                <span>{row.status}</span>
+                            </td>
+                            <td>{row.orderDate}</td>
+                            <td>medium</td>
+                            
+                            <td>{row.amount}</td>
+                            </tr>
+                        ))}
+                        </tbody>
+                        <thead>
+                        <tr>
+                            <th>Titles of Tutorials</th>
+                            <th>Category</th>
+                            <th>Statistics</th>
+                            <th>Status</th>
+                            <th>Quality</th>
+                            <th>Last Update</th>
+                        </tr>
+                        </thead>
+                    </table>
+
+                    <ul>
+                        <li>
+                            <div>
+                                <a>Titles of Tutorials</a>
+                                
+                                <ul className={styles['edit-view-movile']}>
+                                    <li><a>Edit</a></li>
+                                    <li><a>Preview</a></li>
+                                    <li><a className={styles['delete']}>Delete</a></li> 
+                                </ul>
+                            </div>
+
+                        </li>
+                        <li>
+                            <div>
+                                <a>Titles of Tutorials</a>
+                                
+                                <ul className={styles['edit-view-movile']}>
+                                    <li><a>Edit</a></li>
+                                    <li><a>Preview</a></li>
+                                    <li><a className={styles['delete']}>Delete</a></li> 
+                                </ul>
+                            </div>
+
+                        </li>
+                        <li>
+                            <div>
+                                <a>Titles of Tutorials</a>
+                                
+                                <ul className={styles['edit-view-movile']}>
+                                    <li><a>Edit</a></li>
+                                    <li><a>Preview</a></li>
+                                    <li><a className={styles['delete']}>Delete</a></li> 
+                                </ul>
+                            </div>
+
+                        </li>
+                        <li>
+                            <div>
+                                <a>Titles of Tutorials</a>
+                                
+                                <ul className={styles['edit-view-movile']}>
+                                    <li><a>Edit</a></li>
+                                    <li><a>Preview</a></li>
+                                    <li><a className={styles['delete']}>Delete</a></li> 
+                                </ul>
+                            </div>
+
+                        </li>
+                    </ul>
                 </div>
                 {/*Paginations*/}
+                <div className={styles['serial-pagination']}>
+                    <ul>
+                        <li><a>Prev</a></li>
+                        <li><a>1</a></li>
+                        <li><a>2</a></li>
+                        <li><a>3</a></li>
+                        <li><a className={styles['active']}>4</a></li>
+                        <li><a>5</a></li>
+                        <li><a>Next</a></li>
+                    </ul>
+                    <span>
+                        page 5 of 12
+                    </span>
+                </div>
             </section>
     </>
 }
