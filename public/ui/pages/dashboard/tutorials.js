@@ -24,7 +24,7 @@ export async function getServerSideProps(context) {
     try {
         
       var request = await Helper.sendRequest({
-          api: `front/admin/tutorials/get?page_number=0`,
+          api: `front/admin/tutorials/get?page_number=0&records_count=1`,
           method: "get",
           data: {} 
       });
@@ -38,7 +38,8 @@ export async function getServerSideProps(context) {
       }
   
       var json = await request.json(); 
-    
+      
+      
       
       return {
         props: {
@@ -60,9 +61,65 @@ export default function tutorials({upcoming}) {
         return <ServerOffline/>
     }
     
-    var [tutorials, setTutorials] = useState(upcoming);
-    var [currentPage, setCurrentPage] = useState(0);
-     
+    var [tutorials, setTutorials] = useState(upcoming); 
+    var [recordsCount, setRecordsCount] = useState(1); // number of records per page
+    
+    var previous_record = (e) => {   
+        
+        e.preventDefault();
+
+        if( tutorials.pagination.prev_page_number == tutorials.pagination.curr_page_number ) {
+            return;
+        } 
+
+        load_more_records(recordsCount, tutorials.pagination.prev_page_number, "prev");
+
+    };
+
+    var next_record = (e) => {
+        
+        e.preventDefault();
+
+        if( tutorials.pagination.next_page_number == tutorials.pagination.curr_page_number ) {
+            return;
+        }
+
+        load_more_records(recordsCount, tutorials.pagination.next_page_number, "next");
+
+    }
+    
+    var load_more_records = async (nRecords, nPage, btn = null, e = -1) => {
+           
+
+        if( e != -1) {
+            e.preventDefault();
+        }
+
+        if( (( tutorials.pagination.prev_page_number == tutorials.pagination.curr_page_number ) && btn == "prev") || ((tutorials.pagination.next_page_number == tutorials.pagination.curr_page_number) && btn == "next") ) {
+            return;
+        }
+
+        var request = await Helper.sendRequest({
+            api: `front/admin/tutorials/get?page_number=${nPage}&records_count=${nRecords}`,
+            method: "get",
+            data: {} 
+        });
+    
+        if (!request.ok) {
+          throw new Error('Server is offline');
+        }
+    
+        if( request.status != 200) {
+          throw new Error('Server is offline');
+        }
+    
+        var json = await request.json(); 
+        console.log(json);
+        if(! json.is_error) {
+            setTutorials(json.data)
+        }
+    }
+
     const data = [
         {
         id: 1,
@@ -107,7 +164,7 @@ export default function tutorials({upcoming}) {
                             <a href='#' className={styles.active}>
                                 <span className={icons['ti-layers']}></span>
                                 <span>
-                                    <i>150K</i>
+                                    <i>{Helper.formatNumber(tutorials.statistics.total_tutorials)}</i>
                                     <span>Total Tutorials</span>
                                 </span>
                             </a>
@@ -116,25 +173,16 @@ export default function tutorials({upcoming}) {
                             <a href='#'>
                                 <span className={icons['ti-share']}></span>
                                 <span>
-                                    <i>52,542</i>
+                                <i>{Helper.formatNumber(tutorials.statistics.total_published)}</i>
                                     <span>Published</span>
                                 </span>
                             </a>
-                        </li>
-                        <li>
-                            <a href='#'>
-                                <span className={icons['ti-view-list-alt']}></span>
-                                <span>
-                                    <i>5483</i>
-                                    <span>Pending Review</span>
-                                </span>
-                            </a>
-                        </li>
+                        </li> 
                         <li>
                             <a href='#'>
                                 <span className={icons['ti-layout']}></span>
                                 <span>
-                                    <i>5,066</i>
+                                <i>{Helper.formatNumber(tutorials.statistics.total_draft)}</i>
                                     <span>Draft</span>
                                 </span>
                             </a>
@@ -209,16 +257,15 @@ export default function tutorials({upcoming}) {
                 {/*Paginations*/}
                 <div className={styles['serial-pagination']}>
                     <ul>
-                        <li><a>Prev</a></li>
-                        <li><a>1</a></li>
-                        <li><a>2</a></li>
-                        <li><a>3</a></li>
-                        <li><a className={styles['active']}>4</a></li>
-                        <li><a>5</a></li>
-                        <li><a>Next</a></li>
+                        <li><a href='#' className={tutorials.pagination.prev_page_number == tutorials.pagination.curr_page_number? styles['disabled_btn']: ''} onClick={previous_record}>Prev</a></li>
+                        { 
+                            tutorials.pagination.paging_serials.length ? 
+                            tutorials.pagination.paging_serials.map(x => <li key={x}><a className={(tutorials.pagination.curr_page_number == (x - 1 )) ?styles['active']: ''} href='#' onClick={e => load_more_records( recordsCount,x - 1, e)}>{x}</a></li>): ''
+                        }
+                        <li><a href='#' className={tutorials.pagination.next_page_number == tutorials.pagination.curr_page_number? styles['disabled_btn']: ''} onClick={next_record}>Next</a></li>
                     </ul>
                     <span>
-                        page 5 of 12
+                        page {tutorials.pagination.curr_page_number + 1} of {tutorials.pagination.pages_count}
                     </span>
                 </div>
             </section>

@@ -4,6 +4,22 @@ class HelperData {
     user_cookie = 'user_info';
     jwt_secret = "flatcoding_t1y4u5236985471zasde!gfh@qwe#$%hoj^ytu&*tu(ib)ib~gfhrytuibonphojlkmlbkxzasqwe";
     
+    formatNumber = function (number) {
+      if (number < 1000) return number.toString(); // No abbreviation needed
+    
+      const units = ['k', 'm', 'b', 't']; // Thousand, Million, Billion, Trillion
+      let unitIndex = -1; // Start with no unit
+      let formattedNumber = number;
+    
+      while (Math.abs(formattedNumber) >= 1000 && unitIndex < units.length - 1) {
+        formattedNumber /= 1000; // Divide by 1000
+        unitIndex++;
+      }
+    
+      // Format the number to one decimal place and add the corresponding unit
+      return `${formattedNumber.toFixed(1)}${units[unitIndex]}`;
+    }
+
     // => send reques
     sendRequest = async ({api, method, data, headers }) => {
 

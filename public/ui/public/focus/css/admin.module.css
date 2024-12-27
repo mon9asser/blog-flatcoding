@@ -291,6 +291,8 @@
     }
   }
 
+
+
   .td-of-tble ul  {
     display: flex;
     
@@ -421,9 +423,11 @@
   .serial-pagination > ul {
     display: flex;
     gap: 10px;
+    align-items: center;
   }
 
   .serial-pagination > ul > li > a,
+  .serial-pagination > ul > li >  button
   .serial-pagination > span {
     padding: 5px 10px;
     display: flex;
@@ -436,12 +440,30 @@
     
   }
 
-  .serial-pagination > ul > li > a {
+  .serial-pagination > ul > li >  button {
+    padding: 8px 10px;
+    font-size: 13px; 
+  }
+
+  .serial-pagination > ul > li >  button:hover {
+    color: #0a679c !important;
+    border-color: #0a679c;
+  }
+
+  .serial-pagination > ul > li > a,
+  .serial-pagination > ul > li >  button {
     border: 1px solid #dfdfdf;
     color: #000 !important;
     border-radius: 3px;
     background-color: #fff;
   }
+
+  .serial-pagination > ul > li >  a.disabled_btn {
+    opacity: 0.7;
+    color: #999 !important;
+    border-color: #dfdfdf !important;
+  }
+
   .serial-pagination > ul > li > a:hover {
     color: #0a679c !important;
     border-color: #0a679c;
@@ -494,3 +516,4 @@
 
 
   
+ 

@@ -457,7 +457,7 @@ frontendRouter.get("/front/tutorial/get", middlewareTokens, async (req, res) => 
 
 frontendRouter.get("/front/admin/tutorials/get", middlewareTokens, async (req, res) => {
     
-    var records_count = 1;
+    var records_count = req.query.records_count == undefined ? 1: parseInt(req.query.records_count);
     var page_number = req.query.page_number;
         page_number = parseInt(page_number, 10);
 
@@ -469,11 +469,12 @@ frontendRouter.get("/front/admin/tutorials/get", middlewareTokens, async (req, r
     if (!/^[0-9]+$/.test(page_number)) {
         page_number = 0;
     } 
-    
-    
-    
+     
     // get count of pages inside tutoruals 
     var all_tutorials = await Tutorial.find({});
+    var total_published = all_tutorials.filter( x => x["options.publish"] == true );
+    var total_draft = all_tutorials.filter( x => x["options.publish"] == false ); 
+
     var pages = !all_tutorials.length ? []: _.chunk(all_tutorials, records_count); 
 
     // pages 
@@ -491,18 +492,24 @@ frontendRouter.get("/front/admin/tutorials/get", middlewareTokens, async (req, r
     
     // should response with 
     res.send({
-        is_error: true, 
+        is_error: false, 
         data: {
             pagination: {
                 pages_count: pages.length,
                 curr_page_number: current_page_number,
                 prev_page_number: prev_page_number,
                 next_page_number: next_page_number,
-                paging_serials:  paging_serials
+                paging_serials:  paging_serials,
+                records_count: records_count
             },
-            tutorials:  pages[current_page_number]
+            tutorials:  pages[current_page_number],
+            statistics: {
+                total_tutorials: all_tutorials.length,
+                total_published: total_published.length, 
+                total_draft: total_draft.length
+            }
         },
-        message: "parameter required!", 
+        message: "Fetched Successfully!", 
     });
 });
 
