@@ -1,3 +1,6 @@
+.page {
+  background-color: #f0f0f2;
+}
 .sidebar {
     background-color: #2d3436;
     position: fixed;
@@ -146,55 +149,54 @@
     margin: 20px 0;
   
   }
-  
+  .tableContainer table {
+    border: 1px solid #dfdfdf;
+    padding: 15px;
+  }
   .tableContainer table tr td {
     color: #999;
     font-size: 14px;
   }
   .tableContainer table thead tr th {
-    font-weight: bold;
-    background-color: #fff;
-    color:rgb(131, 98, 55) !important;
+    font-weight: normal;
+    /*background-color: #fff;*/
+    color:#0a679c !important;
     border: none; 
-    border-top: 2px solid tan;
-    border-bottom: 2px solid tan;
+    font-size: 14px;
   }
 
-  .tableContainer table thead:last-child tr th {
-    border-top: 2px solid tan;
-    border-bottom: 2px solid tan;
- 
-  }
+  
 
   .responsiveTable {
     width: 100%;
     border-collapse: collapse;
     font-family: Arial, sans-serif;
+    background-color: #fff;
   }
   
   .responsiveTable th,
   .responsiveTable td {
     text-align: left;
-    padding: 10px;
-    border-bottom: 1px dashed #b9b8b8;
+    padding: 10px 25px;
+    border-bottom: 1px dashed #b9b8b8b4;
     color: #000 !important;
     
   }
   
   .responsiveTable th {
-    background-color: #f4f4f4;
+   /*  background-color: #f4f4f4;*/
   }
   .responsiveTable thead tr th {
     color: #222 !important;
     font-size: 14px;
-    background-color: #fff !important; 
+    /*background-color: #fff !important; */
   }
   .responsiveTable tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
+    /*background-color: #f9f9f9;*/
   }
   
   .responsiveTable tbody tr:hover {
-    background-color:#f1f1f1; /* #f1f1f1;*/
+    /* background-color:#f1f1f1; #f1f1f1;*/
   }
   
   .published  span {
@@ -388,42 +390,68 @@
     gap: 15px;
     flex-wrap: wrap;
   }
-
   .statistics_blocks ul li {
-    border: 1px solid #dfdfdf;
+    display: flex;
     flex-grow: 1;
-    border-radius: 5px;
-    padding: 10px;
-    display: flex; 
-    align-items: center;
-    gap: 15px;
+    background-color: #fff;
+  }
+  .statistics_blocks ul li a:hover,
+  .statistics_blocks ul li a.active
+  .statistics_blocks ul li a:hover span,
+  .statistics_blocks ul li a.active span,
+  .statistics_blocks ul li a:hover span i,
+  .statistics_blocks ul li a.active span i {
+    color: #0a679c !important; 
+  }
+  .statistics_blocks ul li a:hover,
+  .statistics_blocks ul li a.active {
+    border-color: #0a679c !important; 
+  }
+  .statistics_blocks ul li a:hover > span:first-child,
+  .statistics_blocks ul li a.active > span:first-child {
+    border-right-color: #0a679c !important; 
+  }
+  
+ 
+    .statistics_blocks ul li a {
+      border: 1px solid #dfdfdf;
+      flex-grow: 1;
+      border-radius: 5px;
+      padding: 15px 15px;
+      display: flex; 
+      align-items: center;
+      gap: 15px;
   }
 
-  .statistics_blocks ul li > span:first-child {
+    .statistics_blocks ul li a > span:first-child {
     flex-shrink: 0 !important;
-    font-size: 24px;  
+    font-size: 20px;  
     border-right: 1px solid #dfdfdf;
     padding-left: 5px;
     padding-right: 18px;
   }
-  .statistics_blocks ul li > span:last-child {
+    .statistics_blocks ul li a > span:last-child {
     flex-shrink: 0 !important;
   }
 
-  .statistics_blocks ul li span span, 
-  .statistics_blocks ul li span i {
+    .statistics_blocks ul li a span span, 
+    .statistics_blocks ul li a span i {
     display: block;
     width: 100%;
     color: #000;
   }
-  .statistics_blocks ul li span span {
+    .statistics_blocks ul li a span span {
     font-size: 15px; 
     color: #999;
   }
 
-  .statistics_blocks ul li span i {
+  .statistics_blocks ul li a:hover span span {
+    color: #0a679c !important;
+  }
+
+    .statistics_blocks ul li a span i {
     font-weight: bold;
-    font-size: 25px;
+    font-size: 20px;
     color: #000;
   }
 
@@ -503,7 +531,7 @@
   .headline-titles button {
     margin-left: auto;
     padding: 0;
-    line-height: 30px;
+    line-height: 20px;
     height: auto;
     display: flex;
     font-size: 14px;
@@ -511,11 +539,13 @@
     border-radius: 5px;
     border: 1px solid #ddd;
     color: #333;
-    gap: 10px
+    gap: 5px;
+    background: #fff;
   }
 
   .headline-titles button:hover {
-    color: #000;
+    color: #0a679c;
+    border-color:#0a679c;
   }
 
 

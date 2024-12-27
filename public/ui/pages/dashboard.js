@@ -19,7 +19,7 @@ export default function () {
     }, [])
 
     return (
-        <>
+        <div className={styles.page}>
 
            <Sidebar/>
 
@@ -39,7 +39,7 @@ export default function () {
            <section className={styles['wrapper']}>
                 Section !!
            </section>
-        </>
+        </div>
     );
 
 }

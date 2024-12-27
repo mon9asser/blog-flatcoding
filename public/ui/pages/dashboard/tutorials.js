@@ -60,7 +60,7 @@ export default function tutorials() {
         // Add more rows as needed
     ];
 
-    return <>
+    return <div className={styles.page}>
 
             <Sidebar/> 
             <AdminHeader/>
@@ -79,33 +79,40 @@ export default function tutorials() {
                 <div className={styles.statistics_blocks}>
                     <ul>
                         <li>
-                            <span className={icons['ti-layers']}></span>
-                            <span>
-                                <i>150K</i>
-                                <span>Total Tutorials</span>
-                            </span>
+                            <a href='#' className={styles.active}>
+                                <span className={icons['ti-layers']}></span>
+                                <span>
+                                    <i>150K</i>
+                                    <span>Total Tutorials</span>
+                                </span>
+                            </a>
                         </li>
                         <li>
-                            
-                            <span className={icons['ti-share']}></span>
-                            <span>
-                                <i>52,542</i>
-                                <span>Published</span>
-                            </span>
+                            <a href='#'>
+                                <span className={icons['ti-share']}></span>
+                                <span>
+                                    <i>52,542</i>
+                                    <span>Published</span>
+                                </span>
+                            </a>
                         </li>
                         <li>
-                            <span className={icons['ti-view-list-alt']}></span>
-                            <span>
-                                <i>5483</i>
-                                <span>Pending Review</span>
-                            </span>
+                            <a href='#'>
+                                <span className={icons['ti-view-list-alt']}></span>
+                                <span>
+                                    <i>5483</i>
+                                    <span>Pending Review</span>
+                                </span>
+                            </a>
                         </li>
                         <li>
-                            <span className={icons['ti-layout']}></span>
-                            <span>
-                                <i>5,066</i>
-                                <span>Draft</span>
-                            </span>
+                            <a href='#'>
+                                <span className={icons['ti-layout']}></span>
+                                <span>
+                                    <i>5,066</i>
+                                    <span>Draft</span>
+                                </span>
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -241,5 +248,5 @@ export default function tutorials() {
                     </span>
                 </div>
             </section>
-    </>
+    </div>
 }

@@ -169,196 +169,199 @@ export default function tutorial ({upcoming, adsReady}) {
         nav_right={upcoming.main_nav_right}
       />
 
-      <section className={styles.tutorial_banner + ' ' + styles.wrapper} style={{background: banner_bg.is_gradient? `linear-gradient(to right, ${banner_bg.left}, ${banner_bg.right})`: banner_bg.bg}}>
-        <div className={styles['max-1170'] + ' ' + styles['section-ptb-25'] +  ' ' + styles['offset-right'] + ' ' + styles['offset-left']}>
-          <header className={styles['row']}>
-            <div className={styles['md-10'] + ' ' + (banner_bg.is_dark? styles['banner-header-dark']: styles['banner-header-light'])}>
-              <div className={styles['tut-title']}>
-                <div dangerouslySetInnerHTML={{__html: upcoming.tutorial.tutorial_svg_icon}} />
-                <div>
-                  <h1>{upcoming.tutorial.tutorial_title}</h1>
-                  <p>{upcoming.tutorial.description}</p>
+      
+
+        <section className={styles.tutorial_banner + ' ' + styles.wrapper} style={{background: banner_bg.is_gradient? `linear-gradient(to right, ${banner_bg.left}, ${banner_bg.right})`: banner_bg.bg}}>
+          <div className={styles['max-1170'] + ' ' + styles['section-ptb-25'] +  ' ' + styles['offset-right'] + ' ' + styles['offset-left']}>
+            <header className={styles['row']}>
+              <div className={styles['md-10'] + ' ' + (banner_bg.is_dark? styles['banner-header-dark']: styles['banner-header-light'])}>
+                <div className={styles['tut-title']}>
+                  <div dangerouslySetInnerHTML={{__html: upcoming.tutorial.tutorial_svg_icon}} />
+                  <div>
+                    <h1>{upcoming.tutorial.tutorial_title}</h1>
+                    <p>{upcoming.tutorial.description}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          </header>
-        </div>
-      </section>
-
-      <section className={styles.tutorial_banner + ' ' + styles['section-tabs-navs']}>
-        <div className={styles['max-1170'] + ' ' + styles['offset-right'] + ' ' + styles['offset-left']}>
-          <div className={styles['row']}>
-            <div className={styles['md-8']}>
-              {
-                upcoming.tabs.length ? (
-                  <ul className={styles['tutorials-tabs']}>
-                    {upcoming.tabs.map((x, i) => <li key={i}><a className={i == 0 ? styles['active']: ''} href={x.url}>{x.title}</a></li>)}
-                  </ul>
-                ): ''
-              }
-            </div>
+            </header>
           </div>
-        </div>
-      </section>
+        </section>
 
-
-      <section className={styles['max-1170'] + ' ' + styles['section-ptb-0'] +  ' ' + styles['offset-right'] + ' ' + styles['offset-left']+ ' ' + styles['plr-10']}>
-        <div className={styles['mlr--15']}>
-          <div className={styles['row']}>
-            <div className={styles['md-9']}>
-              <div className={styles['plr-15']}>
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
-                Column 8 
+        <section className={styles.tutorial_banner + ' ' + styles['section-tabs-navs']}>
+          <div className={styles['max-1170'] + ' ' + styles['offset-right'] + ' ' + styles['offset-left']}>
+            <div className={styles['row']}>
+              <div className={styles['md-8']}>
+                {
+                  upcoming.tabs.length ? (
+                    <ul className={styles['tutorials-tabs']}>
+                      {upcoming.tabs.map((x, i) => <li key={i}><a className={i == 0 ? styles['active']: ''} href={x.url}>{x.title}</a></li>)}
+                    </ul>
+                  ): ''
+                }
               </div>
             </div>
-            <div className={styles['md-3'] + ' ' + styles['sidebar-right-col']}>
-              <div className={styles['sidebar-right']}>
+          </div>
+        </section>
+
+
+        <section className={styles['max-1170'] + ' ' + styles['section-ptb-0'] +  ' ' + styles['offset-right'] + ' ' + styles['offset-left']+ ' ' + styles['plr-10']}>
+          <div className={styles['mlr--15']}>
+            <div className={styles['row']}>
+              <div className={styles['md-9']}>
                 <div className={styles['plr-15']}>
-                  Sidebar Box
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                  Column 8 
+                </div>
+              </div>
+              <div className={styles['md-3'] + ' ' + styles['sidebar-right-col']}>
+                <div className={styles['sidebar-right']}>
+                  <div className={styles['plr-15']}>
+                    Sidebar Box
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
- 
+        </section>
+  
 
-      <Footer 
-        footer_options={{
-          subscribe_title: upcoming.subscribe_title, 
-          subscribe_description: upcoming.subscribe_description
-        }}
-        company_links= {upcoming.company_nav_links}
-        follow_links= {upcoming.follow_nav_links}
-        nav_links= {upcoming.tags_nav_links} 
-      />
+        <Footer 
+          footer_options={{
+            subscribe_title: upcoming.subscribe_title, 
+            subscribe_description: upcoming.subscribe_description
+          }}
+          company_links= {upcoming.company_nav_links}
+          follow_links= {upcoming.follow_nav_links}
+          nav_links= {upcoming.tags_nav_links} 
+        />
 
-      {footer_content}  
+        {footer_content}  
+          
     </>;
 }
