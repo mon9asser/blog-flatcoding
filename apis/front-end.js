@@ -9,10 +9,30 @@ const {Usr} = require("./../models/user-model");
 const {AdCampaign} = require("./../models/ad_campaign-model");
 const {middlewareTokens} = require("./secure/middlewares")
 const { escape } = require('validator');
+const _ = require('lodash');
+
 var frontendRouter = express.Router(); 
 var path = require("path");
 var fs = require("fs");
  
+function getPageArray(currentPage, totalPages) {
+    const maxNumbers = 10; // Maximum numbers in the array
+    let start = Math.max(1, currentPage - Math.floor(maxNumbers / 2));
+    let end = start + maxNumbers - 1;
+
+    // Adjust if end exceeds totalPages
+    if (end > totalPages) {
+        end = totalPages;
+        start = Math.max(1, end - maxNumbers + 1);
+    }
+
+    const pageArray = [];
+    for (let i = start; i <= end; i++) {
+        pageArray.push(i);
+    }
+
+    return pageArray;
+}
 
 function getValueFromObject(obj, path) {
 
@@ -430,4 +450,61 @@ frontendRouter.get("/front/tutorial/get", middlewareTokens, async (req, res) => 
     }
 });
  
+
+// ==========================================================
+// ========================== ADMIN APIS
+// ==========================================================
+
+frontendRouter.get("/front/admin/tutorials/get", middlewareTokens, async (req, res) => {
+    
+    var records_count = 1;
+    var page_number = req.query.page_number;
+        page_number = parseInt(page_number, 10);
+
+    if( !page_number || isNaN(page_number) ) {
+        page_number = 0;
+    }
+
+    // secure user data 
+    if (!/^[0-9]+$/.test(page_number)) {
+        page_number = 0;
+    } 
+    
+    
+    
+    // get count of pages inside tutoruals 
+    var all_tutorials = await Tutorial.find({});
+    var pages = !all_tutorials.length ? []: _.chunk(all_tutorials, records_count); 
+
+    // pages 
+    var current_page_number = page_number;
+    var prev_page_number = ( current_page_number - 1 );
+    if( prev_page_number <= 0  ) {
+        prev_page_number = 0;
+    }
+    var next_page_number = ( current_page_number + 1 );
+    if( next_page_number >= pages.length ) {
+        next_page_number = pages.length <= 1 ? 0: ( pages.length - 1) ;
+    }
+    
+    var paging_serials = getPageArray(prev_page_number, pages.length); 
+    
+    // should response with 
+    res.send({
+        is_error: true, 
+        data: {
+            pagination: {
+                pages_count: pages.length,
+                curr_page_number: current_page_number,
+                prev_page_number: prev_page_number,
+                next_page_number: next_page_number,
+                paging_serials:  paging_serials
+            },
+            tutorials:  pages[current_page_number]
+        },
+        message: "parameter required!", 
+    });
+});
+
+
 module.exports = { frontendRouter }

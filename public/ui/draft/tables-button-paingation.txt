@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Link from 'next/link';
 import styles from "@/public/focus/css/admin.module.css";
 import icons from "@/public/focus/icons/themify-icons/css/themify-icons.module.css";
-import { ServerOffline } from "@/services/components";
+  
 import { Helper } from "../../services/helper";
 import Cookies from "js-cookie";
 import Image from "next/image";
@@ -17,52 +17,9 @@ import AdminHeader from "@/parts/admin.header";
 */ 
 
 
-export async function getServerSideProps(context) {
 
-    const { res } = context;
-  
-    try {
-        
-      var request = await Helper.sendRequest({
-          api: `front/admin/tutorials/get?page_number=0`,
-          method: "get",
-          data: {} 
-      });
-  
-      if (!request.ok) {
-        throw new Error('Server is offline');
-      }
-  
-      if( request.status != 200) {
-        throw new Error('Server is offline');
-      }
-  
-      var json = await request.json(); 
-    
-      
-      return {
-        props: {
-          upcoming: json.data ? json.data: undefined
-        }
-      }
-  
-    } catch(error) {
-      return { props: { error: 'Server is offline, please try again later.' } };
-    }
-  
-  
-  }
+export default function tutorials() {
 
-export default function tutorials({upcoming}) {
-
-    // server offline
-    if( !upcoming || upcoming === undefined ) {
-        return <ServerOffline/>
-    }
-    
-    var [tutorials, setTutorials] = useState(upcoming);
-    var [currentPage, setCurrentPage] = useState(0);
-     
     const data = [
         {
         id: 1,
@@ -81,7 +38,25 @@ export default function tutorials({upcoming}) {
         status_code: "declined",
         status: "declined",
         amount: "$5350.50",
-        },  
+        },
+        {
+        id: 2,
+        customer: "Jeet Saru",
+        location: "Kathmandu",
+        orderDate: "27 Aug, 2023",
+        status_code: "draft",
+        status: "draft",
+        amount: "$5350.50",
+        },
+        {
+        id: 2,
+        customer: "Jeet Saru",
+        location: "Kathmandu",
+        orderDate: "27 Aug, 2023",
+        status_code: "pending-review",
+        status: "pending review",
+        amount: "$5350.50",
+        },
         // Add more rows as needed
     ];
 
@@ -224,4 +199,3 @@ export default function tutorials({upcoming}) {
             </section>
     </div>
 }
-

@@ -1,5 +1,6 @@
 .page {
-  background-color: #f0f0f2;
+  background-color: #f9f9f9;
+  padding-bottom: 50px;
 }
 .sidebar {
     background-color: #2d3436;
@@ -143,6 +144,24 @@
 }
 
 
+.btn_primary {
+  background-color: #096dbf !important; 
+  border-color: #096dbf !important; 
+  color: #fff !important;
+  border-radius:5px;
+}
+
+.btn_danger {
+  background-color: #bf0955 !important; 
+  border-color: #bf0955 !important; 
+  color: #fff !important;
+  border-radius:5px;
+}
+
+.btn_primary:hover, .btn_danger:hover {
+  opacity: 0.8;
+}
+
 /*Table Responsive*/
 .tableContainer {
     overflow-x: auto;
@@ -151,7 +170,8 @@
   }
   .tableContainer table {
     border: 1px solid #dfdfdf;
-    padding: 15px;
+    padding: 15px !important;
+    min-width:1000px;
   }
   .tableContainer table tr td {
     color: #999;
@@ -160,15 +180,19 @@
   .tableContainer table thead tr th {
     font-weight: normal;
     /*background-color: #fff;*/
-    color:#0a679c !important;
-    border: none; 
+    color:#000!important;
+    border-bottom: 1px solid #ddd;
+    font-weight: bold; 
+    padding: 15px !important;
     font-size: 14px;
+    background-color: #f9f9f9;
   }
 
   
 
   .responsiveTable {
     width: 100%;
+    overflow-x:auto;
     border-collapse: collapse;
     font-family: Arial, sans-serif;
     background-color: #fff;
@@ -236,83 +260,7 @@
     font-weight: bold !important;
   }
 
-  @media (max-width: 768px) {
-    .responsiveTable tbody,
-    .responsiveTable thead {
-      width: 100%; 
-      margin-left: auto;
-      margin-right: auto;
-      display: block;
-      overflow: hidden;
-    }
-    .responsiveTable th,
-    .responsiveTable td {
-      padding: 8px;
-      font-size: 14px;
-    }
-  }
-  
-  @media (max-width: 688px) {
-    
-  
-    .responsiveTable thead {
-      display: none;
-    }
-  
-    .responsiveTable tbody tr {
-      display: block;
-      margin-bottom: 10px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      background-color: #fff;
-    }
-  
-    .responsiveTable tbody tr td {
-      display: flex;
-      justify-content: space-between;
-      padding: 10px;
-      border: none;
-      border-bottom: 1px solid #ddd;
-    }
-  
-    .responsiveTable tbody tr td:last-child {
-      border-bottom: none;
-    }
-    /*
-    .responsiveTable tbody tr td:before {
-      content: attr(data-label);
-      font-weight: bold;
-      flex: 1;
-      text-align: left;
-    }*/
-  
-    .responsiveTable tbody tr td[data-label="Status"] {
-      display: flex;
-      justify-content: space-between;
-    }
-  }
-  
-
-  .tableContainer > ul {
-    display: none !important;
-  }
-
-  .tableContainer > ul > li {
-    display: block;
-    width: 100%; 
-    font-size: 13px;
-    padding: 10px 0px;
-    border-bottom: 1px dashed #ddd;
-  }
-  .tableContainer > ul > li > div {
-    display: flex;
-    flex-direction: column;
-  }
-  .tableContainer > ul > li > div > a {
-    font-weight: bold;
-    color: #000 !important;
-    font-size: 15px; 
-  }
+   
 
   .headline-title { 
     margin-top: 25px;
@@ -324,17 +272,7 @@
     font-weight: bold;
     font-size: 18px;
   }
-
-  @media only screen and (max-width: 800px) {
-    .tableContainer table {
-      display: none !important;
-    }
-
-    .tableContainer >  ul {
-      display: block !important;
-    }
-  }
-
+ 
   @media only screen and (max-width: 400px) {
     .serial-pagination {
       display: flex;
@@ -472,6 +410,8 @@
 
   .serial-pagination {
     display: flex;
+    padding-bottom: 25px; 
+    
   }
 
   .serial-pagination > span {
@@ -488,7 +428,6 @@
     padding: 5px 10px;
     display: flex;
     
-    
     font-size: 13px;
     min-width: 30px;
     text-align: center;
@@ -501,10 +440,15 @@
     border: 1px solid #dfdfdf;
     color: #000 !important;
     border-radius: 3px;
+    background-color: #fff;
   }
-
+  .serial-pagination > ul > li > a:hover {
+    color: #0a679c !important;
+    border-color: #0a679c;
+  }
   .serial-pagination > ul > li > a.active {
     background-color: #222;
+    border-color: #222;
     color: #fff !important;
   }
 
