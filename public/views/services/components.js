@@ -12,6 +12,19 @@ import Highlight from 'react-highlight'
 import Image from "next/image"; 
 
 import AdCompaignBox from "./ad_campaign";
+ 
+import hljs from 'highlight.js';
+
+const CodeHighlighter = () => {
+    useEffect(() => {
+        const codeBlocks = document.querySelectorAll('pre code');
+        codeBlocks.forEach((block) => {
+            hljs.highlightElement(block);
+        });
+    }, []);
+
+    return null; // No UI rendered by this component
+};
 
 import {
   EmailShareButton,
@@ -777,11 +790,15 @@ function TutorialsContent({ blocks, tutorials, ad_camp, settings, adsReady }){
                  />
                );
              case 'code':
+              
+              return <><CodeHighlighter/> <div dangerouslySetInnerHTML={{__html: x?.data?.value}}/></>
+              /*
                return (
                  <Highlight key={x.id} className={x?.data?.language_type}>
                    {x?.data?.value}
                  </Highlight>
                );
+               */
              case 'image':
               var src = x?.data?.file?.url.replace("codedtag.com", "flatcoding.com")
                return (
@@ -829,11 +846,12 @@ function TutorialsContent({ blocks, tutorials, ad_camp, settings, adsReady }){
              case 'delimiter':
                return <hr key={x.id} />;
              case 'raw':
-               return (
+              return <><CodeHighlighter/><div dangerouslySetInnerHTML={{__html: x?.data?.html}}/></>
+               /*return (
                  <Highlight key={x.id} className={'html'}>
                    {x?.data?.html}
                  </Highlight>
-               );
+               );*/
              case 'table':
                return <ResponsiveTable key={x.id} data={x.data} />;
              case 'list':
@@ -1205,11 +1223,12 @@ var ArticleContentSingle = ({blocks, helper, adsReady}) => {
               </Fragment>
             )
           } else if (x.type == 'code' ) {
-            return (
+            return <><CodeHighlighter/><div dangerouslySetInnerHTML={{__html: x?.data?.value}}/></>
+            /*return (
               <Highlight key={x.id} className={x?.data?.language_type}>
                 {x?.data?.value}
               </Highlight>
-            )
+            )*/
           } else if (x.type == 'image') {
             var src = x?.data?.file?.url.replace("codedtag.com", "flatcoding.com")
               
@@ -1234,11 +1253,12 @@ var ArticleContentSingle = ({blocks, helper, adsReady}) => {
           } else if (x.type == 'delimiter') {
             return (<hr key={x.id} />)
           } else if (x.type == 'raw') {
-            return (
+            return <><CodeHighlighter/><div dangerouslySetInnerHTML={{__html: x?.data?.html}}/></>
+            /*return (
               <Highlight key={x.id} className={'html'}>
                 {x?.data?.html}
               </Highlight>
-            )
+            )*/
           } else if (x.type == 'table') {
             return <ResponsiveTable key={x.id} data={x.data} />
           } else if (x.type == 'list') {
@@ -1697,11 +1717,12 @@ const FaqsSection = ({ faqs_section }) => {
             } else if (idx % 3 === 1) {
               const className = part;
               const codeValue = answerParts[idx + 1];
-              return (
+              return <><CodeHighlighter/><div dangerouslySetInnerHTML={{__html: codeValue}}/></>
+              /*return (
                 <Highlight key={idx} className={className}>
                   {codeValue}
                 </Highlight>
-              );
+              );*/
             } else {
               return null;
             }
@@ -1778,11 +1799,13 @@ var ArticleContent = ({blocks}) => {
               </Fragment>
             )
           } else if (x.type == 'code' ) {
+            return <><CodeHighlighter/><div dangerouslySetInnerHTML={{__html: x?.data?.value}}/></>
+            /*
             return (
               <Highlight key={x.id} className={x?.data?.language_type}>
                 {x?.data?.value}
               </Highlight>
-            )
+            )*/
           } else if (x.type == 'image') {
             var src = x?.data?.file?.url.replace("codedtag.com", "flatcoding.com")
             
@@ -1807,11 +1830,13 @@ var ArticleContent = ({blocks}) => {
           } else if (x.type == 'delimiter') {
             return (<hr key={x.id} />)
           } else if (x.type == 'raw') {
+            return <><CodeHighlighter/><div dangerouslySetInnerHTML={{__html: x?.data?.html}}/></>
+            /*
             return (
               <Highlight key={x.id} className={'html'}>
                 {x?.data?.html}
               </Highlight>
-            )
+            )*/
           } else if (x.type == 'table') {
             return <ResponsiveTable key={x.id} data={x.data} />
           } else if (x.type == 'list') {

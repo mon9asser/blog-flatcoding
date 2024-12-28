@@ -366,7 +366,7 @@ export async function getServerSideProps(context) {
               upcoming = {
                 latest_posts: posts,
                 tutorials: json.data.tutorials,
-                posts: json.data.posts,              
+                //posts: json.data.posts,              
                 settings: json.data.settings,
                 nav_right,
                 nav_left,

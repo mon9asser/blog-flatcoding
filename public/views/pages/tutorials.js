@@ -187,7 +187,7 @@ export async function getServerSideProps(context) {
                 nav_links,
                 site_url,
               };
-          }
+          } 
           
           return {
             props: {upcoming}

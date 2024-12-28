@@ -314,11 +314,13 @@ export async function getServerSideProps(context) {
             var follow_links = json.data.menus?.filter( x=> x.menu_name === 'follow_nav_links');
             var nav_links = json.data.menus?.filter( x=> x.menu_name === 'tags_nav_links');
 
+            var all_posts = json.data.posts.map(x => ({slug: x.slug, post_title: x.post_title}));
+
             upcoming = {
                 ads: json.data.ads,
                 tab: tab,
                 tutorial: json.data.tutorial,
-                posts: json.data.posts,
+                posts: all_posts,
                 chapters: json.data.chapters,
                 settings: json.data.settings,
                 menus: json.data.menus,
