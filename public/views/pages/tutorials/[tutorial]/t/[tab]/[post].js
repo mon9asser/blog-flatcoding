@@ -33,7 +33,7 @@ export default function TabPost({upcoming, adsReady}) {
         return <ServerOffline/>
     } 
     var image = ''
-
+    console.log(upcoming);
     if( upcoming ) {
         // head definations 
         image = upcoming?.post?.blocks?.filter(x => x.type == 'image');
