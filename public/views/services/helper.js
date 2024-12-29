@@ -9,8 +9,14 @@ class HelperData {
   jwt_secret = "flatcoding_t1y4u5236985471zasde!gfh@qwe#$%hoj^ytu&*tu(ib)ib~gfhrytuibonphojlkmlbkxzasqwe";
   
   decodeHtmlEntities(text) {
-    return text;
-    // return he.decode(text);  
+   
+    return he.decode(text);  
+  }
+
+
+  encodetmlEntities(text) {
+   
+    return he.encode(text);  
   }
   
   generateCaptcha = () => {

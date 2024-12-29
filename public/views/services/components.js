@@ -26,6 +26,62 @@ const CodeHighlighter = () => {
     return null; // No UI rendered by this component
 };
 
+var HandleCodeBlock = ({code_value}) => {
+
+  //console.log(code_value);
+   // Match the <code> tag with the class attribute
+   const classMatch = code_value.match(/<code\s+class="([^"]+)"/);
+   const classValue = classMatch ? classMatch[1] : null;
+ 
+   // Match the content inside the <code> element
+   const contentMatch = code_value.match(/<code\s+class="[^"]+">([\s\S]*?)<\/code><\/pre>/);
+   const codeValue = contentMatch ? contentMatch[1].trim() : null;
+  // //console.log(classValue, codeValue);
+
+ 
+   return  <Highlight className={classValue}>
+   {codeValue}
+ </Highlight>;
+
+    
+
+   /*
+  return html
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;'); */
+}
+
+
+
+var FaqHandleCodeBlock = ({code_value}) => {
+ 
+   // Match the <code> tag with the class attribute
+   const classMatch = code_value.match(/<code\s+class="([^"]+)"/);
+   const classValue = classMatch ? classMatch[1] : null;
+ 
+   // Match the content inside the <code> element
+   const contentMatch = code_value.match(/<code\s+class="[^"]+">([\s\S]*?)<\/code><\/pre>/);
+   const codeValue = contentMatch ? contentMatch[1].trim() : null;
+  // //console.log(classValue, codeValue);
+
+ 
+   return  <Highlight className={classValue}>
+   {codeValue}
+ </Highlight>;
+
+    
+
+   /*
+  return html
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;'); */
+}
 import {
   EmailShareButton,
   FacebookShareButton,
@@ -273,7 +329,7 @@ var FeedBackBlock = ({data_id, data_title, feeadback_title }) => {
         is_pressed: true
       })
       
-      // console.log(feedback);
+      // //console.log(feedback);
       var res = await Helper.sendRequest({
         api: "comments/create-update",
         headers: {
@@ -332,7 +388,7 @@ var FeedBackBlock = ({data_id, data_title, feeadback_title }) => {
 
       feedback.thumb= true;
 
-      //console.log(feedback);
+      ////console.log(feedback);
       setTimeout(() => submit_feedback(e, press_type), 100);
       e.preventDefault();
 
@@ -475,7 +531,7 @@ function SubscribeComponents ({is_footer, title, description, camp_data, setting
       } else {
         to_be_state.type= 'success';
       }
-      //console.log(to_be_state, res)
+      ////console.log(to_be_state, res)
       response_results_callback(to_be_state);
 
       setTimeout(() => {
@@ -772,7 +828,7 @@ var TutorialsList = ({ index, data, chapter_title, built_url }) => {
 }
 
 function TutorialsContent({ blocks, tutorials, ad_camp, settings, adsReady }){
-  // console.log(ad_camp);
+  // //console.log(ad_camp);
    var header_count = 0;
    var end_section = 0; 
    return (
@@ -791,7 +847,7 @@ function TutorialsContent({ blocks, tutorials, ad_camp, settings, adsReady }){
                );
              case 'code':
               
-              return <><CodeHighlighter/> <div dangerouslySetInnerHTML={{__html: x?.data?.value}}/></>
+              return <HandleCodeBlock code_value={x?.data?.value} key={x.id}/>
               /*
                return (
                  <Highlight key={x.id} className={x?.data?.language_type}>
@@ -846,7 +902,7 @@ function TutorialsContent({ blocks, tutorials, ad_camp, settings, adsReady }){
              case 'delimiter':
                return <hr key={x.id} />;
              case 'raw':
-              return <><CodeHighlighter/><div dangerouslySetInnerHTML={{__html: x?.data?.html}}/></>
+              return <HandleCodeBlock code_value={x?.data?.html} key={x.id}/>
                /*return (
                  <Highlight key={x.id} className={'html'}>
                    {x?.data?.html}
@@ -1223,7 +1279,7 @@ var ArticleContentSingle = ({blocks, helper, adsReady}) => {
               </Fragment>
             )
           } else if (x.type == 'code' ) {
-            return <><CodeHighlighter/><div dangerouslySetInnerHTML={{__html: x?.data?.value}}/></>
+            return <HandleCodeBlock code_value={x?.data?.value} key={x.id}/>
             /*return (
               <Highlight key={x.id} className={x?.data?.language_type}>
                 {x?.data?.value}
@@ -1253,7 +1309,7 @@ var ArticleContentSingle = ({blocks, helper, adsReady}) => {
           } else if (x.type == 'delimiter') {
             return (<hr key={x.id} />)
           } else if (x.type == 'raw') {
-            return <><CodeHighlighter/><div dangerouslySetInnerHTML={{__html: x?.data?.html}}/></>
+            return <HandleCodeBlock code_value={x?.data?.html} key={x.id}/>
             /*return (
               <Highlight key={x.id} className={'html'}>
                 {x?.data?.html}
@@ -1693,13 +1749,16 @@ const FaqsSection = ({ faqs_section }) => {
 
           
           const processedAnswer = answerParts.map((part, idx) => {
+
+            console.log(part, idx)
+
             if (idx % 3 === 0) {
               return part.split(/(?<!\|)\|(?!\|)/g).map((segment, i) => {
 
                 const inlineProcessed = segment
                   .split(/`([^`]*)`/g)
                   .map((inlinePart, j) => {
-                    console.log(inlinePart);
+                    //console.log(inlinePart);
                     return j % 2 === 0 ? (
 
                       hasHtmlTags(inlinePart) ? <div key={`${idx}-${i}-${j}`} dangerouslySetInnerHTML={{__html: inlinePart }} />: <span key={`${idx}-${i}-${j}`}>{inlinePart}</span>
@@ -1717,7 +1776,8 @@ const FaqsSection = ({ faqs_section }) => {
             } else if (idx % 3 === 1) {
               const className = part;
               const codeValue = answerParts[idx + 1];
-              return <><CodeHighlighter/><div dangerouslySetInnerHTML={{__html: codeValue}}/></>
+              
+              return <FaqHandleCodeBlock code_value={codeValue} key={x.id}/>
               /*return (
                 <Highlight key={idx} className={className}>
                   {codeValue}
@@ -1727,6 +1787,120 @@ const FaqsSection = ({ faqs_section }) => {
               return null;
             }
           });
+
+
+/*
+.replace(/<pre style=['"].*?['"]><code>([\s\S]*?)<\/code><\/pre>/g, (match, codeContent) => {
+  return `{Helper.encodetmlEntities(codeContent)}`;
+})
+.replace(/<pre><code class=['"].*?['"]>([\s\S]*?)<\/code><\/pre>/g, (match, codeContent) => {
+  return `<span>${Helper.encodetmlEntities(codeContent)}</span>`;
+})*/
+          const AnswerBlock = ({ answer = "" }) => {
+            if (!answer) return null; // Handle null or undefined input gracefully
+
+            const wrappedAnswer = answer
+              // Wrap raw backticks and code content
+              .replace(/(<pre>[\s\S]*?<\/pre>)|<code[\s\S]*?>([\s\S]*?)<\/code>|`(.*?)`/g, (match, preBlock, codeContent, rawCode) => {
+                if (preBlock) {
+                  return preBlock; // Leave <pre> blocks unchanged
+                }
+                if (rawCode) {
+                  return `<code class="inline-code">${Helper.encodetmlEntities(rawCode)}</code>`;
+                }
+                return match; // Fallback for unexpected cases
+              })
+              // Replace backticks with bold tags
+              .replace(/(<code[\s\S]*?>[\s\S]*?<\/code>)|`(.*?)`/g, (match, codeBlock, backtickContent) => {
+                if (codeBlock) return codeBlock;
+                if (backtickContent) {
+                  return `<code class='inline-code'>${Helper.encodetmlEntities(backtickContent)}</code>`;
+                }
+                return match;
+              })
+              // Replace pipelines with line breaks
+              .replace(/(<code[\s\S]*?>[\s\S]*?<\/code>)|(\|)/g, (match, codeBlock, pipeline) => {
+                if (codeBlock) return codeBlock;
+                if (pipeline) return "<br />";
+                return match;
+              })
+              // Split into segments for rendering
+              .split(/(<pre style=['"].*?['"]><code>([\s\S]*?)<\/code><\/pre>)/g)
+              .map((segment, index) => {
+                const match = /<pre style=['"].*?['"]><code>([\s\S]*?)<\/code><\/pre>/.exec(segment);
+                if (match) {
+                  const codeContent = match[1];
+                  return <Highlight key={index}>{codeContent}</Highlight>;
+                }
+                return <p key={index} dangerouslySetInnerHTML={{ __html: segment }} />;
+              })
+             
+
+            return <div>{wrappedAnswer}</div>;
+          };
+
+          /*
+          const AnswerBlock = ({ answer }) => {
+            const wrappedAnswer = answer
+              
+              // Step 2: Search for any <code> element which has no <pre> element and wrap it in <i> element
+              .replace(/(<pre>[\s\S]*?<\/pre>)|<code[\s\S]*?>([\s\S]*?)<\/code>|`(.*?)`/g, (match, preBlock, codeContent, rawCode) => {
+                if (preBlock) {
+                  // Leave <pre> blocks unchanged
+                  return preBlock;
+                }
+                
+                if (rawCode) {
+                  // Wrap raw `code` content with <i>
+                  return `<code className="inline-code">${Helper.encodetmlEntities(rawCode)}</code>`;
+                }
+                return match; // Fallback (should not happen)
+              })
+              // Step 3: Replace backtick-enclosed `VALUE` outside any code elements with <b>VALUE</b>
+              .replace(
+                /(<code[\s\S]*?>[\s\S]*?<\/code>)|`(.*?)`/g,
+                (match, codeBlock, backtickContent) => {
+                  if (codeBlock) {
+                    // Return the code block unchanged
+                    return codeBlock;
+                  }
+                  if (backtickContent) {
+                    // Replace backtick content with <b> element
+                    return `<b>${Helper.encodetmlEntities(backtickContent)}</b>`;
+                  }
+                  return match; // Fallback (should not happen)
+                }
+              )
+              // Step 4: Replace pipeline | with <br />
+              .replace(/(<code[\s\S]*?>[\s\S]*?<\/code>)|(\|)/g, (match, codeBlock, pipeline) => {
+                if (codeBlock) {
+                  // Return the code block unchanged
+                  return codeBlock;
+                }
+                if (pipeline) {
+                  // Replace pipeline with <br />
+                  return "<br />";
+                }
+                return match; // Fallback (should not happen)
+              }) 
+              .split(/(<pre style=['"].*?['"]><code>([\s\S]*?)<\/code><\/pre>)/g)
+              .map((segment, index) => {
+                const match = /<pre style=['"].*?['"]><code>([\s\S]*?)<\/code><\/pre>/.exec(segment);
+                if (match) {
+                  const codeContent = match[1];
+                  return (
+                    <Highlight key={index}>{codeContent}</Highlight>
+                  );
+                }
+                return segment; // Return non-matching segments as is
+              });;
+          
+            return (
+              <div>{wrappedAnswer}</div>
+            );
+          };
+          */
+          
 
           return (
             <li key={index}>
@@ -1758,7 +1932,7 @@ const FaqsSection = ({ faqs_section }) => {
                 }}
               >
                 <div style={{padding: '20px'}}>
-                  {processedAnswer}
+                  <AnswerBlock answer={faq.answer}/>
                 </div>
               </div>
             </li>
@@ -1799,7 +1973,7 @@ var ArticleContent = ({blocks}) => {
               </Fragment>
             )
           } else if (x.type == 'code' ) {
-            return <><CodeHighlighter/><div dangerouslySetInnerHTML={{__html: x?.data?.value}}/></>
+            return <HandleCodeBlock code_value={x?.data?.value} key={x.id}/>
             /*
             return (
               <Highlight key={x.id} className={x?.data?.language_type}>
@@ -1830,7 +2004,7 @@ var ArticleContent = ({blocks}) => {
           } else if (x.type == 'delimiter') {
             return (<hr key={x.id} />)
           } else if (x.type == 'raw') {
-            return <><CodeHighlighter/><div dangerouslySetInnerHTML={{__html: x?.data?.html}}/></>
+            return <HandleCodeBlock code_value={x?.data?.html} key={x.id}/>
             /*
             return (
               <Highlight key={x.id} className={'html'}>

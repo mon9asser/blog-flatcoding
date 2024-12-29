@@ -78,7 +78,7 @@ export default function AdCompaignBox({ position, data, classes, settings }) {
 
 
   // ads by google 
-  if( adsbygoogle == undefined ) {
+  if( ! adsbygoogle ) {
     console.error("Google AdSense: Initialization Error")
     return null;
   }
