@@ -30,7 +30,7 @@ userRouters.post("/user/subscribe", middlewareTokens,  async (req, res) => {
     }
 
     var email = req.body.email?req.body.email: null; 
-
+    console.log(email);
     if( email === null ) {
         objx.is_error = true;
         objx.success = false;
@@ -110,7 +110,7 @@ userRouters.post("/user/login", middlewareTokens, async (req, res) => {
         } else {
             throw new Error('Invalid email');
         }
-
+         
         // Check if the email or username exists in the database
         const user_check = await Usr.findOne({
             $or: [
@@ -118,7 +118,7 @@ userRouters.post("/user/login", middlewareTokens, async (req, res) => {
                 { username: email_username }
             ]
         });
-
+        
         if (!user_check) {
             return res.status(400).send({
                 is_error: true,
@@ -129,6 +129,7 @@ userRouters.post("/user/login", middlewareTokens, async (req, res) => {
 
         // Verify password
         var verify_password = await bcrypt.compare(password, user_check.password);
+         
         if( ! verify_password ) {
             return res.status(400).send({
                 is_error: true,

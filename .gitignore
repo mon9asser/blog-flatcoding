@@ -4,7 +4,9 @@
 /node_modules
 /public/admin/node_modules
 /public/views/node_modules  
+/public/ui/node_modules  
 /public/views/.next  
+/public/ui/.next  
 /.next
 /.pnp
 .pnp.js

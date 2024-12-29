@@ -1,5 +1,5 @@
 import { Poppins } from 'next/font/google';
-import "@/app/globals.css"; // Import your global styles
+//import "@/app/theme.css"; // Import your global styles
 import Head from 'next/head';
 import Script from 'next/script';
 import { useEffect, useState } from 'react';

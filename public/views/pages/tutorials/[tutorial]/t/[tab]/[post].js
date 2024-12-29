@@ -1,5 +1,5 @@
 
-import "@/app/globals.css";
+import "@/app/theme.css";
 import Head from "next/head";
 import Image from "next/image";
 import parse from 'html-react-parser' 
@@ -33,7 +33,7 @@ export default function TabPost({upcoming, adsReady}) {
         return <ServerOffline/>
     } 
     var image = ''
-
+    console.log(upcoming);
     if( upcoming ) {
         // head definations 
         image = upcoming?.post?.blocks?.filter(x => x.type == 'image');
@@ -345,6 +345,27 @@ export async function getServerSideProps(context) {
             var follow_links = json.data.menus?.filter( x=> x.menu_name === 'follow_nav_links');
             var nav_links = json.data.menus?.filter( x=> x.menu_name === 'tags_nav_links');
             
+            var all_posts_titles = json.data.posts.map(x => ({slug: x.slug, post_title: x.post_title}))
+            var current_post = json.data.post;
+            var blocks = json.data.post.blocks.map(x => {
+                if(x.type == 'code' ) {
+                    
+                    var code = `<pre><code class="hljs language-${x.data.language_type}">${x.data.value}</code></pre>`;
+                    x.data.value = code;
+
+                }
+                return x;
+            });
+
+            
+            var faqs = json.data.post.faqs_section.map(x => {
+                var answer = x.answer.replace(/\{\`\*class=['"][^'"]+['"]\*\s([^`]*)\`\}/g, `<pre><code>$1</code></pre>`);
+                x.answer = answer;
+                return x; 
+            })
+            current_post.blocks = blocks;
+            current_post.faqs_section = faqs;
+            
             upcoming = {                 
                 nav_right,
                 nav_left,
@@ -354,11 +375,11 @@ export async function getServerSideProps(context) {
                 site_url, 
                 ads: json.data.ads,
                 menus: json.data.menus,
-                post: json.data.post,
+                post: current_post,
                 settings: json.data.settings,
                 chapters: json.data.chapters,
                 tutorial: json.data.tutorial,
-                posts: json.data.posts,
+                posts: all_posts_titles,
                 is_redirect: json.redirect,
                 tab: tab
             }

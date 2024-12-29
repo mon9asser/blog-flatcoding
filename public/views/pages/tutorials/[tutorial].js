@@ -1,5 +1,5 @@
 
-import "@/app/globals.css";
+import "@/app/theme.css";
 import Head from "next/head";
 import Image from "next/image";
 import parse from 'html-react-parser' 
@@ -289,9 +289,11 @@ export async function getServerSideProps(context) {
             var follow_links = json.data.menus?.filter( x=> x.menu_name === 'follow_nav_links');
             var nav_links = json.data.menus?.filter( x=> x.menu_name === 'tags_nav_links');
 
+            var all_posts = json.data.posts.map(x => ({slug: x.slug, post_title: x.post_title}));
+
             upcoming = {
                 tutorial: json.data.tutorial,
-                posts: json.data.posts,
+                posts: all_posts,
                 chapters: json.data.chapters,
                 settings: json.data.settings,
                 ads: json.data.ads,

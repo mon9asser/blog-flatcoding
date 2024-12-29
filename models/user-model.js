@@ -74,6 +74,10 @@ let usersSchema = new Schema({
           type: Boolean,
           default: true
     },
+    is_verified:  {
+            type: Boolean, // verify user by email 
+            default: false
+      }, 
     is_blocked: {
           type: Boolean,
           default: false
@@ -85,6 +89,7 @@ let usersSchema = new Schema({
     register_date:Date,
     last_log:Date, 
 });
+
 
 
 

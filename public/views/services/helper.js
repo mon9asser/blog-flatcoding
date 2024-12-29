@@ -5,9 +5,31 @@ import Script from 'next/script';
 
 class HelperData {
 
+  user_cookie = 'user_info';
+  jwt_secret = "flatcoding_t1y4u5236985471zasde!gfh@qwe#$%hoj^ytu&*tu(ib)ib~gfhrytuibonphojlkmlbkxzasqwe";
+  
   decodeHtmlEntities(text) {
+   
     return he.decode(text);  
   }
+
+
+  encodetmlEntities(text) {
+   
+    return he.encode(text);  
+  }
+  
+  generateCaptcha = () => {
+
+    // make it with 6 charachters 
+    var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    return Array.from({ length: 6 }, () => { 
+      var generate = Math.floor(Math.random() * chars.length);
+      return chars.charAt(generate)
+    }).join(' ');
+
+  }
+ 
 
   generateRandomStrings() {
     var length = 15;
@@ -210,10 +232,11 @@ class HelperData {
         token = response.data;
       }
     } 
-
+    
     headers["x-api-key"] = Config.app_key 
     headers["authorization"] = token;
-    
+    headers["Content-Type"] = "application/json";
+
     var requestObject = { 
      // cache: 'force-cache',
       headers,
@@ -221,7 +244,7 @@ class HelperData {
     }
 
     if( method.toLowerCase() == 'post') { 
-      requestObject.body = data; 
+      requestObject.body = JSON.stringify(data); 
     }
 
     
@@ -232,6 +255,16 @@ class HelperData {
     return response;
   }
 
+  sanitizeCode( code ) {
+    return code;
+    return code
+        .replace(/&/g, '&amp;')  // Escape & first to avoid double escaping
+        .replace(/</g, '&lt;')  // Escape <
+        .replace(/>/g, '&gt;')  // Escape >
+        .replace(/"/g, '&quot;') // Escape "
+        .replace(/'/g, '&#39;')  // Escape '
+        .replace(/\//g, '&#47;'); // Escape /
+  }
 }
 
 var Helper = new HelperData();

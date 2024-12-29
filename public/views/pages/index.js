@@ -1,6 +1,6 @@
 
 
-import "@/app/globals.css";
+import "@/app/theme.css";
 import Head from "next/head";
 import Image from "next/image";
 import parse from 'html-react-parser' 
@@ -361,12 +361,12 @@ export async function getServerSideProps(context) {
               }
 
               
-              
+              console.log(json.data.posts);
 
               upcoming = {
                 latest_posts: posts,
                 tutorials: json.data.tutorials,
-                posts: json.data.posts,              
+                //posts: json.data.posts,              
                 settings: json.data.settings,
                 nav_right,
                 nav_left,
