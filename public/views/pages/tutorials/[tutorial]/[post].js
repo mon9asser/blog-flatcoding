@@ -386,7 +386,7 @@ export async function getServerSideProps(context) {
 
             
             var faqs = json.data.post.faqs_section.map(x => {
-                var answer = x.answer.replace(/\{\`\*class=['"][^'"]+['"]\*\s([^`]*)\`\}/g, `<pre style='margin-top:15px;margin-bottom:15px;'><code>$1</code></pre>`);
+                var answer = x.answer.replace(/\{\`\*class=['"][^'"]+['"]\*\s([^`]*)\`\}/g, `<pre><code>$1</code></pre>`);
                 x.answer = answer;
                 return x; 
             })
