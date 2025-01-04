@@ -797,6 +797,30 @@ postRouter.get("/gutenberg/posts/get", middlewareTokens, async (req, res) => {
 })
 
 
+postRouter.get("/gutenberg/posy/get/:post_id", middlewareTokens, async (req, res) => {
+    
+    try {
+
+        const postId = req.params.post_id;
+        const post = await Posts.findById(postId);
+
+        return res.json({
+            is_error: false, 
+            data: post == null ? false: post, 
+            message: 'Fetched Successfully!'
+        });
+
+    } catch (error) {
+         
+        return res.json({
+            is_error: true,
+            data: null,
+            message: error.message || "An error occurred while retrieving posts"
+        });
+    }
+})
+
+
 postRouter.get("/post/get-published", middlewareTokens, async (req, res) => {
     
     try {
