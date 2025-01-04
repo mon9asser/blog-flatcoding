@@ -773,6 +773,28 @@ postRouter.get("/post/get", middlewareTokens, async (req, res) => {
     }
 })
 
+// gutenberg/posts/get
+postRouter.get("/gutenberg/posts/get", middlewareTokens, async (req, res) => {
+    
+    try {
+        
+        const posts = await Posts.find({}).select('_id slug post_title');
+
+        return res.send({
+            is_error: true, 
+            data: posts, 
+            message: 'Fetched Successfully!'
+        })
+
+    } catch (error) {
+         
+        return res.send({
+            is_error: true,
+            data: null,
+            message: error.message || "An error occurred while retrieving posts"
+        });
+    }
+})
 
 
 postRouter.get("/post/get-published", middlewareTokens, async (req, res) => {
