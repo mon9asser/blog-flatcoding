@@ -803,7 +803,7 @@ postRouter.get("/gutenberg/posy/get/:post_id", middlewareTokens, async (req, res
 
         const postId = req.params.post_id;
         const post = await Posts.findById(postId);
-
+        console.log(post.faqs_section);
         return res.json({
             is_error: false, 
             data: post == null ? false: post, 
