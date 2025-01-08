@@ -122,6 +122,8 @@ postRouter.post("/post/create-update", middlewareTokens, async (req, res) => {
     try {
         const body = req.body;
 
+        
+
         // Validate the request body
         if (!body || Object.keys(body).length === 0) {
             throw new Error("Invalid request body");
