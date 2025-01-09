@@ -1,7 +1,7 @@
 import {useState, useEffect, useRef } from 'react';
 import style from './../public/css/style.css';
 import { Helper } from '../services/helper';
-import {CreateCaptcha} from "./../services/components";
+import {CreateCaptcha} from "../services/components";
 import DOMPurify from 'dompurify';
 import Cookies from 'js-cookie';
 
