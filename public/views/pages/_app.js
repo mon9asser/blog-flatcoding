@@ -17,6 +17,7 @@ export default function MyApp({ Component, pageProps  }) {
   var settings = (pageProps.upcoming == undefined || pageProps == undefined) ? null: pageProps.upcoming.settings; 
   var [adsReady, setAdsReady] = useState(false);
   var [analyticsRead, setAnalyticsRead] = useState(false);
+  var [analyticsLoaded, setAnalyticsLoaded] = useState(false);
   
   var adsense_account = (settings != null && settings.google_ads.enabled) ? settings.google_ads.field: '';
   
@@ -46,7 +47,7 @@ export default function MyApp({ Component, pageProps  }) {
 
   return (
     <div className={poppins.className}>
-         
+          
         { 
           ( settings != null && settings.google_ads.enabled ) && (
             <Script
@@ -61,17 +62,24 @@ export default function MyApp({ Component, pageProps  }) {
             />
           )  
         }
-
         {
-          // Google Analytics 
-          (analyticsRead && settings != null && settings.google_analytics.enabled) && (
+          ( settings != null && settings.google_analytics.enabled ) && (
             <>
               <Script
                 src={`https://www.googletagmanager.com/gtag/js?id=${settings.google_analytics.field}`}
                 strategy="afterInteractive"
                 crossOrigin="anonymous" 
+                onLoad={() => { 
+                  setAnalyticsLoaded(true);
+                }}
               />
-
+            </>
+          )
+        }
+        {
+          // Google Analytics 
+          (analyticsLoaded && analyticsRead && settings != null && settings.google_analytics.enabled) && (
+            <> 
               <Script
                 id="google-analytics-init"
                 strategy="afterInteractive"

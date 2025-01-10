@@ -2,6 +2,10 @@
 import os from 'os';
 
 const nextConfig = { 
+    i18n: {
+        locales: ['en'],  
+        defaultLocale: 'en',
+    },
     reactStrictMode: true,
     productionBrowserSourceMaps: true, 
     trailingSlash: true,  
