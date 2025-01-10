@@ -99,37 +99,7 @@ export default function Home({upcoming, adsReady}){
                                     </div>
                                 )
                             })
-                        ): (
-                            
-                            //upcoming.latest_posts.length
-                            <>
-                                <ul className="latest-post-list">
-                                   {
-                                    upcoming.latest_posts.map(x => { 
-                                        var href = `${upcoming.site_url}tutorials/${x.tutorial.slug}/`;
-                                        if(x.selected_tab && x.selected_tab._id != 'root') {
-                                            href =`${href}t/${x.selected_tab.slug}/` 
-                                        }
-                                        href= `${href}${x.slug}/`;
-                                        
-                                        return (
-                                            <li key={x._id}>
-                                                <Link href={href}>
-                                                    <div className='post-thum'>
-                                                        <Image alt={x.meta_title} src={x.article_thumbnail_url} width="90" height="195" />
-                                                    </div>
-                                                    <div className='post-data'>
-                                                        <h3>{x.meta_title}</h3>
-                                                        <span>{Helper.formatDate(x.updated_date)}</span>
-                                                    </div>
-                                                </Link>
-                                            </li>
-                                        )
-                                    })
-                                   }
-                                </ul> 
-                            </>
-                        )
+                        ): null
                     }
 
                     
@@ -209,15 +179,32 @@ export default function Home({upcoming, adsReady}){
         );
     }
      
-    const header_content = parse(upcoming.settings.header)
-    const footer_content = parse(upcoming.settings.footer)
+    const header_content = parse(upcoming.settings.header);
+    const footer_content = parse(upcoming.settings.footer);
+    const dynamicImageUrl = Helper.generateNextImageUrl(upcoming.settings.banner_image_url);
+
+
     return (
        <>
             <Head>
                 <title>{upcoming.settings.site_meta_title}</title>
                 <meta name="description" content={upcoming.settings.site_meta_description}/>
                 <link rel="canonical" href={upcoming.site_url}/>
- 
+                <link
+                    rel="preload"
+                    as="image"
+                    href={`/next/image/?url=${encodeURIComponent(upcoming.settings.banner_image_url)}&w=750&q=75`} 
+                    imageSrcSet={`/_next/image/?url=${encodeURIComponent(upcoming.settings.banner_image_url)}&w=384&q=75 384w,
+                                /_next/image/?url=${encodeURIComponent(upcoming.settings.banner_image_url)}&w=640&q=75 640w,
+                                /_next/image/?url=${encodeURIComponent(upcoming.settings.banner_image_url)}&w=750&q=75 750w,
+                                /_next/image/?url=${encodeURIComponent(upcoming.settings.banner_image_url)}&w=828&q=75 828w,
+                                /_next/image/?url=${encodeURIComponent(upcoming.settings.banner_image_url)}&w=1080&q=75 1080w,
+                                /_next/image/?url=${encodeURIComponent(upcoming.settings.banner_image_url)}&w=1200&q=75 1200w,
+                                /_next/image/?url=${encodeURIComponent(upcoming.settings.banner_image_url)}&w=1920&q=75 1920w,
+                                /_next/image/?url=${encodeURIComponent(upcoming.settings.banner_image_url)}&w=2048&q=75 2048w,
+                                /_next/image/?url=${encodeURIComponent(upcoming.settings.banner_image_url)}&w=3840&q=75 3840w`}
+                    imageSizes="(max-width: 768px) 95vw, (max-width: 1200px) 50vw, 320px"
+                />
                 <meta property="og:locale" content="en_US"/>
                 <meta property="og:type" content="website"/>
                 <meta property="og:title" content={upcoming.settings.site_meta_title}/>
@@ -269,16 +256,13 @@ export default function Home({upcoming, adsReady}){
                                         <Image
                                             crossOrigin="anonymous"
                                             className={'half'}
-                                            alt={upcoming.settings.banner_site_title}
+                                            alt={upcoming.settings.banner_site_title || 'FlatCoding.com Banner'}
                                             height={360}
                                             width={640}
-                                            src={upcoming.settings.banner_image_url}  
+                                            src={upcoming.settings.banner_image_url} // This will be dynamically processed by Next.js
                                             decoding="async"
-                                            priority={true} 
-                                            sizes="(max-width: 768px) 95vw, (max-width: 1200px) 50vw, 320px"
-                                            //loading="lazy" 
-                                            //placeholder="blur"
-                                            //blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAAAXNSR0IArs4c6QAAA1lJREFUeF7t3GtyqkAQBWBchmzD/e8Al6Euw1tTKXONAvPqxzlD8ydUAtM954PBoiqelmV5ns/nKTb/BB6Px3S63W7PtHO5XPw7OnAH1+t1muf5ByTtpF8Eis8V8cr+9w5JIGkLFHuQ98y/QALFFuTzBlgFCRQblLXVaBMkUHRRth4NuyCBooOy95zOggSKLEruQ1MRSKDIoOQwUpVikEDpQynBqAYJlDaUUowmkECpQ6nBaAYJlDKUWowukEDZR2nB6AYJlHWUVgwRkED5i9KDIQYSKD8ovRiiIFINlT0u8Y6SwBAHOSqKFIYKyNFQJDHUQI6CIo2hCjI6igaGOsioKFoYJiCjoWhimIGMgqKNYQrCjmKBYQ7CimKF4QLChmKJ4QbCgmKN4QqCjuKB4Q6CiuKFAQGChuKJAQOCguKNAQXijYKAAQfihYKCAQlijYKEAQtihYKGAQ2ijYKIAQ+ihYKKQQEijYKMQQMihYKOQQXSi8KAQQfSisKCQQlSi8KEQQtSisKGQQ2SQ2HEoAfZQmHFGALkE4UZYxiQF0r6yf71UlX/p54mjLqlOyNAQHTel6lYspxR1gCYUaiXrL3gWVFoQUoCLznG+Qb/Kk8JUhN0zbEIOHQgLQG3nOOFQwXSE2zPuZY4NCASgUqMoY1DASIZpORYGjjwIBoBaowphQMNohmc5tg9OLAgFoFZ1KjFgQSxDMqyVgkOHIhHQB41t3CgQDyD8az9jgMDghAIQg8QIAhBvK5S717cQbwDWFvLPXtyBfGceO4Tj1dvbiBeE85BvP/do0cXEI+J1kB4opiDMGF4POhNQRgxrFHMQJgxLFFMQEbAsEJRBxkJwwJFFWREDG0UNZCRMTRRVECOgKGFIg5yJAwNFFGQI2JIo4iBHBlDEkUEJDD+v/3qzaIbpLeB1pd+yOf1ZNIF0lMYOVCJ3lqzaQZpLSgxWZYxWjJqAmkpxBKidJ+1WVWD1BaQniDjeDWZVYHUDMwYnGbPpdkVg5QOqDkp9rFLMiwCKRmIPSyr/nNZZkFyA1hNZKQ6e5nuggSG3mWwle0mSGDoYey9+1oFCQx9jC2UL5DAsMNYQ/kDEhj2GJ8ovyBph/3Lv/zilKmcboh5nqfTsizPtBObfwL3+336B07+3Sny7gNQAAAAAElFTkSuQmCC"
+                                            priority={true}
+                                            sizes="(max-width: 768px) 95vw, (max-width: 1200px) 50vw, 320px"                                          
                                         /> 
                                     </figure>
                                 </div> 
@@ -365,12 +349,9 @@ export async function getServerSideProps(context) {
               if(posts.length) {
                 posts = posts.slice(-6)
               }
-
               
-              console.log(json.data.posts);
-
               upcoming = {
-                latest_posts: posts,
+                //latest_posts: posts,
                 tutorials: json.data.tutorials,
                 //posts: json.data.posts,              
                 settings: json.data.settings,
