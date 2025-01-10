@@ -233,6 +233,12 @@ export default function Home({upcoming, adsReady}){
                                 upcoming.settings.banner_image_url == "" ? "" : 
                                 <div className="lg-5 md-5 sm-12 flexbox content-center items-center column-direction p-all-15">
                                     <figure> 
+                                        <link
+                                            rel="preload"
+                                            href={upcoming.settings.banner_image_url}
+                                            as="image"
+                                            type="image/webp"
+                                        />
                                         <Image
                                             crossOrigin="anonymous"
                                             className={'half'}
