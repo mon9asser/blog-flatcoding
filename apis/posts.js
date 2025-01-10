@@ -122,6 +122,8 @@ postRouter.post("/post/create-update", middlewareTokens, async (req, res) => {
     try {
         const body = req.body;
 
+        
+
         // Validate the request body
         if (!body || Object.keys(body).length === 0) {
             throw new Error("Invalid request body");
@@ -773,6 +775,52 @@ postRouter.get("/post/get", middlewareTokens, async (req, res) => {
     }
 })
 
+// gutenberg/posts/get
+postRouter.get("/gutenberg/posts/get", middlewareTokens, async (req, res) => {
+    
+    try {
+        
+        const posts = await Posts.find({}).select('_id slug post_title');
+
+        return res.send({
+            is_error: true, 
+            data: posts, 
+            message: 'Fetched Successfully!'
+        })
+
+    } catch (error) {
+         
+        return res.send({
+            is_error: true,
+            data: null,
+            message: error.message || "An error occurred while retrieving posts"
+        });
+    }
+})
+
+
+postRouter.get("/gutenberg/posy/get/:post_id", middlewareTokens, async (req, res) => {
+    
+    try {
+
+        const postId = req.params.post_id;
+        const post = await Posts.findById(postId);
+        console.log(post.faqs_section);
+        return res.json({
+            is_error: false, 
+            data: post == null ? false: post, 
+            message: 'Fetched Successfully!'
+        });
+
+    } catch (error) {
+         
+        return res.json({
+            is_error: true,
+            data: null,
+            message: error.message || "An error occurred while retrieving posts"
+        });
+    }
+})
 
 
 postRouter.get("/post/get-published", middlewareTokens, async (req, res) => {

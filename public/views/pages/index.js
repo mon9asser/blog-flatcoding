@@ -30,7 +30,7 @@ export default function Home({upcoming, adsReady}){
         return <ServerOffline/>
     }
     
-      
+    console.log(upcoming);
 
     var jsonLdContent = `
             {
@@ -85,7 +85,7 @@ export default function Home({upcoming, adsReady}){
                                             }
                                             
                                             <h3>
-                                                <Link href={`${upcoming.site_url}tutorials/${tutorial.slug}/`}>{tutorial.tutorial_title}</Link>
+                                                <Link aria-label={'Go to ' + tutorial.tutorial_title} href={`${upcoming.site_url}tutorials/${tutorial.slug}/`}>{tutorial.tutorial_title}</Link>
                                                 
                                                 {
                                                     tutorial?.selected_category?.name != ''? 
@@ -94,46 +94,13 @@ export default function Home({upcoming, adsReady}){
                                                 }
                                                 
                                             </h3>
-                                            <Link className="floating-all" href={`${upcoming.site_url}tutorials/${tutorial.slug}/`}></Link>
+                                            <Link aria-label={'Go to ' + tutorial.tutorial_title} className="floating-all" href={`${upcoming.site_url}tutorials/${tutorial.slug}/`}></Link>
                                         </div>
                                     </div>
                                 )
                             })
-                        ): (
-                            
-                            //upcoming.latest_posts.length
-                            <>
-                                <ul className="latest-post-list">
-                                   {
-                                    upcoming.latest_posts.map(x => { 
-                                        var href = `${upcoming.site_url}tutorials/${x.tutorial.slug}/`;
-                                        if(x.selected_tab && x.selected_tab._id != 'root') {
-                                            href =`${href}t/${x.selected_tab.slug}/` 
-                                        }
-                                        href= `${href}${x.slug}/`;
-                                        
-                                        return (
-                                            <li key={x._id}>
-                                                <Link href={href}>
-                                                    <div className='post-thum'>
-                                                        <Image alt={x.meta_title} src={x.article_thumbnail_url} width="90" height="195" />
-                                                    </div>
-                                                    <div className='post-data'>
-                                                        <h3>{x.meta_title}</h3>
-                                                        <span>{Helper.formatDate(x.updated_date)}</span>
-                                                    </div>
-                                                </Link>
-                                            </li>
-                                        )
-                                    })
-                                   }
-                                </ul> 
-                            </>
-                        )
-                    }
-
-                    
-
+                        ): null 
+                    } 
                 </div>
             </>
         );
@@ -162,7 +129,7 @@ export default function Home({upcoming, adsReady}){
                             </span>
                             
                         </div>
-                        <h5>Free Tutorials</h5>
+                        <h3>Free Tutorials</h3>
                     </div>
                     <div className='center-icons sm-6 md-3 lg-3 text-center p-all-15'>
                         <div className="flatcoding-icon">
@@ -173,7 +140,7 @@ export default function Home({upcoming, adsReady}){
                             </span>
                             
                         </div>
-                        <h5>Online Compilers</h5>
+                        <h3>Online Compilers</h3>
                     </div>
                     <div className='center-icons sm-6 md-3 lg-3 text-center p-all-15'>
                         <div className="flatcoding-icon">
@@ -186,7 +153,7 @@ export default function Home({upcoming, adsReady}){
                                 </svg>
                             </span> 
                         </div>
-                        <h5>Solving Problems</h5>
+                        <h3>Solving Problems</h3>
                     </div>
                     <div className='center-icons sm-6 md-3 lg-3 text-center p-all-15'>
                         <div className="flatcoding-icon">
@@ -201,7 +168,7 @@ export default function Home({upcoming, adsReady}){
                                 </svg>
                             </span> 
                         </div>
-                        <h5>Books and Resources</h5>
+                        <h3>Books and Resources</h3>
                     </div>
 
                 </div>
@@ -270,9 +237,15 @@ export default function Home({upcoming, adsReady}){
                                             crossOrigin="anonymous"
                                             className={'half'}
                                             alt={upcoming.settings.banner_site_title}
-                                            height={200} 
-                                            width={320}
+                                            height={360}
+                                            width={640}
                                             src={upcoming.settings.banner_image_url}  
+                                            decoding="async"
+                                            priority={true} 
+                                            sizes="(max-width: 768px) 95vw, (max-width: 1200px) 50vw, 320px"
+                                            //loading="lazy" 
+                                            //placeholder="blur"
+                                            //blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAAAXNSR0IArs4c6QAAA1lJREFUeF7t3GtyqkAQBWBchmzD/e8Al6Euw1tTKXONAvPqxzlD8ydUAtM954PBoiqelmV5ns/nKTb/BB6Px3S63W7PtHO5XPw7OnAH1+t1muf5ByTtpF8Eis8V8cr+9w5JIGkLFHuQ98y/QALFFuTzBlgFCRQblLXVaBMkUHRRth4NuyCBooOy95zOggSKLEruQ1MRSKDIoOQwUpVikEDpQynBqAYJlDaUUowmkECpQ6nBaAYJlDKUWowukEDZR2nB6AYJlHWUVgwRkED5i9KDIQYSKD8ovRiiIFINlT0u8Y6SwBAHOSqKFIYKyNFQJDHUQI6CIo2hCjI6igaGOsioKFoYJiCjoWhimIGMgqKNYQrCjmKBYQ7CimKF4QLChmKJ4QbCgmKN4QqCjuKB4Q6CiuKFAQGChuKJAQOCguKNAQXijYKAAQfihYKCAQlijYKEAQtihYKGAQ2ijYKIAQ+ihYKKQQEijYKMQQMihYKOQQXSi8KAQQfSisKCQQlSi8KEQQtSisKGQQ2SQ2HEoAfZQmHFGALkE4UZYxiQF0r6yf71UlX/p54mjLqlOyNAQHTel6lYspxR1gCYUaiXrL3gWVFoQUoCLznG+Qb/Kk8JUhN0zbEIOHQgLQG3nOOFQwXSE2zPuZY4NCASgUqMoY1DASIZpORYGjjwIBoBaowphQMNohmc5tg9OLAgFoFZ1KjFgQSxDMqyVgkOHIhHQB41t3CgQDyD8az9jgMDghAIQg8QIAhBvK5S717cQbwDWFvLPXtyBfGceO4Tj1dvbiBeE85BvP/do0cXEI+J1kB4opiDMGF4POhNQRgxrFHMQJgxLFFMQEbAsEJRBxkJwwJFFWREDG0UNZCRMTRRVECOgKGFIg5yJAwNFFGQI2JIo4iBHBlDEkUEJDD+v/3qzaIbpLeB1pd+yOf1ZNIF0lMYOVCJ3lqzaQZpLSgxWZYxWjJqAmkpxBKidJ+1WVWD1BaQniDjeDWZVYHUDMwYnGbPpdkVg5QOqDkp9rFLMiwCKRmIPSyr/nNZZkFyA1hNZKQ6e5nuggSG3mWwle0mSGDoYey9+1oFCQx9jC2UL5DAsMNYQ/kDEhj2GJ8ovyBph/3Lv/zilKmcboh5nqfTsizPtBObfwL3+336B07+3Sny7gNQAAAAAElFTkSuQmCC"
                                         /> 
                                     </figure>
                                 </div> 
@@ -360,11 +333,10 @@ export async function getServerSideProps(context) {
                 posts = posts.slice(-6)
               }
 
-              
-              console.log(json.data.posts);
+               
 
               upcoming = {
-                latest_posts: posts,
+                // latest_posts: posts,
                 tutorials: json.data.tutorials,
                 //posts: json.data.posts,              
                 settings: json.data.settings,
