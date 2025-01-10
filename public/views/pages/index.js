@@ -270,11 +270,11 @@ export default function Home({upcoming, adsReady}){
                                             crossOrigin="anonymous"
                                             className={'half'}
                                             alt={upcoming.settings.banner_site_title}
-                                            height={200} 
-                                            width={320}
+                                            height={360}
+                                            width={640}
                                             src={upcoming.settings.banner_image_url}  
                                             decoding="async"
-                                            priority 
+                                            priority={true} 
                                             sizes="(max-width: 768px) 95vw, (max-width: 1200px) 50vw, 320px"
                                             //loading="lazy" 
                                             //placeholder="blur"
