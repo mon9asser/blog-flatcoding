@@ -819,7 +819,7 @@ var TutorialsList = ({ index, data, chapter_title, built_url }) => {
            } 
            <div className="chapter-cont">
               <ul className="tuts-categ">
-                  {data.map(x => <li key={x._id}><Link href={`${built_url}${x.slug}/`}>{ Helper.decodeHtmlEntities(x.post_title)}</Link></li>)} 
+                  {data.map(x => <li key={x._id}><Link aria-label={x.post_title} href={`${built_url}${x.slug}/`}>{ Helper.decodeHtmlEntities(x.post_title)}</Link></li>)} 
               </ul>
            </div>
       </div>
@@ -949,6 +949,7 @@ function TutorialsContent({ blocks, tutorials, ad_camp, settings, adsReady }){
                                )}
                              </h3>
                              <Link
+                              aria-label={item.tutorial_title}
                                className="floating-all"
                                href={`/tutorials/${item.slug}/`}
                              ></Link>
@@ -1376,7 +1377,7 @@ var NextPrevPagination = ({site_url, tutorial_slug, type, data, current_post_slu
           
           ( prev == undefined ) ? '':
         
-          <Link href={prev_link} className="flexbox direction-row items-center hover-to-left">
+          <Link aria-label={Helper.decodeHtmlEntities(prev.post_title)} href={prev_link} className="flexbox direction-row items-center hover-to-left">
               <i className="left-arrow-pagin"></i>
               <span>
                   <span className="d-none d-sm-block">{Helper.decodeHtmlEntities(prev.post_title)}</span> 
@@ -1388,7 +1389,7 @@ var NextPrevPagination = ({site_url, tutorial_slug, type, data, current_post_slu
         {
           
           ( next == undefined ) ? '':
-          <Link href={next_link} className="flexbox direction-row items-center hover-to-right auto-right">
+          <Link aria-label={Helper.decodeHtmlEntities(next.post_title)} href={next_link} className="flexbox direction-row items-center hover-to-right auto-right">
               <span>
                   <span className="d-none d-sm-block">{Helper.decodeHtmlEntities(next.post_title)}</span> 
                   <span className="d-block d-sm-none">Next</span>
@@ -1405,7 +1406,7 @@ var NextPrevPagination = ({site_url, tutorial_slug, type, data, current_post_slu
 var Breadcrumbs = ({data}) => {
   return (
     <ul className="breadcrumbs">
-        {data.map((x, index) => <li key={index} className='sub-title'><Link href={x.url}>{Helper.decodeHtmlEntities(x.title)}</Link></li>)}
+        {data.map((x, index) => <li key={index} className='sub-title'><Link aria-label={Helper.decodeHtmlEntities(x.title)} href={x.url}>{Helper.decodeHtmlEntities(x.title)}</Link></li>)}
     </ul>
   );
 }
@@ -1482,12 +1483,12 @@ var ArticleSidebar = ({type, data, site_url, tutorial_slug, current_post_slug, t
 
                         <>
                           <li className={`${chapter.posts.length ? 'has-slideitem' : ''}`}>
-                            <Link className={` ${is_expaned ? 'expanded-a': ''}`} id={`anchor-${chapter._id}`} onClick={e => collapsed_item(e, `${chapter._id}`)} href="#">{chapter.chapter_title}</Link>
+                            <Link aria-label={chapter.chapter_title} className={` ${is_expaned ? 'expanded-a': ''}`} id={`anchor-${chapter._id}`} onClick={e => collapsed_item(e, `${chapter._id}`)} href="#">{chapter.chapter_title}</Link>
                             {chapter.posts.length ? (
                               <ul id={`item-${chapter._id}`} className={`collapsible list-items ${is_expaned ? 'expanded': ''}`}>
                                 {chapter.posts.map(x => (
                                   <li key={x._id}>
-                                    <Link className={current_post_slug == x.slug ? 'selected_tab': ''} href={`${link_url}${x.slug}/`}>{Helper.decodeHtmlEntities(x.post_title)}</Link>
+                                    <Link aria-label={Helper.decodeHtmlEntities(x.post_title)} className={current_post_slug == x.slug ? 'selected_tab': ''} href={`${link_url}${x.slug}/`}>{Helper.decodeHtmlEntities(x.post_title)}</Link>
                                   </li>
                                 ))} 
                                 
@@ -1501,7 +1502,7 @@ var ArticleSidebar = ({type, data, site_url, tutorial_slug, current_post_slug, t
                           <ul className="block-list custom-aside-tuts list-items">
                             {chapter.posts.map(x => (
                               <li key={x._id}>
-                                <Link className={current_post_slug == x.slug ? 'selected_tab': ''} href={`${link_url}${x.slug}/`}>{Helper.decodeHtmlEntities(x.post_title)}</Link>
+                                <Link aria-label={Helper.decodeHtmlEntities(x.post_title)} className={current_post_slug == x.slug ? 'selected_tab': ''} href={`${link_url}${x.slug}/`}>{Helper.decodeHtmlEntities(x.post_title)}</Link>
                               </li>
                             ))}
                           </ul>
@@ -1544,7 +1545,7 @@ var ArticleSidebar = ({type, data, site_url, tutorial_slug, current_post_slug, t
                     return (
                       <Fragment key={post._id}>
                         <li key={post._id}>
-                          <Link className={current_post_slug == post.slug ? 'selected_tab': ''} href={`${link_url}${post.slug}/`}>{Helper.decodeHtmlEntities(post.post_title)}</Link>
+                          <Link aria-label={Helper.decodeHtmlEntities(post.post_title)} className={current_post_slug == post.slug ? 'selected_tab': ''} href={`${link_url}${post.slug}/`}>{Helper.decodeHtmlEntities(post.post_title)}</Link>
                         </li>
                       </Fragment>
                     );

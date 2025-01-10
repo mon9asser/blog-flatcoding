@@ -30,7 +30,7 @@ export default function Home({upcoming, adsReady}){
         return <ServerOffline/>
     }
     
-      
+    console.log(upcoming);
 
     var jsonLdContent = `
             {
@@ -85,7 +85,7 @@ export default function Home({upcoming, adsReady}){
                                             }
                                             
                                             <h3>
-                                                <Link href={`${upcoming.site_url}tutorials/${tutorial.slug}/`}>{tutorial.tutorial_title}</Link>
+                                                <Link aria-label={'Go to ' + tutorial.tutorial_title} href={`${upcoming.site_url}tutorials/${tutorial.slug}/`}>{tutorial.tutorial_title}</Link>
                                                 
                                                 {
                                                     tutorial?.selected_category?.name != ''? 
@@ -94,16 +94,16 @@ export default function Home({upcoming, adsReady}){
                                                 }
                                                 
                                             </h3>
-                                            <Link className="floating-all" href={`${upcoming.site_url}tutorials/${tutorial.slug}/`}></Link>
+                                            <Link aria-label={'Go to ' + tutorial.tutorial_title} className="floating-all" href={`${upcoming.site_url}tutorials/${tutorial.slug}/`}></Link>
                                         </div>
                                     </div>
                                 )
                             })
+ 
                         ): null
                     }
 
-                    
-
+                     
                 </div>
             </>
         );
@@ -132,7 +132,7 @@ export default function Home({upcoming, adsReady}){
                             </span>
                             
                         </div>
-                        <h5>Free Tutorials</h5>
+                        <h3>Free Tutorials</h3>
                     </div>
                     <div className='center-icons sm-6 md-3 lg-3 text-center p-all-15'>
                         <div className="flatcoding-icon">
@@ -143,7 +143,7 @@ export default function Home({upcoming, adsReady}){
                             </span>
                             
                         </div>
-                        <h5>Online Compilers</h5>
+                        <h3>Online Compilers</h3>
                     </div>
                     <div className='center-icons sm-6 md-3 lg-3 text-center p-all-15'>
                         <div className="flatcoding-icon">
@@ -156,7 +156,7 @@ export default function Home({upcoming, adsReady}){
                                 </svg>
                             </span> 
                         </div>
-                        <h5>Solving Problems</h5>
+                        <h3>Solving Problems</h3>
                     </div>
                     <div className='center-icons sm-6 md-3 lg-3 text-center p-all-15'>
                         <div className="flatcoding-icon">
@@ -171,7 +171,7 @@ export default function Home({upcoming, adsReady}){
                                 </svg>
                             </span> 
                         </div>
-                        <h5>Books and Resources</h5>
+                        <h3>Books and Resources</h3>
                     </div>
 
                 </div>
@@ -189,22 +189,7 @@ export default function Home({upcoming, adsReady}){
             <Head>
                 <title>{upcoming.settings.site_meta_title}</title>
                 <meta name="description" content={upcoming.settings.site_meta_description}/>
-                <link rel="canonical" href={upcoming.site_url}/>
-                <link
-                    rel="preload"
-                    as="image"
-                    href={`/next/image/?url=${encodeURIComponent(upcoming.settings.banner_image_url)}&w=750&q=75`} 
-                    imageSrcSet={`/_next/image/?url=${encodeURIComponent(upcoming.settings.banner_image_url)}&w=384&q=75 384w,
-                                /_next/image/?url=${encodeURIComponent(upcoming.settings.banner_image_url)}&w=640&q=75 640w,
-                                /_next/image/?url=${encodeURIComponent(upcoming.settings.banner_image_url)}&w=750&q=75 750w,
-                                /_next/image/?url=${encodeURIComponent(upcoming.settings.banner_image_url)}&w=828&q=75 828w,
-                                /_next/image/?url=${encodeURIComponent(upcoming.settings.banner_image_url)}&w=1080&q=75 1080w,
-                                /_next/image/?url=${encodeURIComponent(upcoming.settings.banner_image_url)}&w=1200&q=75 1200w,
-                                /_next/image/?url=${encodeURIComponent(upcoming.settings.banner_image_url)}&w=1920&q=75 1920w,
-                                /_next/image/?url=${encodeURIComponent(upcoming.settings.banner_image_url)}&w=2048&q=75 2048w,
-                                /_next/image/?url=${encodeURIComponent(upcoming.settings.banner_image_url)}&w=3840&q=75 3840w`}
-                    imageSizes="(max-width: 768px) 95vw, (max-width: 1200px) 50vw, 320px"
-                />
+                <link rel="canonical" href={upcoming.site_url}/> 
                 <meta property="og:locale" content="en_US"/>
                 <meta property="og:type" content="website"/>
                 <meta property="og:title" content={upcoming.settings.site_meta_title}/>
@@ -253,6 +238,13 @@ export default function Home({upcoming, adsReady}){
                                 upcoming.settings.banner_image_url == "" ? "" : 
                                 <div className="lg-5 md-5 sm-12 flexbox content-center items-center column-direction p-all-15">
                                     <figure> 
+                                        {/*
+                                        <link
+                                            rel="preload"
+                                            href={upcoming.settings.banner_image_url}
+                                            as="image"
+                                            type="image/webp"
+                                        />*/}
                                         <Image
                                             crossOrigin="anonymous"
                                             className={'half'}
@@ -349,9 +341,11 @@ export async function getServerSideProps(context) {
               if(posts.length) {
                 posts = posts.slice(-6)
               }
+ 
               
+
               upcoming = {
-                //latest_posts: posts,
+                // latest_posts: posts, 
                 tutorials: json.data.tutorials,
                 //posts: json.data.posts,              
                 settings: json.data.settings,

@@ -101,13 +101,13 @@ export default function Header({settings, menus}) {
                     <div ref={maskRef} className="mask fade" onClick={close_sidebar}></div> 
 
                     {/* Close Button */}
-                    <Link ref={closeSidebarRef} className="close-toggler close-btn" href='#' onClick={close_sidebar}></Link> 
+                    <Link aria-label='Close Sidebar' ref={closeSidebarRef} className="close-toggler close-btn" href='#' onClick={close_sidebar}></Link> 
 
                     <div ref={sidebarContentRef} className="aside-content white-bg" id="sidebar-content"> 
                         <div className="flexbox items-center content-center site-logo-container">
                             {
                                 settings != null && settings.site_logo != ""?
-                                <Link className="site-logo" href={site_url}><Image src={settings.site_logo} alt="Logo Site" width="135" height="36" /></Link>
+                                <Link aria-label='FlatCoding.com' className="site-logo" href={site_url}><Image src={settings.site_logo} alt="Logo Site" width="384" height="95" layout="intrinsic"/></Link>
                                 : ""
                             }
                         </div>
@@ -121,14 +121,14 @@ export default function Header({settings, menus}) {
                                 {
                                     nav_left.map(x => { 
                                         
-                                        var _return = <li key={x._id}><Link target={x.openInNewTab?"_blank": ""} href={x.link}><ItemElement text={x.title}/></Link></li>;
+                                        var _return = <li key={x._id}><Link aria-label={x.title} target={x.openInNewTab?"_blank": ""} href={x.link}><ItemElement text={x.title}/></Link></li>;
                                         
                                         if(x.subitems.length) {
                                             _return = (
                                                 <li className="has-slideitem" key={x._id}> 
                                                     <Link id={`nav-anchor-${x._id}`} onClick={(e) => expand_collapse_item(e, x._id)} target={x.openInNewTab?"_blank": ""} href={x.link}><ItemElement text={x.title}/></Link>
                                                     <ul className="slideitem collapsible" id={`collapsed-item-${x._id}`}>
-                                                        {x.subitems.map(y => <li key={y._id}><Link target={y.openInNewTab?"_blank": ""} href={y.link}>{y.title}</Link></li>)}
+                                                        {x.subitems.map(y => <li key={y._id}><Link aria-label={y.title} target={y.openInNewTab?"_blank": ""} href={y.link}>{y.title}</Link></li>)}
                                                     </ul>
                                                 </li>
                                             );
@@ -147,7 +147,7 @@ export default function Header({settings, menus}) {
                         
                         {
                             settings != null && settings?.site_logo != "" ?
-                            <Link href={site_url} className="site-logo">
+                            <Link aria-label={settings.site_name} href={site_url} className="site-logo">
                                 <Image 
                                     alt={settings.site_name}
                                     width="135" 
@@ -162,16 +162,16 @@ export default function Header({settings, menus}) {
                             {
                             nav_left?.map(x => { 
                                     
-                                var _return = <li key={x._id}><Link target={x.openInNewTab?"_blank": ""} href={x.link}><ItemElement text={x.title}/></Link></li>;
+                                var _return = <li key={x._id}><Link aria-label={x.title} target={x.openInNewTab?"_blank": ""} href={x.link}><ItemElement text={x.title}/></Link></li>;
                                 
                                 if(x.subitems.length) {
                                     _return = (
                                         <li className="has-subitem" key={x._id}> 
-                                            <Link target={x.openInNewTab?"_blank": ""} href={x.link}>
+                                            <Link aria-label={'has sub item'} target={x.openInNewTab?"_blank": ""} href={x.link}>
                                                 <ItemElement text={x.title}/>
                                             </Link>
                                             <ul className="subitem">
-                                                {x.subitems.map(y => <li key={y._id}><Link target={y.openInNewTab?"_blank": ""} href={y.link}>{y.title}</Link></li>)}
+                                                {x.subitems.map(y => <li key={y._id}><Link aria-label={y.title} target={y.openInNewTab?"_blank": ""} href={y.link}>{y.title}</Link></li>)}
                                             </ul>
                                         </li>
                                     );
@@ -191,7 +191,7 @@ export default function Header({settings, menus}) {
                                     // handling sidebar event 
                                     if( x.title.indexOf('[burgericon]') != -1 ) {
                                         _return = <li key={x._id}>
-                                            <Link href='#' onClick={sidebar_toggle}>
+                                            <Link aria-label={x.title} href='#' onClick={sidebar_toggle}>
                                                 <ItemElement text={x.title}/>
                                             </Link>
                                         </li>;
@@ -200,11 +200,11 @@ export default function Header({settings, menus}) {
                                     if(x.subitems.length) {
                                         _return = (
                                             <li className="has-subitem" key={x._id}> 
-                                                <Link target={x.openInNewTab?"_blank": ""} href={x.link}>
+                                                <Link aria-label={x.title} target={x.openInNewTab?"_blank": ""} href={x.link}>
                                                     <ItemElement text={x.title}/>
                                                 </Link>
                                                 <ul className="subitem">
-                                                    {x.subitems.map(y => <li key={y._id}><Link target={y.openInNewTab?"_blank": ""} href={y.link}>{y.title}</Link></li>)}
+                                                    {x.subitems.map(y => <li key={y._id}><Link aria-label={y.title}target={y.openInNewTab?"_blank": ""} href={y.link}>{y.title}</Link></li>)}
                                                 </ul>
                                             </li>
                                         );
