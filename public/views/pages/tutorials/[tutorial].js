@@ -25,11 +25,11 @@ import Script from "next/script";
 
 
 export default function Tutorials({upcoming, adsReady}) {
-     
+    
     if(!upcoming) {
         return <ServerOffline/>
     }
-
+    
     const header_content = parse(upcoming.settings.header)
     const footer_content = parse(upcoming.settings.footer)
 
@@ -117,7 +117,7 @@ export default function Tutorials({upcoming, adsReady}) {
                 "mainEntityOfPage": {
                     "@type": "WebPage",
                     "@id": "${upcoming.site_url}tutorials/${upcoming.tutorial?.slug}/"
-                },
+                }, 
                 "url": "${upcoming.site_url}tutorials/${upcoming.tutorial?.slug}/",
                 "articleSection": "${upcoming.tutorial?.tag}",
                 "keywords": "${upcoming.tutorial?.keyphrase}",

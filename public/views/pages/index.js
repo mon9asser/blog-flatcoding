@@ -30,7 +30,7 @@ export default function Home({upcoming, adsReady}){
         return <ServerOffline/>
     }
     
-    console.log(upcoming);
+    //console.log(upcoming);
 
     var jsonLdContent = `
             {

@@ -264,7 +264,7 @@ var GenerateTutorialContent_tab = ({ data, upcoming, built_url, ad_camp, adsRead
         // Default case: plain paragraph
         else {
           return (
-            <p key={index} className="tutorial-description text-center">
+            <p key={index} className="tutorial-description">
               {part}
             </p>
           );
@@ -738,7 +738,7 @@ var GenerateTutorialContent_2 = ({ data, upcoming, built_url, ad_camp, adsReady 
         // Default case: plain paragraph
         else {
           return (
-            <p key={index} className="tutorial-description text-center">
+            <p key={index} className="tutorial-description">
               {part}
             </p>
           );
@@ -819,7 +819,7 @@ var TutorialsList = ({ index, data, chapter_title, built_url }) => {
            } 
            <div className="chapter-cont">
               <ul className="tuts-categ">
-                  {data.map(x => <li key={x._id}><Link aria-label={x.post_title} href={`${built_url}${x.slug}/`}>{ Helper.decodeHtmlEntities(x.post_title)}</Link></li>)} 
+                  {data.map((x, index) => <li key={`${x._id}-${index}`}><Link aria-label={x.post_title} href={`${built_url}${x.slug}/`}>{ Helper.decodeHtmlEntities(x.post_title)}</Link></li>)} 
               </ul>
            </div>
       </div>
@@ -1068,7 +1068,7 @@ var GenerateTutorialContent_1 = ({ data, upcoming, built_url, ad_camp, adsReady 
         // Default case: plain paragraph
         else {
           return (
-            <p key={index} className="tutorial-description text-center">
+            <p key={index} className="tutorial-description">
               {part}
             </p>
           );

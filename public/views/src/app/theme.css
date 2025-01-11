@@ -3296,9 +3296,7 @@ li:hover a.nav-toggler span {
 .tutorial-map:hover .fill-color {
     fill: #b9355e
 }
-.tutorial-description {
-    margin-top: 25px
-}
+ 
 .list-in-tuts {
     margin-top: 25px
 }
@@ -4244,11 +4242,7 @@ a:hover {
     border-color: #0a0a23;
 }
 
-.text-center {
-    text-align: center;
-}
-
-
+ 
 .page-block-section {
     margin: 50px auto;
     padding: 20px;
@@ -4673,11 +4667,11 @@ textarea:focus {
     padding-right: 30px;
 }
 .tutorial-description {
+    margin-top: 25px;
     font-size: 18px;
     line-height: 30px;
     color: #0a0a23;
-    text-align: center;
-    /*margin-top: 25px;*/
+    text-align: center; 
 }
 @media only screen and (max-width: 768px) {
     .tutorial-description {
@@ -4785,12 +4779,13 @@ textarea:focus {
 }
 
 .tuts-categ li a {
-    webkit-transition: padding-left .3s ease-in-out;
+    -webkit-transition: padding-left .3s ease-in-out;
     -moz-transition: padding-left .3s ease-in-out;
     -o-transition: padding-left .3s ease-in-out;
     transition: padding-left .3s ease-in-out;
     font-size: 14px;
     padding: 10px 15px;
+    text-align: left;
 }
 .max-1050 {
     max-width: 1050px;

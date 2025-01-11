@@ -35,8 +35,7 @@ export async function middleware(req) {
         var expired_time = result.data.exp;
         var currentTime = Math.floor(Date.now() / 1000);
 
-        if (expired_time < currentTime) {
-            console.log('Token has expired.');
+        if (expired_time < currentTime) { 
             return removeCookieAndRedirect(req);;
         } 
 
