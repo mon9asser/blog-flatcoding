@@ -161,7 +161,7 @@ function SearchComponent ({searchType}) {
     var render = (
       <form className="search-form" style={{marginTop: '25px'}}>
           <input onChange={e => setQuery(e.target.value)} value={query} type="text" placeholder="What are you looking for?" />
-          <button onClick={sendRequest} className="btn third-btn radius-5 custom-header-btn">
+          <button aria-label="Search on site" onClick={sendRequest} className="btn third-btn radius-5 custom-header-btn">
             {is_pressed?<span className='loader'></span>: 'Search'}
           </button>
       </form>
@@ -172,7 +172,7 @@ function SearchComponent ({searchType}) {
       render = (
         <form className="form-group form-1" action="/" method="get">
             <input onChange={e => setQuery(e.target.value)} value={query} type="text" placeholder="Search in our tutorials" />
-            <button onClick={sendRequest} type="submit">
+            <button aria-label="Search on site" onClick={sendRequest} type="submit">
                 {is_pressed?<span className='loader black-loader'></span>: <span className="flexbox">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <circle cx="11" cy="11" r="7" className="stroke-color" stroke="#33363F" strokeWidth="2" />
@@ -264,7 +264,7 @@ var GenerateTutorialContent_tab = ({ data, upcoming, built_url, ad_camp, adsRead
         // Default case: plain paragraph
         else {
           return (
-            <p key={index} className="tutorial-description text-center">
+            <p key={index} className="tutorial-description">
               {part}
             </p>
           );
@@ -432,7 +432,7 @@ var FeedBackBlock = ({data_id, data_title, feeadback_title }) => {
               <div className="flexbox direction-row gap-15 ptb-10">
                   
 
-                  <button disabled={isDisabled} style={{padding: 0}} className={`x-thumb-down ${isDisabled ? 'disable-feedback': ''}`} onClick={e => thumbDownHandler(e, "thumb-down")}>
+                  <button aria-label="Thumb Down" disabled={isDisabled} style={{padding: 0}} className={`x-thumb-down ${isDisabled ? 'disable-feedback': ''}`} onClick={e => thumbDownHandler(e, "thumb-down")}>
                       
                       {
                         data.is_pressed && data.press_type == 'thumb-down' ?
@@ -442,7 +442,7 @@ var FeedBackBlock = ({data_id, data_title, feeadback_title }) => {
                       
                   </button>
 
-                  <button disabled={isDisabled} style={{padding: 0}} className={`x-thumb-up ${isDisabled ? 'disable-feedback': ''}`} onClick={e => thumbUpHandler(e, "thumb-up")}>
+                  <button aria-label="Thumb Up" disabled={isDisabled} style={{padding: 0}} className={`x-thumb-up ${isDisabled ? 'disable-feedback': ''}`} onClick={e => thumbUpHandler(e, "thumb-up")}>
                       {
                         data.is_pressed && data.press_type == 'thumb-up' ?
                         <span className='loader' style={{borderBottomColor: '#00bec4'}}></span> :
@@ -738,7 +738,7 @@ var GenerateTutorialContent_2 = ({ data, upcoming, built_url, ad_camp, adsReady 
         // Default case: plain paragraph
         else {
           return (
-            <p key={index} className="tutorial-description text-center">
+            <p key={index} className="tutorial-description">
               {part}
             </p>
           );
@@ -819,7 +819,7 @@ var TutorialsList = ({ index, data, chapter_title, built_url }) => {
            } 
            <div className="chapter-cont">
               <ul className="tuts-categ">
-                  {data.map(x => <li key={x._id}><Link href={`${built_url}${x.slug}/`}>{ Helper.decodeHtmlEntities(x.post_title)}</Link></li>)} 
+                  {data.map((x, index) => <li key={`${x._id}-${index}`}><Link aria-label={x.post_title} href={`${built_url}${x.slug}/`}>{ Helper.decodeHtmlEntities(x.post_title)}</Link></li>)} 
               </ul>
            </div>
       </div>
@@ -949,8 +949,9 @@ function TutorialsContent({ blocks, tutorials, ad_camp, settings, adsReady }){
                                )}
                              </h3>
                              <Link
-                               className="floating-all"
-                               href={`/tutorials/${item.slug}/`}
+                              aria-label={item.tutorial_title}
+                              className="floating-all"
+                              href={`/tutorials/${item.slug}/`}
                              ></Link>
                            </div>
                          </div>
@@ -1067,7 +1068,7 @@ var GenerateTutorialContent_1 = ({ data, upcoming, built_url, ad_camp, adsReady 
         // Default case: plain paragraph
         else {
           return (
-            <p key={index} className="tutorial-description text-center">
+            <p key={index} className="tutorial-description">
               {part}
             </p>
           );
@@ -1102,121 +1103,121 @@ var SocialShare = ({platforms, url, title, radius, size, width, height}) => {
     switch (trimmedPlatform) {
       case 'email':
         return (
-          <EmailShareButton key={index} url={url} subject={title} className="social-share-button">
+          <EmailShareButton aria-label={title} key={index} url={url} subject={title} className="social-share-button">
             {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={EmailIcon} /> : <EmailIcon width={width} height={height} size={size} round />}
           </EmailShareButton>
         );
       case 'facebook':
         return (
-          <FacebookShareButton key={index} url={url} quote={title} className="social-share-button">
+          <FacebookShareButton aria-label={title} key={index} url={url} quote={title} className="social-share-button">
             {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={FacebookIcon} /> : <FacebookIcon width={width} height={height} size={size} round />}
           </FacebookShareButton>
         );
       case 'gab':
         return (
-          <GabShareButton key={index} url={url} title={title} className="social-share-button">
+          <GabShareButton aria-label={title} key={index} url={url} title={title} className="social-share-button">
             {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={GabIcon} /> : <GabIcon width={width} height={height} size={size} round />}
           </GabShareButton>
         );
       case 'hatena':
         return (
-          <HatenaShareButton key={index} url={url} title={title} className="social-share-button">
+          <HatenaShareButton aria-label={title} key={index} url={url} title={title} className="social-share-button">
             {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={HatenaIcon} /> : <HatenaIcon width={width} height={height} size={size} round />}
           </HatenaShareButton>
         );
       case 'instapaper':
         return (
-          <InstapaperShareButton key={index} url={url} title={title} className="social-share-button">
+          <InstapaperShareButton aria-label={title} key={index} url={url} title={title} className="social-share-button">
             {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={InstapaperIcon} /> : <InstapaperIcon width={width} height={height} size={size} round />}
           </InstapaperShareButton>
         );
       case 'line':
         return (
-          <LineShareButton key={index} url={url} title={title} className="social-share-button">
+          <LineShareButton aria-label={title} key={index} url={url} title={title} className="social-share-button">
             {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={LineIcon} /> : <LineIcon width={width} height={height} size={size} round />}
           </LineShareButton>
         );
       case 'linkedin':
         return (
-          <LinkedinShareButton key={index} url={url} title={title} className="social-share-button">
+          <LinkedinShareButton aria-label={title} key={index} url={url} title={title} className="social-share-button">
             {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={LinkedinIcon} /> : <LinkedinIcon width={width} height={height} size={size} round />}
           </LinkedinShareButton>
         );
       case 'livejournal':
         return (
-          <LivejournalShareButton key={index} url={url} title={title} className="social-share-button">
+          <LivejournalShareButton aria-label={title} key={index} url={url} title={title} className="social-share-button">
             {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={LivejournalIcon} /> : <LivejournalIcon width={width} height={height} size={size} round />}
           </LivejournalShareButton>
         );
       case 'mailru':
         return (
-          <MailruShareButton key={index} url={url} title={title} className="social-share-button">
+          <MailruShareButton aria-label={title} key={index} url={url} title={title} className="social-share-button">
             {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={MailruIcon} /> : <MailruIcon width={width} height={height} size={size} round />}
           </MailruShareButton>
         );
       case 'ok':
         return (
-          <OKShareButton key={index} url={url} title={title} className="social-share-button">
+          <OKShareButton aria-label={title} key={index} url={url} title={title} className="social-share-button">
             {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={OKIcon} /> : <OKIcon width={width} height={height} size={size} round />}
           </OKShareButton>
         );
       case 'pinterest':
         return (
-          <PinterestShareButton key={index} url={url} media={url} description={title} className="social-share-button">
+          <PinterestShareButton aria-label={title} key={index} url={url} media={url} description={title} className="social-share-button">
             {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={PinterestIcon} /> : <PinterestIcon width={width} height={height} size={size} round />}
           </PinterestShareButton>
         );
       case 'pocket':
         return (
-          <PocketShareButton key={index} url={url} title={title} className="social-share-button">
+          <PocketShareButton aria-label={title} key={index} url={url} title={title} className="social-share-button">
             {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={PocketIcon} /> : <PocketIcon width={width} height={height} size={size} round />}
           </PocketShareButton>
         );
       case 'reddit':
         return (
-          <RedditShareButton key={index} url={url} title={title} className="social-share-button">
+          <RedditShareButton aria-label={title} key={index} url={url} title={title} className="social-share-button">
             {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={RedditIcon} /> : <RedditIcon width={width} height={height} size={size} round />}
           </RedditShareButton>
         );
       case 'telegram':
         return (
-          <TelegramShareButton key={index} url={url} title={title} className="social-share-button">
+          <TelegramShareButton aria-label={title} key={index} url={url} title={title} className="social-share-button">
             {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={TelegramIcon} /> : <TelegramIcon width={width} height={height} size={size} round />}
           </TelegramShareButton>
         );
       case 'tumblr':
         return (
-          <TumblrShareButton key={index} url={url} title={title} className="social-share-button">
+          <TumblrShareButton aria-label={title} key={index} url={url} title={title} className="social-share-button">
             {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={TumblrIcon} /> : <TumblrIcon width={width} height={height} size={size} round />}
           </TumblrShareButton>
         );
       case 'twitter':
         return (
-          <TwitterShareButton key={index} url={url} title={title} className="social-share-button">
+          <TwitterShareButton aria-label={title} key={index} url={url} title={title} className="social-share-button">
             {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={TwitterIcon} /> : <TwitterIcon width={width} height={height} size={size} round />}
           </TwitterShareButton>
         );
       case 'viber':
         return (
-          <ViberShareButton key={index} url={url} title={title} className="social-share-button">
+          <ViberShareButton aria-label={title} key={index} url={url} title={title} className="social-share-button">
             {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={ViberIcon} /> : <ViberIcon width={width} height={height} size={size} round />}
           </ViberShareButton>
         );
       case 'vk':
         return (
-          <VKShareButton key={index} url={url} title={title} className="social-share-button">
+          <VKShareButton aria-label={title} key={index} url={url} title={title} className="social-share-button">
             {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={VKIcon} /> : <VKIcon width={width} height={height} size={size} round />}
           </VKShareButton>
         );
       case 'whatsapp':
         return (
-          <WhatsappShareButton key={index} url={url} title={title} separator=":: " className="social-share-button">
+          <WhatsappShareButton aria-label={title} key={index} url={url} title={title} separator=":: " className="social-share-button">
             {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={WhatsappIcon} /> : <WhatsappIcon width={width} height={height} size={size} round />}
           </WhatsappShareButton>
         );
       case 'workplace':
         return (
-          <WorkplaceShareButton key={index} url={url} title={title} className="social-share-button">
+          <WorkplaceShareButton aria-label={title} key={index} url={url} title={title} className="social-share-button">
             {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={WorkplaceIcon} /> : <WorkplaceIcon width={width} height={height} size={size} round />}
           </WorkplaceShareButton>
         );
@@ -1376,7 +1377,7 @@ var NextPrevPagination = ({site_url, tutorial_slug, type, data, current_post_slu
           
           ( prev == undefined ) ? '':
         
-          <Link href={prev_link} className="flexbox direction-row items-center hover-to-left">
+          <Link aria-label={Helper.decodeHtmlEntities(prev.post_title)} href={prev_link} className="flexbox direction-row items-center hover-to-left">
               <i className="left-arrow-pagin"></i>
               <span>
                   <span className="d-none d-sm-block">{Helper.decodeHtmlEntities(prev.post_title)}</span> 
@@ -1388,7 +1389,7 @@ var NextPrevPagination = ({site_url, tutorial_slug, type, data, current_post_slu
         {
           
           ( next == undefined ) ? '':
-          <Link href={next_link} className="flexbox direction-row items-center hover-to-right auto-right">
+          <Link aria-label={Helper.decodeHtmlEntities(next.post_title)} href={next_link} className="flexbox direction-row items-center hover-to-right auto-right">
               <span>
                   <span className="d-none d-sm-block">{Helper.decodeHtmlEntities(next.post_title)}</span> 
                   <span className="d-block d-sm-none">Next</span>
@@ -1405,7 +1406,7 @@ var NextPrevPagination = ({site_url, tutorial_slug, type, data, current_post_slu
 var Breadcrumbs = ({data}) => {
   return (
     <ul className="breadcrumbs">
-        {data.map((x, index) => <li key={index} className='sub-title'><Link href={x.url}>{Helper.decodeHtmlEntities(x.title)}</Link></li>)}
+        {data.map((x, index) => <li key={index} className='sub-title'><Link aria-label={Helper.decodeHtmlEntities(x.title)} href={x.url}>{Helper.decodeHtmlEntities(x.title)}</Link></li>)}
     </ul>
   );
 }
@@ -1482,12 +1483,12 @@ var ArticleSidebar = ({type, data, site_url, tutorial_slug, current_post_slug, t
 
                         <>
                           <li className={`${chapter.posts.length ? 'has-slideitem' : ''}`}>
-                            <Link className={` ${is_expaned ? 'expanded-a': ''}`} id={`anchor-${chapter._id}`} onClick={e => collapsed_item(e, `${chapter._id}`)} href="#">{chapter.chapter_title}</Link>
+                            <Link aria-label={chapter.chapter_title} className={` ${is_expaned ? 'expanded-a': ''}`} id={`anchor-${chapter._id}`} onClick={e => collapsed_item(e, `${chapter._id}`)} href="#">{chapter.chapter_title}</Link>
                             {chapter.posts.length ? (
                               <ul id={`item-${chapter._id}`} className={`collapsible list-items ${is_expaned ? 'expanded': ''}`}>
                                 {chapter.posts.map(x => (
                                   <li key={x._id}>
-                                    <Link className={current_post_slug == x.slug ? 'selected_tab': ''} href={`${link_url}${x.slug}/`}>{Helper.decodeHtmlEntities(x.post_title)}</Link>
+                                    <Link aria-label={Helper.decodeHtmlEntities(x.post_title)} className={current_post_slug == x.slug ? 'selected_tab': ''} href={`${link_url}${x.slug}/`}>{Helper.decodeHtmlEntities(x.post_title)}</Link>
                                   </li>
                                 ))} 
                                 
@@ -1499,9 +1500,9 @@ var ArticleSidebar = ({type, data, site_url, tutorial_slug, current_post_slug, t
                       ) : (
                         <li>
                           <ul className="block-list custom-aside-tuts list-items">
-                            {chapter.posts.map(x => (
-                              <li key={x._id}>
-                                <Link className={current_post_slug == x.slug ? 'selected_tab': ''} href={`${link_url}${x.slug}/`}>{Helper.decodeHtmlEntities(x.post_title)}</Link>
+                            {chapter.posts.map((x, index) => (
+                              <li key={`${x._id}-${index}` }>
+                                <Link aria-label={Helper.decodeHtmlEntities(x.post_title)} className={current_post_slug == x.slug ? 'selected_tab': ''} href={`${link_url}${x.slug}/`}>{Helper.decodeHtmlEntities(x.post_title)}</Link>
                               </li>
                             ))}
                           </ul>
@@ -1531,8 +1532,8 @@ var ArticleSidebar = ({type, data, site_url, tutorial_slug, current_post_slug, t
             elem_list++;
 
           return  (
-            <Fragment key={index} >
-              <ul className="block-list custom-aside-tuts list-items">
+            <Fragment key={x._id} >
+              <ul key={`post-${x._id}-${index}`} className="block-list custom-aside-tuts list-items">
                 {
                   x.map(post => {
 
@@ -1544,7 +1545,7 @@ var ArticleSidebar = ({type, data, site_url, tutorial_slug, current_post_slug, t
                     return (
                       <Fragment key={post._id}>
                         <li key={post._id}>
-                          <Link className={current_post_slug == post.slug ? 'selected_tab': ''} href={`${link_url}${post.slug}/`}>{Helper.decodeHtmlEntities(post.post_title)}</Link>
+                          <Link aria-label={Helper.decodeHtmlEntities(post.post_title)} className={current_post_slug == post.slug ? 'selected_tab': ''} href={`${link_url}${post.slug}/`}>{Helper.decodeHtmlEntities(post.post_title)}</Link>
                         </li>
                       </Fragment>
                     );

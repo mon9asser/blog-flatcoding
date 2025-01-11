@@ -25,7 +25,6 @@ export default function MyApp({ Component, pageProps  }) {
   useEffect(() => {
   if (typeof window !== 'undefined') {
     const handleLoad = () => {
-      console.log('>>> Window loaded');
       setAnalyticsRead(true);
     };
 

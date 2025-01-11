@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 export default function () {
 
     useEffect(() => {
-        console.log(Cookies.get(Helper.user_cookie));
+       // console.log(Cookies.get(Helper.user_cookie));
        // Cookies.get(Helper.user_cookie);
        // Cookies.remove(Helper.user_cookie);
 

@@ -13,6 +13,9 @@ class HelperData {
     return he.decode(text);  
   }
 
+  generateNextImageUrl = (imageUrl, width = 640, quality = 75) => {
+    return `/next/image/?url=${encodeURIComponent(imageUrl)}&w=${width}&q=${quality}`;
+  };
 
   encodetmlEntities(text) {
    

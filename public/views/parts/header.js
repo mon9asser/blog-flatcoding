@@ -107,7 +107,7 @@ export default function Header({settings, menus}) {
                         <div className="flexbox items-center content-center site-logo-container">
                             {
                                 settings != null && settings.site_logo != ""?
-                                <Link aria-label='FlatCoding.com' className="site-logo" href={site_url}><Image src={settings.site_logo} alt="Logo Site" width="384" height="95" layout="intrinsic"/></Link>
+                                <Link aria-label='FlatCoding.com' className="site-logo" href={site_url}><Image src={settings.site_logo} alt="Logo Site" width="384" height="95" style={{ objectFit: 'contain' }}/></Link>
                                 : ""
                             }
                         </div>
@@ -152,7 +152,9 @@ export default function Header({settings, menus}) {
                                     alt={settings.site_name}
                                     width="135" 
                                     height="36"
-                                    src={settings?.site_logo}  
+                                    src={settings?.site_logo}
+                                    decoding="async"
+                                    priority={true}
                                 /> 
                             </Link>: ""
                         }
