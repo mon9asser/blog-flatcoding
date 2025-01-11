@@ -30,7 +30,7 @@ export default function Post ({upcoming, adsReady}) {
         return <ServerOffline/>
     }
 
-    console.log(upcoming.post)
+    console.log(upcoming)
      
     var image = ''
 

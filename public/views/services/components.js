@@ -1500,8 +1500,8 @@ var ArticleSidebar = ({type, data, site_url, tutorial_slug, current_post_slug, t
                       ) : (
                         <li>
                           <ul className="block-list custom-aside-tuts list-items">
-                            {chapter.posts.map(x => (
-                              <li key={x._id}>
+                            {chapter.posts.map((x, index) => (
+                              <li key={`${x._id}-${index}` }>
                                 <Link aria-label={Helper.decodeHtmlEntities(x.post_title)} className={current_post_slug == x.slug ? 'selected_tab': ''} href={`${link_url}${x.slug}/`}>{Helper.decodeHtmlEntities(x.post_title)}</Link>
                               </li>
                             ))}
@@ -1532,8 +1532,8 @@ var ArticleSidebar = ({type, data, site_url, tutorial_slug, current_post_slug, t
             elem_list++;
 
           return  (
-            <Fragment key={index} >
-              <ul className="block-list custom-aside-tuts list-items">
+            <Fragment key={x._id} >
+              <ul key={`post-${x._id}-${index}`} className="block-list custom-aside-tuts list-items">
                 {
                   x.map(post => {
 
