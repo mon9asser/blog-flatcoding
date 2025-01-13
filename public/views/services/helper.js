@@ -216,7 +216,23 @@ class HelperData {
     return staticData;
   };
   
+    sendWPRequest = async ({ api, method, data }) => {
 
+      const options = {
+          method: method.toUpperCase(),
+          headers: {
+              'Content-Type': 'application/json',
+          },
+      };
+
+      if (method === 'post' || method === 'put') {
+          options.body = JSON.stringify(data);
+      }
+
+      var url = `${Config.wp_api}/${api}`;
+
+      return fetch(url, options);
+  }
   sendRequest = async ({api, method, data, headers }) => {
 
     if( headers === undefined ) {

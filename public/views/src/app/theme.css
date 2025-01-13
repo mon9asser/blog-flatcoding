@@ -4984,7 +4984,8 @@ ul li a.expanded-a::after {
     gap: 20;
 }
 
-.center-icons h5 {
+.center-icons h5,
+.center-icons h3 {
     font-size: 16px !important;
     display: block;
     width: 100%;

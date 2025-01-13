@@ -23,9 +23,7 @@ import parse from 'html-react-parser'
 import Head from "next/head"; 
  
 export default function Post ({upcoming, adsReady}) {
-    
-    
-    
+     
     if(!upcoming) {
         return <ServerOffline/>
     }
