@@ -43,6 +43,11 @@ export async function getServerSideProps(context) {
                 api: "wp-json/wp/v2/posts?per_page=6",
                 method: "get",
                 data: {}
+            }),
+            Helper.sendWPRequest({
+                api: "wp-json/wp/v2/settings",
+                method: "get",
+                data: {}
             })
         ];
 
@@ -52,7 +57,7 @@ export async function getServerSideProps(context) {
         // Parse JSON from each response
         const data = await Promise.all(responses.map(response => response.json()));
 
-        // site url 
+        // 1- Site Settings  
         var settings = data[0].settings.length?data[0].settings[0]: {};
         if(settings.site_address) {
             var convertToArray = settings.site_address.split('/');
@@ -60,19 +65,83 @@ export async function getServerSideProps(context) {
                 settings.site_address = `${settings.site_address}/`;
             }
         }
+
+        // 2- Blog Settings
+        var blogsettings = data[4];
+        var { 
+            url,
+            use_smilies,
+            timezone,
+            time_format,
+            start_of_week,
+            site_icon,
+            site_logo,
+            show_on_front,
+            page_on_front,
+            page_for_posts,
+            description,
+            language,email,default_post_format, default_ping_status,default_category,date_format,
+            ...blog_settings} = blogsettings;
+
+
+        var meta_title = blog_settings.title + ': ' + blog_settings.homepage_title;
         
-        var meta_title = settings.meta_title + ' ' + settings.beside_post_title;
         
         // prepare lists from menu  data:data[0].menus
-       // var nav_left = json.menus?.filter( x=> x.menu_name === "main_menu")
-        //var nav_right = json.menus?.filter( x=> x.menu_name === 'main_nav_right');
-       // var company_links = json.menus?.filter( x=> x.menu_name === "company_nav_links")
-        //var follow_links = json.menus?.filter( x=> x.menu_name === 'follow_nav_links');
-        //var nav_links = json.menus?.filter( x=> x.menu_name === 'tags_nav_links');
-         
+        var nav_left = data[0].menus?.filter( x=> x.menu_name === "main_menu")
+        var nav_right = data[0].menus?.filter( x=> x.menu_name === 'main_nav_right');
+        var company_links = data[0].menus?.filter( x=> x.menu_name === "company_nav_links")
+        var follow_links = data[0].menus?.filter( x=> x.menu_name === 'follow_nav_links');
+        var nav_links = data[0].menus?.filter( x=> x.menu_name === 'tags_nav_links');
+        
+        // popular posts
+        var popular_posts = data[1].map(x => {
+            
+            x.post_content = x.content.rendered;
+            x.link = `${settings.site_address}blog/${x.slug}/`;
+
+            delete x.guid;
+            delete x.meta; 
+            delete x.class_list;
+            delete x.content; 
+
+            
+            return x; 
+        }); 
+
+        var upcoming = {
+            
+            // settings
+            meta_title,
+            meta_description: description,
+            default_comment_status: blog_settings.default_comment_status,
+            posts_per_page: blog_settings.posts_per_page,
+            title: blog_settings.title,
+            site_logo: settings.site_logo,
+            site_url: settings.site_address,
+            google_analytics: settings.google_analytics,
+            share_social_buttons: settings.share_social_buttons,
+            subscribe_description:settings.subscribe_description,
+            subscribe_title:settings.subscribe_title,
+
+            // menus 
+            menus: {
+                nav_left,
+                nav_right,
+                company_links,
+                follow_links,
+                nav_links
+            }, 
+
+            // Popular Posts
+            popular_posts,
+
+            data: data[1]
+        };
+
 
         return {
-            props: { upcoming: {data: settings}} 
+            props: { upcoming } 
         };
 
     } catch (error) {

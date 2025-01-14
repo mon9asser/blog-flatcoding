@@ -222,6 +222,7 @@ class HelperData {
           method: method.toUpperCase(),
           headers: {
               'Content-Type': 'application/json',
+              'Authorization': 'Basic ' + btoa('montasser:V5jb 1rcY wXnS ipRE cAtn w4Fw'),
           },
       };
 
@@ -233,6 +234,7 @@ class HelperData {
 
       return fetch(url, options);
   }
+  
   sendRequest = async ({api, method, data, headers }) => {
 
     if( headers === undefined ) {
