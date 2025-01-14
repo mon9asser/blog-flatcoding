@@ -99,15 +99,29 @@ export async function getServerSideProps(context) {
             
             x.post_content = x.content.rendered;
             x.link = `${settings.site_address}blog/${x.slug}/`;
-
-            delete x.guid;
-            delete x.meta; 
-            delete x.class_list;
-            delete x.content; 
-
+            x.title = x.title.rendered;
             
-            return x; 
+            
+            return {
+                link: x.link,
+                author: x.author,
+                categories: x.categories,
+                excerpt: x.excerpt.rendered,
+                pageviews: x.pageviews,
+                title: x.title
+            }; 
         }); 
+
+        // tags 
+        var tags = data[2].map(x => {
+            x.link = `${settings.site_address}blog/tags/${x.slug}/`;
+            
+            return {
+                id: x.id, 
+                name: x.name, 
+                link: x.link 
+            };
+        })
 
         var upcoming = {
             
@@ -135,8 +149,11 @@ export async function getServerSideProps(context) {
 
             // Popular Posts
             popular_posts,
+            
+            // tags 
+            tags, 
 
-            data: data[1]
+            data: data[2]
         };
 
 
