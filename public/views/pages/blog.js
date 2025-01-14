@@ -30,7 +30,7 @@ export async function getServerSideProps(context) {
                 data: {}
             }),
             Helper.sendWPRequest({
-                api: "wp-json/wordpress-popular-posts/v1/popular-posts?range=last7days",
+                api: "/wp-json/custom/v1/popular-posts", // "wp-json/wordpress-popular-posts/v1/popular-posts?range=last7days",
                 method: "get",
                 data: {}
             }),
@@ -95,27 +95,11 @@ export async function getServerSideProps(context) {
         var nav_links = data[0].menus?.filter( x=> x.menu_name === 'tags_nav_links');
         
         // popular posts
-        var popular_posts = data[1].map(x => {
-            
-            x.post_content = x.content.rendered;
-            x.link = `${settings.site_address}blog/${x.slug}/`;
-            x.title = x.title.rendered;
-            
-            
-            return {
-                link: x.link,
-                author: x.author,
-                categories: x.categories,
-                excerpt: x.excerpt.rendered,
-                pageviews: x.pageviews,
-                title: x.title
-            }; 
-        }); 
+        var popular_posts = data[1];
 
         // tags 
         var tags = data[2].map(x => {
-            x.link = `${settings.site_address}blog/tags/${x.slug}/`;
-            
+            x.link = `${settings.site_address}blog/tag/${x.slug}/`;
             return {
                 id: x.id, 
                 name: x.name, 
