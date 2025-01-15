@@ -30,7 +30,7 @@ export async function getServerSideProps(context) {
                 data: {}
             }),
             Helper.sendWPRequest({
-                api: "/wp-json/custom/v1/popular-posts", // "wp-json/wordpress-popular-posts/v1/popular-posts?range=last7days",
+                api: "wp-json/custom/v1/popular-posts", // "wp-json/wordpress-popular-posts/v1/popular-posts?range=last7days",
                 method: "get",
                 data: {}
             }),
@@ -40,7 +40,7 @@ export async function getServerSideProps(context) {
                 data: {}
             }),
             Helper.sendWPRequest({
-                api: "wp-json/wp/v2/posts?per_page=6",
+                api: "wp-json/custom/v1/latest-posts?page_number=1",
                 method: "get",
                 data: {}
             }),
@@ -48,7 +48,12 @@ export async function getServerSideProps(context) {
                 api: "wp-json/wp/v2/settings",
                 method: "get",
                 data: {}
-            })
+            }),
+            Helper.sendWPRequest({
+                api: "wp-json/wp/v2/categories",
+                method: "get",
+                data: {}
+            }),
         ];
 
         // Wait for all requests to resolve
@@ -96,6 +101,9 @@ export async function getServerSideProps(context) {
         
         // popular posts
         var popular_posts = data[1];
+        
+        // latest posts 
+        var latest_posts = data[3];
 
         // tags 
         var tags = data[2].map(x => {
@@ -105,11 +113,21 @@ export async function getServerSideProps(context) {
                 name: x.name, 
                 link: x.link 
             };
-        })
+        });
+
+        // categories
+        var categories = data[5].map(x => {
+            x.link = `${settings.site_address}blog/category/${x.slug}/`;
+            return {
+                id: x.id, 
+                name: x.name, 
+                link: x.link 
+            };
+        });
 
         var upcoming = {
             
-            // settings
+            // Settings
             meta_title,
             meta_description: description,
             default_comment_status: blog_settings.default_comment_status,
@@ -122,7 +140,7 @@ export async function getServerSideProps(context) {
             subscribe_description:settings.subscribe_description,
             subscribe_title:settings.subscribe_title,
 
-            // menus 
+            // Menus 
             menus: {
                 nav_left,
                 nav_right,
@@ -134,10 +152,14 @@ export async function getServerSideProps(context) {
             // Popular Posts
             popular_posts,
             
-            // tags 
+            // Tags 
             tags, 
 
-            data: data[2]
+            // Categories
+            categories, 
+
+            // Latest posts 
+            latest_posts
         };
 
 
