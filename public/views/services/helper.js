@@ -217,15 +217,17 @@ class HelperData {
   };
   
     sendWPRequest = async ({ api, method, data }) => {
-
+      
       const options = {
           method: method.toUpperCase(),
           headers: {
               'Content-Type': 'application/json',
               'Authorization': 'Basic ' + btoa('montasser:V5jb 1rcY wXnS ipRE cAtn w4Fw'),
-          },
+              'X-API-Key-Public': Config.wp_keys.public,
+              'X-API-Key-Secret': Config.wp_keys.secret
+            },
       };
-
+      
       if (method === 'post' || method === 'put') {
           options.body = JSON.stringify(data);
       }

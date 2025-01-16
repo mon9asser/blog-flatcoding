@@ -54,6 +54,11 @@ export async function getServerSideProps(context) {
                 method: "get",
                 data: {}
             }),
+            Helper.sendWPRequest({
+                api: "wp-json/custom/v1/author?slug=montasser",
+                method: "get",
+                data: {}
+            }),
         ];
 
         // Wait for all requests to resolve
@@ -104,7 +109,10 @@ export async function getServerSideProps(context) {
         
         // latest posts 
         var latest_posts = data[3];
-
+        
+        // Author data
+        var author_data = data[6];
+        
         // tags 
         var tags = data[2].map(x => {
             x.link = `${settings.site_address}blog/tag/${x.slug}/`;
@@ -159,7 +167,10 @@ export async function getServerSideProps(context) {
             categories, 
 
             // Latest posts 
-            latest_posts
+            latest_posts,
+
+            // Author data
+            author_data
         };
 
 
