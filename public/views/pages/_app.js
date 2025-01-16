@@ -15,6 +15,10 @@ export default function MyApp({ Component, pageProps  }) {
  
  
   var settings = (pageProps.upcoming == undefined || pageProps == undefined) ? null: pageProps.upcoming.settings; 
+  if(settings == undefined) {
+    settings = pageProps.upcoming; 
+  }
+
   var [adsReady, setAdsReady] = useState(false);
   var [analyticsRead, setAnalyticsRead] = useState(false);
   var [analyticsLoaded, setAnalyticsLoaded] = useState(false);

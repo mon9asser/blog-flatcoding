@@ -16,7 +16,83 @@ import {
 
 export default function Blog({upcoming}) {
     console.log(upcoming);
-    return <b>Blog Page</b>;
+    
+    var header_content = parse(upcoming.header);
+    var footer_content = parse(upcoming.footer);
+    var jsonLdContent = JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": `${upcoming.site_url}blog/`
+        },
+        "headline": upcoming.meta_title,
+        "description": upcoming.meta_description,
+    
+        "author": {
+            "@type": "Person",
+            "name": "Montasser Mossallem" // Replace with the author name
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": upcoming.title, // Replace with the publisher name
+            "logo": {
+                "@type": "ImageObject",
+                "url": upcoming.site_logo // Ensure this is a valid URL to your site's logo
+            }
+        } 
+    });
+
+    return <>
+        <Head>
+            <title>{upcoming.meta_title}</title>
+            <meta name="description" content={upcoming.meta_description} />            
+            <link rel="canonical" href={`${upcoming.site_url}blog/`}/>
+            <meta property="og:locale" content="en_US"/>
+            <meta property="og:type" content="website"/>
+            <meta property="og:title" content={upcoming.meta_title}/>
+            <meta property="og:description" content={upcoming.meta_description}/>
+            <meta property="og:url" content={`${upcoming.site_url}blog/`}/>
+            <meta property="og:site_name" content={upcoming.title}/>  
+            <meta name="twitter:card" content="summary_large_image"/>  
+            <script
+                type="application/ld+json" 
+                dangerouslySetInnerHTML={{ __html: jsonLdContent }}
+            />
+            {header_content}  
+        </Head>
+
+        <Header 
+            settings={{
+                site_address: upcoming.site_url,
+                site_logo: upcoming.site_logo,
+                site_name: upcoming.title
+            }}
+            menus={{
+                nav_left: upcoming.menus.nav_left, 
+                nav_right: upcoming.menus.nav_right
+            }}
+        />
+        <h1>Hello this is a new headline</h1>
+        <Footer 
+            settings={{
+                site_address: upcoming.site_url,
+                site_logo: upcoming.site_logo,
+                site_name: upcoming.title,
+
+                subscribe_title: upcoming.subscribe_title,
+                subscribe_description: upcoming.subscribe_description,
+
+            }}
+            menus={{
+                company_links: upcoming.menus.company_links,
+                follow_links: upcoming.menus.follow_links,
+                nav_links: upcoming.menus.nav_links, 
+            }}
+        />
+
+        {footer_content}
+    </>
 }
 
 
@@ -136,10 +212,12 @@ export async function getServerSideProps(context) {
             site_logo: settings.site_logo,
             site_url: settings.site_address,
             google_analytics: settings.google_analytics,
+            google_ads: settings.google_ads,
             share_social_buttons: settings.share_social_buttons,
             subscribe_description:settings.subscribe_description,
             subscribe_title:settings.subscribe_title,
-
+            header: settings.header,
+            footer: settings.footer, 
             // Menus 
             menus: {
                 nav_left,
