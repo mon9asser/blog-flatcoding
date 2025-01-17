@@ -1,6 +1,10 @@
 
 
-import "@/app/theme.css";
+
+// import style from "@/app/styles.module.css";
+// import "@/app/theme.css";
+
+import style from "@/app/styles.module.css";
 import Head from "next/head";
 import Image from "next/image";
 import parse from 'html-react-parser' 
@@ -12,6 +16,7 @@ import Script from "next/script";
 import { 
     TutorialsContent
 } from "./../services/components"; 
+import Link from "next/link";
 
 
 export default function Blog({upcoming}) {
@@ -73,7 +78,35 @@ export default function Blog({upcoming}) {
                 nav_right: upcoming.menus.nav_right
             }}
         />
-        <h1>Hello this is a new headline</h1>
+        
+        <div className={`${style.wrapper} ${style['white-bg']} ${style['plr-0']}`}>
+            <div className={`${style.wrapper} ${style['offset-left']} ${style['offset-right']} ${style['plr-15']} ${style['max-1170']} ${style['ptb-25']}`}>
+                <div className={`${style.row} ${style['mlr--15']}`}>
+                    <div className={`${style['lg-8']} ${style['md-8']} ${style['sm-12']} ${style['plr-15']} ${style['ptb-15']}`}>
+                        <div className={style.blog_post_wrap}>
+                            <div className={style['entry-header']}>
+                                <h2 className={style['entry-title']}>
+                                    <Link href={'#'}>dsdasdasd</Link>
+                                </h2>
+                                <div className={style['entry-meta']}>Meta entry</div>
+                            </div>
+                            <div className={style['entry-content']}>
+                                <Link href={'#'} className={style['entry-image-wrap']}>
+                                    <span>IMAGE BG</span>
+                                </Link>
+                                <p className={style['entry-excerpt excerpt']}>
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book…
+                                </p>
+                            </div>
+                        </div> 
+                    </div>
+                    <div className={`${style['lg-4']} ${style['md-4']} ${style['sm-12']} ${style['plr-15']} ${style['ptb-15']}`}>
+                        Sidebar Right
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <Footer 
             settings={{
                 site_address: upcoming.site_url,
