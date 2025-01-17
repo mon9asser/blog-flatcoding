@@ -456,7 +456,9 @@ html, body {
     width: 100%; 
 }
 
-
+svg.fa-facebook-f {
+    width: 10px !important;
+}
 ins[data-ad-status="unfilled"] {
     display: none !important;
 }

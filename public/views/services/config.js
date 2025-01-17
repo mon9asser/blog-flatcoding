@@ -1,3 +1,29 @@
+import {
+    faFacebookF,
+    faTwitter,
+    faInstagram,
+    faLinkedinIn,
+    faYoutube,
+    faPinterest,
+    faReddit,
+    faTelegram,
+    faWhatsapp,
+    faTiktok,
+    faSnapchat,
+    faWeibo,
+    faTumblr,
+    faDribbble,
+    faBehance,
+    faFlickr,
+    faVimeoV,
+    faQuora,
+    faMediumM,
+    faDiscord,
+    faGithub,
+    faStackOverflow 
+} from '@fortawesome/free-brands-svg-icons';
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+
 var Config = {
 
     app_key: 'qwe#r$s%s&d*r!w*e((f))d-f`werh14445`4rt5`4ert5`4rt31645k132v132',
@@ -12,6 +38,32 @@ var Config = {
     captcha: {
         public: '6LefOUopAAAAAERp42vXnixQ6WAUcq7VAnyHjwlt',
         secret:'6LefOUopAAAAAKDP80U5BQ8v-U10T_H2IF0WCZ9P'
+    },
+
+    icons: { 
+        facebook: faFacebookF,
+        twitter: faTwitter,
+        instagram: faInstagram,
+        linkedin: faLinkedinIn,
+        youtube: faYoutube,
+        pinterest: faPinterest,
+        reddit: faReddit,
+        telegram: faTelegram,
+        whatsapp: faWhatsapp,
+        tiktok: faTiktok,
+        snapchat: faSnapchat,
+        weibo: faWeibo,
+        tumblr: faTumblr,
+        dribbble: faDribbble,
+        behance: faBehance,
+        flickr: faFlickr,
+        vimeo: faVimeoV,
+        quora: faQuora,
+        medium: faMediumM,
+        discord: faDiscord,
+        github: faGithub,
+        stackoverflow: faStackOverflow ,
+        email: faEnvelope
     }
     
 } 
