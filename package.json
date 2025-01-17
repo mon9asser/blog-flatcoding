@@ -40,6 +40,8 @@
     "node-addon-api": "^8.1.0",
     "node-cron": "^3.0.3",
     "node-gyp": "^10.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-notifications": "^1.7.4",
     "redis": "^4.6.14",
     "sharp": "^0.33.5",

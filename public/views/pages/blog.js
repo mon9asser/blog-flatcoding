@@ -79,29 +79,54 @@ export default function Blog({upcoming}) {
             }}
         />
         
-        <div className={`${style.wrapper} ${style['white-bg']} ${style['plr-0']}`}>
+        <div className={`${style.wrapper} ${style['smken-bg']} ${style['plr-0']}`}>
             <div className={`${style.wrapper} ${style['offset-left']} ${style['offset-right']} ${style['plr-15']} ${style['max-1170']} ${style['ptb-25']}`}>
                 <div className={`${style.row} ${style['mlr--15']}`}>
                     <div className={`${style['lg-8']} ${style['md-8']} ${style['sm-12']} ${style['plr-15']} ${style['ptb-15']}`}>
-                        <div className={style.blog_post_wrap}>
-                            <div className={style['entry-header']}>
-                                <h2 className={style['entry-title']}>
-                                    <Link href={'#'}>dsdasdasd</Link>
-                                </h2>
-                                <div className={style['entry-meta']}>Meta entry</div>
-                            </div>
-                            <div className={style['entry-content']}>
-                                <Link href={'#'} className={style['entry-image-wrap']}>
-                                    <span>IMAGE BG</span>
-                                </Link>
-                                <p className={style['entry-excerpt excerpt']}>
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book…
-                                </p>
+                        <div id='posts-wrap'>
+                            <div className={style.blog_post_wrap}>
+                                <div className={style['entry-header']}>
+                                    <h2 className={style['entry-title']}>
+                                        <Link href={'#'}>Google Correlate: The Best SEO Research Tool You Aren’t Using</Link>
+                                    </h2>
+                                    <div className={style['entry-meta']}>
+                                        <span className={`${style['entry-author']} ${style.mi}`}>
+                                            <span className={`${style['by']} ${style['sp']}`}>by</span>
+                                            <a className={`${style['author-name']}`}>John Doe</a>
+                                        </span>
+                                        <span className={style["entry-time mi"]}>
+                                            <span className={style["sp"]}>•</span>
+                                            <time className={style["published"]} dateTime="2021-07-12T18:44:00Z">July 12, 2021</time>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className={style['entry-content']}>
+                                    <Link href={'#'} className={style['entry-image-wrap']}>
+                                        <span className={style['entry-thumbnail']}></span>
+                                    </Link>
+                                    <p className={`${style['entry-excerpt']}`}>
+                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.
+                                    </p>
+                                </div>
                             </div>
                         </div> 
+                        <a className={style.load_more}>Load More</a>
                     </div>
                     <div className={`${style['lg-4']} ${style['md-4']} ${style['sm-12']} ${style['plr-15']} ${style['ptb-15']}`}>
-                        Sidebar Right
+                        <div className={style.widget}>
+                            <div className={`${style['widget-title']} ${style['title-wrap']}`}>
+                                <h3 className={style.title}>Follow Us</h3>
+                            </div>
+                            <div className={style['widget-content']}>
+                                <ul className={`${style['social-icons']} ${style['social-bg']}`}>
+                                    <li className={style['facebook']}>
+                                        <Link href={'#'}>
+                                            <span>Facebook</span>
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

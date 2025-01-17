@@ -5247,9 +5247,10 @@ img.half, div.feature-block svg, .feature-block {
 }
 
 .blog_post_wrap {
-    padding: 00px 0px;
+    padding: 30px;
     background-color: #fff;
-   /* border: 1px solid #000; */
+    box-shadow: 0 0 10px rgba(0,0,0,0.03);
+    /*border: 1px solid #eee;*/
     border-radius: 10px;
     margin-bottom: 20px;
 }
@@ -5259,7 +5260,7 @@ img.half, div.feature-block svg, .feature-block {
     display: block;
     font-size: 28px;
     color: #111111;
-    font-weight: 700;
+    font-weight: 500;
     line-height: 1.3em;
 }
 
@@ -5278,4 +5279,224 @@ img.half, div.feature-block svg, .feature-block {
     width: 210px;
     height: 140px;
     margin: 0 20px 0 0;
+    flex-shrink: 0;
+    
+}
+
+.smken-bg {
+    background-color: #fafafa;
+}
+
+ 
+.entry-thumbnail {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    z-index: 1; 
+    transition: opacity .35s ease, filter 0s ease;
+    background-color: #dfdfdf;
+    border-radius: 5px;
+}
+
+.entry-excerpt {
+    flex: 1;
+    font-size: 15px;
+    color: #111;
+}
+
+.entry-meta {
+    display: flex;
+    font-size: 12px;
+    color: #595959;
+    font-weight: 400; 
+    flex-wrap: wrap;
+    font-size: 13px;
+    margin: 13px 0 0;
+}
+
+.entry-meta .mi, .entry-meta .sp {
+    margin: 0 4px 0 0;
+}
+.entry-meta .mi {
+    display: flex;
+}
+
+.entry-meta .mi, .entry-meta .sp {
+    margin: 0 4px 0 0;
+}
+
+.entry-meta .author-name {
+    color: #b93461;
+    font-weight: 600;
+}
+
+.entry-meta .author-name:hover {
+    color: #222;
+}
+.load_more {
+    background-color: #b9355e;
+    font-size: 14px;
+    padding: 10px 25px;
+    display: block;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    border-radius: 3px;
+    color: #fff;
+}
+ 
+.load_more:hover {
+    color: #fff;
+    opacity: 0.9;
+}
+
+.widget {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    padding: 20px;
+    margin: 0 0 25px;
+    border-radius: 5;
+    box-shadow: 0 0 10px rgba(0,0,0,0.03);
+}
+
+.title-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 0 20px;
+}
+ 
+.social-icons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 5px;
+    margin: 0;
+}
+
+.social-icons li {
+    display: block;
+    margin: 0;
+}
+
+.social-icons a {
+    display: flex;
+    height: 34px;
+    font-size: 16px;
+    color: #fff;
+    align-items: center;
+    font-weight: 400;
+    border-radius: 5px;
+}
+
+ .social-icons span {
+    font-size: 14px;
+    line-height: 1;
+    padding: 0 10px;
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.widget-title {
+    line-height: 1.0;
+    margin-bottom: 13px;
+}
+
+.widget-title h3 {
+    padding-bottom: 0;
+    margin-bottom:  0;
+}
+
+/* Facebook */
+.social-bg .facebook a, .social-bg .facebook-f a, .social-bg-hover .facebook a:hover, .social-bg-hover .facebook-f a:hover {
+    background-color: #3b5999;
+}
+
+/* Twitter */
+.social-bg .twitter a, .social-bg-hover .twitter a:hover {
+    background-color: #1da1f2;
+}
+
+/* Instagram */
+.social-bg .instagram a, .social-bg-hover .instagram a:hover {
+    background-color: #e4405f;
+}
+
+/* LinkedIn */
+.social-bg .linkedin a, .social-bg-hover .linkedin a:hover {
+    background-color: #0077b5;
+}
+
+/* YouTube */
+.social-bg .youtube a, .social-bg-hover .youtube a:hover {
+    background-color: #ff0000;
+}
+
+/* Pinterest */
+.social-bg .pinterest a, .social-bg-hover .pinterest a:hover {
+    background-color: #bd081c;
+}
+
+/* Snapchat */
+.social-bg .snapchat a, .social-bg-hover .snapchat a:hover {
+    background-color: #fffc00;
+}
+
+/* WhatsApp */
+.social-bg .whatsapp a, .social-bg-hover .whatsapp a:hover {
+    background-color: #25d366;
+}
+
+/* TikTok */
+.social-bg .tiktok a, .social-bg-hover .tiktok a:hover {
+    background-color: #010101;
+}
+
+/* GitHub */
+.social-bg .github a, .social-bg-hover .github a:hover {
+    background-color: #333333;
+}
+
+/* Reddit */
+.social-bg .reddit a, .social-bg-hover .reddit a:hover {
+    background-color: #ff4500;
+}
+
+/* Tumblr */
+.social-bg .tumblr a, .social-bg-hover .tumblr a:hover {
+    background-color: #35465c;
+}
+
+/* Dribbble */
+.social-bg .dribbble a, .social-bg-hover .dribbble a:hover {
+    background-color: #ea4c89;
+}
+
+/* Behance */
+.social-bg .behance a, .social-bg-hover .behance a:hover {
+    background-color: #1769ff;
+}
+
+/* Skype */
+.social-bg .skype a, .social-bg-hover .skype a:hover {
+    background-color: #00aff0;
+}
+
+/* Slack */
+.social-bg .slack a, .social-bg-hover .slack a:hover {
+    background-color: #4a154b;
+}
+
+/* Medium */
+.social-bg .medium a, .social-bg-hover .medium a:hover {
+    background-color: #00ab6c;
+}
+
+/* Stack Overflow */
+.social-bg .stackoverflow a, .social-bg-hover .stackoverflow a:hover {
+    background-color: #f48024;
 }
