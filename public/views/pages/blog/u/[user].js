@@ -20,8 +20,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Config from "../../../services/config";
 
 export default function Author({upcoming}) {
-     
     
+    console.log(upcoming);
+
     var header_content = parse(upcoming.header);
     var footer_content = parse(upcoming.footer);
     var jsonLdContent =  '';
@@ -59,11 +60,33 @@ export default function Author({upcoming}) {
         <div className={`${style.wrapper} ${style['smken-bg']} ${style['plr-0']}`}>
             
             <div className={`${style.wrapper} ${style['offset-left']} ${style['offset-right']} ${style['plr-15']} ${style['max-1170']} ${style['ptb-25']} ${style['pb-space-10']}`}>
-                <div className={`${style.widget} ${style.remove_spaces}`}>
-                    <h1>
-                        Montasser Mossallem
-                    </h1>
-                </div> 
+                <header className={`${style.widget} ${style.remove_spaces}`}>
+                    <div className={`${style["row"]}`} style={{ marginLeft: '-15px', marginRight: '-15px' }}>
+                            <div
+                                className={`${style["md-9"]} ${style["text-center"]} ${style["offset-left"]} ${style["offset-right"]} ${style["p-all-15"]} ${style["flexbox"]} ${style["content-center"]} ${style["column-direction"]} ${style["tutorial-header-block"]}`}
+                            >
+                                <span
+                                    className={`${style['entry-thumbnail']} ${style['pbt-lazy']} ${style['contributer-thumb']}`}
+                                    data-image="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w72-h72-p-k-no-nu/p9.jpg"
+                                    style={{
+                                        backgroundImage:
+                                            "url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w99-h66-p-k-no-nu/p9.jpg=w72-h72-p-k-no-nu)",
+                                    }}
+                                ></span>
+                                <h1 className={`${style["tutorial-headline"]}`}>Montasser Mossallem</h1>
+                                <div className={`${style["sub-title"]} ${style["user-analytics-data"]}`}>
+                                    <span>25 Articles</span>
+                                    <span>6 Comments</span>
+                                </div> 
+                                <div className={`${style["mt-20"]} ${style["content-elem"]}`}>
+                                    <p className={`${style["tutorial-description"]} ${style["no-spaces"]}`}>
+                                        This tutorial covers complete PHP basics to help you learn how to code
+                                        with PHP programming language.
+                                    </p>
+                                </div>
+                            </div>
+                    </div>
+                </header> 
             </div>
 
             <div className={`${style.wrapper} ${style['offset-left']} ${style['offset-right']} ${style['plr-15']} ${style['max-1170']} ${style['ptb-25']} ${style['pt-space-10']}`}>
@@ -353,7 +376,11 @@ export async function getServerSideProps(context) {
         
         // Author data
         var author_data = data[6];
-        
+        if(!author_data.is_error) {
+            if( author_data.data.url ) {
+                author_data.data.url = author_data.data.url.replace("https://authors.flatcoding.com/author/", `${settings.site_address}blog/u/`)
+            }
+        }
         // tags 
         var tags = data[2].map(x => {
             x.link = `${settings.site_address}blog/tag/${x.slug}/`;

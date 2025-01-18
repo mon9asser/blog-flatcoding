@@ -5322,6 +5322,7 @@ img.half, div.feature-block svg, .feature-block {
     flex-wrap: wrap;
     font-size: 13px;
     margin: 13px 0 0;
+    gap: 15px;
 }
 
 .entry-meta .mi, .entry-meta .sp {
@@ -5730,4 +5731,308 @@ img.half, div.feature-block svg, .feature-block {
 
 .pb-space-10 {
     padding-bottom: 10px !important;
+}
+
+.no-spaces {
+    margin: 0 !important;
+}
+
+.user-analytics-data {
+    display: flex;
+    gap: 15px;
+    text-align: center;
+    justify-content: center; 
+}
+
+.contributer-thumb { 
+    width: 100px;
+    height: 100px;
+    margin: 0px auto 20px auto;
+    border-radius: 50%;
+}
+
+.single--content {
+    display: block;
+}
+
+.single--content {
+    font-family: Arial, sans-serif; /* Set a default font for the content */
+    line-height: 1.6; /* Add line height for readability */
+    color: #333; /* Default text color */
+    padding: 20px 0 0 0; /* Add padding to the container */
+}
+
+/* Headings */
+.single--content h1,
+.single--content h2,
+.single--content h3,
+.single--content h4,
+.single--content h5,
+.single--content h6 {
+    color: #2c3e50; /* Heading color */
+    margin: 20px 0 10px; /* Space above and below */
+    font-weight: bold;
+}
+
+/* Paragraphs */
+.single--content p {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+/* Images */
+.single--content img {
+    max-width: 100%; /* Make images responsive */
+    height: auto; /* Maintain aspect ratio */
+    margin: 10px 0;
+    border-radius: 5px; /* Optional: Add rounded corners */
+}
+
+/* Lists */
+.single--content ul {
+    margin: 10px 0 10px 20px; /* Space and indentation for unordered lists */
+    list-style-type: disc;
+}
+
+.single--content ol {
+    margin: 10px 0 10px 20px; /* Space and indentation for ordered lists */
+    list-style-type: decimal;
+}
+
+.single--content li {
+    margin: 5px 0; /* Space between list items */
+}
+
+/* Blockquotes */
+.single--content blockquote {
+    font-style: italic;
+    color: #555;
+    border-left: 4px solid #2ecc71; /* Green left border */
+    padding: 10px 15px;
+    margin: 20px 0;
+    background: #f9f9f9;
+}
+
+/* Tables */
+.single--content table {
+    width: 100%; /* Make tables responsive */
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+    text-align: left;
+}
+
+.single--content table th,
+.single--content table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.single--content table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+/* Forms */
+.single--content form {
+    margin: 20px 0;
+}
+
+.single--content form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.single--content form input,
+.single--content form button {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.single--content form button {
+    background-color: #2ecc71;
+    color: #fff;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.single--content form button:hover {
+    background-color: #27ae60;
+}
+
+/* Code Blocks */
+.single--content pre {
+    background-color: #f4f4f4;
+    padding: 15px;
+    overflow-x: auto;
+    border-radius: 5px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.single--content code {
+    font-family: monospace;
+    color: #e74c3c;
+    background-color: #f9f9f9;
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+
+/* Embedded Videos */
+.single--content iframe {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 16/9;
+    margin: 20px 0;
+}
+
+/* Audio */
+.single--content audio {
+    width: 100%;
+    margin: 10px 0;
+}
+
+
+/* Comments Section */
+.comments-section {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: Arial, sans-serif;
+}
+
+.comments-section h2 {
+    font-size: 24px;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #2ecc71;
+    padding-bottom: 5px;
+}
+
+/* Single Comment Container */
+.comment {
+    padding: 15px;
+    margin: 15px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.comment.reply {
+    margin-left: 30px;
+    border-left: 3px solid #2ecc71;
+    padding-left: 15px;
+}
+
+/* Comment Header */
+.comment-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.comment-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+    border: 2px solid #ddd;
+    object-fit: cover;
+}
+
+.comment-meta {
+    font-size: 14px;
+    color: #555;
+}
+
+.comment-author {
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.comment-date {
+    display: block;
+    font-size: 12px;
+    color: #888;
+    margin-top: 2px;
+}
+
+/* Comment Body */
+.comment-body {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+/* Comment Actions */
+.comment-actions {
+    text-align: right;
+}
+
+.reply-btn {
+    font-size: 14px;
+    color: #2ecc71;
+    background: none;
+    border: 1px solid #2ecc71;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 3px;
+    transition: background-color 0.3s ease;
+}
+
+.reply-btn:hover {
+    background-color: #2ecc71;
+    color: #fff;
+}
+
+/* Nested Comments */
+.comment.reply {
+    background-color: #f4f4f4;
+    border-left: 3px solid #2ecc71;
+    margin-left: 20px;
+    padding-left: 20px;
+}
+
+/* Placeholder Avatar */
+.comment-avatar::after {
+    content: "";
+    background-color: #ccc;
+    display: block;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+    .comments-section {
+        padding: 15px;
+    }
+
+    .comment {
+        padding: 10px;
+    }
+
+    .comment-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .comment-avatar {
+        margin-bottom: 10px;
+    }
+
+    .reply-btn {
+        width: 100%;
+        text-align: center;
+    }
 }

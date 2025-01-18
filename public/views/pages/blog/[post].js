@@ -1,7 +1,7 @@
-
-
-import "@/app/theme.css";
+import style from "@/app/styles.module.css";
+import Link from "next/link";
 import Head from "next/head";
+import StickyBox from "react-sticky-box";
 import Image from "next/image";
 import parse from 'html-react-parser' 
 import { Helper } from "./../../services/helper";
@@ -14,11 +14,328 @@ import {
 } from "./../../services/components"; 
 
 
-export default function Post({upcoming}) {
-    console.log(upcoming);
-    return <b>Post or article Page</b>;
-}
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Config from "./../../services/config";
 
+export default function Tag({upcoming}) {
+    
+    console.log(upcoming);
+
+    var header_content = parse(upcoming.header);
+    var footer_content = parse(upcoming.footer);
+    var jsonLdContent =  '';
+
+    var color = [
+        '#d63031', '#6c5ce7', '#00b894', '#2d3436', '#182C61',
+        '#182C61', '#82589F', '#6D214F', '#6ab04c', '#e056fd',
+        '#30336b', '#0fb9b1', '#eb3b5a', '#778ca3', '#8854d0' 
+    ];
+    
+    const getRandomColor = () => {
+        var bg = color[Math.floor(Math.random() * color.length)];
+        return {
+            background: `${bg}`
+        };
+    };
+
+    return <>
+        <Head>
+             
+        </Head>
+
+        <Header 
+            settings={{
+                site_address: upcoming.site_url,
+                site_logo: upcoming.site_logo,
+                site_name: upcoming.title
+            }}
+            menus={{
+                nav_left: upcoming.menus.nav_left, 
+                nav_right: upcoming.menus.nav_right
+            }}
+        />
+        
+        <div className={`${style.wrapper} ${style['smken-bg']} ${style['plr-0']}`}>
+            
+            
+
+            <div className={`${style.wrapper} ${style['offset-left']} ${style['offset-right']} ${style['plr-15']} ${style['max-1170']} ${style['ptb-25']} ${style['pt-space-10']}`}>
+                <div className={`${style.row} ${style['mlr--15']}`}>
+                    <div className={`${style['lg-8']} ${style['md-8']} ${style['sm-12']} ${style['plr-15']} ${style['ptb-15']}`}>
+                         
+                        <div id='posts-wrap'> 
+                            <div className={style.blog_post_wrap}>
+                                
+
+                                <div className={style['entry-header']}>
+                                    <h1 className={`${style["tutorial-headline"]}`}>JavaScript</h1>    
+                                    <div className={style['entry-meta']}>
+                                        <ul className={`${style['entry-author']} ${style['category-label-meta']} ${style.mi}`}>
+                                            <li>
+                                                <Link style={getRandomColor()} href='#'>
+                                                    JavaScript
+                                                </Link>
+                                            </li>
+                                            <li>
+                                                <Link style={getRandomColor()} href='#'>
+                                                    PHP
+                                                </Link>
+                                            </li>
+                                        </ul>
+
+                                        <span className={`${style['entry-author']} ${style.mi}`}>
+                                            <span className={`${style['by']} ${style['sp']}`}>by</span>
+                                            <a className={`${style['author-name']}`}>John Doe</a>
+                                        </span>
+                                        <span className={style["entry-time mi"]}>
+                                            <span className={style["sp"]}>•</span>
+                                            <time className={style["published"]} dateTime="2021-07-12T18:44:00Z">July 12, 2021</time>
+                                        </span>
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div className={`${style['entry-content']} ${style['single--content']}`}> 
+                                      
+                                    <p>This is an example post content area. Here, you can share engaging articles, stories, and updates with your audience.</p>
+
+                                     
+                                    <img src="https://example.com/wp-content/uploads/sample-image.jpg" alt="Sample Image" />
+
+                                     
+                                    <h2>Key Features:</h2>
+                                    <ul>
+                                        <li>High-quality content</li>
+                                        <li>Engaging visuals</li>
+                                        <li>Responsive design</li>
+                                    </ul>
+
+                                    
+                                    <h2>Steps to Success:</h2>
+                                    <ol>
+                                        <li>Plan your content strategy</li>
+                                        <li>Create valuable posts</li>
+                                        <li>Engage with your readers</li>
+                                    </ol>
+
+                                    
+                                    <blockquote>
+                                        <p>"Content is king, but engagement is queen, and the lady rules the house!"</p>
+                                    </blockquote>
+
+                                     
+                                    <h2>Watch Our Introduction Video:</h2>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video" frameborder="0" allowfullscreen></iframe>
+
+                                    
+                                    <h2>Sample Code Snippet:</h2>
+                                    <pre><code>
+                                        ${`function greetUser() {
+                                            console.log("Hello, WordPress World!");
+                                        }`}
+                                    </code></pre>
+ 
+
+                                    
+                                    <h2>Comparison Table:</h2>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Feature</th>
+                                                <th>Free Plan</th>
+                                                <th>Pro Plan</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Storage</td>
+                                                <td>1 GB</td>
+                                                <td>10 GB</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Support</td>
+                                                <td>Email</td>
+                                                <td>Priority Email & Phone</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                            
+
+                                </div>
+                                
+                                <div className="comments-section">
+                                    <h2>Comments</h2> 
+                                    <div className="comment">
+                                        <div className="comment-header">
+                                            <img src="https://via.placeholder.com/50" alt="User Avatar" className="comment-avatar" />
+                                            <div className="comment-meta">
+                                                <span className="comment-author">John Doe</span>
+                                                <span className="comment-date">January 18, 2025</span>
+                                            </div>
+                                        </div>
+                                        <div className="comment-body">
+                                            <p>This is an example comment. It explains the user’s opinion or feedback regarding the post content.</p>
+                                        </div>
+                                        <div className="comment-actions">
+                                            <button className="reply-btn">Reply</button>
+                                        </div>
+ 
+                                        <div className="comment reply">
+                                            <div className="comment-header">
+                                                <img src="https://via.placeholder.com/50" alt="User Avatar" className="comment-avatar" />
+                                                <div className="comment-meta">
+                                                    <span className="comment-author">Jane Smith</span>
+                                                    <span className="comment-date">January 19, 2025</span>
+                                                </div>
+                                            </div>
+                                            <div className="comment-body">
+                                                <p>This is a reply to the previous comment.</p>
+                                            </div>
+                                            <div className="comment-actions">
+                                                <button className="reply-btn">Reply</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+ 
+                        </div> 
+                    </div>
+                    <div className={`${style['lg-4']} ${style['md-4']} ${style['sm-12']} ${style['plr-15']} ${style['ptb-15']}`}>
+                        <StickyBox offsetTop={85} offsetBottom={20}>
+                            <div className={style.widget}>
+                                <div className={`${style['widget-title']} ${style['title-wrap']}`}>
+                                    <h3 className={style.title}>Become a Contributor</h3>
+                                </div>
+                                <div className={style['widget-content']}>
+                                    <Link className={`${style.load_more} ${style.write_for_us}`} href={'#'}>Submit an Article</Link>
+                                </div>
+                            </div>
+
+                            <div className={style.widget}>
+                                <div className={`${style['widget-title']} ${style['title-wrap']}`}>
+                                    <h3 className={style.title}>Follow Us</h3>
+                                </div>
+                                <div className={style['widget-content']}>
+                                    <ul className={`${style['social-icons']} ${style['social-bg']}`}>
+                                        <li className={style['facebook']}>
+                                            <Link href={'#'}>
+                                                <FontAwesomeIcon className={style.icon_social_icon} icon={Config.icons['facebook']} />
+                                                <span>Facebook</span>
+                                            </Link>
+                                        </li>
+                                        <li className={style['email']}>
+                                            <Link href={'#'}>
+                                                <FontAwesomeIcon className={style.icon_social_icon} icon={Config.icons['email']} />
+                                                <span>Contact</span>
+                                            </Link>
+                                        </li> 
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div className={style.widget}>
+                                <div className={`${style['widget-title']} ${style['title-wrap']}`}>
+                                    <h3 className={style.title}>Popular Posts</h3>
+                                </div>
+                                <div className={style['widget-content']}>
+                                    <div className={`${style['default-items']} ${style.ds} ${style['item-0']}`}>
+                                        <a
+                                            className={`${style['entry-image-wrap']} ${style['is-image']}`}
+                                            href="https://starter-pbt.blogspot.com/2021/07/google-correlate-best-seo-research-tool.html"
+                                            title="Google Correlate: The Best SEO Research Tool You Aren’t Using"
+                                        >
+                                            <span
+                                                className={`${style['entry-image']} ${style['pbt-lazy']}`}
+                                                data-image="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w72-h72-p-k-no-nu/p9.jpg"
+                                                style={{
+                                                    backgroundImage:
+                                                        "url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w99-h66-p-k-no-nu/p9.jpg=w72-h72-p-k-no-nu)",
+                                                }}
+                                            ></span>
+                                        </a>
+                                        <div className={style['entry-header']}>
+                                            <h2 className={style['entry-title']}>
+                                                <a
+                                                    href="https://starter-pbt.blogspot.com/2021/07/google-correlate-best-seo-research-tool.html"
+                                                    title="Google Correlate: The Best SEO Research Tool You Aren’t Using"
+                                                >
+                                                    Google Correlate: The Best SEO Research Tool You Aren’t Using
+                                                </a>
+                                            </h2>
+                                            <div className={style['entry-meta']}>
+                                                <span className={style['entry-time']}>
+                                                    <time className={style.published} dateTime="2021-07-12T18:44:00Z">
+                                                        July 12, 2021
+                                                    </time>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                </div>
+
+                            </div>
+
+                            <div className={style.widget}>
+                                <div className={`${style['widget-title']} ${style['title-wrap']}`}>
+                                    <h3 className={style.title}>Categories</h3>
+                                </div>
+                                <div className={style['widget-content']}>
+                                    <div className={`${style['cloud-label']} ${style.ds} ${style['item-0']}`}>
+                                        <ul className={`${style['cloud-categories']}`}>
+                                            <li><Link className={`${style['label-name']}`} href="#">JavaScript</Link></li>
+                                            <li><Link className={`${style['label-name']}`} href="#">Fushion</Link></li>
+                                            <li><Link className={`${style['label-name']}`} href="#">PHP</Link></li>
+                                            <li><Link className={`${style['label-name']}`} href="#">C++</Link></li>
+                                            <li><Link className={`${style['label-name']}`} href="#">C Sharp</Link></li> 
+                                        </ul>
+                                    </div> 
+                                </div>
+                            </div>
+
+                            <div className={style.widget}>
+                                <div className={`${style['widget-title']} ${style['title-wrap']}`}>
+                                    <h3 className={style.title}>Tags</h3>
+                                </div>
+                                <div className={style['widget-content']}>
+                                    <div className={`${style['cloud-label']} ${style.ds} ${style['item-0']}`}>
+                                        <ul className={`${style['cloud-style']}`}>
+                                            <li><Link className={`${style['label-name']}`} href="#">JavaScript</Link></li>
+                                            <li><Link className={`${style['label-name']}`} href="#">Fushion</Link></li>
+                                            <li><Link className={`${style['label-name']}`} href="#">PHP</Link></li>
+                                            <li><Link className={`${style['label-name']}`} href="#">C++</Link></li>
+                                            <li><Link className={`${style['label-name']}`} href="#">C Sharp</Link></li> 
+                                        </ul>
+                                    </div> 
+                                </div>
+                            </div>
+                        </StickyBox>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <Footer 
+            settings={{
+                site_address: upcoming.site_url,
+                site_logo: upcoming.site_logo,
+                site_name: upcoming.title,
+
+                subscribe_title: upcoming.subscribe_title,
+                subscribe_description: upcoming.subscribe_description,
+
+            }}
+            menus={{
+                company_links: upcoming.menus.company_links,
+                follow_links: upcoming.menus.follow_links,
+                nav_links: upcoming.menus.nav_links, 
+            }}
+        />
+
+        {footer_content}
+    </>
+}
 
 export async function getServerSideProps(context) {
     try {
@@ -147,6 +464,10 @@ export async function getServerSideProps(context) {
             share_social_buttons: settings.share_social_buttons,
             subscribe_description:settings.subscribe_description,
             subscribe_title:settings.subscribe_title,
+
+            footer: settings.footer,
+            header: settings.header,
+            google_ads: settings.google_ads,
 
             // Menus 
             menus: {
