@@ -5256,6 +5256,32 @@ img.half, div.feature-block svg, .feature-block {
     margin-bottom: 20px;
 }
 
+.single--content > * {
+    font-size: 14px;
+}
+
+.blog_post_wrap h2 {
+    font-size: 20px;
+}
+
+.blog_post_wrap h3 {
+    font-size: 18px;
+}
+
+.blog_post_wrap h4 {
+    font-size: 16px;
+}
+
+.blog_post_wrap h5 {
+    font-size: 15px;
+}
+
+.blog_post_wrap h6 {
+    font-size: 14px;
+}
+
+
+
 .icon_social_icon {
     margin-left: 12px;
     margin-right: 12px;
@@ -5729,6 +5755,9 @@ img.half, div.feature-block svg, .feature-block {
     padding-top: 0px !important;
 }
 
+.paddingt-10 {
+    padding-top: 10px !important;
+}
 .pb-space-10 {
     padding-bottom: 10px !important;
 }
@@ -5759,8 +5788,9 @@ img.half, div.feature-block svg, .feature-block {
     font-family: Arial, sans-serif; /* Set a default font for the content */
     line-height: 1.6; /* Add line height for readability */
     color: #333; /* Default text color */
-    padding: 20px 0 0 0; /* Add padding to the container */
+   
 }
+ 
 
 /* Headings */
 .single--content h1,
@@ -5770,13 +5800,13 @@ img.half, div.feature-block svg, .feature-block {
 .single--content h5,
 .single--content h6 {
     color: #2c3e50; /* Heading color */
-    margin: 20px 0 10px; /* Space above and below */
+     
     font-weight: bold;
 }
 
 /* Paragraphs */
 .single--content p {
-    margin: 10px 0;
+     
     font-size: 16px;
 }
 
@@ -5784,40 +5814,38 @@ img.half, div.feature-block svg, .feature-block {
 .single--content img {
     max-width: 100%; /* Make images responsive */
     height: auto; /* Maintain aspect ratio */
-    margin: 10px 0;
+     
     border-radius: 5px; /* Optional: Add rounded corners */
 }
 
 /* Lists */
 .single--content ul {
-    margin: 10px 0 10px 20px; /* Space and indentation for unordered lists */
+     
     list-style-type: disc;
 }
 
 .single--content ol {
-    margin: 10px 0 10px 20px; /* Space and indentation for ordered lists */
+     
     list-style-type: decimal;
 }
 
 .single--content li {
-    margin: 5px 0; /* Space between list items */
+     
 }
 
 /* Blockquotes */
 .single--content blockquote {
     font-style: italic;
     color: #555;
-    border-left: 4px solid #2ecc71; /* Green left border */
-    padding: 10px 15px;
-    margin: 20px 0;
+    border-left: 4px solid #b7355f; /* Green left border */
+  
     background: #f9f9f9;
 }
 
 /* Tables */
 .single--content table {
     width: 100%; /* Make tables responsive */
-    border-collapse: collapse;
-    margin: 20px 0;
+    border-collapse: collapse; 
     font-size: 14px;
     text-align: left;
 }
@@ -5825,7 +5853,7 @@ img.half, div.feature-block svg, .feature-block {
 .single--content table th,
 .single--content table td {
     border: 1px solid #ddd;
-    padding: 8px;
+    padding: 5px;
 }
 
 .single--content table th {
@@ -5839,16 +5867,13 @@ img.half, div.feature-block svg, .feature-block {
 }
 
 .single--content form label {
-    display: block;
-    margin-bottom: 5px;
+    display: block; 
     font-weight: bold;
 }
 
 .single--content form input,
 .single--content form button {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
+    width: 100%; 
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 14px;
@@ -5866,9 +5891,10 @@ img.half, div.feature-block svg, .feature-block {
 }
 
 /* Code Blocks */
+/*
+
 .single--content pre {
-    background-color: #f4f4f4;
-    padding: 15px;
+    background-color: #f4f4f4; 
     overflow-x: auto;
     border-radius: 5px;
     font-size: 14px;
@@ -5878,9 +5904,15 @@ img.half, div.feature-block svg, .feature-block {
 .single--content code {
     font-family: monospace;
     color: #e74c3c;
-    background-color: #f9f9f9;
-    padding: 2px 4px;
+    background-color: #f9f9f9; 
     border-radius: 3px;
+}
+
+*/
+
+.article-share-box {
+    align-items: center;
+    justify-content: left;
 }
 
 /* Embedded Videos */
@@ -5888,151 +5920,104 @@ img.half, div.feature-block svg, .feature-block {
     width: 100%;
     max-width: 100%;
     height: auto;
-    aspect-ratio: 16/9;
-    margin: 20px 0;
+    aspect-ratio: 16/9; 
+}
+
+.list-tags {
+    margin-top: 30px !important; 
 }
 
 /* Audio */
 .single--content audio {
-    width: 100%;
-    margin: 10px 0;
+    width: 100%; 
+}
+
+.entry-labels {
+    display: flex;
+    flex-wrap: wrap; 
+}
+
+.entry-labels span {
+    color: #111111;
+    font-weight: 700;
+    margin-right: 8px;
+}
+
+.entry-labels span, .entry-labels a {
+    font-size: 14px;
+    color: #b9355e;
+    font-weight: 400; 
+}
+
+.entry-labels span {
+    color: #000;
+    font-weight: bold;
+}
+.entry-labels a:not(:last-child):after {
+    content: ',';
+    color: #595959;
+    margin-right: 5px;
+}
+
+.post-entry-meta {  
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.post-entry-meta .author {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+}
+.post-entry-meta .author span:first-child {
+     
+}
+.post-entry-meta .authot-thumb {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: inline-block;
+    border:3px solid #dfdfdf;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 
-/* Comments Section */
-.comments-section {
-    margin-top: 40px;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-family: Arial, sans-serif;
-}
-
-.comments-section h2 {
-    font-size: 24px;
-    color: #2c3e50;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #2ecc71;
-    padding-bottom: 5px;
-}
-
-/* Single Comment Container */
-.comment {
-    padding: 15px;
-    margin: 15px 0;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: #fff;
-}
-
-.comment.reply {
-    margin-left: 30px;
-    border-left: 3px solid #2ecc71;
+.single--content > ul,
+.single--content > ol { 
     padding-left: 15px;
 }
 
-/* Comment Header */
-.comment-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
+
+.single--content blockquote {
+    padding: 15px;
 }
 
-.comment-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 15px;
-    border: 2px solid #ddd;
-    object-fit: cover;
+.single--content table {
+    padding: 15px;
 }
 
-.comment-meta {
-    font-size: 14px;
-    color: #555;
+.single--content > p,
+.single--content > img,
+.single--content > figure,
+.single--content > iframe, 
+.single--content > table,
+.single--content > ul,
+.single--content > ol,
+.single--content > pre,
+.single--content > code {
+    margin-bottom: 15px;
 }
 
-.comment-author {
-    font-weight: bold;
-    color: #2c3e50;
-}
-
-.comment-date {
-    display: block;
-    font-size: 12px;
-    color: #888;
-    margin-top: 2px;
-}
-
-/* Comment Body */
-.comment-body {
-    font-size: 16px;
-    color: #333;
-    margin-bottom: 10px;
-    line-height: 1.6;
-}
-
-/* Comment Actions */
-.comment-actions {
-    text-align: right;
-}
-
-.reply-btn {
-    font-size: 14px;
-    color: #2ecc71;
-    background: none;
-    border: 1px solid #2ecc71;
-    cursor: pointer;
-    padding: 5px 10px;
-    border-radius: 3px;
-    transition: background-color 0.3s ease;
-}
-
-.reply-btn:hover {
-    background-color: #2ecc71;
-    color: #fff;
-}
-
-/* Nested Comments */
-.comment.reply {
-    background-color: #f4f4f4;
-    border-left: 3px solid #2ecc71;
-    margin-left: 20px;
-    padding-left: 20px;
-}
-
-/* Placeholder Avatar */
-.comment-avatar::after {
-    content: "";
-    background-color: #ccc;
-    display: block;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-}
-
-/* Responsive Styling */
-@media (max-width: 768px) {
-    .comments-section {
-        padding: 15px;
-    }
-
-    .comment {
-        padding: 10px;
-    }
-
-    .comment-header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .comment-avatar {
-        margin-bottom: 10px;
-    }
-
-    .reply-btn {
-        width: 100%;
-        text-align: center;
-    }
+.single--content > h2,
+.single--content > h3,
+.single--content > h4,
+.single--content > h5,
+.single--content > h6 {
+    margin-bottom: 3px;
+    margin-top: 15px;
 }

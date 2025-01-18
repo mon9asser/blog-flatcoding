@@ -10,24 +10,16 @@ const nextConfig = {
     productionBrowserSourceMaps: true, 
     trailingSlash: true,  
     images: {
-        remotePatterns: [
-          {
-              protocol: 'https',
-              hostname: 'media.flatcoding.com',
-          },
-          {
-            protocol: 'https',
-            hostname: 'media.flatcoding.com',
-          },
-          {
-            protocol: 'https',
-            hostname: 'cdn.pixabay.com'
-          },
-          {
-            protocol: 'https',
-            hostname: 'unsplash.com'
-          }
-        ],
+      remotePatterns: [
+        {
+          protocol: 'https',
+          hostname: '**', // Matches any hostname
+        },
+        {
+          protocol: 'http',
+          hostname: '**', // Matches any hostname
+        },
+      ],
     },  
     
     async rewrites() {

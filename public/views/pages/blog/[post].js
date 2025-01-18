@@ -13,6 +13,7 @@ import {
     TutorialsContent
 } from "./../../services/components"; 
 
+import { SocialShare } from "./../../services/components";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Config from "./../../services/config";
@@ -57,9 +58,7 @@ export default function Tag({upcoming}) {
         
         <div className={`${style.wrapper} ${style['smken-bg']} ${style['plr-0']}`}>
             
-            
-
-            <div className={`${style.wrapper} ${style['offset-left']} ${style['offset-right']} ${style['plr-15']} ${style['max-1170']} ${style['ptb-25']} ${style['pt-space-10']}`}>
+            <div className={`${style.wrapper} ${style['offset-left']} ${style['offset-right']} ${style['plr-15']} ${style['max-1170']} ${style['ptb-25']} ${style['paddingt-10']}`}>
                 <div className={`${style.row} ${style['mlr--15']}`}>
                     <div className={`${style['lg-8']} ${style['md-8']} ${style['sm-12']} ${style['plr-15']} ${style['ptb-15']}`}>
                          
@@ -68,41 +67,42 @@ export default function Tag({upcoming}) {
                                 
 
                                 <div className={style['entry-header']}>
-                                    <h1 className={`${style["tutorial-headline"]}`}>JavaScript</h1>    
-                                    <div className={style['entry-meta']}>
-                                        <ul className={`${style['entry-author']} ${style['category-label-meta']} ${style.mi}`}>
-                                            <li>
-                                                <Link style={getRandomColor()} href='#'>
-                                                    JavaScript
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link style={getRandomColor()} href='#'>
-                                                    PHP
-                                                </Link>
-                                            </li>
-                                        </ul>
+                                    <h1 className={`${style["tutorial-headline"]}`}>Google Correlate: The Best SEO Research Tool You Aren’t Using</h1>    
+                                    <div className={`${style['entry-meta']} ${style['post-entry-meta']}`}>
+                                        <Link href={'#'} className={style.author}>
+                            
+                                            <span
+                                                className={`${style['authot-thumb']} ${style['pbt-lazy']}`}
+                                                data-image="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w72-h72-p-k-no-nu/p9.jpg"
+                                                style={{
+                                                    backgroundImage:
+                                                        "url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w99-h66-p-k-no-nu/p9.jpg=w72-h72-p-k-no-nu)",
+                                                }}
+                                            ></span> 
+                                            <span>David Albert</span>
+                                        </Link>
 
-                                        <span className={`${style['entry-author']} ${style.mi}`}>
-                                            <span className={`${style['by']} ${style['sp']}`}>by</span>
-                                            <a className={`${style['author-name']}`}>John Doe</a>
-                                        </span>
                                         <span className={style["entry-time mi"]}>
                                             <span className={style["sp"]}>•</span>
                                             <time className={style["published"]} dateTime="2021-07-12T18:44:00Z">July 12, 2021</time>
                                         </span>
-                                        
                                     </div>
                                 </div>
                                 
                                 <div className={`${style['entry-content']} ${style['single--content']}`}> 
-                                      
+                                    
+                                    <Image
+                                        className={`half`} // half
+                                        alt={'Image Thumbnail'}
+                                        height={250}
+                                        src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w99-h66-p-k-no-nu/p9.jpg=w72-h72-p-k-no-nu" 
+                                        width={750}
+                                    />
+
                                     <p>This is an example post content area. Here, you can share engaging articles, stories, and updates with your audience.</p>
-
-                                     
-                                    <img src="https://example.com/wp-content/uploads/sample-image.jpg" alt="Sample Image" />
-
-                                     
+                                    <p>This is an example post content area. Here, you can share engaging articles, stories, and updates with your audience.</p>
+                                    <p>This is an example post content area. Here, you can share engaging articles, stories, and updates with your audience.</p>
+ 
                                     <h2>Key Features:</h2>
                                     <ul>
                                         <li>High-quality content</li>
@@ -162,40 +162,31 @@ export default function Tag({upcoming}) {
                                             
 
                                 </div>
-                                
-                                <div className="comments-section">
-                                    <h2>Comments</h2> 
-                                    <div className="comment">
-                                        <div className="comment-header">
-                                            <img src="https://via.placeholder.com/50" alt="User Avatar" className="comment-avatar" />
-                                            <div className="comment-meta">
-                                                <span className="comment-author">John Doe</span>
-                                                <span className="comment-date">January 18, 2025</span>
+                                <div className={`${style['entry-labels']} ${style['list-tags']}`}>
+                                    <span className={style["labels-label"]}>Tags:</span>
+                                    <a className={style["label-link"]} href="https://starter-pbt.blogspot.com/search/label/Content%20Marketing" rel="tag">Content Marketing</a>
+                                    <a className={style["label-link"]} href="https://starter-pbt.blogspot.com/search/label/Editor%27s%20Picks" rel="tag">Editor's Picks</a>
+                                    <a className={style["label-link"]} href="https://starter-pbt.blogspot.com/search/label/SEO%20News" rel="tag">SEO News</a>
+                                </div>
+
+                                <div className="wrapper max-800 text-center chapter-block-hlght box-vote-block"> 
+                                    {
+                                        upcoming?.share_social_buttons == '' ? ''
+                                        : 
+                                        <>
+                                            <div className={`${style['flexbox']} ${style['gap-15']} ${style['share-box']} ${style['article-share-box']}`}> 
+                                                <SocialShare   
+                                                    platforms={upcoming?.share_social_buttons} 
+                                                    url={`https://tutorials/tutorials/post/`}
+                                                    title={'Post Title'}
+                                                    size={32} 
+                                                    height={'32px'} 
+                                                    width={'32px'} 
+                                                    radius={true} 
+                                                />
                                             </div>
-                                        </div>
-                                        <div className="comment-body">
-                                            <p>This is an example comment. It explains the user’s opinion or feedback regarding the post content.</p>
-                                        </div>
-                                        <div className="comment-actions">
-                                            <button className="reply-btn">Reply</button>
-                                        </div>
- 
-                                        <div className="comment reply">
-                                            <div className="comment-header">
-                                                <img src="https://via.placeholder.com/50" alt="User Avatar" className="comment-avatar" />
-                                                <div className="comment-meta">
-                                                    <span className="comment-author">Jane Smith</span>
-                                                    <span className="comment-date">January 19, 2025</span>
-                                                </div>
-                                            </div>
-                                            <div className="comment-body">
-                                                <p>This is a reply to the previous comment.</p>
-                                            </div>
-                                            <div className="comment-actions">
-                                                <button className="reply-btn">Reply</button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                        </>
+                                    }
                                 </div>
                             </div>
 
