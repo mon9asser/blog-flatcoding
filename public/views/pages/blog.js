@@ -50,6 +50,21 @@ export default function Blog({upcoming}) {
         } 
     });
 
+
+    var color = [
+        '#d63031', '#6c5ce7', '#00b894', '#2d3436', '#182C61',
+        '#182C61', '#82589F', '#6D214F', '#6ab04c', '#e056fd',
+        '#30336b', '#0fb9b1', '#eb3b5a', '#778ca3', '#8854d0' 
+    ];
+    
+    const getRandomColor = () => {
+        var bg = color[Math.floor(Math.random() * color.length)];
+        return {
+            background: `${bg}`
+        };
+    };
+    //const getColorForIndex = (index) => color[index % color.length];
+
     return <>
         <Head>
             <title>{upcoming.meta_title}</title>
@@ -86,12 +101,26 @@ export default function Blog({upcoming}) {
                 <div className={`${style.row} ${style['mlr--15']}`}>
                     <div className={`${style['lg-8']} ${style['md-8']} ${style['sm-12']} ${style['plr-15']} ${style['ptb-15']}`}>
                         <div id='posts-wrap'>
+                            
                             <div className={style.blog_post_wrap}>
                                 <div className={style['entry-header']}>
                                     <h2 className={style['entry-title']}>
                                         <Link href={'#'}>Google Correlate: The Best SEO Research Tool You Aren’t Using</Link>
                                     </h2>
                                     <div className={style['entry-meta']}>
+                                        <ul className={`${style['entry-author']} ${style['category-label-meta']} ${style.mi}`}>
+                                            <li>
+                                                <Link style={getRandomColor()} href='#'>
+                                                    JavaScript
+                                                </Link>
+                                            </li>
+                                            <li>
+                                                <Link style={getRandomColor()} href='#'>
+                                                    PHP
+                                                </Link>
+                                            </li>
+                                        </ul>
+
                                         <span className={`${style['entry-author']} ${style.mi}`}>
                                             <span className={`${style['by']} ${style['sp']}`}>by</span>
                                             <a className={`${style['author-name']}`}>John Doe</a>
@@ -100,6 +129,7 @@ export default function Blog({upcoming}) {
                                             <span className={style["sp"]}>•</span>
                                             <time className={style["published"]} dateTime="2021-07-12T18:44:00Z">July 12, 2021</time>
                                         </span>
+                                        
                                     </div>
                                 </div>
                                 <div className={style['entry-content']}>
@@ -119,271 +149,12 @@ export default function Blog({upcoming}) {
                                 </div>
                             </div>
 
-                            <div className={style.blog_post_wrap}>
-                                <div className={style['entry-header']}>
-                                    <h2 className={style['entry-title']}>
-                                        <Link href={'#'}>Google Correlate: The Best SEO Research Tool You Aren’t Using</Link>
-                                    </h2>
-                                    <div className={style['entry-meta']}>
-                                        <span className={`${style['entry-author']} ${style.mi}`}>
-                                            <span className={`${style['by']} ${style['sp']}`}>by</span>
-                                            <a className={`${style['author-name']}`}>John Doe</a>
-                                        </span>
-                                        <span className={style["entry-time mi"]}>
-                                            <span className={style["sp"]}>•</span>
-                                            <time className={style["published"]} dateTime="2021-07-12T18:44:00Z">July 12, 2021</time>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className={style['entry-content']}>
-                                    <Link href={'#'} className={style['entry-image-wrap']}> 
-                                        <span
-                                            className={`${style['entry-thumbnail']} ${style['pbt-lazy']}`}
-                                            data-image="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w72-h72-p-k-no-nu/p9.jpg"
-                                            style={{
-                                                backgroundImage:
-                                                    "url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w99-h66-p-k-no-nu/p9.jpg=w72-h72-p-k-no-nu)",
-                                            }}
-                                        ></span>
-                                    </Link>
-                                    <p className={`${style['entry-excerpt']}`}>
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.
-                                    </p>
-                                </div>
-                            </div>
+ 
+                        </div>
 
-                            <div className={style.blog_post_wrap}>
-                                <div className={style['entry-header']}>
-                                    <h2 className={style['entry-title']}>
-                                        <Link href={'#'}>Google Correlate: The Best SEO Research Tool You Aren’t Using</Link>
-                                    </h2>
-                                    <div className={style['entry-meta']}>
-                                        <span className={`${style['entry-author']} ${style.mi}`}>
-                                            <span className={`${style['by']} ${style['sp']}`}>by</span>
-                                            <a className={`${style['author-name']}`}>John Doe</a>
-                                        </span>
-                                        <span className={style["entry-time mi"]}>
-                                            <span className={style["sp"]}>•</span>
-                                            <time className={style["published"]} dateTime="2021-07-12T18:44:00Z">July 12, 2021</time>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className={style['entry-content']}>
-                                    <Link href={'#'} className={style['entry-image-wrap']}> 
-                                        <span
-                                            className={`${style['entry-thumbnail']} ${style['pbt-lazy']}`}
-                                            data-image="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w72-h72-p-k-no-nu/p9.jpg"
-                                            style={{
-                                                backgroundImage:
-                                                    "url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w99-h66-p-k-no-nu/p9.jpg=w72-h72-p-k-no-nu)",
-                                            }}
-                                        ></span>
-                                    </Link>
-                                    <p className={`${style['entry-excerpt']}`}>
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div className={style.blog_post_wrap}>
-                                <div className={style['entry-header']}>
-                                    <h2 className={style['entry-title']}>
-                                        <Link href={'#'}>Google Correlate: The Best SEO Research Tool You Aren’t Using</Link>
-                                    </h2>
-                                    <div className={style['entry-meta']}>
-                                        <span className={`${style['entry-author']} ${style.mi}`}>
-                                            <span className={`${style['by']} ${style['sp']}`}>by</span>
-                                            <a className={`${style['author-name']}`}>John Doe</a>
-                                        </span>
-                                        <span className={style["entry-time mi"]}>
-                                            <span className={style["sp"]}>•</span>
-                                            <time className={style["published"]} dateTime="2021-07-12T18:44:00Z">July 12, 2021</time>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className={style['entry-content']}>
-                                    <Link href={'#'} className={style['entry-image-wrap']}> 
-                                        <span
-                                            className={`${style['entry-thumbnail']} ${style['pbt-lazy']}`}
-                                            data-image="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w72-h72-p-k-no-nu/p9.jpg"
-                                            style={{
-                                                backgroundImage:
-                                                    "url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w99-h66-p-k-no-nu/p9.jpg=w72-h72-p-k-no-nu)",
-                                            }}
-                                        ></span>
-                                    </Link>
-                                    <p className={`${style['entry-excerpt']}`}>
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div className={style.blog_post_wrap}>
-                                <div className={style['entry-header']}>
-                                    <h2 className={style['entry-title']}>
-                                        <Link href={'#'}>Google Correlate: The Best SEO Research Tool You Aren’t Using</Link>
-                                    </h2>
-                                    <div className={style['entry-meta']}>
-                                        <span className={`${style['entry-author']} ${style.mi}`}>
-                                            <span className={`${style['by']} ${style['sp']}`}>by</span>
-                                            <a className={`${style['author-name']}`}>John Doe</a>
-                                        </span>
-                                        <span className={style["entry-time mi"]}>
-                                            <span className={style["sp"]}>•</span>
-                                            <time className={style["published"]} dateTime="2021-07-12T18:44:00Z">July 12, 2021</time>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className={style['entry-content']}>
-                                    <Link href={'#'} className={style['entry-image-wrap']}> 
-                                        <span
-                                            className={`${style['entry-thumbnail']} ${style['pbt-lazy']}`}
-                                            data-image="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w72-h72-p-k-no-nu/p9.jpg"
-                                            style={{
-                                                backgroundImage:
-                                                    "url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w99-h66-p-k-no-nu/p9.jpg=w72-h72-p-k-no-nu)",
-                                            }}
-                                        ></span>
-                                    </Link>
-                                    <p className={`${style['entry-excerpt']}`}>
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div className={style.blog_post_wrap}>
-                                <div className={style['entry-header']}>
-                                    <h2 className={style['entry-title']}>
-                                        <Link href={'#'}>Google Correlate: The Best SEO Research Tool You Aren’t Using</Link>
-                                    </h2>
-                                    <div className={style['entry-meta']}>
-                                        <span className={`${style['entry-author']} ${style.mi}`}>
-                                            <span className={`${style['by']} ${style['sp']}`}>by</span>
-                                            <a className={`${style['author-name']}`}>John Doe</a>
-                                        </span>
-                                        <span className={style["entry-time mi"]}>
-                                            <span className={style["sp"]}>•</span>
-                                            <time className={style["published"]} dateTime="2021-07-12T18:44:00Z">July 12, 2021</time>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className={style['entry-content']}>
-                                    <Link href={'#'} className={style['entry-image-wrap']}> 
-                                        <span
-                                            className={`${style['entry-thumbnail']} ${style['pbt-lazy']}`}
-                                            data-image="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w72-h72-p-k-no-nu/p9.jpg"
-                                            style={{
-                                                backgroundImage:
-                                                    "url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w99-h66-p-k-no-nu/p9.jpg=w72-h72-p-k-no-nu)",
-                                            }}
-                                        ></span>
-                                    </Link>
-                                    <p className={`${style['entry-excerpt']}`}>
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div className={style.blog_post_wrap}>
-                                <div className={style['entry-header']}>
-                                    <h2 className={style['entry-title']}>
-                                        <Link href={'#'}>Google Correlate: The Best SEO Research Tool You Aren’t Using</Link>
-                                    </h2>
-                                    <div className={style['entry-meta']}>
-                                        <span className={`${style['entry-author']} ${style.mi}`}>
-                                            <span className={`${style['by']} ${style['sp']}`}>by</span>
-                                            <a className={`${style['author-name']}`}>John Doe</a>
-                                        </span>
-                                        <span className={style["entry-time mi"]}>
-                                            <span className={style["sp"]}>•</span>
-                                            <time className={style["published"]} dateTime="2021-07-12T18:44:00Z">July 12, 2021</time>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className={style['entry-content']}>
-                                    <Link href={'#'} className={style['entry-image-wrap']}> 
-                                        <span
-                                            className={`${style['entry-thumbnail']} ${style['pbt-lazy']}`}
-                                            data-image="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w72-h72-p-k-no-nu/p9.jpg"
-                                            style={{
-                                                backgroundImage:
-                                                    "url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w99-h66-p-k-no-nu/p9.jpg=w72-h72-p-k-no-nu)",
-                                            }}
-                                        ></span>
-                                    </Link>
-                                    <p className={`${style['entry-excerpt']}`}>
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div className={style.blog_post_wrap}>
-                                <div className={style['entry-header']}>
-                                    <h2 className={style['entry-title']}>
-                                        <Link href={'#'}>Google Correlate: The Best SEO Research Tool You Aren’t Using</Link>
-                                    </h2>
-                                    <div className={style['entry-meta']}>
-                                        <span className={`${style['entry-author']} ${style.mi}`}>
-                                            <span className={`${style['by']} ${style['sp']}`}>by</span>
-                                            <a className={`${style['author-name']}`}>John Doe</a>
-                                        </span>
-                                        <span className={style["entry-time mi"]}>
-                                            <span className={style["sp"]}>•</span>
-                                            <time className={style["published"]} dateTime="2021-07-12T18:44:00Z">July 12, 2021</time>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className={style['entry-content']}>
-                                    <Link href={'#'} className={style['entry-image-wrap']}> 
-                                        <span
-                                            className={`${style['entry-thumbnail']} ${style['pbt-lazy']}`}
-                                            data-image="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w72-h72-p-k-no-nu/p9.jpg"
-                                            style={{
-                                                backgroundImage:
-                                                    "url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w99-h66-p-k-no-nu/p9.jpg=w72-h72-p-k-no-nu)",
-                                            }}
-                                        ></span>
-                                    </Link>
-                                    <p className={`${style['entry-excerpt']}`}>
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div className={style.blog_post_wrap}>
-                                <div className={style['entry-header']}>
-                                    <h2 className={style['entry-title']}>
-                                        <Link href={'#'}>Google Correlate: The Best SEO Research Tool You Aren’t Using</Link>
-                                    </h2>
-                                    <div className={style['entry-meta']}>
-                                        <span className={`${style['entry-author']} ${style.mi}`}>
-                                            <span className={`${style['by']} ${style['sp']}`}>by</span>
-                                            <a className={`${style['author-name']}`}>John Doe</a>
-                                        </span>
-                                        <span className={style["entry-time mi"]}>
-                                            <span className={style["sp"]}>•</span>
-                                            <time className={style["published"]} dateTime="2021-07-12T18:44:00Z">July 12, 2021</time>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className={style['entry-content']}>
-                                    <Link href={'#'} className={style['entry-image-wrap']}> 
-                                        <span
-                                            className={`${style['entry-thumbnail']} ${style['pbt-lazy']}`}
-                                            data-image="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w72-h72-p-k-no-nu/p9.jpg"
-                                            style={{
-                                                backgroundImage:
-                                                    "url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w99-h66-p-k-no-nu/p9.jpg=w72-h72-p-k-no-nu)",
-                                            }}
-                                        ></span>
-                                    </Link>
-                                    <p className={`${style['entry-excerpt']}`}>
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.
-                                    </p>
-                                </div>
-                            </div>
+                        <div className={`${style.widget} ${style.remove_spaces}`}>
+                            <a className={style.load_more}>Load More</a>
                         </div> 
-                        <a className={style.load_more}>Load More</a>
                     </div>
                     <div className={`${style['lg-4']} ${style['md-4']} ${style['sm-12']} ${style['plr-15']} ${style['ptb-15']}`}>
                         <StickyBox offsetTop={85} offsetBottom={20}>
@@ -458,6 +229,40 @@ export default function Blog({upcoming}) {
                                     </div> 
                                 </div>
 
+                            </div>
+
+                            <div className={style.widget}>
+                                <div className={`${style['widget-title']} ${style['title-wrap']}`}>
+                                    <h3 className={style.title}>Categories</h3>
+                                </div>
+                                <div className={style['widget-content']}>
+                                    <div className={`${style['cloud-label']} ${style.ds} ${style['item-0']}`}>
+                                        <ul className={`${style['cloud-categories']}`}>
+                                            <li><Link className={`${style['label-name']}`} href="#">JavaScript</Link></li>
+                                            <li><Link className={`${style['label-name']}`} href="#">Fushion</Link></li>
+                                            <li><Link className={`${style['label-name']}`} href="#">PHP</Link></li>
+                                            <li><Link className={`${style['label-name']}`} href="#">C++</Link></li>
+                                            <li><Link className={`${style['label-name']}`} href="#">C Sharp</Link></li> 
+                                        </ul>
+                                    </div> 
+                                </div>
+                            </div>
+
+                            <div className={style.widget}>
+                                <div className={`${style['widget-title']} ${style['title-wrap']}`}>
+                                    <h3 className={style.title}>Tags</h3>
+                                </div>
+                                <div className={style['widget-content']}>
+                                    <div className={`${style['cloud-label']} ${style.ds} ${style['item-0']}`}>
+                                        <ul className={`${style['cloud-style']}`}>
+                                            <li><Link className={`${style['label-name']}`} href="#">JavaScript</Link></li>
+                                            <li><Link className={`${style['label-name']}`} href="#">Fushion</Link></li>
+                                            <li><Link className={`${style['label-name']}`} href="#">PHP</Link></li>
+                                            <li><Link className={`${style['label-name']}`} href="#">C++</Link></li>
+                                            <li><Link className={`${style['label-name']}`} href="#">C Sharp</Link></li> 
+                                        </ul>
+                                    </div> 
+                                </div>
                             </div>
                         </StickyBox>
                     </div>

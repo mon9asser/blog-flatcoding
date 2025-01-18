@@ -76,10 +76,10 @@
 .title {
     padding: 0px 0 10px 0;
     margin: 0;
-    font-size: 20px;
-    font-weight: 400;
+    font-size: 17px; 
     color: #0a0a23;
-    font-weight: 500
+    font-weight: 500;
+    text-transform: uppercase;
 }
 
 .hero-img-container {
@@ -5401,6 +5401,29 @@ img.half, div.feature-block svg, .feature-block {
     border-radius: 5px;
 }
 
+.social-icons a:hover {
+    opacity: 0.9;
+}
+
+.category-label-meta {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-right: auto !important;
+}
+
+.category-label-meta li a { 
+    color: #fff;
+    padding: 5px;
+    font-size: 12px;
+    border-radius: 2px;
+}
+
+.category-label-meta li a:hover {
+    opacity: 0.9;
+}
+
  .social-icons span {
     font-size: 14px;
     line-height: 1;
@@ -5609,4 +5632,102 @@ img.half, div.feature-block svg, .feature-block {
     margin: 0;
     width: 100%;
     text-align: center;
+}
+
+.remove_spaces {
+    padding: 30px;
+    margin: 0;
+    text-align: center;
+}
+
+.remove_spaces a {
+    margin: 0 auto;
+}
+
+.cloud-style, .cloud-categories {
+    display: flex;
+    list-style: none;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.cloud-categories {
+    flex-direction: column; 
+    text-align: left;
+}
+
+.cloud-style li, .cloud-categories li {
+    border: none;
+}
+
+
+
+.cloud-style li a {
+    font-size: 14px; 
+    color: #000 !important;
+    border: 1px solid #ddd !important;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.cloud-style li a:hover {
+    color: #b9355e !important;
+    border-color: #b9355e !important;
+}
+
+.cloud-categories li::before {
+    position: absolute;
+    content: '';
+    width: 4px;
+    height: 4px;
+    background-color: #222;
+    display: block; 
+}
+.cloud-categories li {
+    position: relative;
+    display: block;
+    width: 100%;
+    text-align: left; 
+    align-items: center;
+    display: flex; 
+}
+.cloud-categories li a {
+    border: none;
+    font-size: 16px;
+    padding: 0; 
+    padding-left: 15px;
+    width: 100%;
+}
+
+.cloud-categories li a.label-name {
+    display: block;
+    font-size: 14px;
+}
+
+.cloud-categories li a:hover {
+    color: #b9355e !important;
+}
+
+
+@media only screen and (max-width: 550px) {
+    .entry-content {
+        flex-direction: column;
+        margin: 0;
+        gap: 15px;
+        margin-top: 10px;
+    }
+
+    .entry-content .entry-image-wrap {
+        width: 100%;
+        margin: 0;
+        height: 180px;
+    }
+}
+
+.pt-space-10 {
+    padding-top: 0px !important;
+}
+
+.pb-space-10 {
+    padding-bottom: 10px !important;
 }
