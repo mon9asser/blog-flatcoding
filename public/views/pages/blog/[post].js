@@ -16,6 +16,9 @@ import {
 import { SocialShare } from "./../../services/components";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faReply } from '@fortawesome/free-solid-svg-icons'
+
+
 import Config from "./../../services/config";
 
 export default function Tag({upcoming}) {
@@ -189,8 +192,95 @@ export default function Tag({upcoming}) {
                                     }
                                 </div>
                             </div>
+                        </div> 
 
- 
+                        <div className={`${style.widget} ${style.remove_spaces} ${style.author_details}`}>
+                            <div>
+                                <span></span>
+                            </div>
+                            <div>
+                                <h5>David Albert</h5>
+                                <p>
+                                    Pro Blogger Templates is a site where you find unique and professional blogger templates, Improve your blog now for free.
+                                </p>
+                                <ul className={`${style['social-icons']} ${style['social-bg']} ${style['social-author-icons']}`}>
+                                    <li className={style['facebook']}>
+                                        <Link href={'#'}>
+                                            <FontAwesomeIcon className={style.icon_social_icon} icon={Config.icons['facebook']} />
+                                        </Link>
+                                    </li>
+                                    <li className={style['email']}>
+                                        <Link href={'#'}>
+                                            <FontAwesomeIcon className={style.icon_social_icon} icon={Config.icons['email']} />
+                                        </Link>
+                                    </li> 
+                                </ul>
+                            </div>
+                        </div> 
+                        
+                        <div className={`${style.widget} ${style.remove_spaces} ${style.comments}`}>
+                            <div className={style['comments-sectison']}>
+                                <div className={style['comment-wrapper']}>
+                                    <div className={style['comment']}>
+                                        <div className={style['thumbnail']}>
+                                            <img src="https://placehold.co/50" alt="User Thumbnail" />
+                                        </div>
+                                        <div className={style['comment-content']}>
+                                            <div className={style['comment-details']}>
+                                                <span className={style['name']}>John Doe</span>
+                                                <span className={style['date']}>January 18, 2025</span>
+                                                <span className={style['is-author']}>Author</span>
+                                            </div>
+                                            <p className={style['comment-text']}>
+                                                This is a great article! I learned so much from it. Thank you for
+                                                sharing!
+                                            </p>
+                                            
+
+                                            <div className={style.reply_comments}>
+                                                <div className={`${style['comment']} ${style['reply-to']}`}>
+                                                    <FontAwesomeIcon icon={faReply} className={style['icon-reply-to']} />
+                                                    <div className={style['thumbnail']}>
+                                                        <img src="https://placehold.co/50" alt="User Thumbnail" />
+                                                    </div>
+                                                    <div className={style['comment-content']}>
+                                                        <div className={style['comment-details']}>
+                                                            <span className={style['name']}>John Doe</span>
+                                                            <span className={style['date']}>January 18, 2025</span>
+                                                        </div>
+                                                        <p className={style['comment-text']}>
+                                                            This is a great article! I learned so much from it. Thank you for
+                                                            sharing!
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                
+                                            </div>
+                                        </div>
+                                        
+                                    </div>  
+                                </div>
+
+                                <div className={style['comment-wrapper']}>
+                                    <div className={style['comment']}>
+                                        <div className={style['thumbnail']}>
+                                            <img src="https://placehold.co/50" alt="User Thumbnail" />
+                                        </div>
+                                        <div className={style['comment-content']}>
+                                            <div className={style['comment-details']}>
+                                                <span className={style['name']}>John Doe</span>
+                                                <span className={style['date']}>January 18, 2025</span>
+                                            </div>
+                                            <p className={style['comment-text']}>
+                                                This is a great article! I learned so much from it. Thank you for
+                                                sharing!
+                                            </p> 
+                                        </div>
+                                        
+                                    </div>  
+                                </div>
+                            </div>
                         </div> 
                     </div>
                     <div className={`${style['lg-4']} ${style['md-4']} ${style['sm-12']} ${style['plr-15']} ${style['ptb-15']}`}>
