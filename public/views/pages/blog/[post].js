@@ -20,11 +20,25 @@ import { faReply, faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-i
 
 
 import Config from "./../../services/config";
+ 
+
+
+import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
+import 'react-quill/dist/quill.snow.css';
+
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+
+
 
 export default function Tag({upcoming}) {
     
+    
     console.log(upcoming);
+    const [value, setValue] = useState('');
 
+    
+    
     var header_content = parse(upcoming.header);
     var footer_content = parse(upcoming.footer);
     var jsonLdContent =  '';
@@ -42,6 +56,38 @@ export default function Tag({upcoming}) {
         };
     };
 
+    var AddNewComment = ({thumbnail}) => {
+        return <>
+
+            <div className={style.add_comment_for_author}>
+                {
+                    thumbnail ?
+                        <div className={style['add_comment_for_author_thumbnail']}>
+                            <img src="https://placehold.co/50" alt="User Thumbnail" />
+                        </div>
+                    : null
+                }
+                
+                <div className={style.add_comment_details}>
+                    <ReactQuill
+                        theme="snow"
+                        value={value}
+                        onChange={setValue}
+                        placeholder="Write your comment here..."
+                        modules={{
+                            toolbar: [
+                                ['bold', 'italic', 'underline'], // Text formatting
+                                [{ list: 'ordered' }, { list: 'bullet' }], // Lists
+                                ['link', 'code-block'], // Links and code blocks
+                            ],
+                        }}
+                        formats={['bold', 'italic', 'underline', 'list', 'bullet', 'link', 'code-block']}
+                    />
+                </div>
+            </div>
+            <a className={style.post_comment} href='#'>Submit</a> 
+        </>
+    }
     return <>
         <Head>
              
@@ -128,7 +174,7 @@ export default function Tag({upcoming}) {
 
                                      
                                     <h2>Watch Our Introduction Video:</h2>
-                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video" frameborder="0" allowfullscreen></iframe>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video" frameborder="0" allowFullScreen></iframe>
 
                                     
                                     <h2>Sample Code Snippet:</h2>
@@ -217,7 +263,28 @@ export default function Tag({upcoming}) {
                                 </ul>
                             </div>
                         </div> 
+
+                        {/*Add a New Comments*/}
+                        <div className={`${style.widget} ${style.remove_spaces} ${style.comments}`}>
+                            <div className={`${style['comments-sectison']} ${style['join_us_to_comment']}`}>
+                                <h3>
+                                    Add a New Comment
+                                </h3>
+                               <a className={style.post_comment}>Add Comment</a> 
+                            </div>
+                        </div>
+
+                        {/*Add a New Comments*/}
+                        <div className={`${style.widget} ${style.remove_spaces} ${style.comments}`}>
+                            <div className={style['comments-sectison']}>
+                                <h3>
+                                    Add a New Comment
+                                </h3>
+                                <AddNewComment thumbnail={true}/>  
+                            </div>
+                        </div>
                         
+                        {/*Recently Comments*/}
                         <div className={`${style.widget} ${style.remove_spaces} ${style.comments}`}>
                             <div className={style['comments-sectison']}>
                                 <h3>
@@ -256,6 +323,8 @@ export default function Tag({upcoming}) {
                                                     <a>Reply</a>
                                                 </li>
                                             </ul>
+
+                                            
 
                                             <div className={style.reply_comments}>
                                                 <div className={`${style['comment']} ${style['reply-to']}`}>
@@ -326,6 +395,10 @@ export default function Tag({upcoming}) {
                                                    Read More (5 Replies)
                                                 </a>
                                             </div>
+
+                                            <div className={style.add_comment_reply}>
+                                                <AddNewComment thumbnail={false}/>  
+                                            </div>
                                         </div>
                                         
                                     </div>  
@@ -379,6 +452,7 @@ export default function Tag({upcoming}) {
                                     See More (5 Comments)
                                 </a> 
                             </div>
+                            
                         </div> 
                         
                     </div>

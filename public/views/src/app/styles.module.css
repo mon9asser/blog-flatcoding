@@ -5397,6 +5397,7 @@ img.half, div.feature-block svg, .feature-block {
     padding: 20px;
     margin: 0 0 25px; 
     box-shadow: 0 0 10px rgba(0,0,0,0.03);
+    overflow: hidden;
 }
 
 .title-wrap {
@@ -5587,7 +5588,7 @@ img.half, div.feature-block svg, .feature-block {
     display: block;
     position: relative;
     overflow: hidden;
-    background-color: red;
+    background-color: #eee;
     z-index: 5;
     color: transparent;
 }
@@ -6317,4 +6318,87 @@ img.half, div.feature-block svg, .feature-block {
     color: #0a0a23;
     font-weight: 500;
     text-transform: uppercase;
+}
+
+
+.ql-editor ol, .ql-editor ul {
+    padding-left: 0px !important;
+}
+
+.add_comment_for_author {
+    display: flex;
+    gap: 15px;
+}
+.add_comment_for_author_thumbnail {
+    flex-shrink: 0;
+    width: 90px;
+    height: 90px;
+    position: relative;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+}
+
+.add_comment_for_author_thumbnail::after {
+    position: absolute;
+    content: '';
+    display: inline-block;
+    width: 0;
+    height: 0;
+    top: 10%;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid #ddd; /* Adjust the color of the arrow */
+    margin-left: 0px; /* Optional: Add spacing between the arrow and the element */ 
+}
+
+.post_comment {
+    background-color: #b9355e !important;
+    font-size: 14px;
+    color: #fff;
+    margin-top: 20px !important;
+    position: relative;
+    display: block;
+    width: fit-content;
+    padding: 8px 15px;
+    float: right;
+    border-radius: 5px;
+}
+
+.add_comment_reply {
+    margin-top: 25px; 
+    overflow: hidden;
+    padding: 25px;
+    background-color: #fafafa;
+}
+
+.post_comment:hover {
+    opacity: 0.9;
+    color: #fff;
+    
+}
+
+.add_comment_for_author_thumbnail img {
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.add_comment_details {
+    flex-grow:1;
+}
+
+.join_us_to_comment {
+    display: flex;
+    align-items: center; 
+}
+
+.join_us_to_comment h3 {
+    margin: 0px !important;
+    padding: 0 !important;
+}
+
+.join_us_to_comment a {
+    float: unset;
+    margin:0px 0px 0px auto !important;
 }
