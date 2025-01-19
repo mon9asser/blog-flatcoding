@@ -16,7 +16,7 @@ import {
 import { SocialShare } from "./../../services/components";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faReply } from '@fortawesome/free-solid-svg-icons'
+import { faReply, faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons'
 
 
 import Config from "./../../services/config";
@@ -220,6 +220,9 @@ export default function Tag({upcoming}) {
                         
                         <div className={`${style.widget} ${style.remove_spaces} ${style.comments}`}>
                             <div className={style['comments-sectison']}>
+                                <h3>
+                                    Recent Comments (15)
+                                </h3>
                                 <div className={style['comment-wrapper']}>
                                     <div className={style['comment']}>
                                         <div className={style['thumbnail']}>
@@ -229,33 +232,99 @@ export default function Tag({upcoming}) {
                                             <div className={style['comment-details']}>
                                                 <span className={style['name']}>John Doe</span>
                                                 <span className={style['date']}>January 18, 2025</span>
-                                                <span className={style['is-author']}>Author</span>
+                                                <ul className={`${style.comment_meta_ul} ${style.meta_ul_result}`}>
+                                                    <li>
+                                                        5 Likes
+                                                    </li> 
+                                                    <li>
+                                                        3 Unlikes
+                                                    </li> 
+                                                </ul>                                                
                                             </div>
-                                            <p className={style['comment-text']}>
-                                                This is a great article! I learned so much from it. Thank you for
-                                                sharing!
-                                            </p>
-                                            
+                                            <div className={style['comment-text']}>
+                                                <p>This is a great article! I learned so much from it. Thank you for
+                                                sharing!</p>
+                                            </div> 
+                                            <ul className={style.comment_meta_ul}>
+                                                <li>
+                                                    <a>Like</a>
+                                                </li>
+                                                <li>
+                                                    <a>Dislike</a>
+                                                </li>
+                                                <li>
+                                                    <a>Reply</a>
+                                                </li>
+                                            </ul>
 
                                             <div className={style.reply_comments}>
                                                 <div className={`${style['comment']} ${style['reply-to']}`}>
-                                                    <FontAwesomeIcon icon={faReply} className={style['icon-reply-to']} />
+                                                    
                                                     <div className={style['thumbnail']}>
                                                         <img src="https://placehold.co/50" alt="User Thumbnail" />
                                                     </div>
                                                     <div className={style['comment-content']}>
                                                         <div className={style['comment-details']}>
                                                             <span className={style['name']}>John Doe</span>
+                                                            <FontAwesomeIcon icon={faReply} className={style['icon-reply-to']} />
                                                             <span className={style['date']}>January 18, 2025</span>
+                                                            <span className={style['is-author']}>Author</span>
+                                                            <ul className={`${style.comment_meta_ul} ${style.meta_ul_result}`}>
+                                                                <li>
+                                                                    5 Likes
+                                                                </li> 
+                                                                <li>
+                                                                    3 Unlikes
+                                                                </li> 
+                                                            </ul>
                                                         </div>
-                                                        <p className={style['comment-text']}>
-                                                            This is a great article! I learned so much from it. Thank you for
-                                                            sharing!
-                                                        </p>
+                                                        <div className={style['comment-text']}>
+                                                            <p>This is a great article! I learned so much from it. Thank you for
+                                                            sharing!</p>
+                                                        </div> 
+                                                        <ul className={style.comment_meta_ul}>
+                                                            <li>
+                                                                <a>Like</a>
+                                                            </li>
+                                                            <li>
+                                                                <a>Dislike</a>
+                                                            </li> 
+                                                        </ul>
                                                     </div>
                                                 </div>
+                                                <div className={`${style['comment']} ${style['reply-to']}`}>
+                                                    
+                                                    <div className={style['thumbnail']}>
+                                                        <img src="https://placehold.co/50" alt="User Thumbnail" />
+                                                    </div>
+                                                    <div className={style['comment-content']}>
+                                                        <div className={style['comment-details']}>
+                                                            <span className={style['name']}>John Doe</span>
+                                                            <FontAwesomeIcon icon={faReply} className={style['icon-reply-to']} />
+                                                            <span className={style['date']}>January 18, 2025</span>
+                                                        </div>
+                                                        <div className={style['comment-text']}>
+                                                            <p>This is a great article! I learned so much from it. Thank you for
+                                                            sharing!</p>
+                                                        </div> 
 
+                                                        <ul className={style.comment_meta_ul}>
+                                                            <li>
+                                                                <a>Like</a>
+                                                            </li>
+                                                            <li>
+                                                                <a>Dislike</a>
+                                                            </li> 
+                                                        </ul>
+                                                    </div>
+                                                </div>
                                                 
+                                                
+                                            </div>
+                                            <div className={style.view_more_comments}>
+                                                <a>
+                                                   Read More (5 Replies)
+                                                </a>
                                             </div>
                                         </div>
                                         
@@ -271,17 +340,47 @@ export default function Tag({upcoming}) {
                                             <div className={style['comment-details']}>
                                                 <span className={style['name']}>John Doe</span>
                                                 <span className={style['date']}>January 18, 2025</span>
+                                                <ul className={`${style.comment_meta_ul} ${style.meta_ul_result}`}>
+                                                    <li>
+                                                        5 Likes
+                                                    </li> 
+                                                    <li>
+                                                        3 Unlikes
+                                                    </li> 
+                                                </ul>    
                                             </div>
-                                            <p className={style['comment-text']}>
-                                                This is a great article! I learned so much from it. Thank you for
-                                                sharing!
-                                            </p> 
+                                            <div className={style['comment-text']}>
+                                                <p>This is a great article! I learned so much from it. Thank you for
+                                                sharing!</p>
+                                            </div> 
+
+                                            
+
+                                            <ul className={style.comment_meta_ul}>
+                                                <li>
+                                                    <a>Like</a>
+                                                </li>
+                                                <li>
+                                                    <a>Dislike</a>
+                                                </li> 
+                                                <li>
+                                                    <a>Reply</a>
+                                                </li> 
+                                            </ul>
                                         </div>
                                         
-                                    </div>  
+                                    </div>   
                                 </div>
+                                
+                                
+                            </div> 
+                            <div className={`${style.view_more_comments} ${style.load_more_cmt}`}>
+                                <a>
+                                    See More (5 Comments)
+                                </a> 
                             </div>
                         </div> 
+                        
                     </div>
                     <div className={`${style['lg-4']} ${style['md-4']} ${style['sm-12']} ${style['plr-15']} ${style['ptb-15']}`}>
                         <StickyBox offsetTop={85} offsetBottom={20}>
