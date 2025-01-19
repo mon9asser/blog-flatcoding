@@ -264,6 +264,119 @@ export default function Tag({upcoming}) {
                             </div>
                         </div> 
 
+                        {/*You may also like section*/}
+                        <div className={`${style.widget} ${style.remove_spaces} ${style.comments}`}>
+                            <div className={`${style['comments-sectison']}`}>
+                                
+                                <h3>
+                                    You May Also Like
+                                </h3>
+
+                                <div className={style['related-posts']}>
+                                    <div className={style['related-item']} id={style['item-0']}>
+                                        <a
+                                        title="Google Correlate: The Best SEO Research Tool You Aren’t Using"
+                                        className={`${style['entry-image-wrap']} ${style['is-image']}`}
+                                        href="https://starter-pbt.blogspot.com/2021/07/google-correlate-best-seo-research-tool.html"
+                                        >
+                                        <span
+                                            className={`${style['entry-image']} ${style['pbt-lazy']}`}
+                                            data-image="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w72-h72-p-k-no-nu/p9.jpg"
+                                            style={{
+                                            backgroundImage:
+                                                "url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w222-h147-p-k-no-nu/p9.jpg=w72-h72-p-k-no-nu)",
+                                            }}
+                                        ></span>
+                                        </a>
+                                        <div className={style['entry-header']}>
+                                        <h2 className={style['entry-title']}>
+                                            <a
+                                            href="https://starter-pbt.blogspot.com/2021/07/google-correlate-best-seo-research-tool.html"
+                                            title="Google Correlate: The Best SEO Research Tool You Aren’t Using"
+                                            >
+                                            Google Correlate: The Best SEO Research Tool You Aren’t Using
+                                            </a>
+                                        </h2>
+                                        <div className={style['entry-meta']}>
+                                            <span className={style['entry-time']} id={style['mi']}>
+                                            <time className={style['published']} dateTime="2021-07-12T18:44:00.034+00:00">
+                                                July 12, 2021
+                                            </time>
+                                            </span>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <div className={style['related-item']} id={style['item-1']}>
+                                        <a
+                                        title="Google Search Console Made a Change to Data Calculations as of August 19"
+                                        className={`${style['entry-image-wrap']} ${style['is-image']}`}
+                                        href="https://starter-pbt.blogspot.com/2021/07/google-search-console-made-change-to.html"
+                                        >
+                                        <span
+                                            className={`${style['entry-image']} ${style['pbt-lazy']}`}
+                                            data-image="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhDn-0J_EFKWesgI7M6PcKUqtm17YYBrTaWhYT1cbI16_czmZLQ1F-1n-U79MXqcZiHm0sYUbaPIu8jx69C7SKiy1kK6YvGlNNvrjp3yTzMpHct_AxaWRdJDZaO8P6TqtKEALS5YiNNEAc/w72-h72-p-k-no-nu/p20.jpg"
+                                            style={{
+                                            backgroundImage:
+                                                "url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhDn-0J_EFKWesgI7M6PcKUqtm17YYBrTaWhYT1cbI16_czmZLQ1F-1n-U79MXqcZiHm0sYUbaPIu8jx69C7SKiy1kK6YvGlNNvrjp3yTzMpHct_AxaWRdJDZaO8P6TqtKEALS5YiNNEAc/w222-h147-p-k-no-nu/p20.jpg=w72-h72-p-k-no-nu)",
+                                            }}
+                                        ></span>
+                                        </a>
+                                        <div className={style['entry-header']}>
+                                        <h2 className={style['entry-title']}>
+                                            <a
+                                            href="https://starter-pbt.blogspot.com/2021/07/google-search-console-made-change-to.html"
+                                            title="Google Search Console Made a Change to Data Calculations as of August 19"
+                                            >
+                                            Google Search Console Made a Change to Data Calculations as of August 19
+                                            </a>
+                                        </h2>
+                                        <div className={style['entry-meta']}>
+                                            <span className={style['entry-time']} id={style['mi']}>
+                                            <time className={style['published']} dateTime="2021-07-12T18:35:00.004+00:00">
+                                                July 12, 2021
+                                            </time>
+                                            </span>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <div className={style['related-item']} id={style['item-2']}>
+                                        <a
+                                        title="SEO Glossary: 200+ Terms & Definitions You Need to Know"
+                                        className={`${style['entry-image-wrap']} ${style['is-image']}`}
+                                        href="https://starter-pbt.blogspot.com/2021/07/seo-glossary-200-terms-definitions-you.html"
+                                        >
+                                        <span
+                                            className={`${style['entry-image']} ${style['pbt-lazy']}`}
+                                            data-image="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhA3vxsHY7kpc1G5plxBLPJS-4rlel1FlClT4zF7HG36-FMJSqVWB7UJ4mcC0xxxaI430TcnJJpqCSpEOv7dib25qj1Fp7w2mV0xJMdsIv91kQ33QX7gQKA7WZDMsPjjUAtuqZSY1uaG0Q/w72-h72-p-k-no-nu/p15.jpg"
+                                            style={{
+                                            backgroundImage:
+                                                "url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhA3vxsHY7kpc1G5plxBLPJS-4rlel1FlClT4zF7HG36-FMJSqVWB7UJ4mcC0xxxaI430TcnJJpqCSpEOv7dib25qj1Fp7w2mV0xJMdsIv91kQ33QX7gQKA7WZDMsPjjUAtuqZSY1uaG0Q/w222-h147-p-k-no-nu/p15.jpg=w72-h72-p-k-no-nu)",
+                                            }}
+                                        ></span>
+                                        </a>
+                                        <div className={style['entry-header']}>
+                                        <h2 className={style['entry-title']}>
+                                            <a
+                                            href="https://starter-pbt.blogspot.com/2021/07/seo-glossary-200-terms-definitions-you.html"
+                                            title="SEO Glossary: 200+ Terms & Definitions You Need to Know"
+                                            >
+                                            SEO Glossary: 200+ Terms & Definitions You Need to Know
+                                            </a>
+                                        </h2>
+                                        <div className={style['entry-meta']}>
+                                            <span className={style['entry-time']} id={style['mi']}>
+                                            <time className={style['published']} dateTime="2021-07-12T18:34:00.002+00:00">
+                                                July 12, 2021
+                                            </time>
+                                            </span>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
                         {/*Add a New Comments*/}
                         <div className={`${style.widget} ${style.remove_spaces} ${style.comments}`}>
                             <div className={`${style['comments-sectison']} ${style['join_us_to_comment']}`}>

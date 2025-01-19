@@ -78,12 +78,25 @@ export default function Author({upcoming}) {
                                     <span>25 Articles</span>
                                     <span>6 Comments</span>
                                 </div> 
-                                <div className={`${style["mt-20"]} ${style["content-elem"]}`}>
+                                <div className={`${style["mt-20"]} ${style["content-elem"]} ${style["text-element-center"]}`}>
                                     <p className={`${style["tutorial-description"]} ${style["no-spaces"]}`}>
                                         This tutorial covers complete PHP basics to help you learn how to code
                                         with PHP programming language.
                                     </p>
+                                    <ul className={`${style['social-icons']} ${style['social-bg']} ${style['social-author-icons']}`}>
+                                        <li className={style['facebook']}>
+                                            <Link href={'#'}>
+                                                <FontAwesomeIcon className={style.icon_social_icon} icon={Config.icons['facebook']} />
+                                            </Link>
+                                        </li>
+                                        <li className={style['email']}>
+                                            <Link href={'#'}>
+                                                <FontAwesomeIcon className={style.icon_social_icon} icon={Config.icons['email']} />
+                                            </Link>
+                                        </li> 
+                                    </ul>
                                 </div>
+                                
                             </div>
                     </div>
                 </header> 
