@@ -464,8 +464,7 @@ ins[data-ad-status="unfilled"] {
 }
 
 ul li code, 
-ol li code {
-    color: #dd3535;
+ol li code { 
     background: #dd353526;
     padding: 2px 2px;
     border-radius: 4px;
@@ -474,4 +473,54 @@ ol li code {
 
 dfn, em, cite, i, code, kbd, tt, var {
     font-style: italic ;
+}
+
+
+
+.nice-form-group {
+    display: block;
+    margin-top: 1.5rem;
+    line-height: 1;
+}
+
+.nice-form-group > label {
+    font-weight: 500;
+    display: block;
+    color: #374151;
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+
+.nice-form-group > input[type="text"],
+.nice-form-group > textarea {
+    background: #f9fafb;
+    font-family: inherit;
+    font-size: 0.875rem;
+    border-radius: 0.25rem;
+    border: 1px solid #c0c4c9;
+    border-bottom-width: 2px;
+    color: #20242f;
+    width: 100%;
+    padding: 0.75rem;
+    height: 2.75rem;
+    box-sizing: border-box;
+    transition: all 0.15s ease-out;
+}
+
+.nice-form-group > textarea {
+    height: 130px;
+}
+
+.nice-form-group > input[type="text"]::placeholder,
+.nice-form-group > textarea::placeholder {
+    color: #929292;
+}
+
+.nice-form-group > small {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+    display: block;
+    opacity: 0.75;
+    margin-top: 0.5rem;
 }

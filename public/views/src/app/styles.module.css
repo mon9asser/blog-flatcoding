@@ -5788,7 +5788,7 @@ img.half, div.feature-block svg, .feature-block {
 .single--content {
     font-family: Arial, sans-serif; /* Set a default font for the content */
     line-height: 1.6; /* Add line height for readability */
-    color: #333; /* Default text color */
+    color: #4b5563; /* Default text color */
    
 }
  
@@ -6496,4 +6496,18 @@ img.half, div.feature-block svg, .feature-block {
         grid-template-columns: repeat(1, 1fr);
         grid-gap: 20px 15px;
     }
+}
+
+.entry-content form {
+    height:auto;
+    width: 100%;   
+    border: 1px solid #ddd;
+    padding: 25px;
+    border-radius: 10px;
+}
+
+.submit-request {
+    width: fit-content; 
+    margin-top: 25px;
+    margin-left: auto;
 }

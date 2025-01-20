@@ -148,425 +148,87 @@ export default function Write({upcoming}) {
                                     />
 
                                     <p>This is an example post content area. Here, you can share engaging articles, stories, and updates with your audience.</p>
-                                    <p>This is an example post content area. Here, you can share engaging articles, stories, and updates with your audience.</p>
-                                    <p>This is an example post content area. Here, you can share engaging articles, stories, and updates with your audience.</p>
- 
-                                    <h2>Key Features:</h2>
-                                    <ul>
-                                        <li>High-quality content</li>
-                                        <li>Engaging visuals</li>
-                                        <li>Responsive design</li>
-                                    </ul>
-
-                                    
-                                    <h2>Steps to Success:</h2>
-                                    <ol>
-                                        <li>Plan your content strategy</li>
-                                        <li>Create valuable posts</li>
-                                        <li>Engage with your readers</li>
-                                    </ol>
-
-                                    
-                                    <blockquote>
-                                        <p>"Content is king, but engagement is queen, and the lady rules the house!"</p>
-                                    </blockquote>
-
                                      
-                                    <h2>Watch Our Introduction Video:</h2>
-                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video" frameborder="0" allowFullScreen></iframe>
+                                     
+                                    <h2>Become a Contributor</h2>
+                                    <form>
+                                        <div class="nice-form-group">
+                                            <label>Your First Name <i>*</i></label>
+                                            <input type="text" placeholder="First Name" />
+                                        </div>
 
-                                    
-                                    <h2>Sample Code Snippet:</h2>
-                                    <pre><code>
-                                        ${`function greetUser() {
-                                            console.log("Hello, WordPress World!");
-                                        }`}
-                                    </code></pre>
- 
+                                        <div class="nice-form-group">
+                                            <label>Your Second Name <i>*</i></label>
+                                            <input type="text" placeholder="Second Name" />
+                                        </div>
 
-                                    
-                                    <h2>Comparison Table:</h2>
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Feature</th>
-                                                <th>Free Plan</th>
-                                                <th>Pro Plan</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Storage</td>
-                                                <td>1 GB</td>
-                                                <td>10 GB</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Support</td>
-                                                <td>Email</td>
-                                                <td>Priority Email & Phone</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                        <div class="nice-form-group">
+                                            <label>Contact Email <i>*</i></label>
+                                            <input type="text" placeholder="Your Email" />
+                                            <small>Please provide a valid contact email</small>
+                                        </div>
+
+                                        <div class="nice-form-group">
+                                            <label>LinkedIn profile URL</label>
+                                            <input type="text" placeholder="LinkedIn profile URL" /> 
+                                        </div>
+
+                                        <div class="nice-form-group">
+                                            <label>Facebook profile URL</label>
+                                            <input type="text" placeholder="Facebook profile URL" /> 
+                                        </div>
+
+                                        <div class="nice-form-group">
+                                            <label>Instagram profile URL</label>
+                                            <input type="text" placeholder="Instagram profile URL" /> 
+                                        </div>
+                                        <div class="nice-form-group">
+                                            <label>YouTube profile URL</label>
+                                            <input type="text" placeholder="YouTube profile URL" /> 
+                                        </div>
+
+                                        <div class="nice-form-group">
+                                            <label>Website URL</label>
+                                            <input type="text" placeholder="Website URL" /> 
+                                        </div>
+
+                                        <div class="nice-form-group">
+                                            <label>Link to Your Best Article 1 <i>*</i></label>
+                                            <input type="text" placeholder="Article URL" />
+                                            <small>If you do not have articles, create one on Hashnode or Dev.to and share it with us.</small>
+                                        </div>
+
+                                        <div class="nice-form-group">
+                                            <label>Link to Your Best Article 2 <i>*</i></label>
+                                            <input type="text" placeholder="Article URL" />
+                                            <small>If you do not have articles, create one on Hashnode or Dev.to and share it with us.</small>
+                                        </div>
+
+                                        <div class="nice-form-group">
+                                            <label>Link to Your Best Article 3 <i>*</i></label>
+                                            <input type="text" placeholder="Article URL" />
+                                            <small>If you do not have articles, create one on Hashnode or Dev.to and share it with us.</small>
+                                        </div>
+                                        <div class="nice-form-group">
+                                            <label>Short Bio <i>*</i></label>
+                                            <textarea type="text" placeholder="Short Bio"></textarea> 
+                                        </div>
+                                        <div class="nice-form-group">
+                                            <label>Topics You Plan to Write with Us<i>*</i></label>
+                                            <textarea type="text" placeholder="Topics Separated by |"></textarea> 
+                                            <small>Separate Each with |</small>
+                                        </div>
+
+                                        <div className={`${style['widget-content']} ${style['submit-request']}`}>
+                                            <Link className={`${style.load_more} ${style.write_for_us}`} href={'#'}>Submit Request</Link>
+                                        </div>
+                                    </form>
                                             
-
                                 </div>
-                                <div className={`${style['entry-labels']} ${style['list-tags']}`}>
-                                    <span className={style["labels-label"]}>Tags:</span>
-                                    <a className={style["label-link"]} href="https://starter-pbt.blogspot.com/search/label/Content%20Marketing" rel="tag">Content Marketing</a>
-                                    <a className={style["label-link"]} href="https://starter-pbt.blogspot.com/search/label/Editor%27s%20Picks" rel="tag">Editor's Picks</a>
-                                    <a className={style["label-link"]} href="https://starter-pbt.blogspot.com/search/label/SEO%20News" rel="tag">SEO News</a>
-                                </div>
-
-                                <div className="wrapper max-800 text-center chapter-block-hlght box-vote-block"> 
-                                    {
-                                        upcoming?.share_social_buttons == '' ? ''
-                                        : 
-                                        <>
-                                            <div className={`${style['flexbox']} ${style['gap-15']} ${style['share-box']} ${style['article-share-box']}`}> 
-                                                <SocialShare   
-                                                    platforms={upcoming?.share_social_buttons} 
-                                                    url={`https://tutorials/tutorials/post/`}
-                                                    title={'Post Title'}
-                                                    size={32} 
-                                                    height={'32px'} 
-                                                    width={'32px'} 
-                                                    radius={true} 
-                                                />
-                                            </div>
-                                        </>
-                                    }
-                                </div>
+                                 
                             </div>
                         </div> 
-
-                        <div className={`${style.widget} ${style.remove_spaces} ${style.author_details}`}>
-                            <div>
-                                <span></span>
-                            </div>
-                            <div>
-                                <h5>David Albert</h5>
-                                <p>
-                                    Pro Blogger Templates is a site where you find unique and professional blogger templates, Improve your blog now for free.
-                                </p>
-                                <ul className={`${style['social-icons']} ${style['social-bg']} ${style['social-author-icons']}`}>
-                                    <li className={style['facebook']}>
-                                        <Link href={'#'}>
-                                            <FontAwesomeIcon className={style.icon_social_icon} icon={Config.icons['facebook']} />
-                                        </Link>
-                                    </li>
-                                    <li className={style['email']}>
-                                        <Link href={'#'}>
-                                            <FontAwesomeIcon className={style.icon_social_icon} icon={Config.icons['email']} />
-                                        </Link>
-                                    </li> 
-                                </ul>
-                            </div>
-                        </div> 
-
-                        {/*You may also like section*/}
-                        <div className={`${style.widget} ${style.remove_spaces} ${style.comments}`}>
-                            <div className={`${style['comments-sectison']}`}>
-                                
-                                <h3>
-                                    You May Also Like
-                                </h3>
-
-                                <div className={style['related-posts']}>
-                                    <div className={style['related-item']} id={style['item-0']}>
-                                        <a
-                                        title="Google Correlate: The Best SEO Research Tool You Aren’t Using"
-                                        className={`${style['entry-image-wrap']} ${style['is-image']}`}
-                                        href="https://starter-pbt.blogspot.com/2021/07/google-correlate-best-seo-research-tool.html"
-                                        >
-                                        <span
-                                            className={`${style['entry-image']} ${style['pbt-lazy']}`}
-                                            data-image="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w72-h72-p-k-no-nu/p9.jpg"
-                                            style={{
-                                            backgroundImage:
-                                                "url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w222-h147-p-k-no-nu/p9.jpg=w72-h72-p-k-no-nu)",
-                                            }}
-                                        ></span>
-                                        </a>
-                                        <div className={style['entry-header']}>
-                                        <h2 className={style['entry-title']}>
-                                            <a
-                                            href="https://starter-pbt.blogspot.com/2021/07/google-correlate-best-seo-research-tool.html"
-                                            title="Google Correlate: The Best SEO Research Tool You Aren’t Using"
-                                            >
-                                            Google Correlate: The Best SEO Research Tool You Aren’t Using
-                                            </a>
-                                        </h2>
-                                        <div className={style['entry-meta']}>
-                                            <span className={style['entry-time']} id={style['mi']}>
-                                            <time className={style['published']} dateTime="2021-07-12T18:44:00.034+00:00">
-                                                July 12, 2021
-                                            </time>
-                                            </span>
-                                        </div>
-                                        </div>
-                                    </div>
-                                    <div className={style['related-item']} id={style['item-1']}>
-                                        <a
-                                        title="Google Search Console Made a Change to Data Calculations as of August 19"
-                                        className={`${style['entry-image-wrap']} ${style['is-image']}`}
-                                        href="https://starter-pbt.blogspot.com/2021/07/google-search-console-made-change-to.html"
-                                        >
-                                        <span
-                                            className={`${style['entry-image']} ${style['pbt-lazy']}`}
-                                            data-image="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhDn-0J_EFKWesgI7M6PcKUqtm17YYBrTaWhYT1cbI16_czmZLQ1F-1n-U79MXqcZiHm0sYUbaPIu8jx69C7SKiy1kK6YvGlNNvrjp3yTzMpHct_AxaWRdJDZaO8P6TqtKEALS5YiNNEAc/w72-h72-p-k-no-nu/p20.jpg"
-                                            style={{
-                                            backgroundImage:
-                                                "url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhDn-0J_EFKWesgI7M6PcKUqtm17YYBrTaWhYT1cbI16_czmZLQ1F-1n-U79MXqcZiHm0sYUbaPIu8jx69C7SKiy1kK6YvGlNNvrjp3yTzMpHct_AxaWRdJDZaO8P6TqtKEALS5YiNNEAc/w222-h147-p-k-no-nu/p20.jpg=w72-h72-p-k-no-nu)",
-                                            }}
-                                        ></span>
-                                        </a>
-                                        <div className={style['entry-header']}>
-                                        <h2 className={style['entry-title']}>
-                                            <a
-                                            href="https://starter-pbt.blogspot.com/2021/07/google-search-console-made-change-to.html"
-                                            title="Google Search Console Made a Change to Data Calculations as of August 19"
-                                            >
-                                            Google Search Console Made a Change to Data Calculations as of August 19
-                                            </a>
-                                        </h2>
-                                        <div className={style['entry-meta']}>
-                                            <span className={style['entry-time']} id={style['mi']}>
-                                            <time className={style['published']} dateTime="2021-07-12T18:35:00.004+00:00">
-                                                July 12, 2021
-                                            </time>
-                                            </span>
-                                        </div>
-                                        </div>
-                                    </div>
-                                    <div className={style['related-item']} id={style['item-2']}>
-                                        <a
-                                        title="SEO Glossary: 200+ Terms & Definitions You Need to Know"
-                                        className={`${style['entry-image-wrap']} ${style['is-image']}`}
-                                        href="https://starter-pbt.blogspot.com/2021/07/seo-glossary-200-terms-definitions-you.html"
-                                        >
-                                        <span
-                                            className={`${style['entry-image']} ${style['pbt-lazy']}`}
-                                            data-image="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhA3vxsHY7kpc1G5plxBLPJS-4rlel1FlClT4zF7HG36-FMJSqVWB7UJ4mcC0xxxaI430TcnJJpqCSpEOv7dib25qj1Fp7w2mV0xJMdsIv91kQ33QX7gQKA7WZDMsPjjUAtuqZSY1uaG0Q/w72-h72-p-k-no-nu/p15.jpg"
-                                            style={{
-                                            backgroundImage:
-                                                "url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhA3vxsHY7kpc1G5plxBLPJS-4rlel1FlClT4zF7HG36-FMJSqVWB7UJ4mcC0xxxaI430TcnJJpqCSpEOv7dib25qj1Fp7w2mV0xJMdsIv91kQ33QX7gQKA7WZDMsPjjUAtuqZSY1uaG0Q/w222-h147-p-k-no-nu/p15.jpg=w72-h72-p-k-no-nu)",
-                                            }}
-                                        ></span>
-                                        </a>
-                                        <div className={style['entry-header']}>
-                                        <h2 className={style['entry-title']}>
-                                            <a
-                                            href="https://starter-pbt.blogspot.com/2021/07/seo-glossary-200-terms-definitions-you.html"
-                                            title="SEO Glossary: 200+ Terms & Definitions You Need to Know"
-                                            >
-                                            SEO Glossary: 200+ Terms & Definitions You Need to Know
-                                            </a>
-                                        </h2>
-                                        <div className={style['entry-meta']}>
-                                            <span className={style['entry-time']} id={style['mi']}>
-                                            <time className={style['published']} dateTime="2021-07-12T18:34:00.002+00:00">
-                                                July 12, 2021
-                                            </time>
-                                            </span>
-                                        </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        {/*Add a New Comments*/}
-                        <div className={`${style.widget} ${style.remove_spaces} ${style.comments}`}>
-                            <div className={`${style['comments-sectison']} ${style['join_us_to_comment']}`}>
-                                <h3>
-                                    Add a New Comment
-                                </h3>
-                               <a className={style.post_comment}>Add Comment</a> 
-                            </div>
-                        </div>
-
-                        {/*Add a New Comments*/}
-                        <div className={`${style.widget} ${style.remove_spaces} ${style.comments}`}>
-                            <div className={style['comments-sectison']}>
-                                <h3>
-                                    Add a New Comment
-                                </h3>
-                                <AddNewComment thumbnail={true}/>  
-                            </div>
-                        </div>
-                        
-                        {/*Recently Comments*/}
-                        <div className={`${style.widget} ${style.remove_spaces} ${style.comments}`}>
-                            <div className={style['comments-sectison']}>
-                                <h3>
-                                    Recent Comments (15)
-                                </h3>
-                                <div className={style['comment-wrapper']}>
-                                    <div className={style['comment']}>
-                                        <div className={style['thumbnail']}>
-                                            <img src="https://placehold.co/50" alt="User Thumbnail" />
-                                        </div>
-                                        <div className={style['comment-content']}>
-                                            <div className={style['comment-details']}>
-                                                <span className={style['name']}>John Doe</span>
-                                                <span className={style['date']}>January 18, 2025</span>
-                                                <ul className={`${style.comment_meta_ul} ${style.meta_ul_result}`}>
-                                                    <li>
-                                                        5 Likes
-                                                    </li> 
-                                                    <li>
-                                                        3 Unlikes
-                                                    </li> 
-                                                </ul>                                                
-                                            </div>
-                                            <div className={style['comment-text']}>
-                                                <p>This is a great article! I learned so much from it. Thank you for
-                                                sharing!</p>
-                                            </div> 
-                                            <ul className={style.comment_meta_ul}>
-                                                <li>
-                                                    <a>Like</a>
-                                                </li>
-                                                <li>
-                                                    <a>Dislike</a>
-                                                </li>
-                                                <li>
-                                                    <a>Reply</a>
-                                                </li>
-                                            </ul>
-
-                                            
-
-                                            <div className={style.reply_comments}>
-                                                <div className={`${style['comment']} ${style['reply-to']}`}>
-                                                    
-                                                    <div className={style['thumbnail']}>
-                                                        <img src="https://placehold.co/50" alt="User Thumbnail" />
-                                                    </div>
-                                                    <div className={style['comment-content']}>
-                                                        <div className={style['comment-details']}>
-                                                            <span className={style['name']}>John Doe</span>
-                                                            <FontAwesomeIcon icon={faReply} className={style['icon-reply-to']} />
-                                                            <span className={style['date']}>January 18, 2025</span>
-                                                            <span className={style['is-author']}>Author</span>
-                                                            <ul className={`${style.comment_meta_ul} ${style.meta_ul_result}`}>
-                                                                <li>
-                                                                    5 Likes
-                                                                </li> 
-                                                                <li>
-                                                                    3 Unlikes
-                                                                </li> 
-                                                            </ul>
-                                                        </div>
-                                                        <div className={style['comment-text']}>
-                                                            <p>This is a great article! I learned so much from it. Thank you for
-                                                            sharing!</p>
-                                                        </div> 
-                                                        <ul className={style.comment_meta_ul}>
-                                                            <li>
-                                                                <a>Like</a>
-                                                            </li>
-                                                            <li>
-                                                                <a>Dislike</a>
-                                                            </li> 
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div className={`${style['comment']} ${style['reply-to']}`}>
-                                                    
-                                                    <div className={style['thumbnail']}>
-                                                        <img src="https://placehold.co/50" alt="User Thumbnail" />
-                                                    </div>
-                                                    <div className={style['comment-content']}>
-                                                        <div className={style['comment-details']}>
-                                                            <span className={style['name']}>John Doe</span>
-                                                            <FontAwesomeIcon icon={faReply} className={style['icon-reply-to']} />
-                                                            <span className={style['date']}>January 18, 2025</span>
-                                                        </div>
-                                                        <div className={style['comment-text']}>
-                                                            <p>This is a great article! I learned so much from it. Thank you for
-                                                            sharing!</p>
-                                                        </div> 
-
-                                                        <ul className={style.comment_meta_ul}>
-                                                            <li>
-                                                                <a>Like</a>
-                                                            </li>
-                                                            <li>
-                                                                <a>Dislike</a>
-                                                            </li> 
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                
-                                                
-                                            </div>
-                                            <div className={style.view_more_comments}>
-                                                <a>
-                                                   Read More (5 Replies)
-                                                </a>
-                                            </div>
-
-                                            <div className={style.add_comment_reply}>
-                                                <AddNewComment thumbnail={false}/>  
-                                            </div>
-                                        </div>
-                                        
-                                    </div>  
-                                </div>
-
-                                <div className={style['comment-wrapper']}>
-                                    <div className={style['comment']}>
-                                        <div className={style['thumbnail']}>
-                                            <img src="https://placehold.co/50" alt="User Thumbnail" />
-                                        </div>
-                                        <div className={style['comment-content']}>
-                                            <div className={style['comment-details']}>
-                                                <span className={style['name']}>John Doe</span>
-                                                <span className={style['date']}>January 18, 2025</span>
-                                                <ul className={`${style.comment_meta_ul} ${style.meta_ul_result}`}>
-                                                    <li>
-                                                        5 Likes
-                                                    </li> 
-                                                    <li>
-                                                        3 Unlikes
-                                                    </li> 
-                                                </ul>    
-                                            </div>
-                                            <div className={style['comment-text']}>
-                                                <p>This is a great article! I learned so much from it. Thank you for
-                                                sharing!</p>
-                                            </div> 
-
-                                            
-
-                                            <ul className={style.comment_meta_ul}>
-                                                <li>
-                                                    <a>Like</a>
-                                                </li>
-                                                <li>
-                                                    <a>Dislike</a>
-                                                </li> 
-                                                <li>
-                                                    <a>Reply</a>
-                                                </li> 
-                                            </ul>
-                                        </div>
-                                        
-                                    </div>   
-                                </div>
-                                
-                                
-                            </div> 
-                            <div className={`${style.view_more_comments} ${style.load_more_cmt}`}>
-                                <a>
-                                    See More (5 Comments)
-                                </a> 
-                            </div>
-                            
-                        </div> 
-                        
+   
                     </div>
                     <div className={`${style['lg-4']} ${style['md-4']} ${style['sm-12']} ${style['plr-15']} ${style['ptb-15']}`}>
                         <StickyBox offsetTop={85} offsetBottom={20}>

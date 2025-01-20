@@ -18,7 +18,7 @@ import Link from "next/link";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Config from "../services/config";
-
+import BlogSidebarComponents from "../parts/blog/sidebar";
    
 
 export default function Blog({upcoming}) {
@@ -158,112 +158,21 @@ export default function Blog({upcoming}) {
                     </div>
                     <div className={`${style['lg-4']} ${style['md-4']} ${style['sm-12']} ${style['plr-15']} ${style['ptb-15']}`}>
                         <StickyBox offsetTop={85} offsetBottom={20}>
-                            <div className={style.widget}>
-                                <div className={`${style['widget-title']} ${style['title-wrap']}`}>
-                                    <h3 className={style.title}>Become a Contributor</h3>
-                                </div>
-                                <div className={style['widget-content']}>
-                                    <Link className={`${style.load_more} ${style.write_for_us}`} href={'#'}>Submit an Article</Link>
-                                </div>
-                            </div>
-
-                            <div className={style.widget}>
-                                <div className={`${style['widget-title']} ${style['title-wrap']}`}>
-                                    <h3 className={style.title}>Follow Us</h3>
-                                </div>
-                                <div className={style['widget-content']}>
-                                    <ul className={`${style['social-icons']} ${style['social-bg']}`}>
-                                        <li className={style['facebook']}>
-                                            <Link href={'#'}>
-                                                <FontAwesomeIcon className={style.icon_social_icon} icon={Config.icons['facebook']} />
-                                                <span>Facebook</span>
-                                            </Link>
-                                        </li>
-                                        <li className={style['email']}>
-                                            <Link href={'#'}>
-                                                <FontAwesomeIcon className={style.icon_social_icon} icon={Config.icons['email']} />
-                                                <span>Contact</span>
-                                            </Link>
-                                        </li> 
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div className={style.widget}>
-                                <div className={`${style['widget-title']} ${style['title-wrap']}`}>
-                                    <h3 className={style.title}>Popular Posts</h3>
-                                </div>
-                                <div className={style['widget-content']}>
-                                    <div className={`${style['default-items']} ${style.ds} ${style['item-0']}`}>
-                                        <a
-                                            className={`${style['entry-image-wrap']} ${style['is-image']}`}
-                                            href="https://starter-pbt.blogspot.com/2021/07/google-correlate-best-seo-research-tool.html"
-                                            title="Google Correlate: The Best SEO Research Tool You Aren’t Using"
-                                        >
-                                            <span
-                                                className={`${style['entry-image']} ${style['pbt-lazy']}`}
-                                                data-image="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w72-h72-p-k-no-nu/p9.jpg"
-                                                style={{
-                                                    backgroundImage:
-                                                        "url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w99-h66-p-k-no-nu/p9.jpg=w72-h72-p-k-no-nu)",
-                                                }}
-                                            ></span>
-                                        </a>
-                                        <div className={style['entry-header']}>
-                                            <h2 className={style['entry-title']}>
-                                                <a
-                                                    href="https://starter-pbt.blogspot.com/2021/07/google-correlate-best-seo-research-tool.html"
-                                                    title="Google Correlate: The Best SEO Research Tool You Aren’t Using"
-                                                >
-                                                    Google Correlate: The Best SEO Research Tool You Aren’t Using
-                                                </a>
-                                            </h2>
-                                            <div className={style['entry-meta']}>
-                                                <span className={style['entry-time']}>
-                                                    <time className={style.published} dateTime="2021-07-12T18:44:00Z">
-                                                        July 12, 2021
-                                                    </time>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div> 
-                                </div>
-
-                            </div>
-
-                            <div className={style.widget}>
-                                <div className={`${style['widget-title']} ${style['title-wrap']}`}>
-                                    <h3 className={style.title}>Categories</h3>
-                                </div>
-                                <div className={style['widget-content']}>
-                                    <div className={`${style['cloud-label']} ${style.ds} ${style['item-0']}`}>
-                                        <ul className={`${style['cloud-categories']}`}>
-                                            <li><Link className={`${style['label-name']}`} href="#">JavaScript</Link></li>
-                                            <li><Link className={`${style['label-name']}`} href="#">Fushion</Link></li>
-                                            <li><Link className={`${style['label-name']}`} href="#">PHP</Link></li>
-                                            <li><Link className={`${style['label-name']}`} href="#">C++</Link></li>
-                                            <li><Link className={`${style['label-name']}`} href="#">C Sharp</Link></li> 
-                                        </ul>
-                                    </div> 
-                                </div>
-                            </div>
-
-                            <div className={style.widget}>
-                                <div className={`${style['widget-title']} ${style['title-wrap']}`}>
-                                    <h3 className={style.title}>Tags</h3>
-                                </div>
-                                <div className={style['widget-content']}>
-                                    <div className={`${style['cloud-label']} ${style.ds} ${style['item-0']}`}>
-                                        <ul className={`${style['cloud-style']}`}>
-                                            <li><Link className={`${style['label-name']}`} href="#">JavaScript</Link></li>
-                                            <li><Link className={`${style['label-name']}`} href="#">Fushion</Link></li>
-                                            <li><Link className={`${style['label-name']}`} href="#">PHP</Link></li>
-                                            <li><Link className={`${style['label-name']}`} href="#">C++</Link></li>
-                                            <li><Link className={`${style['label-name']}`} href="#">C Sharp</Link></li> 
-                                        </ul>
-                                    </div> 
-                                </div>
-                            </div>
+                            <BlogSidebarComponents
+                                menus={upcoming.menus}
+                                popular_posts={upcoming.popular_posts.data}
+                                categories={upcoming.categories}
+                                tags={upcoming.tags}
+                                ads={[]}
+                                enable={{
+                                    popular_posts: (!upcoming.popular_posts.is_error  && true),
+                                    follow_us: (upcoming?.menus?.follow_links?.length  && true),
+                                    become_contributor: (upcoming?.menus?.company_links?.length  && true),
+                                    categories: (upcoming?.categories?.length  && true),
+                                    tags: (upcoming?.tags?.length  && true),
+                                    ads:  (!upcoming?.ads?.is_error && true),
+                                }}
+                            />
                         </StickyBox>
                     </div>
                 </div>
