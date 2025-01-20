@@ -523,7 +523,7 @@ var FeedBackBlock = ({data_id, data_title, feeadback_title }) => {
 
 }
 
-function SubscribeComponents ({is_footer, title, description, camp_data, settings, adsReady }) {
+function SubscribeComponents ({is_footer, title, description, camp_data, settings, adsReady, isSmallBtn }) {
 
   var main_settings = settings; 
   
@@ -629,8 +629,9 @@ function SubscribeComponents ({is_footer, title, description, camp_data, setting
       value={email}
       onChange={e => setEmail(e.target.value)}
       placeholder="example@email.com"
+      className={`${isSmallBtn?' ' + style['subscribe-smallb-field']: ''}`}
     />
-    <button className={`${style.btn} ${style['primary-btn']}`} type="submit" onClick={send_data}>
+    <button className={`${style.btn} ${style['primary-btn']}${isSmallBtn?' ' + style['subscribe-smallb-btn']: ''}`} type="submit" onClick={send_data}>
       {result.is_pressed ? (
         <span className={`${style.loader}`}></span>
       ) : (

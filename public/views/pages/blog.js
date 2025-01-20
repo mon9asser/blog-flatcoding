@@ -19,10 +19,34 @@ import Link from "next/link";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Config from "../services/config";
 import BlogSidebarComponents from "../parts/blog/sidebar";
+import { useEffect, useState } from "react";
    
 
 export default function Blog({upcoming}) {
-    console.log(upcoming);
+     
+    
+    var [paging, setPaging] = useState({
+        current_page: 0, 
+        total_pages: -1,
+        total_posts: -1,
+        posts: []
+    });
+    
+    var [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        
+        // store current paging  
+        if(upcoming.latest_posts && ! upcoming.latest_posts.is_error) {           
+            if( upcoming.latest_posts.data.pagination ) { 
+                setPaging({
+                    ...upcoming.latest_posts.data.pagination, 
+                    posts: upcoming.latest_posts.data.posts                    
+                });
+            }
+        } 
+
+    }, [upcoming]);
     
     var header_content = parse(upcoming.header);
     var footer_content = parse(upcoming.footer);
@@ -50,6 +74,41 @@ export default function Blog({upcoming}) {
         } 
     });
 
+    // load more posts
+    var load_more_posts = async (e) => {
+        e.preventDefault();
+        setIsLoading(true);
+        var current_page    = paging.current_page,
+            total_pages     = paging.total_pages;
+                  
+        if(current_page <= total_pages) {
+            current_page++; 
+        }
+
+        ///api/latest_posts/?page_number=4
+        var latest_request = await Helper.sendNTRequest({
+            api: `latest_posts?page_number=${current_page}`,
+            method: "get",
+            data: {}
+        });
+
+        var response = await latest_request.json();
+        
+        // Something went wrong (Show message)
+        if(response.is_error) {
+            setIsLoading(false);
+            return;
+        }
+
+        var pagination = response.data.pagination;
+        var posts = response.data.posts;
+        setPaging({
+            ...pagination,
+            posts: [...paging.posts, ...posts]
+        });
+        setIsLoading(false);
+
+    }
 
     var color = [
         '#d63031', '#6c5ce7', '#00b894', '#2d3436', '#182C61',
@@ -102,58 +161,57 @@ export default function Blog({upcoming}) {
                     <div className={`${style['lg-8']} ${style['md-8']} ${style['sm-12']} ${style['plr-15']} ${style['ptb-15']}`}>
                         <div id='posts-wrap'>
                             
-                            <div className={style.blog_post_wrap}>
-                                <div className={style['entry-header']}>
-                                    <h2 className={style['entry-title']}>
-                                        <Link href={'#'}>Google Correlate: The Best SEO Research Tool You Aren’t Using</Link>
-                                    </h2>
-                                    <div className={style['entry-meta']}>
-                                        <ul className={`${style['entry-author']} ${style['category-label-meta']} ${style.mi}`}>
-                                            <li>
-                                                <Link style={getRandomColor()} href='#'>
-                                                    JavaScript
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link style={getRandomColor()} href='#'>
-                                                    PHP
-                                                </Link>
-                                            </li>
-                                        </ul>
+                            {
+                                !paging.posts.length ? '' : (
+                                    paging.posts.map(post => {
+                                         
+                                        return (
+                                            <div key={post.id} className={style.blog_post_wrap}>
+                                                <div className={style['entry-header']}>
+                                                    <h2 className={style['entry-title']}>
+                                                        <Link href={post.link}>{post.title}</Link>
+                                                    </h2>
+                                                    <div className={style['entry-meta']}>
+                                                        <ul className={`${style['entry-author']} ${style['category-label-meta']} ${style.mi}`}>
+                                                            {
+                                                                !post.tags.length ? '':post.tags.map(x =><li><Link style={getRandomColor()} href={x.url}>{x.name}</Link></li>)
+                                                            } 
+                                                        </ul>
 
-                                        <span className={`${style['entry-author']} ${style.mi}`}>
-                                            <span className={`${style['by']} ${style['sp']}`}>by</span>
-                                            <a className={`${style['author-name']}`}>John Doe</a>
-                                        </span>
-                                        <span className={style["entry-time mi"]}>
-                                            <span className={style["sp"]}>•</span>
-                                            <time className={style["published"]} dateTime="2021-07-12T18:44:00Z">July 12, 2021</time>
-                                        </span>
-                                        
-                                    </div>
-                                </div>
-                                <div className={style['entry-content']}>
-                                    <Link href={'#'} className={style['entry-image-wrap']}> 
-                                        <span
-                                            className={`${style['entry-thumbnail']} ${style['pbt-lazy']}`}
-                                            data-image="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w72-h72-p-k-no-nu/p9.jpg"
-                                            style={{
-                                                backgroundImage:
-                                                    "url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w99-h66-p-k-no-nu/p9.jpg=w72-h72-p-k-no-nu)",
-                                            }}
-                                        ></span>
-                                    </Link>
-                                    <p className={`${style['entry-excerpt']}`}>
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.
-                                    </p>
-                                </div>
-                            </div>
-
+                                                        <span className={`${style['entry-author']} ${style.mi}`}>
+                                                            <span className={`${style['by']} ${style['sp']}`}>by</span>
+                                                            <Link href={post.author.url} className={`${style['author-name']}`}>{Helper.UppercaseName(post.author.name)}</Link>
+                                                        </span>
+                                                        <span className={style["entry-time mi"]}>
+                                                            <span className={style["sp"]}>•</span>
+                                                            <time className={style["published"]} dateTime={post.last_modified}>{Helper.formatDate(post.last_modified)}</time>
+                                                        </span>
+                                                        
+                                                    </div>
+                                                </div>
+                                                <div className={style['entry-content']}>
+                                                    <Link href={post.link} className={style['entry-image-wrap']}> 
+                                                        <span
+                                                            className={`${style['entry-thumbnail']} ${style['pbt-lazy']}`}
+                                                            style={{ backgroundImage: `url(${post.thumbnail})`}}
+                                                        ></span>
+                                                    </Link>
+                                                    <p className={`${style['entry-excerpt']}`}>{post.excerpt}</p>
+                                                </div>
+                                            </div>
+                                        );
+                                    })
+                                )
+                            }
  
                         </div>
 
                         <div className={`${style.widget} ${style.remove_spaces}`}>
-                            <a className={style.load_more}>Load More</a>
+                            {
+                                paging.current_page == paging.total_pages ? <span>No more posts found!</span>: <Link href={'#'} onClick={load_more_posts} className={style.load_more + ' ' + style.btn_load_more}>
+                                    {isLoading? <span className={style.loader}></span>: 'Load More'}
+                                </Link>
+                            }
                         </div> 
                     </div>
                     <div className={`${style['lg-4']} ${style['md-4']} ${style['sm-12']} ${style['plr-15']} ${style['ptb-15']}`}>

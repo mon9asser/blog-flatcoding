@@ -215,7 +215,28 @@ class HelperData {
   
     return staticData;
   };
-  
+
+  sendNTRequest = async ({ api, method, params }) => {
+    const options = {
+        method: method.toUpperCase(),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    // Construct the base URL
+    let url = `/api/${api}`;
+
+    // If params exist, append them as query strings
+    if (params && typeof params === 'object') {
+        const queryString = new URLSearchParams(params).toString(); // Convert params object to query string
+        url += `?${queryString}`; // Append query string to the URL
+    }
+
+    return fetch(url, options);
+};
+
+
     sendWPRequest = async ({ api, method, data }) => {
       
       const options = {
@@ -288,6 +309,21 @@ class HelperData {
         .replace(/'/g, '&#39;')  // Escape '
         .replace(/\//g, '&#47;'); // Escape /
   }
+
+  
+  generateSlugName(text) {
+    return text.replace(/\s+/g, '_').toLowerCase();
+  }
+
+  UppercaseName(fullName) {
+    if (!fullName) return ''; // Handle empty or null input
+
+    return fullName
+        .split(' ') // Split the string into an array of words
+        .map(name => name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()) // Capitalize each word
+        .join(' '); // Join the array back into a single string
+  }
+
 }
 
 var Helper = new HelperData();

@@ -4066,6 +4066,12 @@ li.has-slideitem>a.active::after {
     animation: rotation 1s linear infinite;
 }
 
+.btn_load_more {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
 
 .ssreash {
     color: #0a0a23;
@@ -6510,4 +6516,13 @@ img.half, div.feature-block svg, .feature-block {
     width: fit-content; 
     margin-top: 25px;
     margin-left: auto;
+}
+
+.subscribe-smallb-btn { 
+    font-size: 13px !important;
+    padding: 0 10px !important;
+}
+
+.subscribe-smallb-field {
+     padding-right: 80px !important;
 }

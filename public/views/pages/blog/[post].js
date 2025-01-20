@@ -640,6 +640,40 @@ export default function Tag({upcoming}) {
                                             </div>
                                         </div>
                                     </div> 
+
+                                    <div className={`${style['default-items']} ${style.ds} ${style['item-0']}`}>
+                                        <a
+                                            className={`${style['entry-image-wrap']} ${style['is-image']}`}
+                                            href="https://starter-pbt.blogspot.com/2021/07/google-correlate-best-seo-research-tool.html"
+                                            title="Google Correlate: The Best SEO Research Tool You Aren’t Using"
+                                        >
+                                            <span
+                                                className={`${style['entry-image']} ${style['pbt-lazy']}`}
+                                                data-image="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w72-h72-p-k-no-nu/p9.jpg"
+                                                style={{
+                                                    backgroundImage:
+                                                        "url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w99-h66-p-k-no-nu/p9.jpg=w72-h72-p-k-no-nu)",
+                                                }}
+                                            ></span>
+                                        </a>
+                                        <div className={style['entry-header']}>
+                                            <h2 className={style['entry-title']}>
+                                                <a
+                                                    href="https://starter-pbt.blogspot.com/2021/07/google-correlate-best-seo-research-tool.html"
+                                                    title="Google Correlate: The Best SEO Research Tool You Aren’t Using"
+                                                >
+                                                    Google Correlate: The Best SEO Research Tool You Aren’t Using
+                                                </a>
+                                            </h2>
+                                            <div className={style['entry-meta']}>
+                                                <span className={style['entry-time']}>
+                                                    <time className={style.published} dateTime="2021-07-12T18:44:00Z">
+                                                        July 12, 2021
+                                                    </time>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div> 
                                 </div>
 
                             </div>

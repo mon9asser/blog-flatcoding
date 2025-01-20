@@ -13,7 +13,7 @@ import Link from "next/link";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Config from "./../../services/config"; 
-
+import { SubscribeComponents } from "./../../services/components";
  /*
     enable.become_contributor;
     enable.follow_us;
@@ -26,6 +26,9 @@ var BlogSidebarComponents = ({menus, popular_posts, categories, tags, ads, enabl
     
     var contributer_page_array = menus.company_links.filter( x => x.link.indexOf('write-for-us') !== -1 );
     var contributer_request_page = contributer_page_array.length?contributer_page_array[0]: {}
+
+    var follow_us = menus.follow_links;
+    
 
     return <>
 
@@ -50,18 +53,21 @@ var BlogSidebarComponents = ({menus, popular_posts, categories, tags, ads, enabl
                 </div>
                 <div className={style['widget-content']}>
                     <ul className={`${style['social-icons']} ${style['social-bg']}`}>
-                        <li className={style['facebook']}>
-                            <Link href={'#'}>
-                                <FontAwesomeIcon className={style.icon_social_icon} icon={Config.icons['facebook']} />
-                                <span>Facebook</span>
-                            </Link>
-                        </li>
-                        <li className={style['email']}>
-                            <Link href={'#'}>
-                                <FontAwesomeIcon className={style.icon_social_icon} icon={Config.icons['email']} />
-                                <span>Contact</span>
-                            </Link>
-                        </li> 
+                        {
+                            follow_us?.map( (x, ind) => {
+                                
+                                var slug = Helper.generateSlugName(x.title);
+
+                                return (
+                                    <li key={ind} className={style[slug]}>
+                                        <Link href={x.link}>
+                                            <FontAwesomeIcon className={style.icon_social_icon} icon={Config.icons[slug]} />
+                                            <span>{x.title}</span>
+                                        </Link>
+                                    </li> 
+                                );
+                            })
+                        }
                     </ul>
                 </div>
             </div>
@@ -69,54 +75,50 @@ var BlogSidebarComponents = ({menus, popular_posts, categories, tags, ads, enabl
         }
 
         {
-            enable?.popular_posts ?
-            <div className={style.widget}>
-                <div className={`${style['widget-title']} ${style['title-wrap']}`}>
-                    <h3 className={style.title}>Popular Posts</h3>
-                </div>
-                <div className={style['widget-content']}>
-                    <div className={`${style['default-items']} ${style.ds} ${style['item-0']}`}>
-                        <a
-                            className={`${style['entry-image-wrap']} ${style['is-image']}`}
-                            href="https://starter-pbt.blogspot.com/2021/07/google-correlate-best-seo-research-tool.html"
-                            title="Google Correlate: The Best SEO Research Tool You Aren’t Using"
-                        >
-                            <span
-                                className={`${style['entry-image']} ${style['pbt-lazy']}`}
-                                data-image="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w72-h72-p-k-no-nu/p9.jpg"
-                                style={{
-                                    backgroundImage:
-                                        "url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w99-h66-p-k-no-nu/p9.jpg=w72-h72-p-k-no-nu)",
-                                }}
-                            ></span>
-                        </a>
-                        <div className={style['entry-header']}>
-                            <h2 className={style['entry-title']}>
+            (enable?.popular_posts && popular_posts.length) ?
+                <div className={style.widget}>
+                    <div className={`${style['widget-title']} ${style['title-wrap']}`}>
+                        <h3 className={style.title}>Popular Posts</h3>
+                    </div>
+                    <div className={style['widget-content']}>
+                        {
+                            popular_posts.map((x, k) =><div key={k} className={`${style['default-items']} ${style.ds} ${style['item-0']}`}>
                                 <a
-                                    href="https://starter-pbt.blogspot.com/2021/07/google-correlate-best-seo-research-tool.html"
-                                    title="Google Correlate: The Best SEO Research Tool You Aren’t Using"
+                                    className={`${style['entry-image-wrap']} ${style['is-image']}`}
+                                    href={x.link}
+                                    title={x.title}
                                 >
-                                    Google Correlate: The Best SEO Research Tool You Aren’t Using
+                                    <span
+                                        className={`${style['entry-image']} ${style['pbt-lazy']}`}
+                                        style={{backgroundImage:`url(${x.thumbnail})`}}
+                                    ></span>
                                 </a>
-                            </h2>
-                            <div className={style['entry-meta']}>
-                                <span className={style['entry-time']}>
-                                    <time className={style.published} dateTime="2021-07-12T18:44:00Z">
-                                        July 12, 2021
-                                    </time>
-                                </span>
-                            </div>
-                        </div>
-                    </div> 
+                                <div className={style['entry-header']}>
+                                    <h2 className={style['entry-title']}>
+                                        <a
+                                            href={x.link}
+                                            title={x.title}
+                                        >
+                                            {x.title}
+                                        </a>
+                                    </h2>
+                                    <div className={style['entry-meta']}>
+                                        <span className={style['entry-time']}>
+                                            <time className={style.published} dateTime={x.last_modified}>
+                                                {Helper.formatDate(x.last_modified)}
+                                            </time>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>)
+                        }
+                    </div>
                 </div>
-
-            </div>
             :''
         }
         
-
         {
-            enable?.categories ?
+            (enable?.categories && categories.length) ?
             <div className={style.widget}>
                 <div className={`${style['widget-title']} ${style['title-wrap']}`}>
                     <h3 className={style.title}>Categories</h3>
@@ -124,11 +126,9 @@ var BlogSidebarComponents = ({menus, popular_posts, categories, tags, ads, enabl
                 <div className={style['widget-content']}>
                     <div className={`${style['cloud-label']} ${style.ds} ${style['item-0']}`}>
                         <ul className={`${style['cloud-categories']}`}>
-                            <li><Link className={`${style['label-name']}`} href="#">JavaScript</Link></li>
-                            <li><Link className={`${style['label-name']}`} href="#">Fushion</Link></li>
-                            <li><Link className={`${style['label-name']}`} href="#">PHP</Link></li>
-                            <li><Link className={`${style['label-name']}`} href="#">C++</Link></li>
-                            <li><Link className={`${style['label-name']}`} href="#">C Sharp</Link></li> 
+                            {
+                                categories.map(x => <li key={x.id}><Link className={`${style['label-name']}`} href={x.link}>{x.name}</Link></li>)
+                            }
                         </ul>
                     </div> 
                 </div>
@@ -136,8 +136,19 @@ var BlogSidebarComponents = ({menus, popular_posts, categories, tags, ads, enabl
             :''
         }
 
+            <div className={style.widget}>
+                <div className={`${style['widget-title']} ${style['title-wrap']}`}>
+                    <h3 className={style.title}>Subscribe</h3>
+                </div>
+                <div className={style['widget-content']}>
+                    <div className={`${style['cloud-label']} ${style.ds} ${style['item-0']}`}>
+                        <SubscribeComponents isSmallBtn={true}/>
+                    </div> 
+                </div>
+            </div>
+
         {
-            enable?.tags ?
+            (enable?.tags && tags.length) ?
             <div className={style.widget}>
                 <div className={`${style['widget-title']} ${style['title-wrap']}`}>
                     <h3 className={style.title}>Tags</h3>
@@ -145,11 +156,9 @@ var BlogSidebarComponents = ({menus, popular_posts, categories, tags, ads, enabl
                 <div className={style['widget-content']}>
                     <div className={`${style['cloud-label']} ${style.ds} ${style['item-0']}`}>
                         <ul className={`${style['cloud-style']}`}>
-                            <li><Link className={`${style['label-name']}`} href="#">JavaScript</Link></li>
-                            <li><Link className={`${style['label-name']}`} href="#">Fushion</Link></li>
-                            <li><Link className={`${style['label-name']}`} href="#">PHP</Link></li>
-                            <li><Link className={`${style['label-name']}`} href="#">C++</Link></li>
-                            <li><Link className={`${style['label-name']}`} href="#">C Sharp</Link></li> 
+                            {
+                                tags.map(x => <li key={x.id}><Link className={`${style['label-name']}`} href={x.link}>{x.name}</Link></li>)
+                            }
                         </ul>
                     </div> 
                 </div>
