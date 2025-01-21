@@ -34,7 +34,8 @@ export default function Blog({upcoming}) {
         total_posts: -1,
         posts: []
     });
-    
+
+    var [userNeedsToLoadMore, setUserNeedsToLoadMore] = useState(false); 
     var [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
@@ -74,13 +75,31 @@ export default function Blog({upcoming}) {
                 "@type": "ImageObject",
                 "url": upcoming.site_logo // Ensure this is a valid URL to your site's logo
             }
-        } 
+        },
+        "breadcrumb": {
+        "@type": "BreadcrumbList",
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": `${upcoming.site_url}`
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Blog",
+                    "item": `${upcoming.site_url}blog/`
+                } 
+            ]
+        }
     });
 
     // load more posts
     var load_more_posts = async (e) => {
         e.preventDefault();
         setIsLoading(true);
+        setUserNeedsToLoadMore(true);
         var current_page    = paging.current_page,
             total_pages     = paging.total_pages;
                   
@@ -167,7 +186,7 @@ export default function Blog({upcoming}) {
                             
                             {
                                 !upcoming.latest_posts.data.posts.length ? '' : (
-                                    upcoming.latest_posts.data.posts.map(post => {
+                                    (userNeedsToLoadMore ? paging.posts: upcoming.latest_posts.data.posts).map(post => {
                                          
                                         return (
                                             <div key={post.id} className={style.blog_post_wrap}>

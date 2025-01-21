@@ -13,6 +13,7 @@ import {
     TutorialsContent
 } from "./../../services/components"; 
 
+import BlogSidebarComponents from "../../parts/blog/sidebar";
 import { SocialShare } from "./../../services/components";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -31,13 +32,12 @@ const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 
 
-export default function Tag({upcoming}) {
+export default function Post({upcoming}) {
     
     
     console.log(upcoming);
-    const [value, setValue] = useState('');
 
-    
+    const [value, setValue] = useState('');
     
     var header_content = parse(upcoming.header);
     var footer_content = parse(upcoming.footer);
@@ -48,7 +48,8 @@ export default function Tag({upcoming}) {
         '#182C61', '#82589F', '#6D214F', '#6ab04c', '#e056fd',
         '#30336b', '#0fb9b1', '#eb3b5a', '#778ca3', '#8854d0' 
     ];
-    
+
+ 
     const getRandomColor = () => {
         var bg = color[Math.floor(Math.random() * color.length)];
         return {
@@ -88,9 +89,117 @@ export default function Tag({upcoming}) {
             <a className={style.post_comment} href='#'>Submit</a> 
         </>
     }
+
+
+
+    var faqs = upcoming.single_post.data.faqs;
+    var faqs_schema = '';
+    // Check if FAQs exist and append them as "mainEntity" of the Article
+    if (faqs && faqs.length) {
+        var faqEntities = faqs.map((faq) => {
+            
+            return {
+                "@type": "Question",
+                "name": faq.question,
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": faq.answer
+                }
+            };
+        });        
+    
+        // Adding FAQs as part of the main JSON-LD object
+        faqs_schema += `
+            "mainEntity": { 
+                "@type": "FAQPage",
+                "mainEntity": ${JSON.stringify(faqEntities)}
+            }
+        `;
+    }
+    // JSON LD Schema
+    var json_data_var = `{
+                            "@context": "https://schema.org",
+                            "@type": "Article",
+                            "headline": "${upcoming.single_post.data?.title}",   
+                            "author": {
+                                "@type": "Organization",
+                                "name": "${upcoming?.title}"  
+                            },
+                            "datePublished": "${upcoming.single_post.data.publish_date}",   
+                            "dateModified": "${upcoming.single_post.data.last_modified}",   
+                            "description": "${upcoming?.meta_description}",   
+                            "publisher": {
+                                "@type": "Organization",
+                                "name": "${upcoming?.title}",  
+                                "logo": {
+                                    "@type": "ImageObject",
+                                    "url": "${upcoming.site_logo}"  
+                                }
+                            },
+                            "mainEntityOfPage": {
+                                "@type": "WebPage",
+                                "@id": "${upcoming.single_post.data.link}"   
+                            },
+                            "url": "${upcoming.single_post.data.link}",
+                             
+                            "breadcrumb": {
+                                "@context": "https://schema.org",
+                                "@type": "BreadcrumbList",
+                                "itemListElement": [
+                                    {
+                                        "@type": "ListItem",
+                                        "position": 1,
+                                        "name": "Home",
+                                        "item": "${upcoming.site_url}"
+                                    },
+                                    {
+                                        "@type": "ListItem",
+                                        "position": 2,
+                                        "name": "Blog",
+                                        "item": "${upcoming.site_url}blog/"
+                                    },
+                                    {
+                                        "@type": "ListItem",
+                                        "position": 3,
+                                        "name": "${upcoming.single_post.data.title}",
+                                        "item": "${upcoming.single_post.data.link}"
+                                    }, 
+                                ]
+                            }
+                            
+                            ${faqs_schema && faqs_schema != '' ? ',' + faqs_schema : ''}
+                        }`;
     return <>
         <Head>
-             
+                     
+            <title>{upcoming?.meta_title}</title>
+            <meta name="description" content={upcoming?.meta_description} />
+            {
+                upcoming?.single_post?.data?.allow_post_indexing == false ?
+                <meta name="robots" content={"noindex, nofollow, noarchive, nosnippet, noodp, notranslate, noimageindex"} />
+                : ""
+            }
+            <link rel="canonical" href={upcoming.single_post.link}/>
+            <meta property="og:locale" content="en_US"/>
+            <meta property="og:type" content="article"/>
+
+            <meta property="og:title" content={upcoming?.meta_title}/>
+            <meta property="og:description" content={upcoming?.meta_description}/>
+            <meta property="og:url" content={upcoming.single_post.link}/>
+            <meta property="og:site_name" content={upcoming.title}/>
+            {
+                upcoming.single_post.thumbnail ?
+                (
+                    <meta name="twitter:card" content="summary_large_image"/>,
+                    <meta property="og:image" content={upcoming.single_post.thumbnail}/>,
+                    <meta name="twitter:image" content={upcoming.single_post.thumbnail}/>
+                )
+                : ""
+            }
+            
+            <script type="application/ld+json" dangerouslySetInnerHTML={{__html: json_data_var}} /> 
+            
+            {header_content}
         </Head>
 
         <Header 
@@ -116,101 +225,44 @@ export default function Tag({upcoming}) {
                                 
 
                                 <div className={style['entry-header']}>
-                                    <h1 className={`${style["tutorial-headline"]}`}>Google Correlate: The Best SEO Research Tool You Aren’t Using</h1>    
+                                    <h1 className={`${style["tutorial-headline"]}`}>{upcoming.single_post.data.title}</h1>    
                                     <div className={`${style['entry-meta']} ${style['post-entry-meta']}`}>
                                         <Link href={'#'} className={style.author}>
                             
-                                            <span
+                                            {/*<span
                                                 className={`${style['authot-thumb']} ${style['pbt-lazy']}`}
                                                 data-image="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w72-h72-p-k-no-nu/p9.jpg"
                                                 style={{
                                                     backgroundImage:
                                                         "url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w99-h66-p-k-no-nu/p9.jpg=w72-h72-p-k-no-nu)",
                                                 }}
-                                            ></span> 
-                                            <span>David Albert</span>
+                                            ></span>*/} 
+                                            <Image
+                                                src={upcoming.single_post.data.author.avatar}
+                                                alt="Default Thumbnail"
+                                                style={{ objectFit: 'cover' }} // Replace `objectFit="cover"` with inline styles
+                                                priority 
+                                                width={30}
+                                                height={30}
+                                                className={style.user_avatar}
+                                                decoding="async"
+                                            />
+                                            <span>{Helper.UppercaseName(upcoming.single_post.data.author.name)}</span>
                                         </Link>
 
                                         <span className={style["entry-time mi"]}>
                                             <span className={style["sp"]}>•</span>
-                                            <time className={style["published"]} dateTime="2021-07-12T18:44:00Z">July 12, 2021</time>
+                                            <time className={style["published"]} dateTime={upcoming.single_post.data.last_modified}>{Helper.formatDate(upcoming.single_post.data.last_modified)}</time>
                                         </span>
                                     </div>
                                 </div>
                                 
-                                <div className={`${style['entry-content']} ${style['single--content']}`}> 
-                                    
-                                    <Image
-                                        className={`half`} // half
-                                        alt={'Image Thumbnail'}
-                                        height={250}
-                                        src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w99-h66-p-k-no-nu/p9.jpg=w72-h72-p-k-no-nu" 
-                                        width={750}
-                                    />
+                                <div 
+                                    className={`${style['entry-content']} 
+                                    ${style['single--content']}`} 
+                                    dangerouslySetInnerHTML={{__html: upcoming.single_post.data.content}}
+                                />
 
-                                    <p>This is an example post content area. Here, you can share engaging articles, stories, and updates with your audience.</p>
-                                    <p>This is an example post content area. Here, you can share engaging articles, stories, and updates with your audience.</p>
-                                    <p>This is an example post content area. Here, you can share engaging articles, stories, and updates with your audience.</p>
- 
-                                    <h2>Key Features:</h2>
-                                    <ul>
-                                        <li>High-quality content</li>
-                                        <li>Engaging visuals</li>
-                                        <li>Responsive design</li>
-                                    </ul>
-
-                                    
-                                    <h2>Steps to Success:</h2>
-                                    <ol>
-                                        <li>Plan your content strategy</li>
-                                        <li>Create valuable posts</li>
-                                        <li>Engage with your readers</li>
-                                    </ol>
-
-                                    
-                                    <blockquote>
-                                        <p>"Content is king, but engagement is queen, and the lady rules the house!"</p>
-                                    </blockquote>
-
-                                     
-                                    <h2>Watch Our Introduction Video:</h2>
-                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video" frameborder="0" allowFullScreen></iframe>
-
-                                    
-                                    <h2>Sample Code Snippet:</h2>
-                                    <pre><code>
-                                        ${`function greetUser() {
-                                            console.log("Hello, WordPress World!");
-                                        }`}
-                                    </code></pre>
- 
-
-                                    
-                                    <h2>Comparison Table:</h2>
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Feature</th>
-                                                <th>Free Plan</th>
-                                                <th>Pro Plan</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Storage</td>
-                                                <td>1 GB</td>
-                                                <td>10 GB</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Support</td>
-                                                <td>Email</td>
-                                                <td>Priority Email & Phone</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                            
-
-                                </div>
                                 <div className={`${style['entry-labels']} ${style['list-tags']}`}>
                                     <span className={style["labels-label"]}>Tags:</span>
                                     <a className={style["label-link"]} href="https://starter-pbt.blogspot.com/search/label/Content%20Marketing" rel="tag">Content Marketing</a>
@@ -571,146 +623,21 @@ export default function Tag({upcoming}) {
                     </div>
                     <div className={`${style['lg-4']} ${style['md-4']} ${style['sm-12']} ${style['plr-15']} ${style['ptb-15']}`}>
                         <StickyBox offsetTop={85} offsetBottom={20}>
-                            <div className={style.widget}>
-                                <div className={`${style['widget-title']} ${style['title-wrap']}`}>
-                                    <h3 className={style.title}>Become a Contributor</h3>
-                                </div>
-                                <div className={style['widget-content']}>
-                                    <Link className={`${style.load_more} ${style.write_for_us}`} href={'#'}>Submit an Article</Link>
-                                </div>
-                            </div>
-
-                            <div className={style.widget}>
-                                <div className={`${style['widget-title']} ${style['title-wrap']}`}>
-                                    <h3 className={style.title}>Follow Us</h3>
-                                </div>
-                                <div className={style['widget-content']}>
-                                    <ul className={`${style['social-icons']} ${style['social-bg']}`}>
-                                        <li className={style['facebook']}>
-                                            <Link href={'#'}>
-                                                <FontAwesomeIcon className={style.icon_social_icon} icon={Config.icons['facebook']} />
-                                                <span>Facebook</span>
-                                            </Link>
-                                        </li>
-                                        <li className={style['email']}>
-                                            <Link href={'#'}>
-                                                <FontAwesomeIcon className={style.icon_social_icon} icon={Config.icons['email']} />
-                                                <span>Contact</span>
-                                            </Link>
-                                        </li> 
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div className={style.widget}>
-                                <div className={`${style['widget-title']} ${style['title-wrap']}`}>
-                                    <h3 className={style.title}>Popular Posts</h3>
-                                </div>
-                                <div className={style['widget-content']}>
-                                    <div className={`${style['default-items']} ${style.ds} ${style['item-0']}`}>
-                                        <a
-                                            className={`${style['entry-image-wrap']} ${style['is-image']}`}
-                                            href="https://starter-pbt.blogspot.com/2021/07/google-correlate-best-seo-research-tool.html"
-                                            title="Google Correlate: The Best SEO Research Tool You Aren’t Using"
-                                        >
-                                            <span
-                                                className={`${style['entry-image']} ${style['pbt-lazy']}`}
-                                                data-image="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w72-h72-p-k-no-nu/p9.jpg"
-                                                style={{
-                                                    backgroundImage:
-                                                        "url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w99-h66-p-k-no-nu/p9.jpg=w72-h72-p-k-no-nu)",
-                                                }}
-                                            ></span>
-                                        </a>
-                                        <div className={style['entry-header']}>
-                                            <h2 className={style['entry-title']}>
-                                                <a
-                                                    href="https://starter-pbt.blogspot.com/2021/07/google-correlate-best-seo-research-tool.html"
-                                                    title="Google Correlate: The Best SEO Research Tool You Aren’t Using"
-                                                >
-                                                    Google Correlate: The Best SEO Research Tool You Aren’t Using
-                                                </a>
-                                            </h2>
-                                            <div className={style['entry-meta']}>
-                                                <span className={style['entry-time']}>
-                                                    <time className={style.published} dateTime="2021-07-12T18:44:00Z">
-                                                        July 12, 2021
-                                                    </time>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div> 
-
-                                    <div className={`${style['default-items']} ${style.ds} ${style['item-0']}`}>
-                                        <a
-                                            className={`${style['entry-image-wrap']} ${style['is-image']}`}
-                                            href="https://starter-pbt.blogspot.com/2021/07/google-correlate-best-seo-research-tool.html"
-                                            title="Google Correlate: The Best SEO Research Tool You Aren’t Using"
-                                        >
-                                            <span
-                                                className={`${style['entry-image']} ${style['pbt-lazy']}`}
-                                                data-image="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w72-h72-p-k-no-nu/p9.jpg"
-                                                style={{
-                                                    backgroundImage:
-                                                        "url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w99-h66-p-k-no-nu/p9.jpg=w72-h72-p-k-no-nu)",
-                                                }}
-                                            ></span>
-                                        </a>
-                                        <div className={style['entry-header']}>
-                                            <h2 className={style['entry-title']}>
-                                                <a
-                                                    href="https://starter-pbt.blogspot.com/2021/07/google-correlate-best-seo-research-tool.html"
-                                                    title="Google Correlate: The Best SEO Research Tool You Aren’t Using"
-                                                >
-                                                    Google Correlate: The Best SEO Research Tool You Aren’t Using
-                                                </a>
-                                            </h2>
-                                            <div className={style['entry-meta']}>
-                                                <span className={style['entry-time']}>
-                                                    <time className={style.published} dateTime="2021-07-12T18:44:00Z">
-                                                        July 12, 2021
-                                                    </time>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div> 
-                                </div>
-
-                            </div>
-
-                            <div className={style.widget}>
-                                <div className={`${style['widget-title']} ${style['title-wrap']}`}>
-                                    <h3 className={style.title}>Categories</h3>
-                                </div>
-                                <div className={style['widget-content']}>
-                                    <div className={`${style['cloud-label']} ${style.ds} ${style['item-0']}`}>
-                                        <ul className={`${style['cloud-categories']}`}>
-                                            <li><Link className={`${style['label-name']}`} href="#">JavaScript</Link></li>
-                                            <li><Link className={`${style['label-name']}`} href="#">Fushion</Link></li>
-                                            <li><Link className={`${style['label-name']}`} href="#">PHP</Link></li>
-                                            <li><Link className={`${style['label-name']}`} href="#">C++</Link></li>
-                                            <li><Link className={`${style['label-name']}`} href="#">C Sharp</Link></li> 
-                                        </ul>
-                                    </div> 
-                                </div>
-                            </div>
-
-                            <div className={style.widget}>
-                                <div className={`${style['widget-title']} ${style['title-wrap']}`}>
-                                    <h3 className={style.title}>Tags</h3>
-                                </div>
-                                <div className={style['widget-content']}>
-                                    <div className={`${style['cloud-label']} ${style.ds} ${style['item-0']}`}>
-                                        <ul className={`${style['cloud-style']}`}>
-                                            <li><Link className={`${style['label-name']}`} href="#">JavaScript</Link></li>
-                                            <li><Link className={`${style['label-name']}`} href="#">Fushion</Link></li>
-                                            <li><Link className={`${style['label-name']}`} href="#">PHP</Link></li>
-                                            <li><Link className={`${style['label-name']}`} href="#">C++</Link></li>
-                                            <li><Link className={`${style['label-name']}`} href="#">C Sharp</Link></li> 
-                                        </ul>
-                                    </div> 
-                                </div>
-                            </div>
+                            <BlogSidebarComponents
+                                menus={upcoming.menus}
+                                popular_posts={upcoming.popular_posts.data}
+                                categories={upcoming.categories}
+                                tags={upcoming.tags}
+                                ads={[]}
+                                enable={{
+                                    popular_posts: (!upcoming.popular_posts.is_error  && true),
+                                    follow_us: (upcoming?.menus?.follow_links?.length  && true),
+                                    become_contributor: (upcoming?.menus?.company_links?.length  && true),
+                                    categories: (upcoming?.categories?.length  && true),
+                                    tags: (upcoming?.tags?.length  && true),
+                                    ads:  (!upcoming?.ads?.is_error && true),
+                                }}
+                            />
                         </StickyBox>
                     </div>
                 </div>
@@ -739,6 +666,9 @@ export default function Tag({upcoming}) {
 }
 
 export async function getServerSideProps(context) {
+    
+    var slug = context.params.post;
+     
     try {
         // Define the requests
         const requests = [
@@ -758,7 +688,7 @@ export async function getServerSideProps(context) {
                 data: {}
             }), 
             Helper.sendWPRequest({
-                api: "wp-json/custom/v1/related-posts?post_slug=install-react-xyz&number_of_posts=2",
+                api: `wp-json/custom/v1/related-posts?post_slug=${slug}&number_of_posts=3`,
                 method: "get",
                 data: {}
             }),
@@ -773,7 +703,7 @@ export async function getServerSideProps(context) {
                 data: {}
             }),
             Helper.sendWPRequest({
-                api: "wp-json/custom/v1/post-by-slug?post_slug=node-js-nvm",
+                api: `wp-json/custom/v1/post-by-slug?post_slug=${slug}`,
                 method: "get",
                 data: {}
             }),
@@ -785,6 +715,15 @@ export async function getServerSideProps(context) {
         // Parse JSON from each response
         const data = await Promise.all(responses.map(response => response.json()));
 
+        // Single of Post 
+        var single_post = data[6]; 
+        if(single_post.is_error) {
+            return {
+                notFound: true, // This triggers the default Next.js 404 page
+            };    
+        }
+
+  
         // 1- Site Settings  
         var settings = data[0].settings.length?data[0].settings[0]: {};
         if(settings.site_address) {
@@ -793,6 +732,10 @@ export async function getServerSideProps(context) {
                 settings.site_address = `${settings.site_address}/`;
             }
         }
+
+        // change link value 
+        single_post.data.link = single_post?.data.link.replace("https://authors.flatcoding.com/", `${settings.site_address}blog/` );
+
 
         // 2- Blog Settings
         var blogsettings = data[4];
@@ -812,7 +755,7 @@ export async function getServerSideProps(context) {
             ...blog_settings} = blogsettings;
 
 
-        var meta_title = blog_settings.title + ': ' + blog_settings.homepage_title;
+        var meta_title = single_post.data.title + ' - ' + blog_settings.title;
         
         
         // prepare lists from menu  data:data[0].menus
@@ -828,8 +771,8 @@ export async function getServerSideProps(context) {
         // latest posts 
         var releated_posts = data[3];
         
-        // Single of Post 
-        var single_post = data[6];
+        
+        
 
         // tags 
         var tags = data[2].map(x => {
@@ -855,7 +798,7 @@ export async function getServerSideProps(context) {
             
             // Settings
             meta_title,
-            meta_description: description,
+            meta_description: single_post.data.meta_description,
             default_comment_status: blog_settings.default_comment_status,
             posts_per_page: blog_settings.posts_per_page,
             title: blog_settings.title,

@@ -6528,3 +6528,8 @@ img.half, div.feature-block svg, .feature-block {
 .subscribe-smallb-field {
      padding-right: 80px !important;
 }
+
+.user_avatar {
+    border-radius: 50%;
+    border:3px solid #eee;
+}
