@@ -359,76 +359,11 @@
     font-size: 40px;
     color: var(--nav-link-color-hover)
 }
-.content>* {
-    margin-bottom: 1.3rem;
-    line-height: 32px;
-    font-size: 16px;
-    color: #484747;
-    font-weight: 400
-}
-.content>*:last-child {
-    margin-bottom: 0
-}
 
-.content figure {
-    width: 100%
-}
-.content img {
-    max-width: 100%
-}
-.content p {
-    font-weight: 400
-}
-.content p code {
-    border: 1px solid #e6d3d5;
-    padding: 0 4px;
-    border-radius: 4px;
-    font-style: normal;
-    font-family: "Droid Sans Mono", "Inconsolata", "Menlo", "Consolas", "Bitstream Vera Sans Mono", "Courier", monospace;
-    display: inline-block;
-    line-height: 24px;
-    font-size: 14px;
-    line-height: 20px;
-    margin: 0 2px;
-    color: #b9355e
-}
-.content p a {
-    color: #b9355e
-}
-.content p a:hover {
-    text-decoration: underline
-}
-.content ul, .content ol {
-    margin-left: 30px
-}
-.content ul li, .content ol li {
-    list-style-type: circle;
-    margin-bottom: 12px
-}
-.content h2, .content h3, .content h4, .content h5, .content h6 {
-    padding-top: 16px;
-    line-height: 1.5;
-    font-weight: 700;
-    color: #0a0a23
-}
-.content h2 {
-    font-size: 1.6rem
-}
-.content h3 {
-    font-size: 1.45rem
-}
-.content h4 {
-    margin-bottom: 12px;
-    font-size: 1.3rem
-}
-.content h5 {
-    margin-bottom: 15px;
-    font-size: 1.1rem
-}
-.content h6 {
-    font-size: 1rem;
-    margin-bottom: 15px
-}
+
+
+
+
 .plr-25 {
     padding-left: 25px;
     padding-right: 25px
@@ -5262,31 +5197,6 @@ img.half, div.feature-block svg, .feature-block {
     margin-bottom: 20px;
 }
 
-.single--content > * {
-    font-size: 14px;
-}
-
-.blog_post_wrap h2 {
-    font-size: 20px;
-}
-
-.blog_post_wrap h3 {
-    font-size: 18px;
-}
-
-.blog_post_wrap h4 {
-    font-size: 16px;
-}
-
-.blog_post_wrap h5 {
-    font-size: 15px;
-}
-
-.blog_post_wrap h6 {
-    font-size: 14px;
-}
-
-
 
 .icon_social_icon {
     margin-left: 12px;
@@ -5789,140 +5699,110 @@ img.half, div.feature-block svg, .feature-block {
     border-radius: 50%;
 }
 
-.single--content {
-    display: block;
-}
-
-.single--content {
-    font-family: Arial, sans-serif; /* Set a default font for the content */
-    line-height: 1.6; /* Add line height for readability */
-    color: #4b5563; /* Default text color */
-   
-}
- 
-
-/* Headings */
-.single--content h1,
-.single--content h2,
-.single--content h3,
-.single--content h4,
-.single--content h5,
-.single--content h6 {
-    color: #2c3e50; /* Heading color */
-     
-    font-weight: bold;
-}
-
-/* Paragraphs */
-.single--content p {
-     
-    font-size: 16px;
-}
-
-/* Images */
-.single--content img {
-    max-width: 100%; /* Make images responsive */
-    height: auto; /* Maintain aspect ratio */
-     
-    border-radius: 5px; /* Optional: Add rounded corners */
-}
-
-/* Lists */
-.single--content ul {
-     
-    list-style-type: disc;
-}
-
-.single--content ol {
-     
-    list-style-type: decimal;
-}
-
-.single--content li {
-     
-}
-
-/* Blockquotes */
-.single--content blockquote {
-    font-style: italic;
-    color: #555;
-    border-left: 4px solid #b7355f; /* Green left border */
-  
-    background: #f9f9f9;
-}
-
-/* Tables */
-.single--content table {
-    width: 100%; /* Make tables responsive */
-    border-collapse: collapse; 
-    font-size: 14px;
-    text-align: left;
-}
-
-.single--content table th,
-.single--content table td {
-    border: 1px solid #ddd;
-    padding: 5px;
-}
-
-.single--content table th {
-    background-color: #f4f4f4;
-    font-weight: bold;
-}
-
-/* Forms */
-.single--content form {
-    margin: 20px 0;
-}
-
-.single--content form label {
-    display: block; 
-    font-weight: bold;
-}
-
-.single--content form input,
-.single--content form button {
-    width: 100%; 
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-}
-
-.single--content form button {
-    background-color: #2ecc71;
-    color: #fff;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.single--content form button:hover {
-    background-color: #27ae60;
-}
-
-/* Code Blocks */
-/*
-
-.single--content pre {
-    background-color: #f4f4f4; 
-    overflow-x: auto;
-    border-radius: 5px;
-    font-size: 14px;
-    line-height: 1.5;
-}
-
-.single--content code {
-    font-family: monospace;
-    color: #e74c3c;
-    background-color: #f9f9f9; 
-    border-radius: 3px;
-}
-
-*/
-
 .article-share-box {
     align-items: center;
     justify-content: left;
 }
+
+
+
+.content>*:last-child {
+    margin-bottom: 0
+}
+
+.content figure {
+    width: 100%
+}
+.content img {
+    max-width: 100%
+}
+.content p {
+    font-weight: 400
+}
+.content p code {
+    border: 1px solid #e6d3d5;
+    padding: 0 4px;
+    border-radius: 4px;
+    font-style: normal;
+    font-family: "Droid Sans Mono", "Inconsolata", "Menlo", "Consolas", "Bitstream Vera Sans Mono", "Courier", monospace;
+    display: inline-block;
+    line-height: 24px;
+    font-size: 14px;
+    line-height: 20px;
+    margin: 0 2px;
+    color: #b9355e
+}
+.content p a {
+    color: #b9355e
+}
+.content p a:hover {
+    text-decoration: underline
+}
+.content ul, .content ol {
+    margin-left: 30px
+}
+.content ul li, .content ol li {
+    list-style-type: circle;
+    margin-bottom: 12px
+}
+.content h2, .content h3, .content h4, .content h5, .content h6 {
+    padding-top: 16px;
+    line-height: 1.5;
+    font-weight: 700;
+    color: #0a0a23
+}
+.content h2 {
+    font-size: 1.6rem
+}
+.content h3 {
+    font-size: 1.45rem
+}
+.content h4 {
+    margin-bottom: 12px;
+    font-size: 1.3rem
+}
+.content h5 {
+    margin-bottom: 15px;
+    font-size: 1.1rem
+}
+.content h6 {
+    font-size: 1rem;
+    margin-bottom: 15px
+}
+
+
+
+
+
+.content>* {
+    margin-block-start: 1.2rem;
+    margin-block-end: 0;
+    line-height: 32px;
+    font-size: 1.05rem;
+    color: #000;
+    font-weight: normal;
+    overflow-wrap: break-word;  
+    pointer-events: auto;
+    position: relative;
+    -webkit-user-select: text;
+    user-select: text;
+    white-space: pre-wrap;
+    min-width: 1px;
+    transform-origin: center center;
+}
+
+.tutorial-content ul,
+.tutorial-content ol {
+    padding-left: 30px;
+}
+
+.tutorial-content ul li,
+.tutorial-content ol li {
+    padding-bottom: 12px;
+    font-size: inherit;
+    line-height: 1.4;
+}
+
 
 /* Embedded Videos */
 .single--content iframe {
@@ -6532,4 +6412,27 @@ img.half, div.feature-block svg, .feature-block {
 .user_avatar {
     border-radius: 50%;
     border:3px solid #eee;
+}
+
+.post-single  ul li,
+.post-single  ol li,
+.post-single  p,
+.post-single table td {
+    line-height: 1.5;
+    color: #000;
+}
+
+.post-single pre {
+    padding: 15px;  
+    border-radius: 0 0 10px 10px;
+}
+
+.post-single blockquote {
+    padding: 30px;   
+    border-left: 3px solid #0a0a23;
+}
+
+.post-single blockquote p {
+    color: #0a0a23 !important;
+    font-weight: bold;
 }

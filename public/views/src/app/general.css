@@ -463,6 +463,14 @@ ins[data-ad-status="unfilled"] {
     display: none !important;
 }
 
+pre code {
+    font-style: normal;
+}
+.wp-block-kevinbatdorf-code-block-pro > span:first-child {
+    border-radius: 10px 10px 0 0;
+}
+
+
 ul li code, 
 ol li code { 
     background: #dd353526;

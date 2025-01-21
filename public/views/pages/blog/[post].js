@@ -257,9 +257,11 @@ export default function Post({upcoming}) {
                                     </div>
                                 </div>
                                 
+                                
+                                {/* Content */}
                                 <div 
-                                    className={`${style['entry-content']} 
-                                    ${style['single--content']}`} 
+                                    className={`${style['lg-2-content']} ${style['post-single']} ${style['tutorial-content']} 
+                                    ${style['content-section']}`} 
                                     dangerouslySetInnerHTML={{__html: upcoming.single_post.data.content}}
                                 />
 
