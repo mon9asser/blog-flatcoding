@@ -3,24 +3,27 @@
 
 // import style from "@/app/styles.module.css";
 // import "@/app/theme.css";
-
+import { useEffect, useState } from "react";
 import style from "@/app/styles.module.css";
 import StickyBox from "react-sticky-box";
 import Head from "next/head";
 import Image from "next/image";
 import parse from 'html-react-parser' 
-import { Helper } from "./../services/helper";
-import Header from "./../parts/header";
-import Footer from "./../parts/footer"; 
-import { ServerOffline } from "./../services/components";
 import Script from "next/script"; 
 import Link from "next/link";
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import dynamic from 'next/dynamic';
+
+// Import dynamically for non-critical components
+const Header = dynamic(() => import("./../parts/header"));
+const Footer = dynamic(() => import("./../parts/footer"));
+const BlogSidebarComponents = dynamic(() => import("../parts/blog/sidebar"));
+const ServerOffline = dynamic(() => import("./../services/components"));
+
+// Keep Config and Helper as direct imports if they are critical
+import { Helper } from "./../services/helper";
 import Config from "../services/config";
-import BlogSidebarComponents from "../parts/blog/sidebar";
-import { useEffect, useState } from "react";
-   
 
 export default function Blog({upcoming}) {
      
@@ -158,12 +161,13 @@ export default function Blog({upcoming}) {
         <div className={`${style.wrapper} ${style['smken-bg']} ${style['plr-0']}`}>
             <div className={`${style.wrapper} ${style['offset-left']} ${style['offset-right']} ${style['plr-15']} ${style['max-1170']} ${style['ptb-25']}`}>
                 <div className={`${style.row} ${style['mlr--15']}`}>
+                    
                     <div className={`${style['lg-8']} ${style['md-8']} ${style['sm-12']} ${style['plr-15']} ${style['ptb-15']}`}>
                         <div id='posts-wrap'>
                             
                             {
-                                !paging.posts.length ? '' : (
-                                    paging.posts.map(post => {
+                                !upcoming.latest_posts.data.posts.length ? '' : (
+                                    upcoming.latest_posts.data.posts.map(post => {
                                          
                                         return (
                                             <div key={post.id} className={style.blog_post_wrap}>
@@ -191,10 +195,18 @@ export default function Blog({upcoming}) {
                                                 </div>
                                                 <div className={style['entry-content']}>
                                                     <Link href={post.link} className={style['entry-image-wrap']}> 
-                                                        <span
+                                                        {/*<span
                                                             className={`${style['entry-thumbnail']} ${style['pbt-lazy']}`}
                                                             style={{ backgroundImage: `url(${post.thumbnail})`}}
-                                                        ></span>
+                                                        ></span> */}
+                                                        <Image
+                                                            src={post.thumbnail}
+                                                            alt="Default Thumbnail"
+                                                            style={{ objectFit: 'cover' }} // Replace `objectFit="cover"` with inline styles
+                                                            priority
+                                                            fill 
+                                                            decoding="async"
+                                                        />
                                                     </Link>
                                                     <p className={`${style['entry-excerpt']}`}>{post.excerpt}</p>
                                                 </div>
@@ -214,6 +226,7 @@ export default function Blog({upcoming}) {
                             }
                         </div> 
                     </div>
+                    
                     <div className={`${style['lg-4']} ${style['md-4']} ${style['sm-12']} ${style['plr-15']} ${style['ptb-15']}`}>
                         <StickyBox offsetTop={85} offsetBottom={20}>
                             <BlogSidebarComponents
@@ -233,6 +246,7 @@ export default function Blog({upcoming}) {
                             />
                         </StickyBox>
                     </div>
+                    
                 </div>
             </div>
         </div>
