@@ -2,6 +2,7 @@ import Config from "./config.js";
 import he from 'he';
 import { createElement } from "react";
 import Script from 'next/script';
+import Cookies from "js-cookie";
 
 class HelperData {
 
@@ -16,6 +17,23 @@ class HelperData {
   generateNextImageUrl = (imageUrl, width = 640, quality = 75) => {
     return `/next/image/?url=${encodeURIComponent(imageUrl)}&w=${width}&q=${quality}`;
   };
+
+  isLoggedIn() {
+
+    var cookie = Cookies.get(Config.cookie_name);
+        
+    // check session exists
+    if (cookie) {
+      return true; 
+    }  
+
+    return false;
+
+  }
+
+  userInfo() {
+    
+  }
 
   encodetmlEntities(text) {
    

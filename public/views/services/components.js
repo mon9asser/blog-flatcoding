@@ -2220,6 +2220,58 @@ const FaqsSection = ({ faqs_section }) => {
 };
 
 
+const BlogFaqsSection = ({ faqs_section }) => {
+  const [isExpanded, setIsExpanded] = useState(faqs_section.map(() => false));
+
+  const toggleExpansion = (currentIndex) => {
+    setIsExpanded((prevState) =>
+      prevState.map((item, index) => (index === currentIndex ? !item : false))
+    );
+  };
+
+  return (
+    <div className={`${style['faqs-section']}`}>
+      <h3>Frequently Asked Questions (FAQs)</h3>
+      <ul>
+        {faqs_section.map((faq, index) => (
+          <li key={index}>
+            <h4
+              onClick={() => toggleExpansion(index)}
+              className={`${style['faq-question']}`}
+              style={{
+                borderBottomWidth: isExpanded[index] ? "1px" : "0",
+              }}
+            >
+              <span>{faq.question}</span>
+              <span
+                className={`${style['faq-arrow']} ${
+                  isExpanded[index] ? style.expanded : ""
+                }`}
+              ></span>
+            </h4>
+            <div
+              className={`${style['faq-answer']}`}
+              ref={(el) => {
+                if (el && isExpanded[index]) {
+                  el.style.maxHeight = `${el.scrollHeight}px`;
+                } else if (el) {
+                  el.style.maxHeight = "0";
+                }
+              }}
+              style={{
+                overflow: "hidden",
+                transition: "max-height 0.3s ease, opacity 0.3s ease",
+                opacity: isExpanded[index] ? 1 : 0,
+              }}
+            >
+              <div className={style.faq_section_list} style={{ padding: "20px" }} dangerouslySetInnerHTML={{ __html: Helper.decodeHtmlEntities(faq.answer) }}/>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 
 
 var ArticleContent = ({blocks}) => {
@@ -2358,5 +2410,6 @@ export {
   ArticleContent,
   GenerateTutorialContent_tab,
   FaqsSection,
+  BlogFaqsSection,
   CreateCaptcha
 }

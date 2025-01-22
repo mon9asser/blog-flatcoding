@@ -9,6 +9,9 @@ import Header from "./../../parts/header";
 import Footer from "./../../parts/footer"; 
 import { ServerOffline } from "./../../services/components";
 import Script from "next/script";
+import { signIn, signOut, useSession } from "next-auth/react";
+import Cookies from "js-cookie";
+import { BlogFaqsSection } from "./../../services/components";
 import { 
     TutorialsContent
 } from "./../../services/components"; 
@@ -42,7 +45,7 @@ export default function Post({upcoming}) {
     var header_content = parse(upcoming.header);
     var footer_content = parse(upcoming.footer);
     var jsonLdContent =  '';
-
+    
     var color = [
         '#d63031', '#6c5ce7', '#00b894', '#2d3436', '#182C61',
         '#182C61', '#82589F', '#6D214F', '#6ab04c', '#e056fd',
@@ -91,7 +94,9 @@ export default function Post({upcoming}) {
     }
 
 
-
+    var googleLoginCallback = async() => {
+        await signIn("google");
+    }
     var faqs = upcoming.single_post.data.faqs;
     var faqs_schema = '';
     // Check if FAQs exist and append them as "mainEntity" of the Article
@@ -265,12 +270,24 @@ export default function Post({upcoming}) {
                                     dangerouslySetInnerHTML={{__html: upcoming.single_post.data.content}}
                                 />
 
-                                <div className={`${style['entry-labels']} ${style['list-tags']}`}>
-                                    <span className={style["labels-label"]}>Tags:</span>
-                                    <a className={style["label-link"]} href="https://starter-pbt.blogspot.com/search/label/Content%20Marketing" rel="tag">Content Marketing</a>
-                                    <a className={style["label-link"]} href="https://starter-pbt.blogspot.com/search/label/Editor%27s%20Picks" rel="tag">Editor's Picks</a>
-                                    <a className={style["label-link"]} href="https://starter-pbt.blogspot.com/search/label/SEO%20News" rel="tag">SEO News</a>
-                                </div>
+                                {
+                                    upcoming.single_post.data.tags?.length?
+                                    (
+                                        <div className={`${style['entry-labels']} ${style['list-tags']}`}>
+                                            <span className={style["labels-label"]}>Tags:</span>
+                                            {upcoming.single_post.data.tags.map(x => <Link className={style["label-link"]} href={x.link}>{x.name}</Link>)}
+                                        </div>
+                                    ): ''
+                                }
+
+                                
+                                
+                                {
+                                    upcoming.single_post.data.faqs?.length?
+                                        <BlogFaqsSection faqs_section={upcoming.single_post.data.faqs}/>
+                                    : ''
+                                }
+
 
                                 <div className="wrapper max-800 text-center chapter-block-hlght box-vote-block"> 
                                     {
@@ -278,10 +295,11 @@ export default function Post({upcoming}) {
                                         : 
                                         <>
                                             <div className={`${style['flexbox']} ${style['gap-15']} ${style['share-box']} ${style['article-share-box']}`}> 
+                                                <b className={style['share-on-social']}>Help Others Find This:</b>
                                                 <SocialShare   
                                                     platforms={upcoming?.share_social_buttons} 
-                                                    url={`https://tutorials/tutorials/post/`}
-                                                    title={'Post Title'}
+                                                    url={upcoming.single_post.data.link}
+                                                    title={upcoming.single_post.data.title}
                                                     size={32} 
                                                     height={'32px'} 
                                                     width={'32px'} 
@@ -291,165 +309,145 @@ export default function Post({upcoming}) {
                                         </>
                                     }
                                 </div>
+
+                                
                             </div>
                         </div> 
 
+                        
+                        
+
                         <div className={`${style.widget} ${style.remove_spaces} ${style.author_details}`}>
                             <div>
-                                <span></span>
+                                <span style={{background: `url(${upcoming.single_post.data.author.avatar})`}}></span>
                             </div>
                             <div>
-                                <h5>David Albert</h5>
-                                <p>
-                                    Pro Blogger Templates is a site where you find unique and professional blogger templates, Improve your blog now for free.
-                                </p>
-                                <ul className={`${style['social-icons']} ${style['social-bg']} ${style['social-author-icons']}`}>
-                                    <li className={style['facebook']}>
-                                        <Link href={'#'}>
-                                            <FontAwesomeIcon className={style.icon_social_icon} icon={Config.icons['facebook']} />
-                                        </Link>
-                                    </li>
-                                    <li className={style['email']}>
-                                        <Link href={'#'}>
-                                            <FontAwesomeIcon className={style.icon_social_icon} icon={Config.icons['email']} />
-                                        </Link>
-                                    </li> 
-                                </ul>
+                                <h5><Link href={upcoming.single_post.data.author.link}>{Helper.UppercaseName(upcoming.single_post.data.author.name)}</Link></h5>
+                                
+                                {
+                                    upcoming.single_post.data.author.description != "" ?
+                                    <p>{upcoming.single_post.data.author.description}</p>
+                                    : ""
+                                }
+                                
+                                {
+                                    Object.entries(upcoming.single_post.data.author.social_links)?.length ? (
+                                        <ul className={`${style['social-icons']} ${style['social-bg']} ${style['social-author-icons']}`}>
+                                        {
+                                            Object.entries(upcoming.single_post.data.author.social_links).map(([key, value]) => (
+                                           
+                                                value.indexOf("https://") !== -1 ?
+                                                <li key={key} className={style[key]}>
+                                                    <Link target="_blank" href={value}>
+                                                        <FontAwesomeIcon className={style.icon_social_icon} icon={Config.icons[key]} />
+                                                    </Link>
+                                                </li> :''
+                                            
+                                            
+                                            ))
+                                        }
+                                        </ul>
+                                    ) : (
+                                        ""
+                                    )
+                                    }
                             </div>
                         </div> 
 
                         {/*You may also like section*/}
-                        <div className={`${style.widget} ${style.remove_spaces} ${style.comments}`}>
-                            <div className={`${style['comments-sectison']}`}>
-                                
-                                <h3>
-                                    You May Also Like
-                                </h3>
+                        {
+                            upcoming.releated_posts.data?.length?
+                            <div className={`${style.widget} ${style.remove_spaces} ${style.comments}`}>
+                                <div className={`${style['comments-sectison']}`}>
+                                    
+                                    <h3>
+                                        You May Also Like
+                                    </h3>
+                                    <div className={style['related-posts']}>
+                                    {
+                                        upcoming.releated_posts.data.map(post => (
+                                            
+                                            <div className={style['related-item']} id={style['item-0']}>
+                                                <Link
+                                                title={post.title}
+                                                className={`${style['entry-image-wrap']} ${style['is-image']}`}
+                                                href={post.link}
+                                                >
+                                                <span
+                                                    className={`${style['entry-image']} ${style['pbt-lazy']}`}
+                                                    data-image="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w72-h72-p-k-no-nu/p9.jpg"
+                                                    style={{
+                                                    backgroundImage:
+                                                        `url(${post.thumbnail})`,
+                                                    }}
+                                                ></span>
+                                                </Link>
+                                                <div className={style['entry-header']}>
+                                                <h2 className={style['entry-title']}>
+                                                    <Link
+                                                    href={post.link}
+                                                    title={post.title}
+                                                    >
+                                                    {post.title}
+                                                    </Link>
+                                                </h2>
+                                                <div className={style['entry-meta']}>
+                                                    <span className={style['entry-time']} id={style['mi']}>
+                                                    <time className={style['published']} dateTime={post.last_modified}>
+                                                        {Helper.formatDate(post.last_modified)}
+                                                    </time>
+                                                    </span>
+                                                </div>
+                                                </div>
+                                            </div>
+                                           
+                                        ))
+                                    }
+                                     </div>
+                                    
 
-                                <div className={style['related-posts']}>
-                                    <div className={style['related-item']} id={style['item-0']}>
-                                        <a
-                                        title="Google Correlate: The Best SEO Research Tool You Aren’t Using"
-                                        className={`${style['entry-image-wrap']} ${style['is-image']}`}
-                                        href="https://starter-pbt.blogspot.com/2021/07/google-correlate-best-seo-research-tool.html"
-                                        >
-                                        <span
-                                            className={`${style['entry-image']} ${style['pbt-lazy']}`}
-                                            data-image="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w72-h72-p-k-no-nu/p9.jpg"
-                                            style={{
-                                            backgroundImage:
-                                                "url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w222-h147-p-k-no-nu/p9.jpg=w72-h72-p-k-no-nu)",
-                                            }}
-                                        ></span>
-                                        </a>
-                                        <div className={style['entry-header']}>
-                                        <h2 className={style['entry-title']}>
-                                            <a
-                                            href="https://starter-pbt.blogspot.com/2021/07/google-correlate-best-seo-research-tool.html"
-                                            title="Google Correlate: The Best SEO Research Tool You Aren’t Using"
-                                            >
-                                            Google Correlate: The Best SEO Research Tool You Aren’t Using
-                                            </a>
-                                        </h2>
-                                        <div className={style['entry-meta']}>
-                                            <span className={style['entry-time']} id={style['mi']}>
-                                            <time className={style['published']} dateTime="2021-07-12T18:44:00.034+00:00">
-                                                July 12, 2021
-                                            </time>
-                                            </span>
-                                        </div>
-                                        </div>
-                                    </div>
-                                    <div className={style['related-item']} id={style['item-1']}>
-                                        <a
-                                        title="Google Search Console Made a Change to Data Calculations as of August 19"
-                                        className={`${style['entry-image-wrap']} ${style['is-image']}`}
-                                        href="https://starter-pbt.blogspot.com/2021/07/google-search-console-made-change-to.html"
-                                        >
-                                        <span
-                                            className={`${style['entry-image']} ${style['pbt-lazy']}`}
-                                            data-image="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhDn-0J_EFKWesgI7M6PcKUqtm17YYBrTaWhYT1cbI16_czmZLQ1F-1n-U79MXqcZiHm0sYUbaPIu8jx69C7SKiy1kK6YvGlNNvrjp3yTzMpHct_AxaWRdJDZaO8P6TqtKEALS5YiNNEAc/w72-h72-p-k-no-nu/p20.jpg"
-                                            style={{
-                                            backgroundImage:
-                                                "url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhDn-0J_EFKWesgI7M6PcKUqtm17YYBrTaWhYT1cbI16_czmZLQ1F-1n-U79MXqcZiHm0sYUbaPIu8jx69C7SKiy1kK6YvGlNNvrjp3yTzMpHct_AxaWRdJDZaO8P6TqtKEALS5YiNNEAc/w222-h147-p-k-no-nu/p20.jpg=w72-h72-p-k-no-nu)",
-                                            }}
-                                        ></span>
-                                        </a>
-                                        <div className={style['entry-header']}>
-                                        <h2 className={style['entry-title']}>
-                                            <a
-                                            href="https://starter-pbt.blogspot.com/2021/07/google-search-console-made-change-to.html"
-                                            title="Google Search Console Made a Change to Data Calculations as of August 19"
-                                            >
-                                            Google Search Console Made a Change to Data Calculations as of August 19
-                                            </a>
-                                        </h2>
-                                        <div className={style['entry-meta']}>
-                                            <span className={style['entry-time']} id={style['mi']}>
-                                            <time className={style['published']} dateTime="2021-07-12T18:35:00.004+00:00">
-                                                July 12, 2021
-                                            </time>
-                                            </span>
-                                        </div>
-                                        </div>
-                                    </div>
-                                    <div className={style['related-item']} id={style['item-2']}>
-                                        <a
-                                        title="SEO Glossary: 200+ Terms & Definitions You Need to Know"
-                                        className={`${style['entry-image-wrap']} ${style['is-image']}`}
-                                        href="https://starter-pbt.blogspot.com/2021/07/seo-glossary-200-terms-definitions-you.html"
-                                        >
-                                        <span
-                                            className={`${style['entry-image']} ${style['pbt-lazy']}`}
-                                            data-image="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhA3vxsHY7kpc1G5plxBLPJS-4rlel1FlClT4zF7HG36-FMJSqVWB7UJ4mcC0xxxaI430TcnJJpqCSpEOv7dib25qj1Fp7w2mV0xJMdsIv91kQ33QX7gQKA7WZDMsPjjUAtuqZSY1uaG0Q/w72-h72-p-k-no-nu/p15.jpg"
-                                            style={{
-                                            backgroundImage:
-                                                "url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhA3vxsHY7kpc1G5plxBLPJS-4rlel1FlClT4zF7HG36-FMJSqVWB7UJ4mcC0xxxaI430TcnJJpqCSpEOv7dib25qj1Fp7w2mV0xJMdsIv91kQ33QX7gQKA7WZDMsPjjUAtuqZSY1uaG0Q/w222-h147-p-k-no-nu/p15.jpg=w72-h72-p-k-no-nu)",
-                                            }}
-                                        ></span>
-                                        </a>
-                                        <div className={style['entry-header']}>
-                                        <h2 className={style['entry-title']}>
-                                            <a
-                                            href="https://starter-pbt.blogspot.com/2021/07/seo-glossary-200-terms-definitions-you.html"
-                                            title="SEO Glossary: 200+ Terms & Definitions You Need to Know"
-                                            >
-                                            SEO Glossary: 200+ Terms & Definitions You Need to Know
-                                            </a>
-                                        </h2>
-                                        <div className={style['entry-meta']}>
-                                            <span className={style['entry-time']} id={style['mi']}>
-                                            <time className={style['published']} dateTime="2021-07-12T18:34:00.002+00:00">
-                                                July 12, 2021
-                                            </time>
-                                            </span>
-                                        </div>
-                                        </div>
-                                    </div>
                                 </div>
-
                             </div>
-                        </div>
+                            :''
+                        }
+                        
+
+                        {
+                            ! Helper.isLoggedIn() ?
+                            <div className={`${style.widget} ${style.remove_spaces} ${style.comments}`}>
+                                <div className={`${style['comments-sectison']} ${style['join_us_to_comment']}`}>
+                                    <h3>
+                                        Add a New Comment
+                                    </h3>
+                                    <button
+                                        onClick={googleLoginCallback}
+                                        style={{
+                                        padding: "10px 20px",
+                                        cursor: "pointer",
+                                        backgroundColor: "#4285F4",
+                                        color: "white",
+                                        border: "none",
+                                        }}
+                                    >
+                                        Sign In with Google
+                                    </button>
+                                    <a className={style.post_comment}>Add Comment</a> 
+                                </div>
+                            </div>
+                            : 
+                            <div className={`${style.widget} ${style.remove_spaces} ${style.comments}`}>
+                                <div className={style['comments-sectison']}>
+                                    <h3>
+                                        Add a New Comment
+                                    </h3>
+                                    <AddNewComment thumbnail={true}/>  
+                                </div>
+                            </div>
+                        }
+                        
 
                         {/*Add a New Comments*/}
-                        <div className={`${style.widget} ${style.remove_spaces} ${style.comments}`}>
-                            <div className={`${style['comments-sectison']} ${style['join_us_to_comment']}`}>
-                                <h3>
-                                    Add a New Comment
-                                </h3>
-                               <a className={style.post_comment}>Add Comment</a> 
-                            </div>
-                        </div>
-
-                        {/*Add a New Comments*/}
-                        <div className={`${style.widget} ${style.remove_spaces} ${style.comments}`}>
-                            <div className={style['comments-sectison']}>
-                                <h3>
-                                    Add a New Comment
-                                </h3>
-                                <AddNewComment thumbnail={true}/>  
-                            </div>
-                        </div>
+                        
                         
                         {/*Recently Comments*/}
                         <div className={`${style.widget} ${style.remove_spaces} ${style.comments}`}>

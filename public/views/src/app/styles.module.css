@@ -6483,4 +6483,39 @@ img.half, div.feature-block svg, .feature-block {
 
 }
 
+.share-on-social {
+    color: #000 !important;
+    font-weight: bold !important;
+    font-size: 14px;
+}
 
+.faq_section_list code {
+    background-color: unset;
+    padding: 0;
+
+    
+
+}
+
+.faq_section_list pre {
+    background: #222; /* Soft gradient background */
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1), -4px -4px 10px rgba(255, 255, 255, 0.7); /* Neomorphic shadow effect */
+    border: 1px solid #ddd; /* Subtle border for better definition */
+    border-radius: 12px; /* More rounded corners for a modern look */
+    padding: 16px 20px; /* Generous padding for better readability */
+    overflow-x: auto; /* Horizontal scroll for long lines */
+    font-family: 'Fira Code', 'Courier New', Courier, monospace; /* Modern monospaced font */
+    font-size: 15px; /* Slightly larger font size */
+    line-height: 1.6; /* Improved line height for readability */
+    color: #fff; /* Darker text for contrast */
+    white-space: pre-wrap; /* Allow text wrapping inside the block */
+    margin: 20px 0; /* Vertical spacing to separate from other content */
+
+}
+
+
+.author_details div:first-child span {
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+}
