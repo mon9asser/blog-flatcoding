@@ -6436,3 +6436,51 @@ img.half, div.feature-block svg, .feature-block {
     color: #0a0a23 !important;
     font-weight: bold;
 }
+
+.post-single {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #1d2031;
+}
+
+.post-single blockquote p,
+.post-single p,
+.post-single ul li,
+.post-single ul ol,
+.post-single table td {
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
+}
+
+.content-section p code,
+.content-section > p > code, 
+.content-section ul li code, 
+.content-section ol li code, 
+.content-section .table tr td code {
+    font-style: normal;
+    font-family: "Fira Code", "Courier New", monospace;
+    background-color: #fff3f7;
+    color: #bb3361;
+    /* padding: 3px 5px; */
+    border: 1px solid #ffbad2;
+    border-radius: 3px;
+    font-size: 0.85em;
+    font-weight: 500;
+}
+
+.content-section p mark,
+.content-section > p > mark, 
+.content-section ul li mark, 
+.content-section ol li code, 
+.content-section .table tr td mark {
+    background-color: #fffae5; /* Soft yellow for a highlighting effect */
+    color: #333; /* Dark text for readability */
+    padding: 2px 4px;
+    border-radius: 3px; /* Rounded corners for a smooth appearance */
+    
+    font-weight: normal; /* Emphasizes the highlighted text */
+
+}
+
+

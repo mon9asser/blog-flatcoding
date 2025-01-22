@@ -532,3 +532,70 @@ dfn, em, cite, i, code, kbd, tt, var {
     opacity: 0.75;
     margin-top: 0.5rem;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ /* General Table Styling */
+ .fixed-post-single .wp-block-table {
+    overflow-x: auto;
+    border-radius: 13px !important;
+    border: 1px solid #ddd; 
+}
+
+.fixed-post-single .wp-block-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+    font-size: 14px;
+    text-align: left;
+    word-break: break-word; /* Ensures long text breaks gracefully */
+}
+
+.fixed-post-single .wp-block-table table th,
+.fixed-post-single .wp-block-table table td {
+    padding: 12px 15px;
+}
+
+.fixed-post-single .wp-block-table table tr th,
+.fixed-post-single .wp-block-table table tr:not(:last-child) td {
+    border-bottom: 1px solid #ddd;
+}
+
+.fixed-post-single .wp-block-table table th:not(:first-child),
+.fixed-post-single .wp-block-table table td:not(:first-child) {
+    border-left: 1px solid #ddd;
+}
+
+.fixed-post-single .wp-block-table table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.fixed-post-single .wp-block-table table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.fixed-post-single .wp-block-table table tbody tr:hover {
+    background-color: #eaeaea;
+    cursor: pointer;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .fixed-post-single .wp-block-table table {
+        min-width: 700px;
+    }
+}
+ 

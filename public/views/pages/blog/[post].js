@@ -227,7 +227,7 @@ export default function Post({upcoming}) {
                                 <div className={style['entry-header']}>
                                     <h1 className={`${style["tutorial-headline"]}`}>{upcoming.single_post.data.title}</h1>    
                                     <div className={`${style['entry-meta']} ${style['post-entry-meta']}`}>
-                                        <Link href={'#'} className={style.author}>
+                                        <Link href={upcoming.single_post.data.author.link} className={style.author}>
                             
                                             {/*<span
                                                 className={`${style['authot-thumb']} ${style['pbt-lazy']}`}
@@ -258,9 +258,9 @@ export default function Post({upcoming}) {
                                 </div>
                                 
                                 
-                                {/* Content */}
+                                 
                                 <div 
-                                    className={`${style['lg-2-content']} ${style['post-single']} ${style['tutorial-content']} 
+                                    className={`${style['lg-2-content']} fixed-post-single ${style['post-single']} ${style['tutorial-content']} 
                                     ${style['content-section']}`} 
                                     dangerouslySetInnerHTML={{__html: upcoming.single_post.data.content}}
                                 />
