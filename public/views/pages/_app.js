@@ -3,6 +3,7 @@ import "@/app/general.css";
 import Head from 'next/head';
 import Script from 'next/script';
 import { useEffect, useState } from 'react';
+import { SessionProvider } from "next-auth/react";
 const poppins = Poppins({
   weight: ['300', '400', '500', '600', '700', '800'],
   subsets: ['latin'],
@@ -99,7 +100,10 @@ export default function MyApp({ Component, pageProps  }) {
           )
         }
         
-        <Component {...pageProps} adsReady={adsReady} />
+        <SessionProvider session={pageProps.session}>
+          <Component {...pageProps} adsReady={adsReady} />
+        </SessionProvider>
+        
         <Head>
             <link rel="manifest" href="/assets/new/icons/manifest.json" />
             <meta name="theme-color" content="#000000" />

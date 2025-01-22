@@ -27,7 +27,7 @@ import Config from "./../../services/config";
  
 
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import 'react-quill/dist/quill.snow.css';
 
@@ -37,8 +37,17 @@ const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 export default function Post({upcoming}) {
     
-    
-    console.log(upcoming);
+    const { data: session } = useSession();
+
+    useEffect(() => {
+        if (session) {
+            // Store user data in a cookie
+            Cookies.set(Config.cookie_name, JSON.stringify(session.user), {
+                expires: 7, // Cookie expiration in days 
+                sameSite: "Strict",
+            });
+        }
+    }, [session]); // <<=== ISSUE HERE
 
     const [value, setValue] = useState('');
     
