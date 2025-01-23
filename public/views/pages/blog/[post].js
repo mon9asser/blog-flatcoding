@@ -38,7 +38,7 @@ const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 export default function Post({upcoming}) {
     
     const { data: session } = useSession(); 
-     
+    var [loadLogin, setLoadLogin] = useState(false);
   
 
 
@@ -67,9 +67,13 @@ export default function Post({upcoming}) {
         
         delete user.id;  
         const [value, setValue] = useState('');
-         
-        var submitComment = (e) => {
+        const [response, setResponse] = useState('');
+        const [isLoading, setLoading] = useState(false);
+        var [loadLogin, setLoadLogin] = useState(false);
+
+        var submitComment = async (e) => {
             e.preventDefault();
+            setLoading(true);
 
             var data_form = {
                 ...user,
@@ -78,8 +82,16 @@ export default function Post({upcoming}) {
                 reply_to_comment_id: reply_to_comment_id? reply_to_comment_id: -1,
                 comment_value: value
             }
+
+            const response = await Helper.sendNTRequest({
+                api: 'submit-comment',
+                method: 'post',
+                body: data_form 
+            });        
+          
+            var submitted = await response.json();
+          
              
-            console.log(data_form);
         }
 
         return <>
@@ -118,13 +130,25 @@ export default function Post({upcoming}) {
                     />
                 </div>
             </div>
-            <Link onClick={submitComment} className={style.post_comment} href='#'>Submit</Link> 
+            <Link onClick={submitComment} className={`${style.post_comment} ${style.flex}`} href='#'>
+                {
+                    isLoading? <span className={style.loader}></span>: 'Submit'
+                }
+            </Link> 
         </>
     }
 
 
-    var googleLoginCallback = async() => {
+    var googleLoginCallback = async(e) => {
+        e.preventDefault();
+        setLoadLogin(true);
         await signIn("google");
+    }
+
+    var googleLogoutCallback = async(e) => {
+        e.preventDefault();
+        setLoadLogin(true);
+        await signOut("google")
     }
     var faqs = upcoming.single_post.data.faqs;
     var faqs_schema = '';
@@ -447,34 +471,29 @@ export default function Post({upcoming}) {
                                 <div className={`${style['comments-sectison']} ${style['join_us_to_comment']}`}>
                                     <h3>
                                         Add a New Comment
-                                    </h3>
-                                    <button
-                                        onClick={googleLoginCallback}
-                                        style={{
-                                        padding: "10px 20px",
-                                        cursor: "pointer",
-                                        backgroundColor: "#4285F4",
-                                        color: "white",
-                                        border: "none",
-                                        }}
-                                    >
-                                        Sign In with Google
-                                    </button>
-                                    <a className={style.post_comment}>Add Comment</a> 
+                                    </h3> 
+                                    <Link onClick={googleLoginCallback} href='#' className={`${style.post_comment} ${style.flex}`}>
+                                        {
+                                            loadLogin? <span className={style.loader}></span>: 'Add Comment'
+                                        }
+                                    </Link> 
                                 </div>
                             </div>
                             : 
                             <div className={`${style.widget} ${style.remove_spaces} ${style.comments}`}>
                                 <div className={style['comments-sectison']}>
-                                    <h3>
-                                        Add a New Comment
-                                    </h3>
+                                    <div className={`${style.flex} ${style.youloggedin}`}>
+                                        <h3>
+                                            Add a New Comment
+                                        </h3> 
+                                        <p>Your comment will be posted using this email: <i>{session.user.email}</i>. You can <button onClick={e => googleLogoutCallback(e)} >{loadLogin? <span className={style.loader}></span>: 'Logout'}</button>.</p>
+                                    </div>
                                     {
                                         (session && session.user) ?
                                             <AddNewComment 
                                                 post_id={upcoming.single_post.data.id}  
-                                                comment_id={-1}
-                                                reply_to_comment_id={-1}
+                                                comment_id={0}
+                                                reply_to_comment_id={0}
                                                 user={session.user}  
                                                 thumbnail={true}/>
                                         : ''

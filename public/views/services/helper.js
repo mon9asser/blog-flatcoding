@@ -234,25 +234,31 @@ class HelperData {
     return staticData;
   };
 
-  sendNTRequest = async ({ api, method, params }) => {
-    const options = {
-        method: method.toUpperCase(),
-        headers: {
-            'Content-Type': 'application/json'
+    sendNTRequest = async ({ api, method, params, body }) => {
+        const options = {
+            method: method.toUpperCase(),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+
+        // Construct the base URL
+        let url = `/api/${api}`;
+
+        // If params exist, append them as query strings
+        if( method.toLowerCase() == 'get') {
+          if (params && typeof params === 'object') {
+              const queryString = new URLSearchParams(params).toString(); // Convert params object to query string
+              url += `?${queryString}`; // Append query string to the URL
+          }
         }
+
+        if ((method.toLowerCase() === 'post' || method.toLowerCase() === 'put') && body) {
+          options.body = JSON.stringify(body);
+        }
+
+        return fetch(url, options);
     };
-
-    // Construct the base URL
-    let url = `/api/${api}`;
-
-    // If params exist, append them as query strings
-    if (params && typeof params === 'object') {
-        const queryString = new URLSearchParams(params).toString(); // Convert params object to query string
-        url += `?${queryString}`; // Append query string to the URL
-    }
-
-    return fetch(url, options);
-};
 
 
     sendWPRequest = async ({ api, method, data }) => {
@@ -269,8 +275,7 @@ class HelperData {
       
       if (method === 'post' || method === 'put') {
           options.body = JSON.stringify(data);
-      }
-
+      } 
       var url = `${Config.wp_api}/${api}`;
 
       return fetch(url, options);
