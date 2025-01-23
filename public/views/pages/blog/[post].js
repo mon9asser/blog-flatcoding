@@ -37,19 +37,11 @@ const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 export default function Post({upcoming}) {
     
-    const { data: session } = useSession();
+    const { data: session } = useSession(); 
+     
+  
 
-    useEffect(() => {
-        if (session) {
-            // Store user data in a cookie
-            Cookies.set(Config.cookie_name, JSON.stringify(session.user), {
-                expires: 7, // Cookie expiration in days 
-                sameSite: "Strict",
-            });
-        }
-    }, [session]); // <<=== ISSUE HERE
 
-    const [value, setValue] = useState('');
     
     var header_content = parse(upcoming.header);
     var footer_content = parse(upcoming.footer);
@@ -69,14 +61,42 @@ export default function Post({upcoming}) {
         };
     };
 
-    var AddNewComment = ({thumbnail}) => {
+    var AddNewComment = ({user, post_id, comment_id, reply_to_comment_id, thumbnail }) => {
+        
+        if(!user) return null; 
+        
+        delete user.id;  
+        const [value, setValue] = useState('');
+         
+        var submitComment = (e) => {
+            e.preventDefault();
+
+            var data_form = {
+                ...user,
+                post_id: post_id? post_id: -1,
+                comment_id: comment_id? comment_id: -1,
+                reply_to_comment_id: reply_to_comment_id? reply_to_comment_id: -1,
+                comment_value: value
+            }
+             
+            console.log(data_form);
+        }
+
         return <>
 
             <div className={style.add_comment_for_author}>
                 {
                     thumbnail ?
                         <div className={style['add_comment_for_author_thumbnail']}>
-                            <img src="https://placehold.co/50" alt="User Thumbnail" />
+                            <Image 
+                                crossOrigin="anonymous" 
+                                src={user.image} 
+                                alt={user.name} 
+                                decoding="async"
+                                width={120}
+                                height={120}
+                                priority
+                            />
                         </div>
                     : null
                 }
@@ -98,7 +118,7 @@ export default function Post({upcoming}) {
                     />
                 </div>
             </div>
-            <a className={style.post_comment} href='#'>Submit</a> 
+            <Link onClick={submitComment} className={style.post_comment} href='#'>Submit</Link> 
         </>
     }
 
@@ -422,7 +442,7 @@ export default function Post({upcoming}) {
                         
 
                         {
-                            ! Helper.isLoggedIn() ?
+                            !session || !session.user ?
                             <div className={`${style.widget} ${style.remove_spaces} ${style.comments}`}>
                                 <div className={`${style['comments-sectison']} ${style['join_us_to_comment']}`}>
                                     <h3>
@@ -449,7 +469,17 @@ export default function Post({upcoming}) {
                                     <h3>
                                         Add a New Comment
                                     </h3>
-                                    <AddNewComment thumbnail={true}/>  
+                                    {
+                                        (session && session.user) ?
+                                            <AddNewComment 
+                                                post_id={upcoming.single_post.data.id}  
+                                                comment_id={-1}
+                                                reply_to_comment_id={-1}
+                                                user={session.user}  
+                                                thumbnail={true}/>
+                                        : ''
+                                    }
+                                      
                                 </div>
                             </div>
                         }
@@ -571,7 +601,7 @@ export default function Post({upcoming}) {
                                             </div>
 
                                             <div className={style.add_comment_reply}>
-                                                <AddNewComment thumbnail={false}/>  
+                                                .......
                                             </div>
                                         </div>
                                         

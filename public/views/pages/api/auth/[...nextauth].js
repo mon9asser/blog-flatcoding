@@ -7,7 +7,7 @@ export const authOptions = {
       clientId: "215910679075-u6usetnuktua89nk586tis0b1p5t9djl.apps.googleusercontent.com",
       clientSecret: "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",
     }),
-  ],
+  ], 
   session: {
     strategy: "jwt", // Use JWT for session management
   },
@@ -23,8 +23,9 @@ export const authOptions = {
       session.user.id = token.id;
       session.user.accessToken = token.accessToken;
       return session;
-    },
-  },
+    }, 
+
+  } 
 };
 
 export default NextAuth(authOptions);
