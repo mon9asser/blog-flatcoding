@@ -50,7 +50,8 @@ export default function Post({upcoming}) {
   
     
     var [loadLogin, setLoadLogin] = useState(false);
-  
+    var [comments, setComments] = useState([]);
+
     console.log(upcoming);
 
     
@@ -72,7 +73,7 @@ export default function Post({upcoming}) {
         };
     };
 
-    var AddNewComment = ({user, post_id, comment_id, reply_to_comment_id, thumbnail }) => {
+    var AddNewComment = ({user, post_id, comment_id, reply_to_comment_id, thumbnail, setComments }) => {
         
         if(!user) return null; 
         
@@ -91,7 +92,7 @@ export default function Post({upcoming}) {
             setLoading(true);
             setMessage('');
             setclasN('nothing'); 
-
+            setComments("This is a new comment added successfully!!");
             var data_form = {
                 ...user,
                 post_id: post_id? post_id: 0,
@@ -180,12 +181,44 @@ export default function Post({upcoming}) {
     }
 
 
+    useEffect(function(){
+        
+        // add comments to array
+        setComments(upcoming.comments?.all);
+
+    }, [upcoming.comments?.all])
+
+    var load_more_replies = async (event, comment_id) => {
+
+        event.preventDefault();
+
+        var load_replies = await Helper.sendWPRequest({
+            api: `wp-json/wp/v2/comments?parent=${comment_id}`,
+            method: "get",
+            data: {},
+            no_header: true
+        });
+
+        var replies = await load_replies.json();
+        
+
+        var all_comments = comments.map(x => {
+
+            if( x.id == comment_id ) {
+                x.replies = replies; 
+            }
+            
+            return x;
+        });
+
+        setComments( all_comments ); 
+    }
     var googleLoginCallback = async(e) => {
         e.preventDefault();
         setLoadLogin(true);
         await signIn("google");
     }
-
+    
     var googleLogoutCallback = async(e) => {
         e.preventDefault();
         setLoadLogin(true);
@@ -532,6 +565,7 @@ export default function Post({upcoming}) {
                                     {
                                         (session && session.user) ?
                                             <AddNewComment 
+                                                setComments={setComments}
                                                 post_id={upcoming.single_post.data.id}  
                                                 comment_id={0}
                                                 reply_to_comment_id={0}
@@ -558,7 +592,7 @@ export default function Post({upcoming}) {
                                         </h3>
                                         
                                         {
-                                            upcoming.comments?.all.map(comment => (
+                                            (comments.length? comments: upcoming.comments?.all).map(comment => (
                                                 <div className={style['comment-wrapper']}>
                                                     <div className={style['comment']}>
                                                         <div className={style['thumbnail']}>
@@ -603,48 +637,38 @@ export default function Post({upcoming}) {
                                                                     </li> 
                                                                 </ul>
                                                             </div>
+                                                            
+                                                            {
+                                                                comment.replies?.length ?
+                                                                
+                                                                    comment.replies.map(reply => (
+                                                                        <div className={`${style['comment']} ${style['reply-to']}`}>
+                                                                            <div className={style['thumbnail']}>
+                                                                                <img src="https://placehold.co/50" alt="User Thumbnail" />
+                                                                            </div>
+                                                                            <div className={style['comment-content']}>
+                                                                                <div className={style['comment-details']}>
+                                                                                    <span className={style['name']}>John Doe</span>
+                                                                                    <FontAwesomeIcon icon={faReply} className={style['icon-reply-to']} />
+                                                                                    <span className={style['date']}>January 18, 2025</span> 
+                                                                                    
+                                                                                </div>
+                                                                                <div className={`${style['comment-text']} ${style['reply-to-text']}`}>
+                                                                                    <p>This is a great article! I learned so much from it. Thank you for
+                                                                                    sharing!</p>
+                                                                                </div> 
+                                                                            </div>
+                                                                        </div>
+                                                                    ))
 
-                                                            <div className={`${style['comment']} ${style['reply-to']}`}>
-					
-                                                                <div className={style['thumbnail']}>
-                                                                    <img src="https://placehold.co/50" alt="User Thumbnail" />
-                                                                </div>
-                                                                <div className={style['comment-content']}>
-                                                                    <div className={style['comment-details']}>
-                                                                        <span className={style['name']}>John Doe</span>
-                                                                        <FontAwesomeIcon icon={faReply} className={style['icon-reply-to']} />
-                                                                        <span className={style['date']}>January 18, 2025</span> 
-                                                                         
-                                                                    </div>
-                                                                    <div className={`${style['comment-text']} ${style['reply-to-text']}`}>
-                                                                        <p>This is a great article! I learned so much from it. Thank you for
-                                                                        sharing!</p>
-                                                                    </div> 
-                                                                     
-                                                                </div>
-                                                            </div>
+                                                                : ""
+                                                            }
 
-                                                            <div className={`${style['comment']} ${style['reply-to']}`}>
-					
-                                                                <div className={style['thumbnail']}>
-                                                                    <img src="https://placehold.co/50" alt="User Thumbnail" />
-                                                                </div>
-                                                                <div className={style['comment-content']}>
-                                                                    <div className={style['comment-details']}>
-                                                                        <span className={style['name']}>John Doe</span>
-                                                                        <FontAwesomeIcon icon={faReply} className={style['icon-reply-to']} />
-                                                                        <span className={style['date']}>January 18, 2025</span> 
-                                                                         
-                                                                    </div>
-                                                                    <div className={`${style['comment-text']} ${style['reply-to-text']}`}>
-                                                                        <p>This is a great article! I learned so much from it. Thank you for
-                                                                        sharing!</p>
-                                                                    </div> 
-                                                                     
-                                                                </div>
-                                                            </div>
-
-
+                                                            {
+                                                                (comment._links?.children?.length && !comment?.replies?.length) ?
+                                                                <Link onClick={e => load_more_replies(e, comment.id)} className={style.load_more_replies} href={'#'}>Show all replies to this comment.</Link> : ""
+                                                            }
+                                                            
                                                         </div>
                                                         
                                                     </div>   

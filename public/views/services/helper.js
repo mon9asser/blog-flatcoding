@@ -261,7 +261,7 @@ class HelperData {
     };
 
 
-    sendWPRequest = async ({ api, method, data }) => {
+    sendWPRequest = async ({ api, method, data, no_header }) => {
       
       const options = {
           method: method.toUpperCase(),
@@ -272,11 +272,17 @@ class HelperData {
               'X-API-Key-Secret': Config.wp_keys.secret
             },
       };
+
+      if( no_header ) {
+        options.headers = {
+          'Content-Type': 'application/json' 
+        }
+      }
       
       if (method === 'post' || method === 'put') {
           options.body = JSON.stringify(data);
       } 
-      var url = `${Config.wp_api}/${api}`;
+      var url =`${Config.wp_api}/${api}`;
 
       return fetch(url, options);
   }
