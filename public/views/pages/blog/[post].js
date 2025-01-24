@@ -37,7 +37,18 @@ const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 export default function Post({upcoming}) {
     
+    
     const { data: session } = useSession(); 
+
+    var ThumbUp = () => (
+        <svg height="25" width="25" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M320 1344q0-26-19-45t-45-19q-27 0-45.5 19t-18.5 45q0 27 18.5 45.5t45.5 18.5q26 0 45-18.5t19-45.5zm160-512v640q0 26-19 45t-45 19h-288q-26 0-45-19t-19-45v-640q0-26 19-45t45-19h288q26 0 45 19t19 45zm1184 0q0 86-55 149 15 44 15 76 3 76-43 137 17 56 0 117-15 57-54 94 9 112-49 181-64 76-197 78h-129q-66 0-144-15.5t-121.5-29-120.5-39.5q-123-43-158-44-26-1-45-19.5t-19-44.5v-641q0-25 18-43.5t43-20.5q24-2 76-59t101-121q68-87 101-120 18-18 31-48t17.5-48.5 13.5-60.5q7-39 12.5-61t19.5-52 34-50q19-19 45-19 46 0 82.5 10.5t60 26 40 40.5 24 45 12 50 5 45 .5 39q0 38-9.5 76t-19 60-27.5 56q-3 6-10 18t-11 22-8 24h277q78 0 135 57t57 135z"/></svg>
+    )
+    
+    var ThumbDown = () => (
+        <svg height="25" width="25" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M320 576q0 26-19 45t-45 19q-27 0-45.5-19t-18.5-45q0-27 18.5-45.5t45.5-18.5q26 0 45 18.5t19 45.5zm160 512v-640q0-26-19-45t-45-19h-288q-26 0-45 19t-19 45v640q0 26 19 45t45 19h288q26 0 45-19t19-45zm1129-149q55 61 55 149-1 78-57.5 135t-134.5 57h-277q4 14 8 24t11 22 10 18q18 37 27 57t19 58.5 10 76.5q0 24-.5 39t-5 45-12 50-24 45-40 40.5-60 26-82.5 10.5q-26 0-45-19-20-20-34-50t-19.5-52-12.5-61q-9-42-13.5-60.5t-17.5-48.5-31-48q-33-33-101-120-49-64-101-121t-76-59q-25-2-43-20.5t-18-43.5v-641q0-26 19-44.5t45-19.5q35-1 158-44 77-26 120.5-39.5t121.5-29 144-15.5h129q133 2 197 78 58 69 49 181 39 37 54 94 17 61 0 117 46 61 43 137 0 32-15 76z"/></svg>
+    )
+  
+    
     var [loadLogin, setLoadLogin] = useState(false);
   
     console.log(upcoming);
@@ -88,11 +99,7 @@ export default function Post({upcoming}) {
                 reply_to_comment_id: reply_to_comment_id? reply_to_comment_id: 0,
                 comment_value: value
             }
-
-            console.log('=========================================');
-            console.log(data_form);
-            console.log('=========================================');
-
+            
             if(value == '' ) {
                 setMessage("Comment cannot be empty!");
                 setclasN('error_msg');
@@ -542,175 +549,120 @@ export default function Post({upcoming}) {
                         
                         
                         {/*Recently Comments*/}
-                        <div className={`${style.widget} ${style.remove_spaces} ${style.comments}`}>
-                            <div className={style['comments-sectison']}>
-                                <h3>
-                                    Recent Comments (15)
-                                </h3>
-                                <div className={style['comment-wrapper']}>
-                                    <div className={style['comment']}>
-                                        <div className={style['thumbnail']}>
-                                            <img src="https://placehold.co/50" alt="User Thumbnail" />
-                                        </div>
-                                        <div className={style['comment-content']}>
-                                            <div className={style['comment-details']}>
-                                                <span className={style['name']}>John Doe</span>
-                                                <span className={style['date']}>January 18, 2025</span>
-                                                <ul className={`${style.comment_meta_ul} ${style.meta_ul_result}`}>
-                                                    <li>
-                                                        5 Likes
-                                                    </li> 
-                                                    <li>
-                                                        3 Unlikes
-                                                    </li> 
-                                                </ul>                                                
-                                            </div>
-                                            <div className={style['comment-text']}>
-                                                <p>This is a great article! I learned so much from it. Thank you for
-                                                sharing!</p>
-                                            </div> 
-                                            <ul className={style.comment_meta_ul}>
-                                                <li>
-                                                    <a>Like</a>
-                                                </li>
-                                                <li>
-                                                    <a>Dislike</a>
-                                                </li>
-                                                <li>
-                                                    <a>Reply</a>
-                                                </li>
-                                            </ul>
-
-                                            
-
-                                            <div className={style.reply_comments}>
-                                                <div className={`${style['comment']} ${style['reply-to']}`}>
-                                                    
-                                                    <div className={style['thumbnail']}>
-                                                        <img src="https://placehold.co/50" alt="User Thumbnail" />
-                                                    </div>
-                                                    <div className={style['comment-content']}>
-                                                        <div className={style['comment-details']}>
-                                                            <span className={style['name']}>John Doe</span>
-                                                            <FontAwesomeIcon icon={faReply} className={style['icon-reply-to']} />
-                                                            <span className={style['date']}>January 18, 2025</span>
-                                                            <span className={style['is-author']}>Author</span>
-                                                            <ul className={`${style.comment_meta_ul} ${style.meta_ul_result}`}>
-                                                                <li>
-                                                                    5 Likes
-                                                                </li> 
-                                                                <li>
-                                                                    3 Unlikes
-                                                                </li> 
-                                                            </ul>
-                                                        </div>
-                                                        <div className={style['comment-text']}>
-                                                            <p>This is a great article! I learned so much from it. Thank you for
-                                                            sharing!</p>
-                                                        </div> 
-                                                        <ul className={style.comment_meta_ul}>
-                                                            <li>
-                                                                <a>Like</a>
-                                                            </li>
-                                                            <li>
-                                                                <a>Dislike</a>
-                                                            </li> 
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div className={`${style['comment']} ${style['reply-to']}`}>
-                                                    
-                                                    <div className={style['thumbnail']}>
-                                                        <img src="https://placehold.co/50" alt="User Thumbnail" />
-                                                    </div>
-                                                    <div className={style['comment-content']}>
-                                                        <div className={style['comment-details']}>
-                                                            <span className={style['name']}>John Doe</span>
-                                                            <FontAwesomeIcon icon={faReply} className={style['icon-reply-to']} />
-                                                            <span className={style['date']}>January 18, 2025</span>
-                                                        </div>
-                                                        <div className={style['comment-text']}>
-                                                            <p>This is a great article! I learned so much from it. Thank you for
-                                                            sharing!</p>
-                                                        </div> 
-
-                                                        <ul className={style.comment_meta_ul}>
-                                                            <li>
-                                                                <a>Like</a>
-                                                            </li>
-                                                            <li>
-                                                                <a>Dislike</a>
-                                                            </li> 
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                
-                                                
-                                            </div>
-                                            <div className={style.view_more_comments}>
-                                                <a>
-                                                   Read More (5 Replies)
-                                                </a>
-                                            </div>
-
-                                            <div className={style.add_comment_reply}>
-                                                .......
-                                            </div>
-                                        </div>
+                        {
+                            upcoming.comments?.all?.length ? 
+                                <div className={`${style.widget} ${style.remove_spaces} ${style.comments}`}>
+                                    <div className={style['comments-sectison']}>
+                                        <h3>
+                                            Recent Comments ({upcoming.comments.paging.counts})
+                                        </h3>
                                         
+                                        {
+                                            upcoming.comments?.all.map(comment => (
+                                                <div className={style['comment-wrapper']}>
+                                                    <div className={style['comment']}>
+                                                        <div className={style['thumbnail']}>
+                                                            <Image 
+                                                                property
+                                                                crossOrigin="anonymous"
+                                                                decoding="async"
+                                                                width={50}
+                                                                height={50}
+                                                                src={comment.author_avatar_urls[48]} 
+                                                                alt={comment.author_name} 
+                                                            />
+                                                        </div>
+                                                        <div className={style['comment-content']}>
+                                                            <div className={style['comment-details']}>
+                                                                <span className={style['name']}>{comment.author_name}</span>
+                                                                <span className={style['date']}>{Helper.formatDate(comment.date)}</span>
+                                                            </div>
+                                                            <div 
+                                                                className={style['comment-text']} 
+                                                                dangerouslySetInnerHTML={{__html: comment.content.rendered}}
+                                                            /> 
+                                                            <div className={style.like_dislike}>
+                                                                <ul className={style.comment_meta_ul}>
+                                                                    <li>
+                                                                        <a>Like</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a>Dislike</a>
+                                                                    </li> 
+                                                                    <li>
+                                                                        <a>Reply</a>
+                                                                    </li> 
+                                                                </ul>
+
+                                                                <ul className={`${style.comment_meta_ul} ${style.meta_ul_result} ${style.comment_meta_ul_result}`}>
+                                                                    <li>
+                                                                        5 <span><ThumbUp/></span>
+                                                                    </li> 
+                                                                    <li>
+                                                                        3 <span><ThumbDown/></span>
+                                                                    </li> 
+                                                                </ul>
+                                                            </div>
+
+                                                            <div className={`${style['comment']} ${style['reply-to']}`}>
+					
+                                                                <div className={style['thumbnail']}>
+                                                                    <img src="https://placehold.co/50" alt="User Thumbnail" />
+                                                                </div>
+                                                                <div className={style['comment-content']}>
+                                                                    <div className={style['comment-details']}>
+                                                                        <span className={style['name']}>John Doe</span>
+                                                                        <FontAwesomeIcon icon={faReply} className={style['icon-reply-to']} />
+                                                                        <span className={style['date']}>January 18, 2025</span> 
+                                                                         
+                                                                    </div>
+                                                                    <div className={`${style['comment-text']} ${style['reply-to-text']}`}>
+                                                                        <p>This is a great article! I learned so much from it. Thank you for
+                                                                        sharing!</p>
+                                                                    </div> 
+                                                                     
+                                                                </div>
+                                                            </div>
+
+                                                            <div className={`${style['comment']} ${style['reply-to']}`}>
+					
+                                                                <div className={style['thumbnail']}>
+                                                                    <img src="https://placehold.co/50" alt="User Thumbnail" />
+                                                                </div>
+                                                                <div className={style['comment-content']}>
+                                                                    <div className={style['comment-details']}>
+                                                                        <span className={style['name']}>John Doe</span>
+                                                                        <FontAwesomeIcon icon={faReply} className={style['icon-reply-to']} />
+                                                                        <span className={style['date']}>January 18, 2025</span> 
+                                                                         
+                                                                    </div>
+                                                                    <div className={`${style['comment-text']} ${style['reply-to-text']}`}>
+                                                                        <p>This is a great article! I learned so much from it. Thank you for
+                                                                        sharing!</p>
+                                                                    </div> 
+                                                                     
+                                                                </div>
+                                                            </div>
+
+
+                                                        </div>
+                                                        
+                                                    </div>   
+                                                </div>
+                                            ))
+                                        }
+                                          
                                     </div>  
-                                </div>
-
-                                <div className={style['comment-wrapper']}>
-                                    <div className={style['comment']}>
-                                        <div className={style['thumbnail']}>
-                                            <img src="https://placehold.co/50" alt="User Thumbnail" />
-                                        </div>
-                                        <div className={style['comment-content']}>
-                                            <div className={style['comment-details']}>
-                                                <span className={style['name']}>John Doe</span>
-                                                <span className={style['date']}>January 18, 2025</span>
-                                                <ul className={`${style.comment_meta_ul} ${style.meta_ul_result}`}>
-                                                    <li>
-                                                        5 Likes
-                                                    </li> 
-                                                    <li>
-                                                        3 Unlikes
-                                                    </li> 
-                                                </ul>    
-                                            </div>
-                                            <div className={style['comment-text']}>
-                                                <p>This is a great article! I learned so much from it. Thank you for
-                                                sharing!</p>
-                                            </div> 
-
-                                            
-
-                                            <ul className={style.comment_meta_ul}>
-                                                <li>
-                                                    <a>Like</a>
-                                                </li>
-                                                <li>
-                                                    <a>Dislike</a>
-                                                </li> 
-                                                <li>
-                                                    <a>Reply</a>
-                                                </li> 
-                                            </ul>
-                                        </div>
                                         
-                                    </div>   
-                                </div>
-                                
-                                
-                            </div> 
-                            <div className={`${style.view_more_comments} ${style.load_more_cmt}`}>
-                                <a>
-                                    See More (5 Comments)
-                                </a> 
-                            </div>
-                            
-                        </div> 
+                                    <div className={`${style.view_more_comments} ${style.load_more_cmt}`}>
+                                        <a>
+                                            See More (5 Comments)
+                                        </a> 
+                                    </div> 
+                                </div> 
+                            : ""
+                        }
+                        
                         
                     </div>
                     <div className={`${style['lg-4']} ${style['md-4']} ${style['sm-12']} ${style['plr-15']} ${style['ptb-15']}`}>
@@ -799,7 +751,11 @@ export async function getServerSideProps(context) {
                 method: "get",
                 data: {}
             }),
+
         ];
+
+
+        
 
         // Wait for all requests to resolve
         const responses = await Promise.all(requests);
@@ -886,6 +842,51 @@ export async function getServerSideProps(context) {
             };
         });
 
+
+        // Getting comments of this post 
+        ///wp-json/wp/v2/comments?per_page=1&page=1&parent=0&post=34
+        /*Helper.sendWPRequest({
+            api: `wp-json/wp/v2/comments?per_page=1&page=1&parent=0&post=34`,
+            method: "get",
+            data: {}
+        });*/
+
+        
+
+        // Wait for all requests to resolve
+        const comment_response = await Promise.all([
+            Helper.sendWPRequest({
+                api: `wp-json/wp/v2/comments?per_page=5&page=1&parent=0&post=${single_post.data.id}`,
+                method: "get",
+                data: {}
+            }),
+            Helper.sendWPRequest({
+                api: `wp-json/wp/v2/comments?parent=0&post=${single_post.data.id}`,
+                method: "get",
+                data: {}
+            }) 
+        ]);
+
+        // Parse JSON from each response
+        const comments_data = await Promise.all(comment_response.map(response => response.json()));
+
+        // convert link to main site url 
+        var new_comments_data = comments_data[0].map(x => {
+            x.link = x.link.replace("authors.flatcoding.com", "flatcoding.com/blog") 
+            return x;
+        });
+
+        var comments = { 
+            all: new_comments_data,
+            paging: {
+                counts: comments_data[1].length,
+                page: 1,
+                comments_per_page: 5
+            }
+        }
+        
+        
+
         var upcoming = {
             
             // Settings
@@ -927,7 +928,10 @@ export async function getServerSideProps(context) {
             releated_posts,
 
             // Post 
-            single_post
+            single_post,
+
+            // comments
+            comments
 
         };
 

@@ -5998,6 +5998,7 @@ img.half, div.feature-block svg, .feature-block {
     margin-left: 10px;
     padding: 2px 10px;
     border-radius: 3px;
+    display: flex;
 }
 .comment-wrapper {
     position: relative;   
@@ -6016,6 +6017,14 @@ img.half, div.feature-block svg, .feature-block {
 }
 .reply-to {
     margin-top: 10px; 
+    background: #fafafa;
+    padding: 18px;
+    border-radius: 5px;
+    border: 1px solid #eee;
+}
+
+.reply-to-text > * {
+    font-size: 14px;
 }
 .comment:last-child {
     border-bottom: none;
@@ -6055,6 +6064,17 @@ img.half, div.feature-block svg, .feature-block {
     font-weight: normal;
     color: #000;
     margin-top: 7px;
+}
+
+.comment-text > *:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+.comment-text > pre {
+    background: #222;
+    color: #fff;
+    padding: 20px;
+    border-radius: 7px;
 }
 
 .view_more_comments {
@@ -6137,17 +6157,58 @@ img.half, div.feature-block svg, .feature-block {
     gap: 10px;
 }
 
+.comment_meta_ul li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
 .comment_meta_ul li a {
     font-size: 13px;
     color: #999;
 }
+
+.comment_meta_ul li  svg {
+    width: 12px;
+}
+
+.comment_meta_ul li span {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.comment_meta_ul_result{
+    border: 1px solid #eee;
+    padding: 5px 20px;
+    border-radius: 7px; 
+    background-color: #eee;
+}
+
+
+
 
 .comment_meta_ul li a:hover,
 .view_more_comments a:hover,
 .view_more_comments a:hover svg {
     color: #b9355e;
 }
- 
+
+.comment_meta_ul_result svg path{
+    fill:rgb(95, 95, 95);
+}
+.comment_meta_ul_result li  {
+    color:rgb(95, 95, 95) !important;
+}
+
+.comment-text a {
+    text-decoration: underline;
+    color: #b9355e;
+}
 
 .view_more_comments a:before {
     content: "";
@@ -6438,7 +6499,7 @@ img.half, div.feature-block svg, .feature-block {
 }
 
 .post-single {
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1.6;
     color: #1d2031;
 }
@@ -6618,3 +6679,23 @@ img.half, div.feature-block svg, .feature-block {
     display: block !important;
 }
 
+.like_dislike {
+    margin-top: 10px;
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: center;
+
+    border: 1px solid #eee;
+    padding: 5px;
+    border-radius: 7px;
+    background: #fafafa;
+    border-radius: 5px;
+}
+
+.like_dislike ul {
+    padding: 5px 15px;
+    border-radius: 5px;
+}
+.like_dislike ul:last-child {
+    border: 1px solid #ddd;
+}
