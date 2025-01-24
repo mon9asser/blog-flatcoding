@@ -40,7 +40,7 @@ export default function Post({upcoming}) {
     const { data: session } = useSession(); 
     var [loadLogin, setLoadLogin] = useState(false);
   
-
+    console.log(upcoming);
 
     
     var header_content = parse(upcoming.header);
@@ -66,21 +66,38 @@ export default function Post({upcoming}) {
         if(!user) return null; 
         
         delete user.id;  
-        const [value, setValue] = useState('');
-        const [response, setResponse] = useState('');
-        const [isLoading, setLoading] = useState(false);
+        var [value, setValue] = useState('');
+        var [response, setResponse] = useState('');
+        var [isLoading, setLoading] = useState(false);
         var [loadLogin, setLoadLogin] = useState(false);
+
+        var [message, setMessage] = useState('');
+        var [display, setDisplay] = useState('');
+        var [clasN, setclasN] = useState('nothing');
 
         var submitComment = async (e) => {
             e.preventDefault();
             setLoading(true);
+            setMessage('');
+            setclasN('nothing'); 
 
             var data_form = {
                 ...user,
-                post_id: post_id? post_id: -1,
-                comment_id: comment_id? comment_id: -1,
-                reply_to_comment_id: reply_to_comment_id? reply_to_comment_id: -1,
+                post_id: post_id? post_id: 0,
+                comment_id: comment_id? comment_id: 0,
+                reply_to_comment_id: reply_to_comment_id? reply_to_comment_id: 0,
                 comment_value: value
+            }
+
+            console.log('=========================================');
+            console.log(data_form);
+            console.log('=========================================');
+
+            if(value == '' ) {
+                setMessage("Comment cannot be empty!");
+                setclasN('error_msg');
+                setLoading(false);
+                return;
             }
 
             const response = await Helper.sendNTRequest({
@@ -90,7 +107,16 @@ export default function Post({upcoming}) {
             });        
           
             var submitted = await response.json();
-          
+            if( submitted.is_error ) {
+                setMessage(submitted.message);
+                setclasN('error_msg');
+                setLoading(false);
+                return;
+            }
+
+            setMessage(submitted.message);
+            setclasN('success_msg'); // 
+            setLoading(false);
              
         }
 
@@ -117,6 +143,11 @@ export default function Post({upcoming}) {
                     <ReactQuill
                         theme="snow"
                         value={value}
+                        onKeyUp={() => {
+                            setMessage("");
+                            setclasN('nothing');
+                            setLoading(false);
+                        }}
                         onChange={setValue}
                         placeholder="Write your comment here..."
                         modules={{
@@ -129,6 +160,9 @@ export default function Post({upcoming}) {
                         formats={['bold', 'italic', 'underline', 'list', 'bullet', 'link', 'code-block']}
                     />
                 </div>
+            </div>
+            <div className={`${style['response_msg']} ${style[clasN]}`}> 
+                <p>{message}</p>
             </div>
             <Link onClick={submitComment} className={`${style.post_comment} ${style.flex}`} href='#'>
                 {
