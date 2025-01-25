@@ -6628,7 +6628,7 @@ img.half, div.feature-block svg, .feature-block {
 }
 .youloggedin p { 
     align-items: center;
-    display: flex !important;
+    /*display: flex !important;*/
     gap: 7px;
 }
 
@@ -6664,7 +6664,7 @@ img.half, div.feature-block svg, .feature-block {
 };
 
 
-
+ 
 
 
 .error_msg p,
@@ -6699,7 +6699,7 @@ img.half, div.feature-block svg, .feature-block {
     margin-top: 10px;
     flex-wrap: wrap;
     display: flex;
-    justify-content: center;
+   
 
     border: 1px solid #eee;
     padding: 5px;
@@ -6712,7 +6712,7 @@ img.half, div.feature-block svg, .feature-block {
     padding: 5px 15px;
     border-radius: 5px;
 }
-.like_dislike ul:last-child {
+.like_dislike ul {
     border: 1px solid #ddd;
 }
 
@@ -6776,10 +6776,12 @@ img.half, div.feature-block svg, .feature-block {
 
 .popup-login-box > div >  h3 {
     color: #000;
+    font-weight: bold;
 }
 
 .popup-login-box > div >  p {
-    color: #666;
+    color: #000;
+    font-size: 14px;
 }
 
 .reply_block_text p,
@@ -6792,4 +6794,33 @@ img.half, div.feature-block svg, .feature-block {
 
 .ql-editor {
     background-color: #fff;
+}
+
+.reply_block_text .response_msg p {
+    margin: 0;
+    padding: 0;
+}
+
+.load_more_commnt a::before {
+    display: none;
+}
+.load_more_commnt a,
+.load_more_commnt a:hover {
+    background-color: #b9355e;
+    width: max-content;
+    padding: 10px;
+    margin: 0px auto;
+    color: #fff; 
+    border-radius: 5px;
+}
+
+.load_more_commnt a:hover {
+    opacity: 0.88;
+}
+
+.nomorecommentsfound {
+    font-size: 16px;
+    display: block;
+    text-align: center;
+    color: #222;
 }

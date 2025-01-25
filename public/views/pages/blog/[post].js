@@ -37,12 +37,13 @@ const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 export default function Post({upcoming}) {
     
-    
+     
     const { data: session } = useSession(); 
     var [loadLogin, setLoadLogin] = useState(false);
-    var [comments, setComments] = useState([]);
+    var [comments, setComments] = useState([]); 
+    
     var [open, setOpen] = useState(false);
-
+    var [enableLoadMoreComments, setEnableLoadMoreComments] = useState(false);
     var [openReplyWindowId, setOpenReplyWindowId] = useState(0);
 
     var ThumbUp = () => (
@@ -53,8 +54,93 @@ export default function Post({upcoming}) {
         <svg height="25" width="25" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M320 576q0 26-19 45t-45 19q-27 0-45.5-19t-18.5-45q0-27 18.5-45.5t45.5-18.5q26 0 45 18.5t19 45.5zm160 512v-640q0-26-19-45t-45-19h-288q-26 0-45 19t-19 45v640q0 26 19 45t45 19h288q26 0 45-19t19-45zm1129-149q55 61 55 149-1 78-57.5 135t-134.5 57h-277q4 14 8 24t11 22 10 18q18 37 27 57t19 58.5 10 76.5q0 24-.5 39t-5 45-12 50-24 45-40 40.5-60 26-82.5 10.5q-26 0-45-19-20-20-34-50t-19.5-52-12.5-61q-9-42-13.5-60.5t-17.5-48.5-31-48q-33-33-101-120-49-64-101-121t-76-59q-25-2-43-20.5t-18-43.5v-641q0-26 19-44.5t45-19.5q35-1 158-44 77-26 120.5-39.5t121.5-29 144-15.5h129q133 2 197 78 58 69 49 181 39 37 54 94 17 61 0 117 46 61 43 137 0 32-15 76z"/></svg>
     )
     
-    
-    console.log(upcoming);
+    var disLikeCallback = async (e, commentId) => {
+        if( !session || !session.user ) {
+            setOpen(true);
+            return;
+        } 
+        
+        upcoming.comments.all = upcoming.comments.all.map(x => {
+
+            if(x.id == commentId) {
+ 
+
+                if(!x.meta.comment_dislikes){
+                    x.meta.comment_dislikes = 1; 
+                } else {
+                    x.meta.comment_dislikes = parseInt( x.meta.comment_dislikes) + 1;
+                }
+
+            }   
+
+            return x;
+        });
+        
+        var formatDate = {
+            name: session.user.name, 
+            email: session.user.email, 
+            image: session.user.image, 
+            accessToken:session.user.accessToken, 
+            comment_id:commentId, 
+            interaction_type: 'dislike' 
+        }
+
+
+        const response = await Helper.sendNTRequest({
+            api: 'submit-interaction',
+            method: 'post',
+            body: formatDate 
+        });   
+
+        var reqs = await response.json();
+        
+
+        
+    }
+
+    var likeCallback    = async (e, commentId) => {
+        
+        if( !session || !session.user ) {
+            setOpen(true);
+            return;
+        }
+        
+        upcoming.comments.all = upcoming.comments.all.map(x => {
+
+            if(x.id == commentId) {
+
+                if(!x.meta.comment_likes){
+                    x.meta.comment_likes = 1; 
+                } else {
+                    x.meta.comment_likes = parseInt( x.meta.comment_likes) + 1;
+                }
+                
+
+            }   
+
+            return x;
+        });
+
+        var formatDate = {
+            name: session.user.name, 
+            email: session.user.email, 
+            image: session.user.image, 
+            accessToken:session.user.accessToken, 
+            comment_id:commentId, 
+            interaction_type: 'like' 
+        }
+
+        const response = await Helper.sendNTRequest({
+            api: 'submit-interaction',
+            method: 'post',
+            body: formatDate 
+        });   
+
+        var reqs = await response.json();
+        
+        console.log(reqs);
+
+    }
 
     var showLoginDialog = () => {
         setOpen(true);
@@ -71,6 +157,41 @@ export default function Post({upcoming}) {
 
     }
     
+    var loadMoreComments = async (e) => {
+        setEnableLoadMoreComments(true);
+        e.preventDefault();
+        
+        upcoming.comments.paging.page= upcoming.comments.paging.page + 1;
+       
+        if( upcoming.comments.paging.page >= upcoming.comments.paging.total_pages ) {
+            upcoming.comments.paging.page = upcoming.comments.paging.total_pages;
+        } 
+
+        var request = await Helper.sendWPRequest({
+            api: `wp-json/wp/v2/comments?per_page=5&page=${upcoming.comments.paging.page}&parent=0&post=${upcoming.single_post.data.id}`,
+            method: "get",
+            data: {},
+            no_header: true
+        });
+
+
+        var response = await request.json();
+        
+        // convert link to main site url 
+        var new_comments_data = response.map(x => {
+            x.link = x.link.replace("authors.flatcoding.com", "flatcoding.com/blog") 
+            return x;
+        }); 
+
+        // push new comments to main comments state
+        var allComments = [...comments, ...new_comments_data]; 
+        
+        setEnableLoadMoreComments(false);
+
+        // assign all comments to main state
+        setComments(allComments);
+
+    }
     var LoginPopUpBox = ({open, setOpen}) => { 
 
         var googleLoginCallback = async(e) => {
@@ -112,7 +233,7 @@ export default function Post({upcoming}) {
         };
     };
 
-    var AddNewComment = ({user, post_id, comment_id, reply_to_comment_id, thumbnail, setComments }) => {
+    var AddNewComment = ({user, post_id, comment_id, reply_to_comment_id, thumbnail }) => {
         
         if(!user) return null; 
         
@@ -131,7 +252,7 @@ export default function Post({upcoming}) {
             setLoading(true);
             setMessage('');
             setclasN('nothing'); 
-            setComments("This is a new comment added successfully!!");
+            
             var data_form = {
                 ...user,
                 post_id: post_id? post_id: 0,
@@ -146,7 +267,7 @@ export default function Post({upcoming}) {
                 setLoading(false);
                 return;
             }
-
+          
             const response = await Helper.sendNTRequest({
                 api: 'submit-comment',
                 method: 'post',
@@ -600,7 +721,7 @@ export default function Post({upcoming}) {
                                     {
                                         (session && session.user) ?
                                             <AddNewComment 
-                                                setComments={setComments}
+                                                
                                                 post_id={upcoming.single_post.data.id}  
                                                 comment_id={0}
                                                 reply_to_comment_id={0}
@@ -625,10 +746,8 @@ export default function Post({upcoming}) {
                                         <h3>
                                             Recent Comments ({upcoming.comments.paging.counts})
                                         </h3>
-                                        {console.log(comments)}
-                                        {
-                                            
-                                            
+                                        
+                                        {   
                                             (comments.length? comments: upcoming.comments?.all).map(comment => (
                                                 <div id={`comment-${comment.id}`} key={comment.id} className={style['comment-wrapper']}>
                                                     <div className={`${style['comment']} ${style['comment-box']}`}>
@@ -655,24 +774,38 @@ export default function Post({upcoming}) {
                                                             <div className={style.like_dislike}>
                                                                 <ul className={style.comment_meta_ul}>
                                                                     <li>
-                                                                        <Link href={`#comment-${comment.id}`} onClick={e=>likeCallback(e)}>Like</Link>
+                                                                        <Link href={`#comment-${comment.id}`} onClick={e=>likeCallback(e, comment.id)}>Like</Link>
                                                                     </li>
                                                                     <li>
-                                                                        <Link href={`#comment-${comment.id}`} onClick={e=>disLikeCallback(e)}>Dislike</Link>
+                                                                        <Link href={`#comment-${comment.id}`} onClick={e=>disLikeCallback(e, comment.id)}>Dislike</Link>
                                                                     </li> 
                                                                     <li>
                                                                         <Link href={`#comment-${comment.id}`} onClick={e=>replyCallback(e, comment.id)}>Reply</Link>
                                                                     </li> 
                                                                 </ul>
 
-                                                                <ul className={`${style.comment_meta_ul} ${style.meta_ul_result} ${style.comment_meta_ul_result}`}>
-                                                                    <li>
-                                                                        5 <span><ThumbUp/></span>
-                                                                    </li> 
-                                                                    <li>
-                                                                        3 <span><ThumbDown/></span>
-                                                                    </li> 
-                                                                </ul>
+                                                                {
+                                                                    comment.meta?.comment_dislikes || comment.meta?.comment_likes ?
+                                                                    <ul className={`${style.comment_meta_ul} ${style.meta_ul_result} ${style.comment_meta_ul_result}`}>
+                                                                       
+                                                                        {
+                                                                            comment.meta.comment_likes ?
+                                                                            <li>
+                                                                                {comment.meta.comment_likes} <span><ThumbUp/></span>
+                                                                            </li> : ""
+                                                                        }
+                                                                        
+                                                                        {
+                                                                            comment.meta.comment_dislikes ?
+                                                                            <li>
+                                                                                {comment.meta.comment_dislikes} <span><ThumbDown/></span>
+                                                                            </li>: ""
+                                                                        }
+                                                                        
+                                                                    </ul>: ""
+                                                                }
+                                                                
+
                                                             </div>
                                                             
                                                             {
@@ -685,7 +818,7 @@ export default function Post({upcoming}) {
                                                                             reply_to_comment_id={comment.id}
                                                                             thumbnail={false}
                                                                             user={session.user}
-                                                                            setComments={setComments}
+                                                                            
                                                                         />
                                                                    </div>
                                                                 : ""
@@ -737,12 +870,23 @@ export default function Post({upcoming}) {
                                         }
                                           
                                     </div>  
-                                        
-                                    <div className={`${style.view_more_comments} ${style.load_more_cmt}`}>
-                                        <a>
-                                            See More (5 Comments)
-                                        </a> 
-                                    </div> 
+                                    
+                                    {
+                                        upcoming.comments.paging.page >= upcoming.comments.paging.total_pages ?
+                                        <span className={style.nomorecommentsfound}>No more comments are found!</span>
+                                        :<div onClick={loadMoreComments} className={`${style.view_more_comments} ${style.load_more_cmt}  ${style.load_more_commnt}`}>
+                                            <a>
+                                                {
+                                                    enableLoadMoreComments ?
+                                                    <span className={style.loader}></span>: 
+                                                    'Load More Comments'
+                                                }
+                                            </a> 
+                                        </div> 
+                                    }
+                                    
+
+                                    
                                 </div> 
                             : ""
                         }
@@ -799,7 +943,7 @@ export default function Post({upcoming}) {
 export async function getServerSideProps(context) {
     
     var slug = context.params.post;
-     
+     console.log(context.resolvedUrl);
     try {
         // Define the requests
         const requests = [
@@ -963,12 +1107,14 @@ export async function getServerSideProps(context) {
             return x;
         });
 
+        var total_pages = Math.ceil( comments_data[1].length / 5 );
         var comments = { 
             all: new_comments_data,
             paging: {
                 counts: comments_data[1].length,
                 page: 1,
-                comments_per_page: 5
+                comments_per_page: 5,
+                total_pages: total_pages
             }
         }
         
