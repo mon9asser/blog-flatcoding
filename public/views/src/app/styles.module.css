@@ -6006,6 +6006,7 @@ img.half, div.feature-block svg, .feature-block {
     padding-bottom: 20px; 
     z-index: 5; 
 }
+/*
 .comment-wrapper:not(:last-child)::before {
     content: '';
     width: 2px;
@@ -6014,7 +6015,7 @@ img.half, div.feature-block svg, .feature-block {
     position: absolute;
     background-color: #dfdfdf;
     z-index: 1;
-}
+}*/
 .reply-to {
     margin-top: 10px; 
     background: #fafafa;
@@ -6028,6 +6029,11 @@ img.half, div.feature-block svg, .feature-block {
 }
 .comment:last-child {
     border-bottom: none;
+}
+
+.comment-box:last-child { 
+    border-bottom: 1px solid #eee;
+    padding-bottom: 45px;
 }
 
 .btn_expand_comments {
@@ -6286,7 +6292,7 @@ img.half, div.feature-block svg, .feature-block {
     border: 2px solid #ddd;
     border-radius: 8px;
 }
-
+ 
 .add_comment_for_author_thumbnail::after {
     position: absolute;
     content: '';
@@ -6296,21 +6302,30 @@ img.half, div.feature-block svg, .feature-block {
     top: 10%;
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
-    border-left: 10px solid #ddd; /* Adjust the color of the arrow */
-    margin-left: 0px; /* Optional: Add spacing between the arrow and the element */ 
-}
+    border-left: 10px solid #ddd;  
+    margin-left: 0px; 
+} 
 
 .post_comment {
     background-color: #b9355e !important;
     font-size: 14px;
     color: #fff;
-    margin-top: 20px !important;
+    margin-top: 10px !important;
     position: relative;
     display: block;
     width: fit-content;
     padding: 8px 15px;
     float: right;
     border-radius: 5px;
+}
+
+.reply_block_text {
+    margin-top: 15px;
+    background-color: #fafafa;
+    padding: 20px;
+    overflow: hidden;
+    border-radius: 10px;
+    border: 1px solid #eee;
 }
 
 .add_comment_reply {
@@ -6335,6 +6350,7 @@ img.half, div.feature-block svg, .feature-block {
 
 .add_comment_details {
     flex-grow:1;
+    background-color: #fff;
 }
 
 .join_us_to_comment {
@@ -6709,4 +6725,71 @@ img.half, div.feature-block svg, .feature-block {
     text-align: center;
     border-radius: 5px;
     border: 1px solid #eee;
+}
+
+ 
+ 
+.popup-login-box{
+    content: '';
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 10000;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: none;
+}
+
+.open_dialog {
+    display: block;
+}
+
+.popup-login-box > div {
+    background-color: #fff;
+    width: 500px;
+    max-width: 100%;
+    margin: 50px auto;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+}
+
+.popup-login-box > div > * {
+    margin-bottom: 15px;
+}
+
+.popup-login-box > div > button,
+.popup-login-box > div > button:hover,
+.popup-login-box > div > button:focus {
+    display: flex;
+    gap: 15px;
+    font-size: 14px;
+    color: #222;
+    padding: 10px;
+    margin: 0px auto;
+}
+
+.popup-login-box > div > button:hover {
+    background-color: #fafafa;
+}
+
+.popup-login-box > div >  h3 {
+    color: #000;
+}
+
+.popup-login-box > div >  p {
+    color: #666;
+}
+
+.reply_block_text p,
+.reply_block_text button {
+    font-size: 12px;
+    border: 0px;
+    padding: 0;
+    margin-bottom: 5px;
+}
+
+.ql-editor {
+    background-color: #fff;
 }

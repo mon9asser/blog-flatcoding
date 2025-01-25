@@ -11,9 +11,7 @@ export default async function handler(req, res) {
         data: []
       });
     }
-    console.log('=================================');    
-    console.log(req.body);
-    console.log('=================================');
+    
     // Extract data from the request body
     const { name, email, image, accessToken, post_id, reply_to_comment_id, comment_value } = req.body;
 
