@@ -943,8 +943,8 @@ export default function Post({upcoming}) {
 
 export async function getServerSideProps(context) {
     
-    var slug = context.params.post; 
-
+    var slug = context.params.post;  
+   
     try {
         // Define the requests
         const requests = [
@@ -987,6 +987,7 @@ export async function getServerSideProps(context) {
         ];
 
 
+        
         
 
         // Wait for all requests to resolve
@@ -1107,6 +1108,22 @@ export async function getServerSideProps(context) {
             x.link = x.link.replace("authors.flatcoding.com", "flatcoding.com/blog") 
             return x;
         });
+
+        // http://localhost:3002/blog/install-react-xyz/?comment_id=28#comment-28
+        if( context.query?.comment_id ) {
+            
+            var reqs = await Helper.sendWPRequest({
+                api: `wp-json/wp/v2/comments/${context.query?.comment_id}`,
+                method: "get",
+                data: {}
+            });
+
+            var first_comment = await reqs.json();
+            if( ! first_comment.data ) {
+                new_comments_data = [first_comment, ...new_comments_data.filter(x => x.id != first_comment.id )];
+            } 
+        }
+
 
         var total_pages = Math.ceil( comments_data[1].length / 5 );
         var comments = { 

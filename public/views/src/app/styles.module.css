@@ -6824,3 +6824,7 @@ img.half, div.feature-block svg, .feature-block {
     text-align: center;
     color: #222;
 }
+
+.center-li {
+    justify-content: center;
+}
