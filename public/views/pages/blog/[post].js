@@ -36,8 +36,8 @@ const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 
 export default function Post({upcoming}) {
-    
      
+
     const { data: session } = useSession(); 
     var [loadLogin, setLoadLogin] = useState(false);
     var [comments, setComments] = useState([]); 
@@ -138,7 +138,7 @@ export default function Post({upcoming}) {
 
         var reqs = await response.json();
         
-        console.log(reqs);
+        
 
     }
 
@@ -275,6 +275,7 @@ export default function Post({upcoming}) {
             });        
           
             var submitted = await response.json();
+            console.log(submitted);
             if( submitted.is_error ) {
                 setMessage(submitted.message);
                 setclasN('error_msg');
@@ -942,8 +943,8 @@ export default function Post({upcoming}) {
 
 export async function getServerSideProps(context) {
     
-    var slug = context.params.post;
-     console.log(context.resolvedUrl);
+    var slug = context.params.post; 
+
     try {
         // Define the requests
         const requests = [
