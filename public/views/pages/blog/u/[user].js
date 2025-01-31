@@ -83,7 +83,7 @@ export default function Author({upcoming}) {
                                         This tutorial covers complete PHP basics to help you learn how to code
                                         with PHP programming language.
                                     </p>
-                                    <ul className={`${style['social-icons']} ${style['social-bg']} ${style['social-author-icons']}`}>
+                                    <ul className={`${style['social-icons']} ${style['center-li']} ${style['social-bg']} ${style['social-author-icons']}`}>
                                         <li className={style['facebook']}>
                                             <Link href={'#'}>
                                                 <FontAwesomeIcon className={style.icon_social_icon} icon={Config.icons['facebook']} />
@@ -298,6 +298,9 @@ export default function Author({upcoming}) {
 
 
 export async function getServerSideProps(context) {
+
+    var usr = context.params.user;
+    
     try {
         // Define the requests
         const requests = [
@@ -317,7 +320,7 @@ export async function getServerSideProps(context) {
                 data: {}
             }),
             Helper.sendWPRequest({
-                api: "wp-json/custom/v1/latest-posts?author=montasser&page_number=1",
+                api: `wp-json/custom/v1/latest-posts?author=${usr}&page_number=1`,
                 method: "get",
                 data: {}
             }),
@@ -332,7 +335,7 @@ export async function getServerSideProps(context) {
                 data: {}
             }),
             Helper.sendWPRequest({
-                api: "wp-json/custom/v1/author?slug=montasser",
+                api: `wp-json/custom/v1/author?slug=${usr}`,
                 method: "get",
                 data: {}
             }),
@@ -343,7 +346,7 @@ export async function getServerSideProps(context) {
 
         // Parse JSON from each response
         const data = await Promise.all(responses.map(response => response.json()));
-
+        
         // 1- Site Settings  
         var settings = data[0].settings.length?data[0].settings[0]: {};
         if(settings.site_address) {
@@ -414,11 +417,28 @@ export async function getServerSideProps(context) {
             };
         });
 
+        if( author_data.is_error ) {
+            return {
+                notFound: true 
+            }
+        }
+
+        // setup user data
+        var meta_description = author_data.data.meta_data?.wpseo_metadesc != '' ? author_data.data.meta_data.wpseo_metadesc: author_data.data.meta_data.description
+        var meta_title = author_data.data.meta_data?.wpseo_title != '' ? author_data.data.meta_data.wpseo_title:  author_data.data.meta_data.name;
+        if( meta_description == '' ) {
+            meta_description = `${Helper.UppercaseName(meta_title)} is an author who writes about technology and programming, offering insights, tutorials, and guidance to help developers solve problems in their projects.`
+        }
+         
+         
+
         var upcoming = {
             
             // Settings
-            meta_title,
-            meta_description: description,
+            meta_title: meta_title,
+            meta_description: meta_description,
+
+
             default_comment_status: blog_settings.default_comment_status,
             posts_per_page: blog_settings.posts_per_page,
             title: blog_settings.title,
