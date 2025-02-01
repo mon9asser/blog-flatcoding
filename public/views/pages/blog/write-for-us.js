@@ -114,7 +114,7 @@ export default function Write({upcoming}) {
                             <div className={style.blog_post_wrap}>
                                 
 
-                                <div className={style['entry-header']}>
+                                <div className={`${style['entry-header']}`}>
                                     <h1 className={`${style["tutorial-headline"]}`}>Google Correlate: The Best SEO Research Tool You Aren’t Using</h1>    
                                     <div className={`${style['entry-meta']} ${style['post-entry-meta']}`}>
                                         <Link href={'#'} className={style.author}>
@@ -137,7 +137,7 @@ export default function Write({upcoming}) {
                                     </div>
                                 </div>
                                 
-                                <div className={`${style['entry-content']} ${style['single--content']}`}> 
+                                <div className={`${style['entry-content']} ${style['flex-direction-column']} ${style['single--content']}`}> 
                                     
                                     <Image
                                         className={`half`} // half
@@ -385,7 +385,7 @@ export async function getServerSideProps(context) {
                 data: {}
             }), 
             Helper.sendWPRequest({
-                api: "wp-json/custom/v1/related-posts?post_slug=install-react-xyz&number_of_posts=2",
+                api: "wp-json/custom/v1/related-posts?post_slug=write-for-us&number_of_posts=2",
                 method: "get",
                 data: {}
             }),
@@ -400,7 +400,7 @@ export async function getServerSideProps(context) {
                 data: {}
             }),
             Helper.sendWPRequest({
-                api: "wp-json/custom/v1/post-by-slug?post_slug=node-js-nvm",
+                api: `wp-json/wp/v2/pages?slug=write-for-us`,
                 method: "get",
                 data: {}
             }),
@@ -457,7 +457,10 @@ export async function getServerSideProps(context) {
         
         // Single of Post 
         var single_post = data[6];
-
+        if( single_post.length ) {
+            single_post = single_post[single_post.length - 1];
+        }
+        
         // tags 
         var tags = data[2].map(x => {
             x.link = `${settings.site_address}blog/tag/${x.slug}/`;

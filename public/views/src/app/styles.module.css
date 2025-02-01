@@ -6828,3 +6828,8 @@ img.half, div.feature-block svg, .feature-block {
 .center-li {
     justify-content: center;
 }
+
+
+.flex-direction-column {
+    flex-direction: column !important;
+}
