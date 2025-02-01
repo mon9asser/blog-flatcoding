@@ -20,6 +20,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Config from "../../../services/config";
 
 export default function Author({upcoming}) {
+
+    console.log(upcoming)
     
     if(!upcoming) {
         return <ServerOffline/>

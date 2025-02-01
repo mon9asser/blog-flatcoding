@@ -64,6 +64,14 @@ class HelperData {
 
     return randomString;
   }
+  
+  isLink(input){
+      // Regular expression to match URLs
+      const urlPattern = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+
+      // Test the input against the pattern
+      return urlPattern.test(input);
+  }
 
   validateEmail(email){
     // var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

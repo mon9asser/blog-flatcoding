@@ -6681,7 +6681,7 @@ img.half, div.feature-block svg, .feature-block {
     color: #B00020;
     font-size: 14px;
 }
-
+ 
 
 .success_msg {
     background-color: rgb(166, 253, 173);
@@ -6832,4 +6832,8 @@ img.half, div.feature-block svg, .feature-block {
 
 .flex-direction-column {
     flex-direction: column !important;
+}
+
+.mt_10 {
+    margin-top: 15px;
 }

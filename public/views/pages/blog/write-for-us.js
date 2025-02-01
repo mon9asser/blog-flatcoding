@@ -17,7 +17,7 @@ import { SocialShare } from "./../../services/components";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faReply, faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons'
-
+import BlogSidebarComponents from "../../parts/blog/sidebar";
 
 import Config from "./../../services/config";
  
@@ -30,17 +30,157 @@ import 'react-quill/dist/quill.snow.css';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
  
 
+
 export default function Write({upcoming}) {
     
     
     console.log(upcoming);
     const [value, setValue] = useState('');
 
+    // error_msg - success_msg
+    var [responseStatus, setResponseStatus] = useState(''); // error_msg - success_msg
+    var [responseMessage, setResponseMessage] = useState(''); 
+    var [loading, setLoading] = useState(false); 
+    var [form, setForm] = useState({
+        first_name: '',
+        second_name: '',
+        email: '',
+        linkdin: '',
+        facebook: '',
+        instagram: '',
+        youtube: '',
+        website_url: '',
+        article_1: '',
+        article_2: '',
+        article_3: '',
+        bio: '',
+        topics: ''
+    });
     
+
+
+    var sendRequest = (e) => {
+        e.preventDefault();
+        setResponseStatus('');
+        setResponseMessage('');
+        setLoading(true);
+        
+        // -----------------------------------------------
+        // validate user inputs 
+        // -----------------------------------------------
+
+        // => Check empty fields
+        if(form.first_name == '' || form.second_name == '' || form.email == '' || form.article_1 == '' || form.article_2 == '' || form.article_3 == '' || form.bio == '' || form.topics == '') {
+            setResponseStatus('error_msg');
+            setResponseMessage('Please ensure that you fill out all required fields.');
+            setLoading(false);
+            return; 
+        }
+
+        // => Invalid email
+        if (!Helper.validateEmail(form.email)) {
+            setResponseStatus('error_msg');
+            setResponseMessage('Please make sure you have entered a valid email.');
+            setLoading(false);
+            return; 
+        }
+
+        // => Invalid Link for Link 1 - 2 - 3
+        if (!Helper.isLink(form.article_1) || !Helper.isLink(form.article_2) || !Helper.isLink(form.article_3) ) {
+            setResponseStatus('error_msg');
+            setResponseMessage('Please ensure that all links contain valid URLs.');
+            setLoading(false);
+            return; 
+        }
+
+        // => Choose at least 3 topics you want to write about.
+        if(form.topics.indexOf('|') == -1 ) {
+            setResponseStatus('error_msg');
+            setResponseMessage('Please ensure that you have filled in at least 3 topics, separated by |.');
+            setLoading(false);
+            return; 
+        }
+
+        // => Convert pipelines to list in html 
+        var topics = form.topics.split('|').map(x => {
+            var field = x.trim();
+            
+            if( field == '' || field.length < 20 ) {
+                return false; 
+            }
+
+            return field;
+        });
+
+        if(topics.includes(false)) {
+            setResponseStatus('error_msg');
+            setResponseMessage('Please make sure you have filled in all topics with at least 20 characters, separated by "|".');
+            setLoading(false);
+            return; 
+        }
+        
+        // => Send Request 
+        console.log({form});
+    }
+
+    var storeFieldValue = ( key, value ) => {
+        var old_obj = {...form};
+            old_obj[key] = value;
+            setForm(old_obj);
+    }
     
     var header_content = parse(upcoming.header);
     var footer_content = parse(upcoming.footer);
-    var jsonLdContent =  '';
+    var json_data_var = `{
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "${upcoming.single_post?.title}",   
+        "author": {
+            "@type": "Organization",
+            "name": "${upcoming?.title}"  
+        },
+        
+        "description": "${upcoming?.meta_description}",   
+        "publisher": {
+            "@type": "Organization",
+            "name": "${upcoming?.title}",  
+            "logo": {
+                "@type": "ImageObject",
+                "url": "${upcoming.site_logo}"  
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "${upcoming.single_post.link}"   
+        },
+        "url": "${upcoming.single_post.link}",
+         
+        "breadcrumb": {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "${upcoming.site_url}"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Blog",
+                    "item": "${upcoming.site_url}blog/"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "name": "${upcoming.single_post.title.rendered}",
+                    "item": "${upcoming.single_post.link}"
+                }, 
+            ]
+        }
+         
+    }`; 
 
     var color = [
         '#d63031', '#6c5ce7', '#00b894', '#2d3436', '#182C61',
@@ -88,8 +228,37 @@ export default function Write({upcoming}) {
         </>
     }
     return <>
+    
         <Head>
-             
+                     
+            <title>{upcoming?.meta_title}</title>
+            <meta name="description" content={upcoming?.meta_description} />
+            {
+                upcoming?.single_post?.allow_post_indexing == false ?
+                <meta name="robots" content={"noindex, nofollow, noarchive, nosnippet, noodp, notranslate, noimageindex"} />
+                : ""
+            }
+            <link rel="canonical" href={upcoming.single_post.link}/>
+            <meta property="og:locale" content="en_US"/>
+            <meta property="og:type" content="article"/>
+
+            <meta property="og:title" content={upcoming?.meta_title}/>
+            <meta property="og:description" content={upcoming?.meta_description}/>
+            <meta property="og:url" content={upcoming.single_post.link}/>
+            <meta property="og:site_name" content={upcoming.title}/>
+            {
+                upcoming.single_post.thumbnail ?
+                (
+                    <meta name="twitter:card" content="summary_large_image"/>,
+                    <meta property="og:image" content={upcoming.single_post.thumbnail}/>,
+                    <meta name="twitter:image" content={upcoming.single_post.thumbnail}/>
+                )
+                : ""
+            }
+            
+            <script type="application/ld+json" dangerouslySetInnerHTML={{__html: json_data_var}} /> 
+            
+            {header_content}
         </Head>
 
         <Header 
@@ -115,112 +284,95 @@ export default function Write({upcoming}) {
                                 
 
                                 <div className={`${style['entry-header']}`}>
-                                    <h1 className={`${style["tutorial-headline"]}`}>Google Correlate: The Best SEO Research Tool You Aren’t Using</h1>    
-                                    <div className={`${style['entry-meta']} ${style['post-entry-meta']}`}>
-                                        <Link href={'#'} className={style.author}>
-                            
-                                            <span
-                                                className={`${style['authot-thumb']} ${style['pbt-lazy']}`}
-                                                data-image="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w72-h72-p-k-no-nu/p9.jpg"
-                                                style={{
-                                                    backgroundImage:
-                                                        "url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w99-h66-p-k-no-nu/p9.jpg=w72-h72-p-k-no-nu)",
-                                                }}
-                                            ></span> 
-                                            <span>David Albert</span>
-                                        </Link>
-
-                                        <span className={style["entry-time mi"]}>
-                                            <span className={style["sp"]}>•</span>
-                                            <time className={style["published"]} dateTime="2021-07-12T18:44:00Z">July 12, 2021</time>
-                                        </span>
-                                    </div>
+                                    <h1 className={`${style["tutorial-headline"]}`}>{upcoming.single_post.title.rendered}</h1>    
                                 </div>
                                 
+                                <div 
+                                    className={`${style['lg-2-content']} fixed-post-single ${style['post-single']} ${style['tutorial-content']} 
+                                    ${style['content-section']}`} 
+                                    dangerouslySetInnerHTML={{__html: upcoming.single_post.content.rendered}}
+                                />
+
                                 <div className={`${style['entry-content']} ${style['flex-direction-column']} ${style['single--content']}`}> 
-                                    
-                                    <Image
-                                        className={`half`} // half
-                                        alt={'Image Thumbnail'}
-                                        height={250}
-                                        src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w99-h66-p-k-no-nu/p9.jpg=w72-h72-p-k-no-nu" 
-                                        width={750}
-                                    />
-
-                                    <p>This is an example post content area. Here, you can share engaging articles, stories, and updates with your audience.</p>
-                                     
-                                     
-                                    <h2>Become a Contributor</h2>
-                                    <form>
-                                        <div class="nice-form-group">
+                                
+                                    <form className={style.mt_10}>
+                                        <div className="nice-form-group">
                                             <label>Your First Name <i>*</i></label>
-                                            <input type="text" placeholder="First Name" />
+                                            <input value={form.first_name} onChange={e => storeFieldValue('first_name', e.target.value)} type="text" placeholder="First Name" />
                                         </div>
 
-                                        <div class="nice-form-group">
+                                        <div className="nice-form-group">
                                             <label>Your Second Name <i>*</i></label>
-                                            <input type="text" placeholder="Second Name" />
+                                            <input value={form.second_name} onChange={e => storeFieldValue('second_name', e.target.value)} type="text" placeholder="Second Name" />
                                         </div>
 
-                                        <div class="nice-form-group">
+                                        <div className="nice-form-group">
                                             <label>Contact Email <i>*</i></label>
-                                            <input type="text" placeholder="Your Email" />
+                                            <input value={form.email} onChange={e => storeFieldValue('email', e.target.value)} type="text" placeholder="Your Email" />
                                             <small>Please provide a valid contact email</small>
                                         </div>
 
-                                        <div class="nice-form-group">
+                                        <div className="nice-form-group">
                                             <label>LinkedIn profile URL</label>
-                                            <input type="text" placeholder="LinkedIn profile URL" /> 
+                                            <input value={form.linkdin} onChange={e => storeFieldValue('linkdin', e.target.value)} type="text" placeholder="LinkedIn profile URL" /> 
                                         </div>
 
-                                        <div class="nice-form-group">
+                                        <div className="nice-form-group">
                                             <label>Facebook profile URL</label>
-                                            <input type="text" placeholder="Facebook profile URL" /> 
+                                            <input value={form.facebook} onChange={e => storeFieldValue('facebook', e.target.value)} type="text" placeholder="Facebook profile URL" /> 
                                         </div>
 
-                                        <div class="nice-form-group">
+                                        <div className="nice-form-group">
                                             <label>Instagram profile URL</label>
-                                            <input type="text" placeholder="Instagram profile URL" /> 
+                                            <input value={form.instagram} onChange={e => storeFieldValue('instagram', e.target.value)} type="text" placeholder="Instagram profile URL" /> 
                                         </div>
-                                        <div class="nice-form-group">
+                                        <div className="nice-form-group">
                                             <label>YouTube profile URL</label>
-                                            <input type="text" placeholder="YouTube profile URL" /> 
+                                            <input value={form.youtube} onChange={e => storeFieldValue('youtube', e.target.value)} type="text" placeholder="YouTube profile URL" /> 
                                         </div>
 
-                                        <div class="nice-form-group">
+                                        <div className="nice-form-group">
                                             <label>Website URL</label>
-                                            <input type="text" placeholder="Website URL" /> 
+                                            <input value={form.website_url} onChange={e => storeFieldValue('website_url', e.target.value)} type="text" placeholder="Website URL" /> 
                                         </div>
 
-                                        <div class="nice-form-group">
+                                        <div className="nice-form-group">
                                             <label>Link to Your Best Article 1 <i>*</i></label>
-                                            <input type="text" placeholder="Article URL" />
+                                            <input value={form.article_1} onChange={e => storeFieldValue('article_1', e.target.value)} type="text" placeholder="Article URL" />
                                             <small>If you do not have articles, create one on Hashnode or Dev.to and share it with us.</small>
                                         </div>
 
-                                        <div class="nice-form-group">
+                                        <div className="nice-form-group">
                                             <label>Link to Your Best Article 2 <i>*</i></label>
-                                            <input type="text" placeholder="Article URL" />
+                                            <input value={form.article_2} onChange={e => storeFieldValue('article_2', e.target.value)} type="text" placeholder="Article URL" />
                                             <small>If you do not have articles, create one on Hashnode or Dev.to and share it with us.</small>
                                         </div>
 
-                                        <div class="nice-form-group">
+                                        <div className="nice-form-group">
                                             <label>Link to Your Best Article 3 <i>*</i></label>
-                                            <input type="text" placeholder="Article URL" />
+                                            <input value={form.article_3} onChange={e => storeFieldValue('article_3', e.target.value)} type="text" placeholder="Article URL" />
                                             <small>If you do not have articles, create one on Hashnode or Dev.to and share it with us.</small>
                                         </div>
-                                        <div class="nice-form-group">
+                                        <div className="nice-form-group">
                                             <label>Short Bio <i>*</i></label>
-                                            <textarea type="text" placeholder="Short Bio"></textarea> 
+                                            <textarea value={form.bio} onChange={e => storeFieldValue('bio', e.target.value)} type="text" placeholder="Short Bio"></textarea> 
                                         </div>
-                                        <div class="nice-form-group">
+                                        <div className="nice-form-group">
                                             <label>Topics You Plan to Write with Us<i>*</i></label>
-                                            <textarea type="text" placeholder="Topics Separated by |"></textarea> 
+                                            <textarea value={form.topics} onChange={e => storeFieldValue('topics', e.target.value)} type="text" placeholder="Topics Separated by |"></textarea> 
                                             <small>Separate Each with |</small>
                                         </div>
+                                        
+                                        <div className={`${style.response_msg} ${style.block_msg} ${style[responseStatus]}`}>
+                                            <p>{responseMessage}</p>
+                                        </div>
 
-                                        <div className={`${style['widget-content']} ${style['submit-request']}`}>
-                                            <Link className={`${style.load_more} ${style.write_for_us}`} href={'#'}>Submit Request</Link>
+                                        <div className={`${style['widget-content']}  ${style['submit-request']}`}>
+                                            <Link onClick={sendRequest} className={`${style.load_more} ${style.flex} ${style.write_for_us}`} href={'#'}>
+                                                {
+                                                    loading ? <span className={style.loader}></span>: 'Submit Request'
+                                                }
+                                            </Link>
                                         </div>
                                     </form>
                                             
@@ -232,112 +384,21 @@ export default function Write({upcoming}) {
                     </div>
                     <div className={`${style['lg-4']} ${style['md-4']} ${style['sm-12']} ${style['plr-15']} ${style['ptb-15']}`}>
                         <StickyBox offsetTop={85} offsetBottom={20}>
-                            <div className={style.widget}>
-                                <div className={`${style['widget-title']} ${style['title-wrap']}`}>
-                                    <h3 className={style.title}>Become a Contributor</h3>
-                                </div>
-                                <div className={style['widget-content']}>
-                                    <Link className={`${style.load_more} ${style.write_for_us}`} href={'#'}>Submit an Article</Link>
-                                </div>
-                            </div>
-
-                            <div className={style.widget}>
-                                <div className={`${style['widget-title']} ${style['title-wrap']}`}>
-                                    <h3 className={style.title}>Follow Us</h3>
-                                </div>
-                                <div className={style['widget-content']}>
-                                    <ul className={`${style['social-icons']} ${style['social-bg']}`}>
-                                        <li className={style['facebook']}>
-                                            <Link href={'#'}>
-                                                <FontAwesomeIcon className={style.icon_social_icon} icon={Config.icons['facebook']} />
-                                                <span>Facebook</span>
-                                            </Link>
-                                        </li>
-                                        <li className={style['email']}>
-                                            <Link href={'#'}>
-                                                <FontAwesomeIcon className={style.icon_social_icon} icon={Config.icons['email']} />
-                                                <span>Contact</span>
-                                            </Link>
-                                        </li> 
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div className={style.widget}>
-                                <div className={`${style['widget-title']} ${style['title-wrap']}`}>
-                                    <h3 className={style.title}>Popular Posts</h3>
-                                </div>
-                                <div className={style['widget-content']}>
-                                    <div className={`${style['default-items']} ${style.ds} ${style['item-0']}`}>
-                                        <a
-                                            className={`${style['entry-image-wrap']} ${style['is-image']}`}
-                                            href="https://starter-pbt.blogspot.com/2021/07/google-correlate-best-seo-research-tool.html"
-                                            title="Google Correlate: The Best SEO Research Tool You Aren’t Using"
-                                        >
-                                            <span
-                                                className={`${style['entry-image']} ${style['pbt-lazy']}`}
-                                                data-image="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w72-h72-p-k-no-nu/p9.jpg"
-                                                style={{
-                                                    backgroundImage:
-                                                        "url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w99-h66-p-k-no-nu/p9.jpg=w72-h72-p-k-no-nu)",
-                                                }}
-                                            ></span>
-                                        </a>
-                                        <div className={style['entry-header']}>
-                                            <h2 className={style['entry-title']}>
-                                                <a
-                                                    href="https://starter-pbt.blogspot.com/2021/07/google-correlate-best-seo-research-tool.html"
-                                                    title="Google Correlate: The Best SEO Research Tool You Aren’t Using"
-                                                >
-                                                    Google Correlate: The Best SEO Research Tool You Aren’t Using
-                                                </a>
-                                            </h2>
-                                            <div className={style['entry-meta']}>
-                                                <span className={style['entry-time']}>
-                                                    <time className={style.published} dateTime="2021-07-12T18:44:00Z">
-                                                        July 12, 2021
-                                                    </time>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div> 
-                                </div>
-
-                            </div>
-
-                            <div className={style.widget}>
-                                <div className={`${style['widget-title']} ${style['title-wrap']}`}>
-                                    <h3 className={style.title}>Categories</h3>
-                                </div>
-                                <div className={style['widget-content']}>
-                                    <div className={`${style['cloud-label']} ${style.ds} ${style['item-0']}`}>
-                                        <ul className={`${style['cloud-categories']}`}>
-                                            <li><Link className={`${style['label-name']}`} href="#">JavaScript</Link></li>
-                                            <li><Link className={`${style['label-name']}`} href="#">Fushion</Link></li>
-                                            <li><Link className={`${style['label-name']}`} href="#">PHP</Link></li>
-                                            <li><Link className={`${style['label-name']}`} href="#">C++</Link></li>
-                                            <li><Link className={`${style['label-name']}`} href="#">C Sharp</Link></li> 
-                                        </ul>
-                                    </div> 
-                                </div>
-                            </div>
-
-                            <div className={style.widget}>
-                                <div className={`${style['widget-title']} ${style['title-wrap']}`}>
-                                    <h3 className={style.title}>Tags</h3>
-                                </div>
-                                <div className={style['widget-content']}>
-                                    <div className={`${style['cloud-label']} ${style.ds} ${style['item-0']}`}>
-                                        <ul className={`${style['cloud-style']}`}>
-                                            <li><Link className={`${style['label-name']}`} href="#">JavaScript</Link></li>
-                                            <li><Link className={`${style['label-name']}`} href="#">Fushion</Link></li>
-                                            <li><Link className={`${style['label-name']}`} href="#">PHP</Link></li>
-                                            <li><Link className={`${style['label-name']}`} href="#">C++</Link></li>
-                                            <li><Link className={`${style['label-name']}`} href="#">C Sharp</Link></li> 
-                                        </ul>
-                                    </div> 
-                                </div>
-                            </div>
+                            <BlogSidebarComponents
+                                menus={upcoming.menus}
+                                popular_posts={upcoming.popular_posts.data}
+                                categories={upcoming.categories}
+                                tags={upcoming.tags}
+                                ads={[]}
+                                enable={{
+                                    popular_posts: (!upcoming.popular_posts.is_error  && true),
+                                    follow_us: (upcoming?.menus?.follow_links?.length  && true),
+                                    become_contributor: (upcoming?.menus?.company_links?.length  && false),
+                                    categories: (upcoming?.categories?.length  && true),
+                                    tags: (upcoming?.tags?.length  && true),
+                                    ads:  (!upcoming?.ads?.is_error && true),
+                                }}
+                            />
                         </StickyBox>
                     </div>
                 </div>
@@ -480,6 +541,13 @@ export async function getServerSideProps(context) {
                 link: x.link 
             };
         });
+
+
+        // change link value 
+        single_post.link = single_post.link.replace("https://authors.flatcoding.com/", `${settings.site_address}blog/` );
+        delete single_post.guid;
+
+        meta_title = `${single_post.title.rendered} - ${blog_settings.title}`; 
 
         var upcoming = {
             

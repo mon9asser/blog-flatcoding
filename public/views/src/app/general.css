@@ -599,3 +599,7 @@ dfn, em, cite, i, code, kbd, tt, var {
     }
 }
  
+
+.nice-form-group i {
+    color: red;
+}
