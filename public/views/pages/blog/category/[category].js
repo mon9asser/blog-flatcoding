@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import style from "@/app/styles.module.css";
 import Link from "next/link";
 import Head from "next/head";
@@ -13,17 +14,90 @@ import {
     TutorialsContent
 } from "./../../../services/components"; 
 
-
+import BlogSidebarComponents from "../../../parts/blog/sidebar";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Config from "../../../services/config";
 
 export default function Category({upcoming}) {
-    
     console.log(upcoming);
+    if(!upcoming) {
+        return <ServerOffline/>
+    }
+
+    var [paging, setPaging] = useState({
+        current_page: 0, 
+        total_pages: -1,
+        total_posts: -1,
+        posts: []
+    });
+
+    var [userNeedsToLoadMore, setUserNeedsToLoadMore] = useState(false); 
+    var [isLoading, setIsLoading] = useState(false);
+    
+    useEffect(() => {
+            
+        // store current paging  
+        if(upcoming.latest_posts && ! upcoming.latest_posts.is_error) {           
+            if( upcoming.latest_posts.data.pagination ) { 
+
+                setPaging({
+                    ...upcoming.latest_posts.data.pagination, 
+                    posts: upcoming.latest_posts.data.posts                    
+                });
+            }
+        } 
+
+    }, [upcoming]);
+
+    // load more posts
+    var load_more_posts = async (e) => {
+        e.preventDefault();
+        setIsLoading(true);
+        setUserNeedsToLoadMore(true);
+        var current_page    = paging.current_page,
+            total_pages     = paging.total_pages;
+            
+        if(current_page <= total_pages) {
+            current_page++; 
+        }
+
+        /*
+        Helper.sendWPRequest({
+                api: `wp-json/custom/v1/latest-posts?author=${usr}&page_number=1`,
+                method: "get",
+                data: {}
+            }),
+        */ 
+
+        ///api/latest_posts/?page_number=4
+        var latest_request = await Helper.sendNTRequest({
+            api: `latest_posts?page_number=${current_page}&category=${upcoming.category_data.name}`,
+            method: "get",
+            data: {}
+        });
+
+        var response = await latest_request.json();
+        
+        // Something went wrong (Show message)
+        if(response.is_error) {
+            setIsLoading(false);
+            return;
+        }
+
+        var pagination = response.data.pagination;
+        var posts = response.data.posts;
+        setPaging({
+            ...pagination,
+            posts: [...paging.posts, ...posts]
+        });
+        setIsLoading(false);
+
+    }
+    
 
     var header_content = parse(upcoming.header);
     var footer_content = parse(upcoming.footer);
-    var jsonLdContent =  '';
+    
 
     var color = [
         '#d63031', '#6c5ce7', '#00b894', '#2d3436', '#182C61',
@@ -38,9 +112,73 @@ export default function Category({upcoming}) {
         };
     };
 
+    var json_data_var = `{
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "${upcoming.meta_title}",   
+        "author": {
+            "@type": "Organization",
+            "name": "${upcoming?.title}"  
+        },  
+        "description": "${upcoming?.meta_description}",   
+        "publisher": {
+            "@type": "Organization",
+            "name": "${upcoming?.title}",  
+            "logo": {
+                "@type": "ImageObject",
+                "url": "${upcoming.site_logo}"  
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "${upcoming?.category_data?.link}"   
+        },
+        "url": "${upcoming?.category_data?.link}",
+         
+        "breadcrumb": {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "${upcoming.site_url}"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Blog",
+                    "item": "${upcoming.site_url}blog/"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "name": "${Helper.UppercaseName(upcoming?.category_data?.name)}",
+                    "item": "${upcoming?.category_data?.link}"
+                }, 
+            ]
+        }
+        
+    }`;
+    
     return <>
         <Head>
+            <title>{upcoming?.meta_title}</title>
+            <meta name="description" content={upcoming?.meta_description} />
              
+            <link rel="canonical" href={upcoming?.category_data?.link}/>
+            <meta property="og:locale" content="en_US"/>
+            <meta property="og:type" content="article"/>
+
+            <meta property="og:title" content={upcoming?.meta_title}/>
+            <meta property="og:description" content={upcoming?.meta_description}/>
+            <meta property="og:url" content={upcoming?.category_data?.link}/>
+            <meta property="og:site_name" content={upcoming.title}/>
+             
+            <script type="application/ld+json" dangerouslySetInnerHTML={{__html: json_data_var}} /> 
+            
+            {header_content} 
         </Head>
 
         <Header 
@@ -63,7 +201,7 @@ export default function Category({upcoming}) {
                             <div
                                 className={`${style["md-9"]} ${style["text-center"]} ${style["offset-left"]} ${style["offset-right"]} ${style["p-all-15"]} ${style["flexbox"]} ${style["content-center"]} ${style["column-direction"]} ${style["tutorial-header-block"]}`}
                             >
-                                <h1 className={`${style["tutorial-headline"]}`}>Category Title</h1>    
+                                <h1 className={`${style["tutorial-headline"]}`}>{Helper.UppercaseName(upcoming?.category_data.name)}</h1>    
                             </div>
                     </div>
                 </header> 
@@ -74,168 +212,83 @@ export default function Category({upcoming}) {
                     <div className={`${style['lg-8']} ${style['md-8']} ${style['sm-12']} ${style['plr-15']} ${style['ptb-15']}`}>
                         <div id='posts-wrap'>
                             
-                            <div className={style.blog_post_wrap}>
-                                <div className={style['entry-header']}>
-                                    <h2 className={style['entry-title']}>
-                                        <Link href={'#'}>Google Correlate: The Best SEO Research Tool You Aren’t Using</Link>
-                                    </h2>
-                                    <div className={style['entry-meta']}>
-                                        <ul className={`${style['entry-author']} ${style['category-label-meta']} ${style.mi}`}>
-                                            <li>
-                                                <Link style={getRandomColor()} href='#'>
-                                                    JavaScript
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link style={getRandomColor()} href='#'>
-                                                    PHP
-                                                </Link>
-                                            </li>
-                                        </ul>
-
-                                        <span className={`${style['entry-author']} ${style.mi}`}>
-                                            <span className={`${style['by']} ${style['sp']}`}>by</span>
-                                            <a className={`${style['author-name']}`}>John Doe</a>
-                                        </span>
-                                        <span className={style["entry-time mi"]}>
-                                            <span className={style["sp"]}>•</span>
-                                            <time className={style["published"]} dateTime="2021-07-12T18:44:00Z">July 12, 2021</time>
-                                        </span>
-                                        
-                                    </div>
-                                </div>
-                                <div className={style['entry-content']}>
-                                    <Link href={'#'} className={style['entry-image-wrap']}> 
-                                        <span
-                                            className={`${style['entry-thumbnail']} ${style['pbt-lazy']}`}
-                                            data-image="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w72-h72-p-k-no-nu/p9.jpg"
-                                            style={{
-                                                backgroundImage:
-                                                    "url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w99-h66-p-k-no-nu/p9.jpg=w72-h72-p-k-no-nu)",
-                                            }}
-                                        ></span>
-                                    </Link>
-                                    <p className={`${style['entry-excerpt']}`}>
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.
-                                    </p>
-                                </div>
-                            </div>
-
+                            {
+                                !upcoming.latest_posts.data.posts.length ? '' : (
+                                    (userNeedsToLoadMore ? paging.posts: upcoming.latest_posts.data.posts).map((post, k) => {
+                                         
+                                        return (
+                                            <div key={post.id + k} className={style.blog_post_wrap}>
+                                                <div className={style['entry-header']}>
+                                                    <h2 className={style['entry-title']}>
+                                                        <Link href={post.link}>{post.title}</Link>
+                                                    </h2>
+                                                    <div className={style['entry-meta']}>
+                                                        <ul className={`${style['entry-author']} ${style['category-label-meta']} ${style.mi}`}>
+                                                            {
+                                                                !post.tags.length ? '':post.tags.map((x, k) =><li key={x.id+k}><Link style={getRandomColor()} href={x.url}>{x.name}</Link></li>)
+                                                            } 
+                                                        </ul>
+                                                        {/*<span className={`${style['entry-author']} ${style.mi}`}>
+                                                            <span className={`${style['by']} ${style['sp']}`}>by</span>
+                                                            <Link href={post.author.url} className={`${style['author-name']}`}>{Helper.UppercaseName(post.author.name)}</Link>
+                                                        </span>*/}
+                                                        
+                                                        <span className={style["entry-time mi"]}> 
+                                                            <time className={style["published"]} dateTime={post.last_modified}>{Helper.formatDate(post.last_modified)}</time>
+                                                        </span>
+                                                        
+                                                    </div>
+                                                </div>
+                                                <div className={style['entry-content']}>
+                                                    <Link href={post.link} className={style['entry-image-wrap']}> 
+                                                        {/*<span
+                                                            className={`${style['entry-thumbnail']} ${style['pbt-lazy']}`}
+                                                            style={{ backgroundImage: `url(${post.thumbnail})`}}
+                                                        ></span> */}
+                                                        <Image
+                                                            src={post.thumbnail}
+                                                            alt="Default Thumbnail"
+                                                            style={{ objectFit: 'cover' }} // Replace `objectFit="cover"` with inline styles
+                                                            priority
+                                                            fill 
+                                                            decoding="async"
+                                                        />
+                                                    </Link>
+                                                    <p className={`${style['entry-excerpt']}`}>{post.excerpt}</p>
+                                                </div>
+                                            </div>
+                                        );
+                                    })
+                                )
+                            }
  
                         </div>
-
+                                            
                         <div className={`${style.widget} ${style.remove_spaces}`}>
-                            <a className={style.load_more}>Load More</a>
+                            {
+                                paging.current_page == paging.total_pages ? <span>No more posts found!</span>: <Link href={'#'} onClick={load_more_posts} className={style.load_more + ' ' + style.btn_load_more}>
+                                    {isLoading? <span className={style.loader}></span>: 'Load More'}
+                                </Link>
+                            }
                         </div> 
                     </div>
                     <div className={`${style['lg-4']} ${style['md-4']} ${style['sm-12']} ${style['plr-15']} ${style['ptb-15']}`}>
                         <StickyBox offsetTop={85} offsetBottom={20}>
-                            <div className={style.widget}>
-                                <div className={`${style['widget-title']} ${style['title-wrap']}`}>
-                                    <h3 className={style.title}>Become a Contributor</h3>
-                                </div>
-                                <div className={style['widget-content']}>
-                                    <Link className={`${style.load_more} ${style.write_for_us}`} href={'#'}>Submit an Article</Link>
-                                </div>
-                            </div>
-
-                            <div className={style.widget}>
-                                <div className={`${style['widget-title']} ${style['title-wrap']}`}>
-                                    <h3 className={style.title}>Follow Us</h3>
-                                </div>
-                                <div className={style['widget-content']}>
-                                    <ul className={`${style['social-icons']} ${style['social-bg']}`}>
-                                        <li className={style['facebook']}>
-                                            <Link href={'#'}>
-                                                <FontAwesomeIcon className={style.icon_social_icon} icon={Config.icons['facebook']} />
-                                                <span>Facebook</span>
-                                            </Link>
-                                        </li>
-                                        <li className={style['email']}>
-                                            <Link href={'#'}>
-                                                <FontAwesomeIcon className={style.icon_social_icon} icon={Config.icons['email']} />
-                                                <span>Contact</span>
-                                            </Link>
-                                        </li> 
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div className={style.widget}>
-                                <div className={`${style['widget-title']} ${style['title-wrap']}`}>
-                                    <h3 className={style.title}>Popular Posts</h3>
-                                </div>
-                                <div className={style['widget-content']}>
-                                    <div className={`${style['default-items']} ${style.ds} ${style['item-0']}`}>
-                                        <a
-                                            className={`${style['entry-image-wrap']} ${style['is-image']}`}
-                                            href="https://starter-pbt.blogspot.com/2021/07/google-correlate-best-seo-research-tool.html"
-                                            title="Google Correlate: The Best SEO Research Tool You Aren’t Using"
-                                        >
-                                            <span
-                                                className={`${style['entry-image']} ${style['pbt-lazy']}`}
-                                                data-image="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w72-h72-p-k-no-nu/p9.jpg"
-                                                style={{
-                                                    backgroundImage:
-                                                        "url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJ8rOtkqEIxqewg0Hf6316slN0X6r6BHAq3ts8so38Hal6NBkhsqQkLWX4-3HdO6P-dip6MhuZTn2Jd9aOn61byzUjTVGPyer22bUZrKSeW86TjDE6SEtfbgDh_wb51EGchYrszDsm9gM/w99-h66-p-k-no-nu/p9.jpg=w72-h72-p-k-no-nu)",
-                                                }}
-                                            ></span>
-                                        </a>
-                                        <div className={style['entry-header']}>
-                                            <h2 className={style['entry-title']}>
-                                                <a
-                                                    href="https://starter-pbt.blogspot.com/2021/07/google-correlate-best-seo-research-tool.html"
-                                                    title="Google Correlate: The Best SEO Research Tool You Aren’t Using"
-                                                >
-                                                    Google Correlate: The Best SEO Research Tool You Aren’t Using
-                                                </a>
-                                            </h2>
-                                            <div className={style['entry-meta']}>
-                                                <span className={style['entry-time']}>
-                                                    <time className={style.published} dateTime="2021-07-12T18:44:00Z">
-                                                        July 12, 2021
-                                                    </time>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div> 
-                                </div>
-
-                            </div>
-
-                            <div className={style.widget}>
-                                <div className={`${style['widget-title']} ${style['title-wrap']}`}>
-                                    <h3 className={style.title}>Categories</h3>
-                                </div>
-                                <div className={style['widget-content']}>
-                                    <div className={`${style['cloud-label']} ${style.ds} ${style['item-0']}`}>
-                                        <ul className={`${style['cloud-categories']}`}>
-                                            <li><Link className={`${style['label-name']}`} href="#">JavaScript</Link></li>
-                                            <li><Link className={`${style['label-name']}`} href="#">Fushion</Link></li>
-                                            <li><Link className={`${style['label-name']}`} href="#">PHP</Link></li>
-                                            <li><Link className={`${style['label-name']}`} href="#">C++</Link></li>
-                                            <li><Link className={`${style['label-name']}`} href="#">C Sharp</Link></li> 
-                                        </ul>
-                                    </div> 
-                                </div>
-                            </div>
-
-                            <div className={style.widget}>
-                                <div className={`${style['widget-title']} ${style['title-wrap']}`}>
-                                    <h3 className={style.title}>Tags</h3>
-                                </div>
-                                <div className={style['widget-content']}>
-                                    <div className={`${style['cloud-label']} ${style.ds} ${style['item-0']}`}>
-                                        <ul className={`${style['cloud-style']}`}>
-                                            <li><Link className={`${style['label-name']}`} href="#">JavaScript</Link></li>
-                                            <li><Link className={`${style['label-name']}`} href="#">Fushion</Link></li>
-                                            <li><Link className={`${style['label-name']}`} href="#">PHP</Link></li>
-                                            <li><Link className={`${style['label-name']}`} href="#">C++</Link></li>
-                                            <li><Link className={`${style['label-name']}`} href="#">C Sharp</Link></li> 
-                                        </ul>
-                                    </div> 
-                                </div>
-                            </div>
+                            <BlogSidebarComponents
+                                menus={upcoming.menus}
+                                popular_posts={upcoming.popular_posts.data}
+                                categories={upcoming.categories}
+                                tags={upcoming.tags}
+                                ads={[]}
+                                enable={{
+                                    popular_posts: (!upcoming.popular_posts.is_error  && true),
+                                    follow_us: (upcoming?.menus?.follow_links?.length  && true),
+                                    become_contributor: (upcoming?.menus?.company_links?.length  && true),
+                                    categories: (upcoming?.categories?.length  && true),
+                                    tags: (upcoming?.tags?.length  && true),
+                                    ads:  (!upcoming?.ads?.is_error && true),
+                                }}
+                            />
                         </StickyBox>
                     </div>
                 </div>
@@ -263,8 +316,10 @@ export default function Category({upcoming}) {
     </>
 }
 
-
 export async function getServerSideProps(context) {
+
+    var category = context.params.category;
+
     try {
         // Define the requests
         const requests = [
@@ -284,7 +339,7 @@ export async function getServerSideProps(context) {
                 data: {}
             }),
             Helper.sendWPRequest({
-                api: "wp-json/custom/v1/latest-posts?category=uncategorized&page_number=1",
+                api: `wp-json/custom/v1/latest-posts?category=${category}&page_number=1`,
                 method: "get",
                 data: {}
             }),
@@ -295,6 +350,11 @@ export async function getServerSideProps(context) {
             }),
             Helper.sendWPRequest({
                 api: "wp-json/wp/v2/categories",
+                method: "get",
+                data: {}
+            }),
+            Helper.sendWPRequest({
+                api: `wp-json/wp/v2/categories?slug=${category}`,
                 method: "get",
                 data: {}
             }),
@@ -369,11 +429,29 @@ export async function getServerSideProps(context) {
             };
         });
 
+
+        var category_data = data[6];
+        if( !category_data || !category_data.length ) {
+            return {
+                notFound: true 
+            }
+        }
+
+
+       
+        category_data = category_data[category_data.length - 1];
+        category_data.link = category_data.link.replace("authors.flatcoding.com", "flatcoding.com/blog");
+        category_data.yoast_head_json.og_url = category_data.yoast_head_json.og_url.replace("authors.flatcoding.com", "flatcoding.com/blog");
+         
+         
+        var meta_description = category_data.description;
+        var meta_title = Helper.UppercaseName(category_data.yoast_head_json.og_title)
+        
         var upcoming = {
             
             // Settings
             meta_title,
-            meta_description: description,
+            meta_description: meta_description,
             default_comment_status: blog_settings.default_comment_status,
             posts_per_page: blog_settings.posts_per_page,
             title: blog_settings.title,
@@ -384,6 +462,10 @@ export async function getServerSideProps(context) {
             subscribe_description:settings.subscribe_description,
             subscribe_title:settings.subscribe_title,
 
+            footer: settings.footer,
+            header: settings.header,
+            google_ads: settings.google_ads,
+
             // Menus 
             menus: {
                 nav_left,
@@ -392,10 +474,6 @@ export async function getServerSideProps(context) {
                 follow_links,
                 nav_links
             }, 
-
-            footer: settings.footer,
-            header: settings.header,
-            google_ads: settings.google_ads,
 
             // Popular Posts
             popular_posts,
@@ -407,10 +485,13 @@ export async function getServerSideProps(context) {
             categories, 
 
             // Latest posts 
-            latest_posts
+            latest_posts,
+
+            //category data
+            category_data
         };
 
-
+        
         return {
             props: { upcoming } 
         };

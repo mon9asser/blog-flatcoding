@@ -37,6 +37,9 @@ const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 export default function Post({upcoming}) {
      
+    if(!upcoming) {
+       return <ServerOffline/>
+    }
 
     const { data: session } = useSession(); 
     var [loadLogin, setLoadLogin] = useState(false);
@@ -208,8 +211,8 @@ export default function Post({upcoming}) {
             <div>
                 <h3>Login</h3>
                 <p>You need to log in to comment and interact with others' comments.</p>
-                <button onClick={googleLoginCallback} type="button" class="btn google-btn"> 
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="24px" height="24px" class="google-icon"><path fill="#4285F4" d="M44.5,20H24v8.5h11.7c-1.1,3.2-3.6,5.7-6.7,6.9l6.7,5.2c3.9-3.6,6.3-8.8,6.3-14.6C44.7,24.9,44.6,22.4,44.5,20z"/><path fill="#34A853" d="M24,44c5.9,0,10.8-1.9,14.4-5.1l-6.7-5.2c-2,1.3-4.6,2-7.7,2c-5.9,0-10.8-4-12.6-9.4l-7.2,5.6C8.9,39.7,15.9,44,24,44z"/><path fill="#FBBC05" d="M11.4,26.3c-0.5-1.3-0.8-2.7-0.8-4.3s0.3-3,0.8-4.3l-7.2-5.6C2.3,15.6,1,19.1,1,22.8s1.3,7.2,3.2,10.7L11.4,26.3z"/><path fill="#EA4335" d="M24,9.5c3.2,0,6.1,1.1,8.4,3.2l6.3-6.3C34.8,2.9,29.9,1,24,1c-8.1,0-15.1,4.3-19.2,10.7l7.2,5.6C13.2,13.5,18.1,9.5,24,9.5z"/><path fill="none" d="M0,0h48v48H0V0z"/></svg>
+                <button onClick={googleLoginCallback} type="button" className="btn google-btn"> 
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="24px" height="24px" className="google-icon"><path fill="#4285F4" d="M44.5,20H24v8.5h11.7c-1.1,3.2-3.6,5.7-6.7,6.9l6.7,5.2c3.9-3.6,6.3-8.8,6.3-14.6C44.7,24.9,44.6,22.4,44.5,20z"/><path fill="#34A853" d="M24,44c5.9,0,10.8-1.9,14.4-5.1l-6.7-5.2c-2,1.3-4.6,2-7.7,2c-5.9,0-10.8-4-12.6-9.4l-7.2,5.6C8.9,39.7,15.9,44,24,44z"/><path fill="#FBBC05" d="M11.4,26.3c-0.5-1.3-0.8-2.7-0.8-4.3s0.3-3,0.8-4.3l-7.2-5.6C2.3,15.6,1,19.1,1,22.8s1.3,7.2,3.2,10.7L11.4,26.3z"/><path fill="#EA4335" d="M24,9.5c3.2,0,6.1,1.1,8.4,3.2l6.3-6.3C34.8,2.9,29.9,1,24,1c-8.1,0-15.1,4.3-19.2,10.7l7.2,5.6C13.2,13.5,18.1,9.5,24,9.5z"/><path fill="none" d="M0,0h48v48H0V0z"/></svg>
                     Sign in with Google
                 </button>
             </div>
@@ -559,7 +562,7 @@ export default function Post({upcoming}) {
                                     (
                                         <div className={`${style['entry-labels']} ${style['list-tags']}`}>
                                             <span className={style["labels-label"]}>Tags:</span>
-                                            {upcoming.single_post.data.tags.map(x => <Link className={style["label-link"]} href={x.link}>{x.name}</Link>)}
+                                            {upcoming.single_post.data.tags.map((x, k) => <Link key={k + x.id} className={style["label-link"]} href={x.link}>{x.name}</Link>)}
                                         </div>
                                     ): ''
                                 }
@@ -649,9 +652,9 @@ export default function Post({upcoming}) {
                                     </h3>
                                     <div className={style['related-posts']}>
                                     {
-                                        upcoming.releated_posts.data.map(post => (
+                                        upcoming.releated_posts.data.map((post, k) => (
                                             
-                                            <div className={style['related-item']} id={style['item-0']}>
+                                            <div key={post.id + k} className={style['related-item']} id={style['item-0']}>
                                                 <Link
                                                 title={post.title}
                                                 className={`${style['entry-image-wrap']} ${style['is-image']}`}
@@ -749,8 +752,8 @@ export default function Post({upcoming}) {
                                         </h3>
                                         
                                         {   
-                                            (comments.length? comments: upcoming.comments?.all).map(comment => (
-                                                <div id={`comment-${comment.id}`} key={comment.id} className={style['comment-wrapper']}>
+                                            (comments.length? comments: upcoming.comments?.all).map((comment, k) => (
+                                                <div key={comment.id + k} id={`comment-${comment.id}`} className={style['comment-wrapper']}>
                                                     <div className={`${style['comment']} ${style['comment-box']}`}>
                                                         <div className={style['thumbnail']}>
                                                             <Image 
@@ -828,8 +831,8 @@ export default function Post({upcoming}) {
                                                             {
                                                                 comment.replies?.length ?
                                                                 
-                                                                    comment.replies.map(reply => (
-                                                                        <div key={reply.id} id={`comment-${reply.id}`} className={`${style['comment']} ${style['reply-to']}`}>
+                                                                    comment.replies.map((reply, k) => (
+                                                                        <div key={reply.id + k} id={`comment-${reply.id}`} className={`${style['comment']} ${style['reply-to']}`}>
                                                                             <div className={style['thumbnail']}>
                                                                                 <Image 
                                                                                     property

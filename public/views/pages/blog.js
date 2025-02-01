@@ -27,7 +27,10 @@ import Config from "../services/config";
 
 export default function Blog({upcoming}) {
      
-    
+    if(!upcoming) {
+        return <ServerOffline/>
+    }
+
     var [paging, setPaging] = useState({
         current_page: 0, 
         total_pages: -1,
@@ -186,10 +189,10 @@ export default function Blog({upcoming}) {
                             
                             {
                                 !upcoming.latest_posts.data.posts.length ? '' : (
-                                    (userNeedsToLoadMore ? paging.posts: upcoming.latest_posts.data.posts).map(post => {
+                                    (userNeedsToLoadMore ? paging.posts: upcoming.latest_posts.data.posts).map((post, k) => {
                                          
                                         return (
-                                            <div key={post.id} className={style.blog_post_wrap}>
+                                            <div key={post.id + k} className={style.blog_post_wrap}>
                                                 <div className={style['entry-header']}>
                                                     <h2 className={style['entry-title']}>
                                                         <Link href={post.link}>{post.title}</Link>
@@ -197,7 +200,10 @@ export default function Blog({upcoming}) {
                                                     <div className={style['entry-meta']}>
                                                         <ul className={`${style['entry-author']} ${style['category-label-meta']} ${style.mi}`}>
                                                             {
-                                                                !post.tags.length ? '':post.tags.map(x =><li><Link style={getRandomColor()} href={x.url}>{x.name}</Link></li>)
+                                                                !post.tags.length ? '':post.tags.map((x, k) =>{
+
+                                                                    return <li key={x.id}><Link style={getRandomColor()} href={x.url}>{x.name}</Link></li>
+                                                                })
                                                             } 
                                                         </ul>
 
@@ -220,7 +226,7 @@ export default function Blog({upcoming}) {
                                                         ></span> */}
                                                         <Image
                                                             src={post.thumbnail}
-                                                            alt="Default Thumbnail"
+                                                            alt={post.title}
                                                             style={{ objectFit: 'cover' }} // Replace `objectFit="cover"` with inline styles
                                                             priority
                                                             fill 

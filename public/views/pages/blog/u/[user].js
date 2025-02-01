@@ -5,7 +5,7 @@ import Link from "next/link";
 import Head from "next/head";
 import StickyBox from "react-sticky-box";
 import Image from "next/image";
-import parse from 'html-react-parser' 
+import parse from 'html-react-parser';
 import { Helper } from "./../../../services/helper";
 import Header from "./../../../parts/header";
 import Footer from "./../../../parts/footer"; 
@@ -21,7 +21,9 @@ import Config from "../../../services/config";
 
 export default function Author({upcoming}) {
     
-    
+    if(!upcoming) {
+        return <ServerOffline/>
+    }
 
     var [paging, setPaging] = useState({
         current_page: 0, 
@@ -38,6 +40,7 @@ export default function Author({upcoming}) {
         // store current paging  
         if(upcoming.latest_posts && ! upcoming.latest_posts.is_error) {           
             if( upcoming.latest_posts.data.pagination ) { 
+
                 setPaging({
                     ...upcoming.latest_posts.data.pagination, 
                     posts: upcoming.latest_posts.data.posts                    
@@ -54,14 +57,22 @@ export default function Author({upcoming}) {
         setUserNeedsToLoadMore(true);
         var current_page    = paging.current_page,
             total_pages     = paging.total_pages;
-                  
+          
         if(current_page <= total_pages) {
             current_page++; 
         }
 
+        /*
+        Helper.sendWPRequest({
+                api: `wp-json/custom/v1/latest-posts?author=${usr}&page_number=1`,
+                method: "get",
+                data: {}
+            }),
+        */ 
+
         ///api/latest_posts/?page_number=4
         var latest_request = await Helper.sendNTRequest({
-            api: `latest_posts?page_number=${current_page}`,
+            api: `latest_posts?page_number=${current_page}&author=${upcoming.author_data.data.name}`,
             method: "get",
             data: {}
         });
@@ -87,7 +98,7 @@ export default function Author({upcoming}) {
 
     var header_content = parse(upcoming.header);
     var footer_content = parse(upcoming.footer);
-    var jsonLdContent =  '';
+ 
 
     var color = [
         '#d63031', '#6c5ce7', '#00b894', '#2d3436', '#182C61',
@@ -209,6 +220,7 @@ export default function Author({upcoming}) {
                                     className={`${style['entry-thumbnail']} ${style['pbt-lazy']} ${style['contributer-thumb']}`}
                                     src={upcoming.author_data.data.avatar}
                                     priority
+                                    alt={upcoming.author_data.data.name}
                                     decoding="async"
                                     width={100}
                                     height={100}
@@ -264,10 +276,10 @@ export default function Author({upcoming}) {
                             
                             {
                                 !upcoming.latest_posts.data.posts.length ? '' : (
-                                    (userNeedsToLoadMore ? paging.posts: upcoming.latest_posts.data.posts).map(post => {
+                                    (userNeedsToLoadMore ? paging.posts: upcoming.latest_posts.data.posts).map((post, k) => {
                                          
                                         return (
-                                            <div key={post.id} className={style.blog_post_wrap}>
+                                            <div key={post.id + k} className={style.blog_post_wrap}>
                                                 <div className={style['entry-header']}>
                                                     <h2 className={style['entry-title']}>
                                                         <Link href={post.link}>{post.title}</Link>
@@ -275,7 +287,7 @@ export default function Author({upcoming}) {
                                                     <div className={style['entry-meta']}>
                                                         <ul className={`${style['entry-author']} ${style['category-label-meta']} ${style.mi}`}>
                                                             {
-                                                                !post.tags.length ? '':post.tags.map(x =><li><Link style={getRandomColor()} href={x.url}>{x.name}</Link></li>)
+                                                                !post.tags.length ? '':post.tags.map((x, k) =><li key={x.id+k}><Link style={getRandomColor()} href={x.url}>{x.name}</Link></li>)
                                                             } 
                                                         </ul>
                                                         {/*<span className={`${style['entry-author']} ${style.mi}`}>
