@@ -34,10 +34,10 @@ const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 export default function Write({upcoming}) {
     
     
-    console.log(upcoming);
+    // console.log(upcoming);
     const [value, setValue] = useState('');
 
-    // error_msg - success_msg
+    var [buttonDisabled, setButtonDisabled] = useState(false);
     var [responseStatus, setResponseStatus] = useState(''); // error_msg - success_msg
     var [responseMessage, setResponseMessage] = useState(''); 
     var [loading, setLoading] = useState(false); 
@@ -59,7 +59,7 @@ export default function Write({upcoming}) {
     
 
 
-    var sendRequest = (e) => {
+    var sendRequest = async (e) => {
         e.preventDefault();
         setResponseStatus('');
         setResponseMessage('');
@@ -109,7 +109,7 @@ export default function Write({upcoming}) {
                 return false; 
             }
 
-            return field;
+            return `<li>${field}</li>`;
         });
 
         if(topics.includes(false)) {
@@ -119,8 +119,27 @@ export default function Write({upcoming}) {
             return; 
         }
         
+        form.topics = `<ol>${topics.join('')}</ol>`;
+        
         // => Send Request 
-        console.log({form});
+        var reqqs = await Helper.sendNTRequest({
+            api: `send_application`,
+            method: "post",
+            body: form
+        });
+
+        var response = await reqqs.json();  
+
+        if(response.is_error) {
+            setResponseStatus('error_msg');
+            setResponseMessage(response.message);
+            setLoading(false);
+            return; 
+        } 
+        setResponseStatus('success_msg');
+        setResponseMessage(response.message);
+        setLoading(false);
+        setButtonDisabled(true)
     }
 
     var storeFieldValue = ( key, value ) => {
@@ -368,7 +387,7 @@ export default function Write({upcoming}) {
                                         </div>
 
                                         <div className={`${style['widget-content']}  ${style['submit-request']}`}>
-                                            <Link onClick={sendRequest} className={`${style.load_more} ${style.flex} ${style.write_for_us}`} href={'#'}>
+                                            <Link disabled={buttonDisabled} onClick={sendRequest} className={`${style.load_more} ${style.flex} ${style.write_for_us}`} href={'#'}>
                                                 {
                                                     loading ? <span className={style.loader}></span>: 'Submit Request'
                                                 }
