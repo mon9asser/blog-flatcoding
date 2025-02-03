@@ -5,7 +5,7 @@ export default async function handler(req, res) {
   try {
     // Using your custom Helper.sendRequest to fetch the JSON data
     const reqs = await Helper.sendWPRequest({
-      api: 'wp-json/wp/v2/users', // Path relative to the base URL in Helper
+      api: 'wp-json/wp/v2/users?context=edit', // Path relative to the base URL in Helper
       method: 'get', 
       data: {}
     });
@@ -15,18 +15,17 @@ export default async function handler(req, res) {
     if (!response || !Array.isArray(response)) {
       return res.status(400).json({ error: "Invalid JSON format" });
     }
-
-     
-
+    
     // Convert JSON to XML
     const xmlData = response.map(urlData => {
-        console.log(urlData);
-      var link = urlData.link.replace("authors.flatcoding.com/author", "flatcoding.com/blog/u");
-      return `
-        <url>
-          <loc>${link}</loc> 
-        </url>
-      `;
+      if( urlData['roles'][0] != 'subscriber' ) { 
+        var link = urlData.link.replace("authors.flatcoding.com/author", "flatcoding.com/blog/u");
+        return `
+          <url>
+            <loc>${link}</loc> 
+          </url>
+        `;
+      }
     }).join("");
 
     const sitemap = `

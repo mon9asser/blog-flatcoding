@@ -2,14 +2,26 @@ import { Helper } from '../../services/helper';
 import Config from '../../services/config';
 
 export default async function handler(req, res) {
+
   try {
+
     // Using your custom Helper.sendRequest to fetch the JSON data
-    const reqs = await Helper.sendRequest({
-      api: 'sitemap_index', // Path relative to the base URL in Helper
-      method: 'get',
-    });
+    const [siteMapXml, sitemapBlogUsers] = await Promise.all([
+        Helper.sendRequest({
+          api: 'sitemap_index',
+          method: 'get',
+        }),
+        Helper.sendRequest({
+          api: '/api/sitemap_blog_users',
+          method: 'get',
+        })
+    ]);
     
-    var response = await reqs.json();
+    var userBlog = await sitemapBlogUsers.json();
+    console.log(userBlog);
+
+    
+    var response = await siteMapXml.json();
 
     if (!response.sitemapindex || !Array.isArray(response.sitemapindex)) {
       return res.status(400).json({ error: "Invalid JSON format" });
@@ -31,8 +43,10 @@ export default async function handler(req, res) {
 
     // Set the response header to XML
     res.setHeader('Content-Type', 'application/xml');
+
     // Send the XML data as the response
     return res.send(sitemapIndex.trim());
+
   } catch (error) {
     console.error('Error fetching sitemap index:', error);
     // Handle errors
