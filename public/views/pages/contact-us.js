@@ -108,8 +108,17 @@ export default function Contact ({upcoming}) {
 
         }
 
-        var res = await Helper.sendRequest({ api: "contact-message", method: "post", data: form_object })
- 
+
+
+       //  var res = await Helper.sendRequest({ api: "contact-message", method: "post", data: form_object })
+        
+  
+        var res = await Helper.sendNTRequest({
+            api: "send_contact",
+            method: "post",
+            body: form_object
+        });
+
         if( res.is_error) {
             
             response_res_change_callback({
