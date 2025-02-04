@@ -1612,7 +1612,7 @@ var ArticleContentSingle = ({blocks, helper, adsReady}) => {
   );     
 }
 
-var NextPrevPagination = ({site_url, tutorial_slug, type, data, current_post_slug, is_tab}) => {
+var NextPrevPagination = ({site_url, tutorial_slug, type, data, current_post_slug, is_tab, tab_slug}) => {
      
   var isTab = is_tab == undefined ? false: is_tab;
   
@@ -1636,8 +1636,10 @@ var NextPrevPagination = ({site_url, tutorial_slug, type, data, current_post_slu
   var prev_link = prev == undefined ? '':`${site_url}tutorials/${tutorial_slug}/${prev.slug}/`;
  
   if( isTab ) {
-    next_link = next == undefined ? '':`${site_url}tutorials/${tutorial_slug}/t/reference/${next.slug}/`;
-    prev_link = prev == undefined ? '':`${site_url}tutorials/${tutorial_slug}/t/reference/${prev.slug}/`;
+    var tab_slug_update =  tab_slug ? tab_slug: 'reference';
+
+    next_link = next == undefined ? '':`${site_url}tutorials/${tutorial_slug}/t/${tab_slug_update}/${next.slug}/`;
+    prev_link = prev == undefined ? '':`${site_url}tutorials/${tutorial_slug}/t/${tab_slug_update}/${prev.slug}/`;
   }
 
   return (
