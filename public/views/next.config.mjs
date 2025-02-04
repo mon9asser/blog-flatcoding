@@ -52,6 +52,28 @@ const nextConfig = {
           }, 
 
           {
+            source: '/sitemap_blog_users.xml',
+            destination: '/api/sitemap_blog_users',
+          }, 
+          {
+            source: '/sitemap_blog_categories.xml',
+            destination: '/api/sitemap_blog_categories',
+          },
+          {
+            source: '/sitemap_blog_tags.xml',
+            destination: '/api/sitemap_blog_tags',
+          },
+          {
+            source: '/sitemap_blog_posts.xml',
+            destination: '/api/sitemap_blog_posts',
+          },
+          {
+            source: '/sitemap_blog_pages.xml',
+            destination: '/api/sitemap_blog_pages',
+          },
+
+
+          {
             source: '/robots.txt',
             destination: '/api/robots',
           }, 
@@ -60,6 +82,8 @@ const nextConfig = {
             source: '/ads.txt',
             destination: '/api/ads',
           }, 
+
+          
         ];
     },
     
