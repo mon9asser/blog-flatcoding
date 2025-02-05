@@ -202,6 +202,11 @@ export default function Category({upcoming}) {
                                 className={`${style["md-9"]} ${style["text-center"]} ${style["offset-left"]} ${style["offset-right"]} ${style["p-all-15"]} ${style["flexbox"]} ${style["content-center"]} ${style["column-direction"]} ${style["tutorial-header-block"]}`}
                             >
                                 <h1 className={`${style["tutorial-headline"]}`}>{Helper.UppercaseName(upcoming?.category_data.name)}</h1>    
+                                <div
+                                    style={{marginTop: '15px', display: 'block'}}
+                                    dangerouslySetInnerHTML={{__html: upcoming.category_data.description}} 
+                                    className={`${style['tutorial-description']}`} 
+                                />
                             </div>
                     </div>
                 </header> 
@@ -444,7 +449,7 @@ export async function getServerSideProps(context) {
         category_data.yoast_head_json.og_url = category_data.yoast_head_json.og_url.replace("authors.flatcoding.com", "flatcoding.com/blog");
          
          
-        var meta_description = category_data.description;
+        var meta_description = category_data?.yoast_head_json?.description ? category_data?.yoast_head_json?.description: category_data.description;
         var meta_title = Helper.UppercaseName(category_data.yoast_head_json.og_title)
         
         var upcoming = {

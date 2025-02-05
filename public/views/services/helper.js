@@ -39,18 +39,7 @@ class HelperData {
    
     return he.encode(text);  
   }
-  
-  generateCaptcha = () => {
-
-    // make it with 6 charachters 
-    var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    return Array.from({ length: 6 }, () => { 
-      var generate = Math.floor(Math.random() * chars.length);
-      return chars.charAt(generate)
-    }).join(' ');
-
-  }
- 
+   
 
   generateRandomStrings() {
     var length = 15;
@@ -268,6 +257,18 @@ class HelperData {
         return fetch(url, options);
     };
 
+    generateCaptcha = () => {
+
+      // make it with 6 charachters 
+      var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      
+      return Array.from({ length: 6 }, () => { 
+        var generate = Math.floor(Math.random() * chars.length);
+         
+        return chars.charAt(generate)
+      }).join(' ');
+  
+    }
 
     sendWPRequest = async ({ api, method, data, no_header }) => {
       

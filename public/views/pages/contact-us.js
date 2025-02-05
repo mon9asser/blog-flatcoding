@@ -1,6 +1,6 @@
 
 import "@/app/theme.css";
-import { useState, useRef } from "react";
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import parse from 'html-react-parser' 
@@ -11,17 +11,27 @@ import Script from "next/script";
 import { 
     TutorialsContent,
     ServerOffline
-} from "./../services/components"; 
-import ReCAPTCHA from "react-google-recaptcha"; 
+} from "./../services/components";  
 import { notFound } from "next/navigation";
 import Config from "../services/config";
+import {CreateCaptcha} from "../services/components";
+
 
 export default function Contact ({upcoming}) {
      
     if(!upcoming) {
         return <ServerOffline/>
     }
-    
+    var [generatedCaptcha, setGenerateCaptcha] = useState(null);
+    var [captcha, setCaptcha] = useState('');
+
+    useEffect(() => { 
+
+        // store result of capcha
+        setGenerateCaptcha(Helper.generateCaptcha()); 
+
+    }, []);
+
     var code_json_var = `
                         {
                             "@context": "https://schema.org",
@@ -35,7 +45,7 @@ export default function Contact ({upcoming}) {
                             "description": "${upcoming.meta_description}"
                         }
                         `;
-    var [captcha, changed_capatch] = useState(null);
+ 
     var [response_result, response_res_change] = useState({
         cls: '',
         text: '',
@@ -43,15 +53,8 @@ export default function Contact ({upcoming}) {
     });
     const header_content = parse(upcoming.settings.header)
     const footer_content = parse(upcoming.settings.footer)
-    var recaptchaRef = useRef("")
-    var handleCaptchaReset = () => {
-
-        if (recaptchaRef.current) {
-          recaptchaRef.current.reset();
-        }
-
-        changed_capatch(null);
-    };
+     
+     
     var response_res_change_callback = (obj) => {
         var old_objec = {...response_result};
         var __keys = Object.keys(obj);
@@ -63,6 +66,10 @@ export default function Contact ({upcoming}) {
     var submit_form = async (e) => {
         
         e.preventDefault();
+
+         
+
+
         response_res_change_callback({
             is_pressed: true,
             cls: '',
@@ -72,16 +79,34 @@ export default function Contact ({upcoming}) {
         if(response_result.is_pressed) {
             return;
         }
-
-        if(captcha == null ) {
+        
+        // checking captcha
+        if( captcha == '' ) {
+            
             response_res_change_callback({
-                is_pressed: false,
+                is_pressed: false, 
                 cls: 'show-msg error',
-                text: 'Confirm that you are not robot!',
+                text: 'Captcha is required to send message!', 
             });
 
-            return;
+            return false;
         }
+
+        var gCaptcha = generatedCaptcha.replace(/\s+/g, '');
+        if( captcha != gCaptcha  ) { 
+            
+            response_res_change_callback({
+                is_pressed: false, 
+                cls: 'show-msg error',
+                text: 'Captcha is not correct!', 
+            });
+
+            // generate a new captcha
+            setGenerateCaptcha(Helper.generateCaptcha());
+  
+            return false;
+        }
+         
 
         var email_validator = Helper.validateEmail(form_object.email);
         if( !email_validator ) {
@@ -202,13 +227,22 @@ export default function Contact ({upcoming}) {
                         <input value={form_object.email} onChange={(e) => apply_object_change({email: e.target.value})} className="full-border grey-border mb-20" type="text" placeholder="Email"/>
                         <input value={form_object.subject} onChange={(e) => apply_object_change({subject: e.target.value})} className="full-border grey-border mb-20" type="text" placeholder="Subject"/>
                         <textarea value={form_object.message} onChange={(e) => apply_object_change({message: e.target.value})} className="full-border grey-border mb-20" name="" cols="15" rows="5" aria-invalid="false" placeholder="Message"></textarea>
-                        
-                        <ReCAPTCHA
-                            ref={recaptchaRef}
-                            sitekey={Config.captcha.public}
-                            onChange={changed_capatch} 
-                            onReset={handleCaptchaReset}
-                        />
+
+                        <div className={`form-inline form-mbr d-flex justify-content-between mt-4 mb-2 flexbox items-center`}>
+                            <div style={{flexGrow: '1'}} className={`form-group`}>
+                                <input 
+                                    type="text"
+                                    placeholder="Write Captcha Here" 
+                                    className="form-control"  
+                                    value={captcha}
+                                    onChange={e => setCaptcha(e.target.value)}
+                                />
+                            </div>
+                            
+                            <div className='form-group'>
+                                <CreateCaptcha value={generatedCaptcha} />
+                            </div>
+                        </div>
 
                         <div className={`response-msg ${response_result.cls}`}>{response_result.text}</div>
 
