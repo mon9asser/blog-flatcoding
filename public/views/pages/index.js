@@ -222,7 +222,7 @@ export default function Home({upcoming, adsReady}){
                             <div className={`lg-7 md-7 sm-12 flexbox content-center items-start column-direction p-all-30 ${upcoming.settings.banner_image_url == "" ? 'offset-left offset-right text-center': ''}`}>                                      
                                 
                                 { adsReady? <AdCompaignBox settings={upcoming.settings} position="before_title" data={upcoming.ads}/> : ""}
-
+                
                                 <SubscribeComponents  
                                     adsReady={adsReady}
                                     camp_data={upcoming.ads}

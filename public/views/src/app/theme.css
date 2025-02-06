@@ -5569,3 +5569,7 @@ img.half, div.feature-block svg, .feature-block {
 .feature-block {
     margin: 0px auto;
 }
+
+.hero h1 ~ p ~ div {
+    width: 90%;
+}
