@@ -160,7 +160,7 @@ export default function Author({upcoming}) {
                     "position": 3,
                     "name": "${Helper.UppercaseName(upcoming?.author_data.data.name)}",
                     "item": "${upcoming?.author_data?.data?.url}"
-                }, 
+                }  
             ]
         }
         

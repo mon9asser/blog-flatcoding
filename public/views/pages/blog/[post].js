@@ -455,7 +455,7 @@ export default function Post({upcoming}) {
                                         "position": 3,
                                         "name": "${upcoming.single_post.data.title}",
                                         "item": "${upcoming.single_post.data.link}"
-                                    }, 
+                                    } 
                                 ]
                             }
                             

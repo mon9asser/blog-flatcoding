@@ -156,7 +156,7 @@ export default function Category({upcoming}) {
                     "position": 3,
                     "name": "${Helper.UppercaseName(upcoming?.category_data?.name)}",
                     "item": "${upcoming?.category_data?.link}"
-                }, 
+                }  
             ]
         }
         

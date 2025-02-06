@@ -156,7 +156,7 @@ export default function Tag({upcoming}) {
                     "position": 3,
                     "name": "${Helper.UppercaseName(upcoming?.tag_data?.name)}",
                     "item": "${upcoming?.tag_data?.link}"
-                }, 
+                }  
             ]
         }
         
