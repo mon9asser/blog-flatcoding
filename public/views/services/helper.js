@@ -2,6 +2,7 @@ import Config from "./config.js";
 import he from 'he';
 import { createElement } from "react";
 import Script from 'next/script';
+import Cookies from "js-cookie";
 
 class HelperData {
 
@@ -17,22 +18,28 @@ class HelperData {
     return `/next/image/?url=${encodeURIComponent(imageUrl)}&w=${width}&q=${quality}`;
   };
 
+  isLoggedIn() {
+
+    var cookie = Cookies.get(Config.cookie_name);
+        
+    // check session exists
+    if (cookie) {
+      return true; 
+    }  
+
+    return false;
+
+  }
+
+  userInfo() {
+    
+  }
+
   encodetmlEntities(text) {
    
     return he.encode(text);  
   }
-  
-  generateCaptcha = () => {
-
-    // make it with 6 charachters 
-    var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    return Array.from({ length: 6 }, () => { 
-      var generate = Math.floor(Math.random() * chars.length);
-      return chars.charAt(generate)
-    }).join(' ');
-
-  }
- 
+   
 
   generateRandomStrings() {
     var length = 15;
@@ -46,11 +53,19 @@ class HelperData {
 
     return randomString;
   }
+  
+  isLink(input){
+      // Regular expression to match URLs
+      const urlPattern = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+
+      // Test the input against the pattern
+      return urlPattern.test(input);
+  }
 
   validateEmail(email){
     // var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-     var re =/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-     return re.test(email);
+      var re =/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
  }
  
   generate_slugs = (text) => {
@@ -215,8 +230,72 @@ class HelperData {
   
     return staticData;
   };
-  
 
+    sendNTRequest = async ({ api, method, params, body }) => {
+        const options = {
+            method: method.toUpperCase(),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+
+        // Construct the base URL
+        let url = `/api/${api}`;
+
+        // If params exist, append them as query strings
+        if( method.toLowerCase() == 'get') {
+          if (params && typeof params === 'object') {
+              const queryString = new URLSearchParams(params).toString(); // Convert params object to query string
+              url += `?${queryString}`; // Append query string to the URL
+          }
+        }
+
+        if ((method.toLowerCase() === 'post' || method.toLowerCase() === 'put') && body) {
+          options.body = JSON.stringify(body);
+        }
+
+        return fetch(url, options);
+    };
+
+    generateCaptcha = () => {
+
+      // make it with 6 charachters 
+      var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      
+      return Array.from({ length: 6 }, () => { 
+        var generate = Math.floor(Math.random() * chars.length);
+         
+        return chars.charAt(generate)
+      }).join(' ');
+  
+    }
+
+    sendWPRequest = async ({ api, method, data, no_header }) => {
+      
+      const options = {
+          method: method.toUpperCase(),
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Basic ' + btoa('montasser:V5jb 1rcY wXnS ipRE cAtn w4Fw'),
+              'X-API-Key-Public': Config.wp_keys.public,
+              'X-API-Key-Secret': Config.wp_keys.secret
+            },
+      };
+
+      if( no_header ) {
+        options.headers = {
+          'Content-Type': 'application/json' 
+        }
+      }
+      
+      if (method === 'post' || method === 'put') {
+          options.body = JSON.stringify(data);
+      } 
+      var url =`${Config.wp_api}/${api}`;
+
+      return fetch(url, options);
+  }
+  
   sendRequest = async ({api, method, data, headers }) => {
 
     if( headers === undefined ) {
@@ -268,6 +347,21 @@ class HelperData {
         .replace(/'/g, '&#39;')  // Escape '
         .replace(/\//g, '&#47;'); // Escape /
   }
+
+  
+  generateSlugName(text) {
+    return text.replace(/\s+/g, '_').toLowerCase();
+  }
+
+  UppercaseName(fullName) {
+    if (!fullName) return ''; // Handle empty or null input
+
+    return fullName
+        .split(' ') // Split the string into an array of words
+        .map(name => name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()) // Capitalize each word
+        .join(' '); // Join the array back into a single string
+  }
+
 }
 
 var Helper = new HelperData();

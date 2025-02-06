@@ -37,8 +37,7 @@ export default function register() {
         setGenerateCaptcha(Helper.generateCaptcha()); 
 
     }, []);
-
-    console.log(userData);
+    
     var updateState = ( key, value ) => {
         var old = {...userData};
         old[key] = value;

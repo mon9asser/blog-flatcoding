@@ -175,37 +175,18 @@ function SearchComponent ({searchType}) {
     // sidebar seach components 
     if( searchType == 'sidebar' ) {
       render = (
-        <form className={`${style['form-group']} ${style['form-1']}`} action="/" method="get">
-          <input 
-            onChange={e => setQuery(e.target.value)} 
-            value={query} 
-            type="text" 
-            placeholder="Search in our tutorials" 
-          />
-          <button 
-            aria-label="Search on site" 
-            onClick={sendRequest} 
-            type="submit"
-          >
-            {is_pressed ? (
-              <span className={`${style.loader} ${style['black-loader']}`}></span>
-            ) : (
-              <span className={`${style.flexbox}`}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <circle cx="11" cy="11" r="7" className={`${style['stroke-color']}`} stroke="#33363F" strokeWidth="2" />
-                  <path 
-                    d="M20 20L17 17" 
-                    className={`${style['stroke-color']}`} 
-                    stroke="#33363F" 
-                    strokeWidth="2" 
-                    strokeLinecap="round" 
-                  />
-                </svg>
-              </span>
-            )}
-          </button>
+        <form className="form-group form-1" action="/" method="get">
+            <input onChange={e => setQuery(e.target.value)} value={query} type="text" placeholder="Search in our tutorials" />
+            <button aria-label="Search on site" onClick={sendRequest} type="submit">
+                {is_pressed?<span className='loader black-loader'></span>: <span className="flexbox">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <circle cx="11" cy="11" r="7" className="stroke-color" stroke="#33363F" strokeWidth="2" />
+                        <path d="M20 20L17 17" className="stroke-color" stroke="#33363F" strokeWidth="2" strokeLinecap="round" />
+                    </svg>
+                </span>}
+                
+            </button>
         </form>
-
       );
     }
 
@@ -265,20 +246,12 @@ var GenerateTutorialContent_tab = ({ data, upcoming, built_url, ad_camp, adsRead
           const src = part.match(/src="([^"]+)"/)[1];
           return (
             <Fragment key={index}>
-            <div className={`${style['mt-25']}`}>
-              <LazyLoadYouTube cls={`${style['ifram-tut-youtube']}`} url={src} />
-            </div>
-          
-            {adsReady ? (
-              <AdCompaignBox 
-                settings={upcoming.settings} 
-                data={ad_camp} 
-                position={'after_youtube_video_content_1'} 
-              />
-            ) : (
-              ""
-            )}
-          </Fragment>          
+                <div className="mt-25">
+                  <LazyLoadYouTube cls="ifram-tut-youtube" url={src} />
+                </div>
+
+                { adsReady? <AdCompaignBox settings={upcoming.settings} data={ad_camp} position={'after_youtube_video_content_1'}/>: ""} 
+            </Fragment>
           );
         }
         // Headline shortcodes from h1 to h6
@@ -286,7 +259,7 @@ var GenerateTutorialContent_tab = ({ data, upcoming, built_url, ad_camp, adsRead
           const tag = part.match(/^\[h([1-6])/)[1];
           const content = part.replace(/^\[h[1-6]\]/, '').trim();
           const TagName = `h${tag}`;
-          return <TagName key={index} className={`${style['tutorial-subheadline']}`}>{Helper.decodeHtmlEntities(content)}</TagName>;
+          return <TagName key={index} className="tutorial-subheadline">{Helper.decodeHtmlEntities(content)}</TagName>;
         }
         // Chapters and posts shortcode
         else if (part.startsWith('[chapters-posts]')) {
@@ -296,9 +269,9 @@ var GenerateTutorialContent_tab = ({ data, upcoming, built_url, ad_camp, adsRead
         // Default case: plain paragraph
         else {
           return (
-            <p key={index} className={`${style['tutorial-description']}`}>
-            {part}
-          </p>          
+            <p key={index} className="tutorial-description">
+              {part}
+            </p>
           );
         }
       })}
@@ -456,74 +429,61 @@ var FeedBackBlock = ({data_id, data_title, feeadback_title }) => {
   )
   
   return (
-    <div className={`${style['feedback-block']} ${style['max-1050']} ${style['update-sider']}`}>
-    <div className={`${style.flexbox} ${style['direction-row']} ${style['items-center']} ${style['space-between']} ${style['flex-wrap']}`}>
-      <div className={`${style['ptb-10']}`}>
-        <h3>{feeadback_title}</h3>
+      <div className="feedback-block max-1050 update-sider">
+          <div className="flexbox direction-row items-center space-between flex-wrap">
+              <div className="ptb-10">
+                  <h3>{feeadback_title}</h3>
+              </div>
+              <div className="flexbox direction-row gap-15 ptb-10">
+                  
+
+                  <button aria-label="Thumb Down" disabled={isDisabled} style={{padding: 0}} className={`x-thumb-down ${isDisabled ? 'disable-feedback': ''}`} onClick={e => thumbDownHandler(e, "thumb-down")}>
+                      
+                      {
+                        data.is_pressed && data.press_type == 'thumb-down' ?
+                        <span className='loader' style={{borderBottomColor: '#f9756e'}}></span> :
+                        <ThumbDown/>
+                      }  
+                      
+                  </button>
+
+                  <button aria-label="Thumb Up" disabled={isDisabled} style={{padding: 0}} className={`x-thumb-up ${isDisabled ? 'disable-feedback': ''}`} onClick={e => thumbUpHandler(e, "thumb-up")}>
+                      {
+                        data.is_pressed && data.press_type == 'thumb-up' ?
+                        <span className='loader' style={{borderBottomColor: '#00bec4'}}></span> :
+                        <ThumbUp/>
+                      }  
+                  </button>
+              </div>
+          </div>
+           
+          <div className={`feedback-form-block ${data.hide_form}`}> 
+              <p className="mb-8" style={{marginBottom: '10px'}}>Your feedback helps us improve our tutorials.</p>
+              <textarea
+                  ref={textareaRef}
+                  onChange={e => changed_feedback_callback({comment: e.target.value})}
+                  value={feedback.comment}
+                  placeholder="write your feedback here!">
+              </textarea>
+              <div className={`feedback-response msg-${data.type} ${data.exposed}`}>
+                <p>{data.message}</p>
+              </div>
+              <button disabled={isDisabled} type="submit" onClick={e => submit_feedback(e, "comment")} className="btn third-btn radius-5 custom-header-btn auto-left">
+                {
+                  data.is_pressed && data.press_type == 'comment' ?
+                  <span className='loader'></span> :
+                  'Submit'
+                }   
+              </button>
+          </div>
+           
+      
       </div>
-      <div className={`${style.flexbox} ${style['direction-row']} ${style['gap-15']} ${style['ptb-10']}`}>
-        <button 
-          aria-label="Thumb Down" 
-          disabled={isDisabled} 
-          style={{ padding: 0 }} 
-          className={`${style['x-thumb-down']} ${isDisabled ? style['disable-feedback'] : ''}`} 
-          onClick={e => thumbDownHandler(e, "thumb-down")}
-        >
-          {data.is_pressed && data.press_type === 'thumb-down' ? (
-            <span className={`${style.loader}`} style={{ borderBottomColor: '#f9756e' }}></span>
-          ) : (
-            <ThumbDown />
-          )}
-        </button>
-  
-        <button 
-          aria-label="Thumb Up" 
-          disabled={isDisabled} 
-          style={{ padding: 0 }} 
-          className={`${style['x-thumb-up']} ${isDisabled ? style['disable-feedback'] : ''}`} 
-          onClick={e => thumbUpHandler(e, "thumb-up")}
-        >
-          {data.is_pressed && data.press_type === 'thumb-up' ? (
-            <span className={`${style.loader}`} style={{ borderBottomColor: '#00bec4' }}></span>
-          ) : (
-            <ThumbUp />
-          )}
-        </button>
-      </div>
-    </div>
-  
-    <div className={`${style['feedback-form-block']} ${style[data.hide_form]}`}>
-      <p className={`${style['mb-8']}`} style={{ marginBottom: '10px' }}>
-        Your feedback helps us improve our tutorials.
-      </p>
-      <textarea
-        ref={textareaRef}
-        onChange={e => changed_feedback_callback({ comment: e.target.value })}
-        value={feedback.comment}
-        placeholder="write your feedback here!"
-      ></textarea>
-      <div className={`${style['feedback-response']} ${style[`msg-${data.type}`]} ${style[data.exposed]}`}>
-        <p>{data.message}</p>
-      </div>
-      <button 
-        disabled={isDisabled} 
-        type="submit" 
-        onClick={e => submit_feedback(e, "comment")} 
-        className={`${style.btn} ${style['third-btn']} ${style['radius-5']} ${style['custom-header-btn']} ${style['auto-left']}`}
-      >
-        {data.is_pressed && data.press_type === 'comment' ? (
-          <span className={`${style.loader}`}></span>
-        ) : (
-          'Submit'
-        )}
-      </button>
-    </div>
-  </div>  
   );
 
 }
 
-function SubscribeComponents ({is_footer, title, description, camp_data, settings, adsReady, isSmallBtn }) {
+function SubscribeComponents ({is_footer, title, description, camp_data, settings, adsReady }) {
 
   var main_settings = settings; 
   
@@ -595,61 +555,44 @@ function SubscribeComponents ({is_footer, title, description, camp_data, setting
   return (
     <>
       {
-  is_footer ? (
-    <h2 className={`${style.title}`}>{title}</h2>
-  ) : (
-    <h1 className={`${style['custom-headline']} ${style['section-head']}`} dangerouslySetInnerHTML={{ __html: title }} />
-  )
-}
+        is_footer ?
+        <h2 className="title">{title}</h2> :
+        <h1 className="custom-headline section-head" dangerouslySetInnerHTML={{__html: title}} />  
+      }
 
-{
-  is_footer ? (
-    <p className={`${style['font-16']} ${style['pb-15']}`}>{description}</p>
-  ) : (
-    <p>{description}</p>
-  )
-}
+      {
+        is_footer ?
+        <p className="font-16 pb-15">{description}</p> :
+        <p>{description}</p>  
+      }
+      
+      
 
-<div style={is_middle ? { margin: "0 auto" } : {}}>
-  <div className={`${style['response-msg']} ${style[result.cls]} ${style[result.type]}`}>{result.message}</div>
 
-  {is_footer ? (
-    ""
-  ) : (
-    adsReady ? (
-      <AdCompaignBox settings={main_settings} position="before_subscribe" data={camp_data} />
-    ) : (
-      ""
-    )
-  )}
-
-  <form className={`${style['set-center']} ${style['form-group']} ${style['set-focus']}`} action="/" method="get">
-    <input
-      type="text"
-      value={email}
-      onChange={e => setEmail(e.target.value)}
-      placeholder="example@email.com"
-      className={`${isSmallBtn?' ' + style['subscribe-smallb-field']: ''}`}
-    />
-    <button className={`${style.btn} ${style['primary-btn']}${isSmallBtn?' ' + style['subscribe-smallb-btn']: ''}`} type="submit" onClick={send_data}>
-      {result.is_pressed ? (
-        <span className={`${style.loader}`}></span>
-      ) : (
-        "Subscribe"
-      )}
-    </button>
-  </form>
-
-  {is_footer ? (
-    ""
-  ) : (
-    adsReady ? (
-      <AdCompaignBox settings={main_settings} position="after_subscribe" data={camp_data} />
-    ) : (
-      ""
-    )
-  )}
-</div>
+      <div style={is_middle ? {margin: "0 auto"}: {}}>
+        <div className={`response-msg ${result.cls} ${result.type}`}>{result.message}</div>
+          
+          {
+            is_footer ? '':
+            (adsReady ? <AdCompaignBox settings={main_settings} position="before_subscribe" data={camp_data}/>: "")
+          }
+          
+          <form className="set-center form-group set-focus" action="/" method="get"> 
+              <input type="text" value={email} onChange={e => setEmail(e.target.value)} placeholder="example@email.com" />
+              <button className="btn primary-btn" type="submit" onClick={send_data}>
+                {
+                  result.is_pressed ?
+                  <span className='loader'></span>: 
+                  'Subscribe'
+                }
+              </button>
+          </form>
+          {
+            is_footer ? '':
+            (adsReady? <AdCompaignBox settings={main_settings} position="after_subscribe" data={camp_data}/> : '') 
+          }
+          
+        </div>
     </>
   )
 }
@@ -704,66 +647,46 @@ var TutorialLinks = ({upcoming, built_url, ad_camp, adsReady}) => {
   var counter_ads = 0;
   var ads_every = upcoming.settings?.ads_between_navs_in_chapters ?upcoming.settings.ads_between_navs_in_chapters: 4;
   return (
-    <div className={`${style.wrapper} ${style['chapter-elements']} ${style['max-1150']} ${style['offset-left']} ${style['offset-right']} ${style['mt-30']} ${style.flexbox} ${style['gap-20']} ${style['flex-wrap']} ${style['content-center']}`}>
-    {upcoming.chapters.length ? (
-      upcoming.chapters.map((chapter, k) => {
-        // Counter for ads
-        if (k % ads_every === 0) {
-          counter_ads++;
-        }
-  
-        return (
-          <Fragment key={chapter._id}>
-            {(k % ads_every === 0) &&
-              (adsReady ? (
-                <AdCompaignBox 
-                  settings={upcoming.settings} 
-                  data={ad_camp} 
-                  position={`between_row_ad_${counter_ads}`} 
-                />
-              ) : (
-                ""
-              ))}
-            <TutorialsList 
-              built_url={built_url} 
-              data={chapter.posts} 
-              chapter_title={chapter.chapter_title} 
-              index={k} 
-            />
-          </Fragment>
-        );
-      })
-    ) : upcoming.posts.length ? (
-      Helper.chunkArray(upcoming.posts, 3).map((posts, k) => {
-        // Counter for ads
-        if (k % ads_every === 0) {
-          counter_ads++;
-        }
-  
-        return (
-          <Fragment key={k}>
-            {(k % ads_every === 0) &&
-              (adsReady ? (
-                <AdCompaignBox 
-                  settings={upcoming.settings} 
-                  data={ad_camp} 
-                  position={`between_row_ad_${counter_ads}`} 
-                />
-              ) : (
-                ""
-              ))}
-            <TutorialsList 
-              built_url={built_url} 
-              data={posts} 
-              index={k} 
-            />
-          </Fragment>
-        );
-      })
-    ) : (
-      ""
-    )}
-  </div>  
+      <div className="wrapper chapter-elements max-1150 offset-left offset-right mt-30 flexbox gap-20 flex-wrap content-center"> 
+                      
+                  
+          {
+              upcoming.chapters.length ?
+              (
+                  upcoming.chapters.map(( chapter, k) => {
+
+                      //counter_ads
+                      if( k % ads_every == 0) {
+                        counter_ads++;
+                      }
+                       
+                      return ( 
+                        <Fragment key={chapter._id} > 
+                          { (k % ads_every == 0 ) &&  ( adsReady? <AdCompaignBox settings={upcoming.settings} data={ad_camp} position={`between_row_ad_${counter_ads}`}/>: '')}
+                          <TutorialsList built_url={built_url} data={chapter.posts} chapter_title={chapter.chapter_title} index={k}/>
+                        </Fragment>
+                       );
+                  })
+              ) :
+              (
+                  upcoming.posts.length ?
+                      Helper.chunkArray(upcoming.posts, 3 ).map(( posts, k) => {
+                          //counter_ads
+                          if( k % ads_every == 0) {
+                            counter_ads++;
+                          }
+                          return ( 
+                          <Fragment key={k} >
+                              { (k % ads_every == 0 ) && ( adsReady? <AdCompaignBox settings={upcoming.settings} data={ad_camp} position={`between_row_ad_${counter_ads}`}/>: '')}
+                              <TutorialsList built_url={built_url} data={posts} index={k}/>
+                           </Fragment>
+                        );
+                      })
+                  : ""
+              )
+          }
+          
+      </div>
   );
 }
 
@@ -798,20 +721,11 @@ var GenerateTutorialContent_2 = ({ data, upcoming, built_url, ad_camp, adsReady 
           const src = part.match(/src="([^"]+)"/)[1];
           return (
             <Fragment key={index}>
-              <div className={`${style['mt-25']}`}>
-                <LazyLoadYouTube cls={`${style['ifram-tut-youtube']}`} url={src} />
-              </div>
-              {adsReady ? (
-                <AdCompaignBox 
-                  settings={upcoming.settings} 
-                  data={ad_camp} 
-                  position={'after_youtube_video_content_2'} 
-                />
-              ) : (
-                ""
-              )}
+                <div className="mt-25">
+                  <LazyLoadYouTube cls="ifram-tut-youtube" url={src} />
+                </div> 
+                 {adsReady ? <AdCompaignBox settings={upcoming.settings} data={ad_camp} position={'after_youtube_video_content_2'}/>: "" }
             </Fragment>
-
           );
         }
         // Headline shortcodes from h1 to h6
@@ -819,7 +733,7 @@ var GenerateTutorialContent_2 = ({ data, upcoming, built_url, ad_camp, adsReady 
           const tag = part.match(/^\[h([1-6])/)[1];
           const content = part.replace(/^\[h[1-6]\]/, '').trim();
           const TagName = `h${tag}`;
-          return <TagName key={index} className={`${style['tutorial-subheadline']}`}>{Helper.decodeHtmlEntities(content)}</TagName>;
+          return <TagName key={index} className="tutorial-subheadline">{Helper.decodeHtmlEntities(content)}</TagName>;
         }
         // Chapters and posts shortcode
         else if (part.startsWith('[chapters-posts]')) {
@@ -829,23 +743,14 @@ var GenerateTutorialContent_2 = ({ data, upcoming, built_url, ad_camp, adsReady 
         // Default case: plain paragraph
         else {
           return (
-            <p key={index} className={`${style['tutorial-description']}`}>
+            <p key={index} className="tutorial-description">
               {part}
             </p>
           );
         }
       })} 
       
-      {adsReady ? (
-        <AdCompaignBox 
-          settings={upcoming.settings} 
-          classes={`${style.wrapper} ${style['chapter-elements']} ${style['max-1150']} ${style['offset-left']} ${style['offset-right']} ${style['mt-30']} ${style.flexbox} ${style['gap-20']} ${style['flex-wrap']} ${style['content-center']}`} 
-          data={ad_camp} 
-          position={'after_tutorial_description_2'} 
-        />
-      ) : (
-        ""
-      )}
+      {adsReady? <AdCompaignBox settings={upcoming.settings} classes='wrapper chapter-elements max-1150 offset-left offset-right mt-30 flexbox gap-20 flex-wrap content-center' data={ad_camp} position={'after_tutorial_description_2'}/>: "" }
     </>
   );
 
@@ -855,21 +760,21 @@ const StyledList = ({ data }) => {
   const { style, items } = data;
 
   return (
-    <div className={`${style['list-container']}`}>
-    {style === 'ordered' ? (
-      <ol>
-        {items.map((item, index) => (
-          <li key={index} dangerouslySetInnerHTML={{ __html: item }}></li>
-        ))}
-      </ol>
-    ) : (
-      <ul>
-        {items.map((item, index) => (
-          <li key={index} dangerouslySetInnerHTML={{ __html: item }}></li>
-        ))}
-      </ul>
-    )}
-  </div>  
+      <div className="list-container">
+          {style === 'ordered' ? (
+              <ol>
+                  {items.map((item, index) => (
+                      <li key={index} dangerouslySetInnerHTML={{ __html: item }}></li>
+                  ))}
+              </ol>
+          ) : (
+              <ul>
+                  {items.map((item, index) => (
+                      <li key={index} dangerouslySetInnerHTML={{ __html: item }}></li>
+                  ))}
+              </ul>
+          )}
+      </div>
   );
 };
 
@@ -877,41 +782,30 @@ const ResponsiveTable = ({ data }) => {
   const { withHeadings, content } = data;
 
   return (
-    <div className={`${style['table-container']}`}>
-    <table className={`${style.table}`}>
-      <thead>
-        {withHeadings && (
-          <tr>
-            {content[0].map((heading, index) => (
-              <th key={index}>{Helper.decodeHtmlEntities(heading)}</th>
-            ))}
-          </tr>
-        )}
-      </thead>
-      <tbody>
-        {content.slice(withHeadings ? 1 : 0).map((row, rowIndex) => (
-          <tr key={rowIndex}>
-            {row.map((cell, cellIndex) => (
-              <td
-                key={cellIndex}
-                data-label={
-                  withHeadings
-                    ? content[0][cellIndex]
-                    : `Column ${cellIndex + 1}`
-                }
-              >
-                <span
-                  dangerouslySetInnerHTML={{
-                    __html: Helper.decodeHtmlEntities(cell),
-                  }}
-                />
-              </td>
-            ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>  
+      <div className="table-container">
+          <table className="table">
+              <thead>
+                  {withHeadings && (
+                      <tr>
+                          {content[0].map((heading, index) => (
+                              <th key={index}>{Helper.decodeHtmlEntities(heading)}</th>
+                          ))}
+                      </tr>
+                  )}
+              </thead>
+              <tbody>
+                  {content.slice(withHeadings ? 1 : 0).map((row, rowIndex) => (
+                      <tr key={rowIndex}>
+                          {row.map((cell, cellIndex) => (
+                              <td key={cellIndex} data-label={withHeadings ? content[0][cellIndex] : `Column ${cellIndex + 1}`}>
+                                <span dangerouslySetInnerHTML={{__html: Helper.decodeHtmlEntities(cell)}}/>
+                              </td>
+                          ))}
+                      </tr>
+                  ))}
+              </tbody>
+          </table>
+      </div>
   );
 }; 
 
@@ -919,27 +813,21 @@ var TutorialsList = ({ index, data, chapter_title, built_url }) => {
   
   return ( 
      
-    <div className={`${style.container} ${style['white-grey-bg']} ${style['category-container']} ${style['update-chpt']}`}>
-    {chapter_title !== undefined && chapter_title !== '' ? (
-      <>
-        <span className={`${style['cats-number']}`}>{Helper.produceNumber(index)}</span>
-        <h2 className={`${style['category-headline']}`}>{chapter_title}</h2>
-      </>
-    ) : (
-      <span className={`${style['cats-number']}`}>{Helper.produceNumber(index)}</span>
-    )}
-    <div className={`${style['chapter-cont']}`}>
-      <ul className={`${style['tuts-categ']}`}>
-        {data.map((x, index) => (
-          <li key={`${x._id}-${index}`}>
-            <Link aria-label={x.post_title} href={`${built_url}${x.slug}/`}>
-              {Helper.decodeHtmlEntities(x.post_title)}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </div>  
+      <div className="container white-grey-bg category-container update-chpt">
+           
+           {
+              chapter_title != undefined && chapter_title != '' ?
+              <>
+                  <span className="cats-number">{Helper.produceNumber(index)}</span>
+                  <h2 className="category-headline">{chapter_title}</h2>
+              </> : <span className="cats-number">{Helper.produceNumber(index)}</span>
+           } 
+           <div className="chapter-cont">
+              <ul className="tuts-categ">
+                  {data.map((x, index) => <li key={`${x._id}-${index}`}><Link aria-label={x.post_title} href={`${built_url}${x.slug}/`}>{ Helper.decodeHtmlEntities(x.post_title)}</Link></li>)} 
+              </ul>
+           </div>
+      </div>
 
   );
 }
@@ -975,15 +863,15 @@ function TutorialsContent({ blocks, tutorials, ad_camp, settings, adsReady }){
              case 'image':
               var src = x?.data?.file?.url.replace("codedtag.com", "flatcoding.com")
                return (
-                <figure key={x.id}>
-                <Image
-                  className={`${x?.data?.stretched ? style.full : ''}`} // half
-                  alt={x?.data?.caption}
-                  height={250}
-                  src={src}
-                  width={x?.data?.file?.width}
-                />
-              </figure>              
+                 <figure key={x.id}>
+                   <Image
+                     className={x?.data?.stretched ? 'full' : ''}//half
+                     alt={x?.data?.caption}
+                     height={250}
+                     src={src}
+                     width={x?.data?.file?.width}
+                   />
+                 </figure>
                );
              case 'header':
                header_count += 1;
@@ -1039,53 +927,52 @@ function TutorialsContent({ blocks, tutorials, ad_camp, settings, adsReady }){
                if (filtered.length) {
                  end_section += 1;
                  return (
-                  <Fragment key={`frage-box-${x.id}`}>
-                  <div className={`${style.row} ${style['mlr--15']}`} key={x.id}>
-                    {filtered.map(item => (
-                      <div
-                        key={item._id}
-                        className={`${style['sm-6']} ${style['md-4']} ${style['lg-4']} ${style['text-center']} ${style['p-all-15']}`}
-                      >
-                        <div className={`${style['tutorial-box']}`}>
-                          {item.tutorial_svg_icon !== '' && (
-                            <i
-                              className={`${style['tutorial-thumbs']}`}
-                              style={{ background: '#2d4756' }}
-                              dangerouslySetInnerHTML={{
-                                __html: item.tutorial_svg_icon,
-                              }}
-                            />
-                          )}
-                          <h3>
-                            <span>{item.tutorial_title}</span>
-                            {item.duration !== '' && (
-                              <span className={`${style.subtitle}`}>
-                                Duration:- {item.duration}
-                              </span>
-                            )}
-                          </h3>
-                          <Link
-                            aria-label={item.tutorial_title}
-                            className={`${style['floating-all']}`}
-                            href={`/tutorials/${item.slug}/`}
-                          ></Link>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                
-                  {adsReady ? (
-                    <AdCompaignBox
-                      settings={settings}
-                      key={`${x.id}-ad-end-of-section`}
-                      position={`end_of_category_section_${end_section}`}
-                      data={ad_camp}
-                    />
-                  ) : (
-                    ""
-                  )}
-                </Fragment>
-                
+                   <Fragment key={`frage-box-${x.id}`}>
+
+                     <div className="row mlr--15" key={x.id}>
+                       {filtered.map(item => (
+                         <div
+                           key={item._id}
+                           className="sm-6 md-4 lg-4 text-center p-all-15"
+                         >
+                           <div className="tutorial-box">
+                             {item.tutorial_svg_icon !== '' && (
+                               <i
+                                 className="tutorial-thumbs"
+                                 style={{ background: '#2d4756' }}
+                                 dangerouslySetInnerHTML={{
+                                   __html: item.tutorial_svg_icon,
+                                 }}
+                               />
+                             )}
+                             <h3>
+                               <span>{item.tutorial_title}</span>
+                               {item.duration !== '' && (
+                                 <span className="subtitle">
+                                   Duration:- {item.duration}
+                                 </span>
+                               )}
+                             </h3>
+                             <Link
+                              aria-label={item.tutorial_title}
+                              className="floating-all"
+                              href={`/tutorials/${item.slug}/`}
+                             ></Link>
+                           </div>
+                         </div>
+                       ))}
+                     </div>
+                    
+                    { 
+                     adsReady ?
+                     <AdCompaignBox settings={settings}
+                       key={`${x.id}-ad-end-of-section`}
+                       position={`end_of_category_section_${end_section}`}
+                       data={ad_camp}
+                     />: ""
+                      }
+
+                   </Fragment>
                  );
                }
                return null;
@@ -1136,14 +1023,13 @@ var LazyLoadYouTube = ({ url, width = '560', height = '315', cls='' }) => {
       <div ref={iframeRef} style={{ minHeight: height, minWidth: width }}>
           {isIntersecting ? (
               <iframe
-                className={`${style[cls]}`}
-                width={width}
-                height={height}
-                src={url}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
+                  className={cls}
+                  width={width}
+                  height={height}
+                  src={`${url}`} 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
               ></iframe>
-            
           ) : (
               <div style={{ minHeight: height, minWidth: width, backgroundColor: '#000' }}></div>
           )}
@@ -1164,21 +1050,12 @@ var GenerateTutorialContent_1 = ({ data, upcoming, built_url, ad_camp, adsReady 
           const src = part.match(/src="([^"]+)"/)[1];
           return (
             <Fragment key={index}>
-              <div className={`${style['mt-25']}`}>
-                <LazyLoadYouTube cls={`${style['ifram-tut-youtube']}`} url={src} />
-              </div>
+                <div className="mt-25">
+                  <LazyLoadYouTube cls="ifram-tut-youtube" url={src} />
+                </div>
 
-              {adsReady ? (
-                <AdCompaignBox 
-                  settings={upcoming.settings} 
-                  data={ad_camp} 
-                  position={'after_youtube_video_content_1'} 
-                />
-              ) : (
-                ""
-              )}
+                 {adsReady? <AdCompaignBox settings={upcoming.settings} data={ad_camp} position={'after_youtube_video_content_1'}/>: ""} 
             </Fragment>
-
           );
         }
         // Headline shortcodes from h1 to h6
@@ -1186,7 +1063,7 @@ var GenerateTutorialContent_1 = ({ data, upcoming, built_url, ad_camp, adsReady 
           const tag = part.match(/^\[h([1-6])/)[1];
           const content = part.replace(/^\[h[1-6]\]/, '').trim();
           const TagName = `h${tag}`;
-          return <TagName key={index} className={`${style['tutorial-subheadline']}`}>{Helper.decodeHtmlEntities(content)}</TagName>;
+          return <TagName key={index} className="tutorial-subheadline">{Helper.decodeHtmlEntities(content)}</TagName>;
         }
         // Chapters and posts shortcode
         else if (part.startsWith('[chapters-posts]')) {
@@ -1196,7 +1073,7 @@ var GenerateTutorialContent_1 = ({ data, upcoming, built_url, ad_camp, adsReady 
         // Default case: plain paragraph
         else {
           return (
-            <p key={index} className={`${style['tutorial-description']}`}>
+            <p key={index} className="tutorial-description">
               {part}
             </p>
           );
@@ -1231,268 +1108,126 @@ var SocialShare = ({platforms, url, title, radius, size, width, height}) => {
     switch (trimmedPlatform) {
       case 'email':
         return (
-          <EmailShareButton 
-            aria-label={title} 
-            key={index} 
-            url={url} 
-            subject={title} 
-            className={`${style['social-share-button']}`}
-          >
-            {radius ? (
-              <CustomShareIcon 
-                width={width} 
-                height={height} 
-                size={size} 
-                IconComponent={EmailIcon} 
-              />
-            ) : (
-              <EmailIcon 
-                width={width} 
-                height={height} 
-                size={size} 
-                round 
-              />
-            )}
+          <EmailShareButton aria-label={title} key={index} url={url} subject={title} className="social-share-button">
+            {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={EmailIcon} /> : <EmailIcon width={width} height={height} size={size} round />}
           </EmailShareButton>
         );
       case 'facebook':
         return (
-          <FacebookShareButton 
-            aria-label={title} 
-            key={index} 
-            url={url} 
-            quote={title} 
-            className={`${style['social-share-button']}`}
-          >
-            {radius ? (
-              <CustomShareIcon 
-                width={width} 
-                height={height} 
-                size={size} 
-                IconComponent={FacebookIcon} 
-              />
-            ) : (
-              <FacebookIcon 
-                width={width} 
-                height={height} 
-                size={size} 
-                round 
-              />
-            )}
+          <FacebookShareButton aria-label={title} key={index} url={url} quote={title} className="social-share-button">
+            {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={FacebookIcon} /> : <FacebookIcon width={width} height={height} size={size} round />}
           </FacebookShareButton>
-
         );
-        case 'gab':
-          return (
-            <GabShareButton 
-              aria-label={title} 
-              key={index} 
-              url={url} 
-              title={title} 
-              className={`${style['social-share-button']}`}
-            >
-              {radius ? (
-                <CustomShareIcon 
-                  width={width} 
-                  height={height} 
-                  size={size} 
-                  IconComponent={GabIcon} 
-                />
-              ) : (
-                <GabIcon 
-                  width={width} 
-                  height={height} 
-                  size={size} 
-                  round 
-                />
-              )}
-            </GabShareButton>
-          );
-        case 'hatena':
-          return (
-            <HatenaShareButton 
-              aria-label={title} 
-              key={index} 
-              url={url} 
-              title={title} 
-              className={`${style['social-share-button']}`}
-            >
-              {radius ? (
-                <CustomShareIcon 
-                  width={width} 
-                  height={height} 
-                  size={size} 
-                  IconComponent={HatenaIcon} 
-                />
-              ) : (
-                <HatenaIcon 
-                  width={width} 
-                  height={height} 
-                  size={size} 
-                  round 
-                />
-              )}
-            </HatenaShareButton>
-          );
-        case 'instapaper':
-          return (
-            <InstapaperShareButton 
-              aria-label={title} 
-              key={index} 
-              url={url} 
-              title={title} 
-              className={`${style['social-share-button']}`}
-            >
-              {radius ? (
-                <CustomShareIcon 
-                  width={width} 
-                  height={height} 
-                  size={size} 
-                  IconComponent={InstapaperIcon} 
-                />
-              ) : (
-                <InstapaperIcon 
-                  width={width} 
-                  height={height} 
-                  size={size} 
-                  round 
-                />
-              )}
-            </InstapaperShareButton>
-          );
-        case 'line':
-          return (
-            <LineShareButton 
-              aria-label={title} 
-              key={index} 
-              url={url} 
-              title={title} 
-              className={`${style['social-share-button']}`}
-            >
-              {radius ? (
-                <CustomShareIcon 
-                  width={width} 
-                  height={height} 
-                  size={size} 
-                  IconComponent={LineIcon} 
-                />
-              ) : (
-                <LineIcon 
-                  width={width} 
-                  height={height} 
-                  size={size} 
-                  round 
-                />
-              )}
-            </LineShareButton>
-          );
-        case 'linkedin':
-          return (
-            <LinkedinShareButton 
-              aria-label={title} 
-              key={index} 
-              url={url} 
-              title={title} 
-              className={`${style['social-share-button']}`}
-            >
-              {radius ? (
-                <CustomShareIcon 
-                  width={width} 
-                  height={height} 
-                  size={size} 
-                  IconComponent={LinkedinIcon} 
-                />
-              ) : (
-                <LinkedinIcon 
-                  width={width} 
-                  height={height} 
-                  size={size} 
-                  round 
-                />
-              )}
-            </LinkedinShareButton>
-          );
-        case 'reddit':
-          return (
-            <RedditShareButton 
-              aria-label={title} 
-              key={index} 
-              url={url} 
-              title={title} 
-              className={`${style['social-share-button']}`}
-            >
-              {radius ? (
-                <CustomShareIcon 
-                  width={width} 
-                  height={height} 
-                  size={size} 
-                  IconComponent={RedditIcon} 
-                />
-              ) : (
-                <RedditIcon 
-                  width={width} 
-                  height={height} 
-                  size={size} 
-                  round 
-                />
-              )}
-            </RedditShareButton>
-          );
-        case 'twitter':
-          return (
-            <TwitterShareButton 
-              aria-label={title} 
-              key={index} 
-              url={url} 
-              title={title} 
-              className={`${style['social-share-button']}`}
-            >
-              {radius ? (
-                <CustomShareIcon 
-                  width={width} 
-                  height={height} 
-                  size={size} 
-                  IconComponent={TwitterIcon} 
-                />
-              ) : (
-                <TwitterIcon 
-                  width={width} 
-                  height={height} 
-                  size={size} 
-                  round 
-                />
-              )}
-            </TwitterShareButton>
-          );
-        case 'whatsapp':
-          return (
-            <WhatsappShareButton 
-              aria-label={title} 
-              key={index} 
-              url={url} 
-              title={title} 
-              separator=":: " 
-              className={`${style['social-share-button']}`}
-            >
-              {radius ? (
-                <CustomShareIcon 
-                  width={width} 
-                  height={height} 
-                  size={size} 
-                  IconComponent={WhatsappIcon} 
-                />
-              ) : (
-                <WhatsappIcon 
-                  width={width} 
-                  height={height} 
-                  size={size} 
-                  round 
-                />
-              )}
-            </WhatsappShareButton>
-          );
-        default:
-          return null;      
+      case 'gab':
+        return (
+          <GabShareButton aria-label={title} key={index} url={url} title={title} className="social-share-button">
+            {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={GabIcon} /> : <GabIcon width={width} height={height} size={size} round />}
+          </GabShareButton>
+        );
+      case 'hatena':
+        return (
+          <HatenaShareButton aria-label={title} key={index} url={url} title={title} className="social-share-button">
+            {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={HatenaIcon} /> : <HatenaIcon width={width} height={height} size={size} round />}
+          </HatenaShareButton>
+        );
+      case 'instapaper':
+        return (
+          <InstapaperShareButton aria-label={title} key={index} url={url} title={title} className="social-share-button">
+            {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={InstapaperIcon} /> : <InstapaperIcon width={width} height={height} size={size} round />}
+          </InstapaperShareButton>
+        );
+      case 'line':
+        return (
+          <LineShareButton aria-label={title} key={index} url={url} title={title} className="social-share-button">
+            {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={LineIcon} /> : <LineIcon width={width} height={height} size={size} round />}
+          </LineShareButton>
+        );
+      case 'linkedin':
+        return (
+          <LinkedinShareButton aria-label={title} key={index} url={url} title={title} className="social-share-button">
+            {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={LinkedinIcon} /> : <LinkedinIcon width={width} height={height} size={size} round />}
+          </LinkedinShareButton>
+        );
+      case 'livejournal':
+        return (
+          <LivejournalShareButton aria-label={title} key={index} url={url} title={title} className="social-share-button">
+            {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={LivejournalIcon} /> : <LivejournalIcon width={width} height={height} size={size} round />}
+          </LivejournalShareButton>
+        );
+      case 'mailru':
+        return (
+          <MailruShareButton aria-label={title} key={index} url={url} title={title} className="social-share-button">
+            {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={MailruIcon} /> : <MailruIcon width={width} height={height} size={size} round />}
+          </MailruShareButton>
+        );
+      case 'ok':
+        return (
+          <OKShareButton aria-label={title} key={index} url={url} title={title} className="social-share-button">
+            {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={OKIcon} /> : <OKIcon width={width} height={height} size={size} round />}
+          </OKShareButton>
+        );
+      case 'pinterest':
+        return (
+          <PinterestShareButton aria-label={title} key={index} url={url} media={url} description={title} className="social-share-button">
+            {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={PinterestIcon} /> : <PinterestIcon width={width} height={height} size={size} round />}
+          </PinterestShareButton>
+        );
+      case 'pocket':
+        return (
+          <PocketShareButton aria-label={title} key={index} url={url} title={title} className="social-share-button">
+            {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={PocketIcon} /> : <PocketIcon width={width} height={height} size={size} round />}
+          </PocketShareButton>
+        );
+      case 'reddit':
+        return (
+          <RedditShareButton aria-label={title} key={index} url={url} title={title} className="social-share-button">
+            {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={RedditIcon} /> : <RedditIcon width={width} height={height} size={size} round />}
+          </RedditShareButton>
+        );
+      case 'telegram':
+        return (
+          <TelegramShareButton aria-label={title} key={index} url={url} title={title} className="social-share-button">
+            {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={TelegramIcon} /> : <TelegramIcon width={width} height={height} size={size} round />}
+          </TelegramShareButton>
+        );
+      case 'tumblr':
+        return (
+          <TumblrShareButton aria-label={title} key={index} url={url} title={title} className="social-share-button">
+            {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={TumblrIcon} /> : <TumblrIcon width={width} height={height} size={size} round />}
+          </TumblrShareButton>
+        );
+      case 'twitter':
+        return (
+          <TwitterShareButton aria-label={title} key={index} url={url} title={title} className="social-share-button">
+            {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={TwitterIcon} /> : <TwitterIcon width={width} height={height} size={size} round />}
+          </TwitterShareButton>
+        );
+      case 'viber':
+        return (
+          <ViberShareButton aria-label={title} key={index} url={url} title={title} className="social-share-button">
+            {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={ViberIcon} /> : <ViberIcon width={width} height={height} size={size} round />}
+          </ViberShareButton>
+        );
+      case 'vk':
+        return (
+          <VKShareButton aria-label={title} key={index} url={url} title={title} className="social-share-button">
+            {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={VKIcon} /> : <VKIcon width={width} height={height} size={size} round />}
+          </VKShareButton>
+        );
+      case 'whatsapp':
+        return (
+          <WhatsappShareButton aria-label={title} key={index} url={url} title={title} separator=":: " className="social-share-button">
+            {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={WhatsappIcon} /> : <WhatsappIcon width={width} height={height} size={size} round />}
+          </WhatsappShareButton>
+        );
+      case 'workplace':
+        return (
+          <WorkplaceShareButton aria-label={title} key={index} url={url} title={title} className="social-share-button">
+            {radius ? <CustomShareIcon width={width} height={height} size={size} IconComponent={WorkplaceIcon} /> : <WorkplaceIcon width={width} height={height} size={size} round />}
+          </WorkplaceShareButton>
+        );
+      default:
+        return null;
     }
   });
 }
@@ -1562,7 +1297,7 @@ var ArticleContentSingle = ({blocks, helper, adsReady}) => {
             return (
               <figure key={x.id}> 
                     <Image
-                        className={x?.data?.stretched ? style.full: ''}//half
+                        className={x?.data?.stretched ? 'full': ''}//half
                         alt={x?.data?.caption}
                         height={250}
                         src={src} // use normal <img> attributes as props
@@ -1596,7 +1331,7 @@ var ArticleContentSingle = ({blocks, helper, adsReady}) => {
             return (
               <figure key={x.id}> 
                     <Image
-                        className={x?.data?.stretched ? style.full: ''}//half
+                        className={x?.data?.stretched ? 'full': ''}//half
                         alt={x?.data?.alt}
                         height={320}
                         src={src} // use normal <img> attributes as props
@@ -1612,7 +1347,7 @@ var ArticleContentSingle = ({blocks, helper, adsReady}) => {
   );     
 }
 
-var NextPrevPagination = ({site_url, tutorial_slug, type, data, current_post_slug, is_tab, tab_slug}) => {
+var NextPrevPagination = ({site_url, tutorial_slug, type, data, current_post_slug, is_tab}) => {
      
   var isTab = is_tab == undefined ? false: is_tab;
   
@@ -1636,46 +1371,38 @@ var NextPrevPagination = ({site_url, tutorial_slug, type, data, current_post_slu
   var prev_link = prev == undefined ? '':`${site_url}tutorials/${tutorial_slug}/${prev.slug}/`;
  
   if( isTab ) {
-    var tab_slug_update =  tab_slug ? tab_slug: 'reference';
-
-    next_link = next == undefined ? '':`${site_url}tutorials/${tutorial_slug}/t/${tab_slug_update}/${next.slug}/`;
-    prev_link = prev == undefined ? '':`${site_url}tutorials/${tutorial_slug}/t/${tab_slug_update}/${prev.slug}/`;
+    next_link = next == undefined ? '':`${site_url}tutorials/${tutorial_slug}/t/reference/${next.slug}/`;
+    prev_link = prev == undefined ? '':`${site_url}tutorials/${tutorial_slug}/t/reference/${prev.slug}/`;
   }
 
   return (
-    <div className={`${style.flexbox} ${style['space-between']} ${style.pagination}`}>
-    {prev !== undefined && (
-      <Link 
-        aria-label={Helper.decodeHtmlEntities(prev.post_title)} 
-        href={prev_link} 
-        className={`${style.flexbox} ${style['direction-row']} ${style['items-center']} ${style['hover-to-left']}`}
-      >
-        <i className={`${style['left-arrow-pagin']}`}></i>
-        <span>
-          <span className={`${style['d-none']} ${style['d-sm-block']}`}>
-            {Helper.decodeHtmlEntities(prev.post_title)}
-          </span>
-          <span className={`${style['d-block']} ${style['d-sm-none']}`}>Prev</span>
-        </span>
-      </Link>
-    )}
-  
-    {next !== undefined && (
-      <Link 
-        aria-label={Helper.decodeHtmlEntities(next.post_title)} 
-        href={next_link} 
-        className={`${style.flexbox} ${style['direction-row']} ${style['items-center']} ${style['hover-to-right']} ${style['auto-right']}`}
-      >
-        <span>
-          <span className={`${style['d-none']} ${style['d-sm-block']}`}>
-            {Helper.decodeHtmlEntities(next.post_title)}
-          </span>
-          <span className={`${style['d-block']} ${style['d-sm-none']}`}>Next</span>
-        </span>
-        <i className={`${style['right-arrow-pagin']}`}></i>
-      </Link>
-    )}
-  </div>  
+    <div className="flexbox space-between pagination">
+       
+        {
+          
+          ( prev == undefined ) ? '':
+        
+          <Link aria-label={Helper.decodeHtmlEntities(prev.post_title)} href={prev_link} className="flexbox direction-row items-center hover-to-left">
+              <i className="left-arrow-pagin"></i>
+              <span>
+                  <span className="d-none d-sm-block">{Helper.decodeHtmlEntities(prev.post_title)}</span> 
+                  <span className="d-block d-sm-none">Prev</span> 
+              </span>
+          </Link> 
+        } 
+
+        {
+          
+          ( next == undefined ) ? '':
+          <Link aria-label={Helper.decodeHtmlEntities(next.post_title)} href={next_link} className="flexbox direction-row items-center hover-to-right auto-right">
+              <span>
+                  <span className="d-none d-sm-block">{Helper.decodeHtmlEntities(next.post_title)}</span> 
+                  <span className="d-block d-sm-none">Next</span>
+              </span>
+              <i className="right-arrow-pagin"></i>
+          </Link> 
+        }
+    </div>
   );
 }
 
@@ -1683,17 +1410,8 @@ var NextPrevPagination = ({site_url, tutorial_slug, type, data, current_post_slu
 
 var Breadcrumbs = ({data}) => {
   return (
-    <ul className={`${style.breadcrumbs}`}>
-      {data.map((x, index) => (
-        <li key={index} className={`${style['sub-title']}`}>
-          <Link 
-            aria-label={Helper.decodeHtmlEntities(x.title)} 
-            href={x.url}
-          >
-            {Helper.decodeHtmlEntities(x.title)}
-          </Link>
-        </li>
-      ))}
+    <ul className="breadcrumbs">
+        {data.map((x, index) => <li key={index} className='sub-title'><Link aria-label={Helper.decodeHtmlEntities(x.title)} href={x.url}>{Helper.decodeHtmlEntities(x.title)}</Link></li>)}
     </ul>
   );
 }
@@ -1754,61 +1472,42 @@ var ArticleSidebar = ({type, data, site_url, tutorial_slug, current_post_slug, t
 
           return (
             <Fragment key={indexer}>
-              <ul key={indexer} className={`${style['block-list']} ${style['custom-aside-tuts']}`}>
-                {chapterData.map(chapter => {
-                  let link_url = `${site_url}tutorials/${tutorial_slug}/`;
-                  if (tab_slug !== undefined) {
-                    link_url = `${link_url}t/${tab_slug}/`;
-                  }
+              <ul key={indexer} className="block-list custom-aside-tuts">
 
-                  const is_expanded = chapter.posts.findIndex(x => x.slug === current_post_slug) !== -1;
+                {chapterData.map(chapter => {
+                  var link_url = `${site_url}tutorials/${tutorial_slug}/`;
+                  if( tab_slug != undefined ) {
+                    link_url = `${link_url}t/${tab_slug}/`
+                  }
+                  
+                  var is_expaned = chapter.posts.findIndex( x => x.slug == current_post_slug) != -1;
 
                   return (
                     <Fragment key={chapter._id}>
                       {chapter.chapter_title !== "" ? (
+
                         <>
-                          <li className={`${chapter.posts.length ? style['has-slideitem'] : ''}`}>
-                            <Link
-                              aria-label={chapter.chapter_title}
-                              className={`${is_expanded ? style['expanded-a'] : ''}`}
-                              id={`anchor-${chapter._id}`}
-                              onClick={e => collapsed_item(e, `${chapter._id}`)}
-                              href="#"
-                            >
-                              {chapter.chapter_title}
-                            </Link>
+                          <li className={`${chapter.posts.length ? 'has-slideitem' : ''}`}>
+                            <Link aria-label={chapter.chapter_title} className={` ${is_expaned ? 'expanded-a': ''}`} id={`anchor-${chapter._id}`} onClick={e => collapsed_item(e, `${chapter._id}`)} href="#">{chapter.chapter_title}</Link>
                             {chapter.posts.length ? (
-                              <ul
-                                id={`item-${chapter._id}`}
-                                className={`${style.collapsible} ${style['list-items']} ${is_expanded ? style.expanded : ''}`}
-                              >
+                              <ul id={`item-${chapter._id}`} className={`collapsible list-items ${is_expaned ? 'expanded': ''}`}>
                                 {chapter.posts.map(x => (
                                   <li key={x._id}>
-                                    <Link
-                                      aria-label={Helper.decodeHtmlEntities(x.post_title)}
-                                      className={`${current_post_slug === x.slug ? style['selected_tab'] : ''}`}
-                                      href={`${link_url}${x.slug}/`}
-                                    >
-                                      {Helper.decodeHtmlEntities(x.post_title)}
-                                    </Link>
+                                    <Link aria-label={Helper.decodeHtmlEntities(x.post_title)} className={current_post_slug == x.slug ? 'selected_tab': ''} href={`${link_url}${x.slug}/`}>{Helper.decodeHtmlEntities(x.post_title)}</Link>
                                   </li>
-                                ))}
+                                ))} 
+                                
                               </ul>
                             ) : null}
-                          </li>
+                          </li> 
                         </>
+                        
                       ) : (
                         <li>
-                          <ul className={`${style['block-list']} ${style['custom-aside-tuts']} ${style['list-items']}`}>
+                          <ul className="block-list custom-aside-tuts list-items">
                             {chapter.posts.map((x, index) => (
-                              <li key={`${x._id}-${index}`}>
-                                <Link
-                                  aria-label={Helper.decodeHtmlEntities(x.post_title)}
-                                  className={`${current_post_slug === x.slug ? style['selected_tab'] : ''}`}
-                                  href={`${link_url}${x.slug}/`}
-                                >
-                                  {Helper.decodeHtmlEntities(x.post_title)}
-                                </Link>
+                              <li key={`${x._id}-${index}` }>
+                                <Link aria-label={Helper.decodeHtmlEntities(x.post_title)} className={current_post_slug == x.slug ? 'selected_tab': ''} href={`${link_url}${x.slug}/`}>{Helper.decodeHtmlEntities(x.post_title)}</Link>
                               </li>
                             ))}
                           </ul>
@@ -1817,19 +1516,12 @@ var ArticleSidebar = ({type, data, site_url, tutorial_slug, current_post_slug, t
                     </Fragment>
                   );
                 })}
+
               </ul>
-
-              {adsReady ? (
-                <AdCompaignBox
-                  settings={settings}
-                  data={ads}
-                  position={`in_sidebar_${elem_list}`}
-                />
-              ) : (
-                ""
-              )}
+               
+              { adsReady? <AdCompaignBox settings={settings} data={ads} position={`in_sidebar_${elem_list}`}/>: "" }
+                
             </Fragment>
-
           )
 
         })
@@ -1845,48 +1537,31 @@ var ArticleSidebar = ({type, data, site_url, tutorial_slug, current_post_slug, t
             elem_list++;
 
           return  (
-            <Fragment key={x._id}>
-              <ul
-                key={`post-${x._id}-${index}`}
-                className={`${style['block-list']} ${style['custom-aside-tuts']} ${style['list-items']}`}
-              >
-                {x.map(post => {
-                  let link_url = `${site_url}tutorials/${tutorial_slug}/`;
-                  if (tab_slug !== undefined) {
-                    link_url = `${link_url}t/${tab_slug}/`;
-                  }
+            <Fragment key={x._id} >
+              <ul key={`post-${x._id}-${index}`} className="block-list custom-aside-tuts list-items">
+                {
+                  x.map(post => {
 
-                  return (
-                    <Fragment key={post._id}>
-                      <li key={post._id}>
-                        <Link
-                          aria-label={Helper.decodeHtmlEntities(post.post_title)}
-                          className={`${current_post_slug === post.slug ? style['selected_tab'] : ''}`}
-                          href={`${link_url}${post.slug}/`}
-                        >
-                          {Helper.decodeHtmlEntities(post.post_title)}
-                        </Link>
-                      </li>
-                    </Fragment>
-                  );
-                })}
+                    var link_url =  `${site_url}tutorials/${tutorial_slug}/`; 
+                    if( tab_slug != undefined ) {
+                      link_url = `${link_url}t/${tab_slug}/`
+                    }
+                    
+                    return (
+                      <Fragment key={post._id}>
+                        <li key={post._id}>
+                          <Link aria-label={Helper.decodeHtmlEntities(post.post_title)} className={current_post_slug == post.slug ? 'selected_tab': ''} href={`${link_url}${post.slug}/`}>{Helper.decodeHtmlEntities(post.post_title)}</Link>
+                        </li>
+                      </Fragment>
+                    );
+                  })
+                }
               </ul>
 
-              {x.length >= settings.ads_between_navs_every_list ? (
-                adsReady ? (
-                  <AdCompaignBox
-                    settings={settings}
-                    data={ads}
-                    position={`in_sidebar_${elem_list}`}
-                  />
-                ) : (
-                  ""
-                )
-              ) : (
-                ""
-              )}
+              {
+                x.length >= settings.ads_between_navs_every_list ?  (adsReady? <AdCompaignBox settings={settings} data={ads} position={`in_sidebar_${elem_list}`}/>: ""): ''
+              }
             </Fragment>
-
           )
         }): ''
       }
@@ -1939,34 +1614,31 @@ const TableOfContent = ({ data }) => {
 
   return (
     <div
-        id="article-tbl-of-content"
-        className={`${style['content-tble-mobile-block']} ${style['tble-content']} ${
-          expandorCheckbox ? style.expanded : ''
-        }`}
-      >
-        <ul className={`${style['block-list']} ${style['custom-aside-tuts']} ${style['list-items']}`}>
-          <li className={`${style['has-slideitem']}`} style={{ background: '#f9f9f9' }}>
-            <b className={`${style['content-table-head-title']}`}>Table of Content</b>
-            <ul className={`${style.slideitem}`} style={{ display: 'block' }}>
-              {data.map((x, index) => (
-                <li key={index}>
-                  <a
-                    href={x.href ? `#section-${Helper.decodeHtmlEntities(x.href)}` : '#'}
-                    onClick={(e) => handleSmoothScroll(e, x.href)}
-                  >
-                    {Helper.decodeHtmlEntities(x.title)}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </li>
-        </ul>
-        <label
-          className={`${style['tble-content-handler']} ${style.expander}`}
-          id="table-of-content-toggler"
-        ></label>
-      </div>
-
+      id='article-tbl-of-content'
+      className={`content-tble-mobile-block tble-content ${expandorCheckbox ? 'expanded' : ''}`}
+    >
+      <ul className='block-list custom-aside-tuts list-items'>
+        <li className='has-slideitem' style={{ background: '#f9f9f9' }}>
+          <b className='content-table-head-title'>Table of Content</b>
+          <ul className='slideitem' style={{ display: 'block' }}>
+            {data.map((x, index) => (
+              <li key={index}>
+                <a
+                  href={x.href ? '#section-' + Helper.decodeHtmlEntities(x.href) : '#'}
+                  onClick={(e) => handleSmoothScroll(e, x.href)}
+                >
+                  {Helper.decodeHtmlEntities(x.title)}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </li>
+      </ul>
+      <label
+        className={'tble-content-handler expander'}
+        id='table-of-content-toggler'
+      ></label>
+    </div>
   );
 };
 
@@ -2073,110 +1745,156 @@ const FaqsSection = ({ faqs_section }) => {
 
 
   return (
-    <div className={`${style['faqs-section']}`}>
+    <div className="faqs-section">
       <h3>Frequently Asked Questions (FAQs)</h3>
       <ul>
         {faqs_section.map((faq, index) => {
           const answerParts = faq.answer.split(
             /\{\`\*class=['"]([^'"]+)['"]\*\s([^`]*)\`\}/g
           );
-  
+
+          
           const processedAnswer = answerParts.map((part, idx) => {
+
+            // console.log(part, idx)
+
             if (idx % 3 === 0) {
               return part.split(/(?<!\|)\|(?!\|)/g).map((segment, i) => {
+
                 const inlineProcessed = segment
                   .split(/`([^`]*)`/g)
                   .map((inlinePart, j) => {
+                    //// console.log(inlinePart);
                     return j % 2 === 0 ? (
-                      hasHtmlTags(inlinePart) ? (
-                        <div
-                          key={`${idx}-${i}-${j}`}
-                          dangerouslySetInnerHTML={{ __html: inlinePart }}
-                        />
-                      ) : (
-                        <span key={`${idx}-${i}-${j}`}>{inlinePart}</span>
-                      )
+
+                      hasHtmlTags(inlinePart) ? <div key={`${idx}-${i}-${j}`} dangerouslySetInnerHTML={{__html: inlinePart }} />: <span key={`${idx}-${i}-${j}`}>{inlinePart}</span>
+                      
                     ) : (
-                      <code
-                        key={`${idx}-${i}-${j}`}
-                        className={`${style['inline-code']}`}
-                      >
+                      <code key={`${idx}-${i}-${j}`} className="inline-code">
                         {inlinePart}
                       </code>
                     );
                   });
-  
+                
+                 
                 return <div key={`${idx}-${i}`}>{inlineProcessed}</div>;
               });
             } else if (idx % 3 === 1) {
               const className = part;
               const codeValue = answerParts[idx + 1];
-  
-              return <FaqHandleCodeBlock code_value={codeValue} key={index} />;
+              
+              return <FaqHandleCodeBlock code_value={codeValue} key={x.id}/>
+              /*return (
+                <Highlight key={idx} className={className}>
+                  {codeValue}
+                </Highlight>
+              );*/
             } else {
               return null;
             }
           });
-  
+
+
+          
+          const AnswerBlockOld = ({ answer = "" }) => {
+
+            if (!answer) return null; // Handle null or undefined input gracefully
+
+            const wrappedAnswer = answer
+              // Wrap raw backticks and code content
+              .replace(/(<pre>[\s\S]*?<\/pre>)|<code[\s\S]*?>([\s\S]*?)<\/code>|`(.*?)`/g, (match, preBlock, codeContent, rawCode) => {
+                if (preBlock) {
+                  return preBlock; // Leave <pre> blocks unchanged
+                }
+                if (rawCode) {
+                  return `<code class="inline-code">${Helper.encodetmlEntities(rawCode)}</code>`;
+                }
+                return match; // Fallback for unexpected cases
+              })
+              // Replace backticks with bold tags
+              .replace(/(<code[\s\S]*?>[\s\S]*?<\/code>)|`(.*?)`/g, (match, codeBlock, backtickContent) => {
+                if (codeBlock) return codeBlock;
+                if (backtickContent) {
+                  return `<code class='inline-code'>${Helper.encodetmlEntities(backtickContent)}</code>`;
+                }
+                return match;
+              })
+              // Replace pipelines with line breaks
+              .replace(/(<code[\s\S]*?>[\s\S]*?<\/code>)|(\|)/g, (match, codeBlock, pipeline) => {
+                if (codeBlock) return codeBlock;
+                if (pipeline) return "";
+                return match;
+              });
+
+            
+            // Change All elements to segment 
+            var segments = wrappedAnswer.split(/(<pre><code>[\s\S]*?<\/code><\/pre>)/g);
+            var output = segments.map(input => {
+
+
+              var match = input.match(/<code>([\s\S]*?)<\/code>/);
+              if (match) {
+                  return <Highlight>{match[1]}</Highlight>
+              } else {
+                  return <p>{input}</p>
+              }
+ 
+            }).join("<br/>");
+            
+            return <div>{output}</div>;
+             
+          };
+ 
           const AnswerBlock = ({ answer = "" }) => {
             if (!answer) return null;
-  
+        
             const wrappedAnswer = answer
-              .replace(
-                /(<pre>[\s\S]*?<\/pre>)|<code[\s\S]*?>([\s\S]*?)<\/code>|`(.*?)`/g,
-                (match, preBlock, codeContent, rawCode) => {
-                  if (preBlock) {
-                    return preBlock;
-                  }
-                  if (rawCode) {
-                    return `<code class="${style['inline-code']}">${Helper.encodetmlEntities(
-                      rawCode
-                    )}</code>`;
-                  }
-                  return match;
-                }
-              )
-              .replace(
-                /(<code[\s\S]*?>[\s\S]*?<\/code>)|`(.*?)`/g,
-                (match, codeBlock, backtickContent) => {
-                  if (codeBlock) return codeBlock;
-                  if (backtickContent) {
-                    return `<code class='${style['inline-code']}'>${Helper.encodetmlEntities(
-                      backtickContent
-                    )}</code>`;
-                  }
-                  return match;
-                }
-              )
-              .replace(
-                /(<code[\s\S]*?>[\s\S]*?<\/code>)|(\|)/g,
-                (match, codeBlock, pipeline) => {
-                  if (codeBlock) return codeBlock;
-                  if (pipeline) return "";
-                  return match;
-                }
-              );
-  
-            const segments = wrappedAnswer.split(
-              /(<pre><code>[\s\S]*?<\/code><\/pre>)/g
-            );
-  
+                // Wrap raw backticks and code content
+                .replace(/(<pre>[\s\S]*?<\/pre>)|<code[\s\S]*?>([\s\S]*?)<\/code>|`(.*?)`/g, (match, preBlock, codeContent, rawCode) => {
+                    if (preBlock) {
+                        return preBlock; // Leave <pre> blocks unchanged
+                    }
+                    if (rawCode) {
+                        return `<code class="inline-code">${Helper.encodetmlEntities(rawCode)}</code>`;
+                    }
+                    return match; // Fallback for unexpected cases
+                })
+                // Replace backticks with inline code tags
+                .replace(/(<code[\s\S]*?>[\s\S]*?<\/code>)|`(.*?)`/g, (match, codeBlock, backtickContent) => {
+                    if (codeBlock) return codeBlock;
+                    if (backtickContent) {
+                        return `<code class='inline-code'>${Helper.encodetmlEntities(backtickContent)}</code>`;
+                    }
+                    return match;
+                })
+                // Replace pipelines with line breaks
+                .replace(/(<code[\s\S]*?>[\s\S]*?<\/code>)|(\|)/g, (match, codeBlock, pipeline) => {
+                    if (codeBlock) return codeBlock;
+                    if (pipeline) return "";
+                    return match;
+                });
+        
+            // Split the content into segments
+            const segments = wrappedAnswer.split(/(<pre><code>[\s\S]*?<\/code><\/pre>)/g);
+        
+            // Render segments
             return (
-              <div>
-                {segments.map((input, index) => {
-                  const match = input.match(/<code>([\s\S]*?)<\/code>/);
-                  if (match) {
-                    return <Highlight key={index}>{match[1]}</Highlight>;
-                  }
-  
-                  return (
-                    <div key={index} dangerouslySetInnerHTML={{ __html: input }} />
-                  );
-                })}
-              </div>
+                <div>
+                    {segments.map((input, index) => {
+                        const match = input.match(/<code>([\s\S]*?)<\/code>/);
+                        if (match) {
+                            // Render code blocks using Highlight component
+                            return <Highlight key={index}>{match[1]}</Highlight>;
+                        }
+        
+                        // Render other segments as plain text or HTML
+                        return <div key={index} dangerouslySetInnerHTML={{ __html: input }} />;
+                    })}
+                </div>
             );
-          };
-  
+        };
+        
+
           return (
             <li key={index}>
               <h4
@@ -2184,17 +1902,15 @@ const FaqsSection = ({ faqs_section }) => {
                   borderBottomWidth: isExpanded[index] ? "1px" : "0",
                 }}
                 onClick={() => toggleExpansion(index)}
-                className={`${style['faq-question']}`}
+                className="faq-question"
               >
                 <span>{faq.question}</span>
                 <span
-                  className={`${style['faq-arrow']} ${
-                    isExpanded[index] ? style.expanded : ""
-                  }`}
+                  className={`faq-arrow ` + (isExpanded[index] ? "expanded" : "")}
                 ></span>
               </h4>
               <div
-                className={`${style['faq-answer']}`}
+                className="faq-answer"
                 ref={(el) => {
                   if (el && isExpanded[index]) {
                     el.style.maxHeight = `${el.scrollHeight}px`;
@@ -2205,10 +1921,10 @@ const FaqsSection = ({ faqs_section }) => {
                 style={{
                   overflow: "hidden",
                   transition: "max-height 0.3s ease, opacity 0.3s ease",
-                  opacity: isExpanded[index] ? 1 : 0,
+                  opacity: isExpanded[index] ? 1 : 0, 
                 }}
               >
-                <div style={{ padding: "20px" }}>
+                <div style={{padding: '20px'}}>
                   <AnswerBlock answer={faq.answer} />
                 </div>
               </div>
@@ -2218,62 +1934,9 @@ const FaqsSection = ({ faqs_section }) => {
       </ul>
     </div>
   );
-  
 };
 
 
-const BlogFaqsSection = ({ faqs_section }) => {
-  const [isExpanded, setIsExpanded] = useState(faqs_section.map(() => false));
-
-  const toggleExpansion = (currentIndex) => {
-    setIsExpanded((prevState) =>
-      prevState.map((item, index) => (index === currentIndex ? !item : false))
-    );
-  };
-
-  return (
-    <div className={`${style['faqs-section']}`}>
-      <h3>Frequently Asked Questions (FAQs)</h3>
-      <ul>
-        {faqs_section.map((faq, index) => (
-          <li key={index}>
-            <h4
-              onClick={() => toggleExpansion(index)}
-              className={`${style['faq-question']}`}
-              style={{
-                borderBottomWidth: isExpanded[index] ? "1px" : "0",
-              }}
-            >
-              <span>{faq.question}</span>
-              <span
-                className={`${style['faq-arrow']} ${
-                  isExpanded[index] ? style.expanded : ""
-                }`}
-              ></span>
-            </h4>
-            <div
-              className={`${style['faq-answer']}`}
-              ref={(el) => {
-                if (el && isExpanded[index]) {
-                  el.style.maxHeight = `${el.scrollHeight}px`;
-                } else if (el) {
-                  el.style.maxHeight = "0";
-                }
-              }}
-              style={{
-                overflow: "hidden",
-                transition: "max-height 0.3s ease, opacity 0.3s ease",
-                opacity: isExpanded[index] ? 1 : 0,
-              }}
-            >
-              <div className={style.faq_section_list} style={{ padding: "20px" }} dangerouslySetInnerHTML={{ __html: Helper.decodeHtmlEntities(faq.answer) }}/>
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
 
 
 var ArticleContent = ({blocks}) => {
@@ -2316,7 +1979,7 @@ var ArticleContent = ({blocks}) => {
             return (
               <figure key={x.id}> 
                     <Image
-                        className={x?.data?.stretched ? style.full: ''} //half
+                        className={x?.data?.stretched ? 'full': ''} //half
                         alt={x?.data?.caption}
                         height={250}
                         src={src} // use normal <img> attributes as props
@@ -2351,7 +2014,7 @@ var ArticleContent = ({blocks}) => {
             return (
               <figure key={x.id}> 
                     <Image
-                        className={x?.data?.stretched ? style.full: ''}//half
+                        className={x?.data?.stretched ? 'full': ''}//half
                         alt={x?.data?.alt}
                         height={320}
                         src={src} // use normal <img> attributes as props
@@ -2412,6 +2075,5 @@ export {
   ArticleContent,
   GenerateTutorialContent_tab,
   FaqsSection,
-  BlogFaqsSection,
   CreateCaptcha
 }
